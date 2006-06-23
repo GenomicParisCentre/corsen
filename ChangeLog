@@ -1,0 +1,93 @@
+* version 0.15
+	- Insertion de points intermediaires pour l'affichage 3d
+
+* version 0.14
+	- Nouvelle methode pour tester si un barycentre d'arn appartient à une mito pour des distances inférieure à 1.
+	- Correction bogue nClass dans calc.R
+	- La taille des points sur la représentation 3D est modifiable
+	- Le décallage de l'affichage fonctionne aussi pour les surfaces 3D
+
+* version 0.13
+	- Chargement automatique de rgl lors de l'execution des scripts R d'affichage des particles 3D
+	- Ajout de variable pour désactiver l'affichage des surfaces et des centres et barycentres
+	- Optimisation de la vitesse de vérification de points doublon lors de la lecture des fichiers .par
+	- Option pour remplacer les points par des spheres
+	- Le nombre de classes peut être passé en parametre dans calc.R
+	- Les distances de messagers inclus dans les mitos sont négatives
+	- On peut spécifier un décalage des objets 3d pour les representation des particles 3D
+
+* version 0.12
+	- Correction d'un bogue lors de la segmentation. Les tests d'intersections n'était pas effectués entre les bonnes particules 2D lors des premieres segmentations.
+
+* version 0.11
+	- Correction du bogue concernant le calcul des distances entre les messagers et les mitochondries
+	- Suppression des points qui font doublons dans les particules (uniquement dans le programme de calcul des distances)
+	- Ajout d'une zone de texte pour fixer la taille d'un pixel	
+
+* version 0.10
+	- Correction du bogue supprimant des particles 3D lors d'une tentative d'ajout à elle même.
+	- Ajout de la possiblité d'affiche en 2D les particles 3D segmentées
+	- Windows Look and Feel under Windows
+
+* version 0.9
+  - Ajout des seuils utilisés dans les fichiers ".par"
+  - Optimisation de la création des cuboids. Maintenant beaucoup beaucoup plus rapide
+
+* version 0.8
+  - Correction du bogue d'ouverture des fichiers
+  - Optimisation du calcul des cuboids
+  - Réorganisation de l'ordre des taches (les graphiques R sont crées juste après lecture des fichiers ".par" (et calcul des cuboids)
+  - Ajout de nouvelles méthodes dans Particle3D Afin d'écrire la sortie des graphiques R directement dans un fichiers afin d'économiser de la mémoire vive
+  - Affiche un message d'erreur quand le repertoire à traiter n'existe pas ou qu'aucun fichier à traiter n'existe
+  - Ajout d'une barre de statut avec progression en pourcentage pour le calcul des cuboids
+  - L'interface est maintenant rafraichie lors des traitements
+
+* version 0.7
+  - Le fichier de sortie du plugin imageJ se termine par l'extension ".par"
+  - Ajout dans le fichier de sortie d'imageJ des information sur le nom et la date de dernière modification de l'image initiale
+  - Ajout dans le fichier de sortie d'ImageJ du nom et de la version du programme
+  - Le traitement par lot des fichiers ".par" utilise des fichiers dont le nom est sous la forme "xxx(mito)_ch14ce52.par"
+  - Supression de la sortie de deboguage
+  
+
+* version 0.6
+  - Les particules dont l'intensitée est nulle ne sont plus enregistrées
+  - La taille des cubes est paramétrable dans Distance
+  - Le rapport des distances en Z est modifiable dans distance
+  - L'extension du fichier de l'image n'apparait plus dans le nom du fichier en sortie du plugin ImageJ
+  - Ajout de graphique supplémentaire dans R
+  - Les graphiques et les résumés sont optionnels
+  - Le script R est commenté
+
+
+* version 0.5
+  - Script R pour analyser automatiquement les sorties de Distance
+  - Un seul fichier (.R) est générer pour chaque type de particule
+  - L'extension ".data" est utilisé pour les données à analyser ultérieurement dans R
+  - L'extension ".result" pour le fichier de résultat complet
+  - Dans Distance, on peut maintenant spécifier un répertoire. Tous les fichiers répondant à un certain motif seront analysés.
+  - Dans le plugin, la boite de confirmation de sauvegarde est maintenant optionnelle
+
+* version 0.4
+  - Les objets particle 3D contienent tous les points de l'objet avec leurs intensités
+  - Gestion plus efficace de la mémoire pour le stockage des points
+  - Generation automatique du nom de fichier de résultats (avec option dans les parametres de l'algorithme)
+  - Calcul du barycentre des particle3D
+  - Calcul des barycentre des cuboids
+  - calcul des distances entre les cubes composant les ARN
+  - Generation automatique de fichiers source R pour visualiser les amats de points
+  
+
+* version 0.3
+  - Test de l'inclusion des ARN dans les mito
+  - Ajout de la distance minimale pour chaque ARN
+  - Sauve le répertoire courant dans l'application Distance
+  - Fait la somme des intensités pour chaque objet
+  - Utilise les algorirthme d'Image-J pour le calcul des aires
+  
+*  version 0.2
+  - Ajout d'une interface graphique pour le calcul des distances
+  - Utilise les parametres globaux d'image-J pour calculer les distances (1px=0.1mm par ex.)
+  
+* version 0.1
+  - Version initiale
