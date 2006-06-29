@@ -1,10 +1,8 @@
-
 /**
  * This class implements a Point2D which data for Point2D are stored in
  * ArrayLists.
  * @author Laurent Jourdren
  */
-
 public class ArrayListPoint2DImpl extends Point2D {
 
   private ArrayLongList values;
@@ -19,7 +17,7 @@ public class ArrayListPoint2DImpl extends Point2D {
    * Get the X coordinate of the point.
    * @return the X coordinate of the point
    */
-  final public float getX() {
+  public final float getX() {
 
     final long val = this.values.get(this.index);
 
@@ -30,7 +28,7 @@ public class ArrayListPoint2DImpl extends Point2D {
    * Get the Y coordinate of the point.
    * @return the Y coordinate of the point
    */
-  final public float getY() {
+  public final float getY() {
 
     final long val = this.values.get(this.index);
 
@@ -41,7 +39,7 @@ public class ArrayListPoint2DImpl extends Point2D {
    * Get the intensity of the point.
    * @return the intensity of the point
    */
-  final public int getI() {
+  public final int getI() {
 
     final long val = this.values.get(this.index);
 
@@ -56,7 +54,7 @@ public class ArrayListPoint2DImpl extends Point2D {
    * Set the value for the X coordinate.
    * @param x The value for the X coordinate
    */
-  final public void setX(final float x) {
+  public final void setX(final float x) {
 
     long val = this.values.get(this.index);
 
@@ -69,7 +67,7 @@ public class ArrayListPoint2DImpl extends Point2D {
    * Set the value for the Y coordinate.
    * @param y The value for the Y coordinate
    */
-  final public void setY(final float y) {
+  public final void setY(final float y) {
 
     long val = this.values.get(this.index);
 
@@ -82,7 +80,7 @@ public class ArrayListPoint2DImpl extends Point2D {
    * Set the value for the intensity of the point.
    * @param i The value of the intensity of the point
    */
-  final public void setI(final int i) {
+  public final void setI(final int i) {
 
     long val = this.values.get(this.index);
 

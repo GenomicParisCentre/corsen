@@ -1,5 +1,4 @@
 
-
 /**
  * This class implements a basic implementation of Point2D. In this objects data
  * are stored inside the object.
@@ -18,7 +17,7 @@ public class SimplePoint2DImpl extends Point2D {
    * Get the X coordinate of the point.
    * @return the X coordinate of the point
    */
-  final public float getX() {
+  public final float getX() {
     return x;
   }
 
@@ -26,7 +25,7 @@ public class SimplePoint2DImpl extends Point2D {
    * Get the Y coordinate of the point.
    * @return the Y coordinate of the point
    */
-  final public float getY() {
+  public final float getY() {
     return y;
   }
 
@@ -34,7 +33,7 @@ public class SimplePoint2DImpl extends Point2D {
    * Get the intensity of the point.
    * @return the intensity of the point
    */
-  final public int getI() {
+  public final int getI() {
     return i;
   }
 
@@ -46,7 +45,7 @@ public class SimplePoint2DImpl extends Point2D {
    * Set the value for the X coordinate.
    * @param x The value for the X coordinate
    */
-  final public void setX(final float x) {
+  public final void setX(final float x) {
     this.x = x;
   }
 
@@ -54,7 +53,7 @@ public class SimplePoint2DImpl extends Point2D {
    * Set the value for the Y coordinate.
    * @param y The value for the Y coordinate
    */
-  final public void setY(final float y) {
+  public final void setY(final float y) {
     this.y = y;
   }
 
@@ -62,7 +61,7 @@ public class SimplePoint2DImpl extends Point2D {
    * Set the value for the intensity of the point.
    * @param i The value of the intensity of the point
    */
-  final public void setI(final int i) {
+  public final void setI(final int i) {
     this.i = i;
   }
 
@@ -106,5 +105,5 @@ public class SimplePoint2DImpl extends Point2D {
    */
   protected SimplePoint2DImpl() {
   }
-  
+
 }

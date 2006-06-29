@@ -8,10 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-/*
- * By Laurent Jourdren
+/**
+ * This class defin a Particle 3D.
+ * @author Laurent Jourdren
  */
-
 public final class Particle3D {
 
   private static int count;
@@ -35,7 +35,7 @@ public final class Particle3D {
    * Return the volume of the particle.
    * @return The volume of the particle
    */
-  public final double getVolume() {
+  public double getVolume() {
     return this.volume;
   }
 
@@ -43,7 +43,7 @@ public final class Particle3D {
    * Get the id of the particle.
    * @return The id of the particle
    */
-  public final int getId() {
+  public int getId() {
     return id;
   }
 
@@ -84,7 +84,7 @@ public final class Particle3D {
    * @param p Inner point to test
    * @return true if the particle contains the inner point
    */
-  public final boolean containsInnerPoint(final Point3D p) {
+  public boolean containsInnerPoint(final Point3D p) {
 
     if (p == null)
       return false;
@@ -103,7 +103,7 @@ public final class Particle3D {
    * @param p Surface point to test
    * @return true if the particle contains the surface point
    */
-  public final boolean containsSurfacePoint(final Point3D p) {
+  public boolean containsSurfacePoint(final Point3D p) {
 
     if (p == null)
       return false;
@@ -121,7 +121,7 @@ public final class Particle3D {
    * Add a surface point to the particle.
    * @param p Point to add
    */
-  public final void addSurfacePoint(final Point3D p) {
+  public void addSurfacePoint(final Point3D p) {
 
     addSurfacePoint(p, false);
   }
@@ -130,7 +130,7 @@ public final class Particle3D {
    * Add a surface point to the particle.
    * @param p Point to add
    */
-  public final void addSurfacePoint(final Point3D p, final boolean testIfExists) {
+  public void addSurfacePoint(final Point3D p, final boolean testIfExists) {
 
     if (p == null)
       return;
@@ -141,7 +141,7 @@ public final class Particle3D {
     this.surfacePoints.add(p);
   }
 
-  public final void addSurfacePoint(final float x, final float y, final float z) {
+  public void addSurfacePoint(final float x, final float y, final float z) {
 
     this.surfacePoints.add(x, y, z);
   }
@@ -150,7 +150,7 @@ public final class Particle3D {
    * Add an inner point to the particle.
    * @param p Point to add
    */
-  public final void addInnerPoint(final Point3D p) {
+  public void addInnerPoint(final Point3D p) {
 
     addInnerPoint(p, false);
   }
@@ -159,7 +159,7 @@ public final class Particle3D {
    * Add an inner point to the particle.
    * @param p Point to add
    */
-  public final void addInnerPoint(final Point3D p, final boolean testIfExists) {
+  public void addInnerPoint(final Point3D p, final boolean testIfExists) {
 
     if (p == null)
       return;
@@ -170,7 +170,7 @@ public final class Particle3D {
     this.innerPoints.add(p);
   }
 
-  public final void addInnerPoint(final float x, final float y, final float z,
+  public void addInnerPoint(final float x, final float y, final float z,
       final int i) {
 
     this.innerPoints.add(x, y, z, i);
@@ -180,7 +180,7 @@ public final class Particle3D {
    * Add the points of a particle to this particle.
    * @param particle Particle to add
    */
-  public final void add(final Particle3D particle) {
+  public void add(final Particle3D particle) {
 
     if (particle == null)
       return;
@@ -218,7 +218,7 @@ public final class Particle3D {
    * Get the number of surface points in the particle.
    * @return The number of point in the particle
    */
-  public final int surfacePointsCount() {
+  public int surfacePointsCount() {
 
     return this.surfacePoints.size();
   }
@@ -227,7 +227,7 @@ public final class Particle3D {
    * Get the number of surfacePoints in the particle.
    * @return The number of point in the particle
    */
-  public final int innerPointsCount() {
+  public int innerPointsCount() {
 
     return this.innerPoints.size();
   }
@@ -237,7 +237,7 @@ public final class Particle3D {
    * @param index Index of the point
    * @return The point at the index if exists.
    */
-  public final Point3D getSurfacePoint(final int index) {
+  public Point3D getSurfacePoint(final int index) {
 
     return this.surfacePoints.get(index);
   }
@@ -247,7 +247,7 @@ public final class Particle3D {
    * @param index Index of the point
    * @return The point at the index if exists.
    */
-  public final Point3D getInnerPoint(final int index) {
+  public Point3D getInnerPoint(final int index) {
 
     return this.innerPoints.get(index);
   }
@@ -449,7 +449,7 @@ public final class Particle3D {
    * @param p Particle to get the distance
    * @return The distance between the 2 objects
    */
-  final public double getCenterToCenterDistance(final Particle3D p) {
+  public double getCenterToCenterDistance(final Particle3D p) {
 
     double min = Double.MAX_VALUE;
 
@@ -568,6 +568,7 @@ public final class Particle3D {
   /**
    * Test the intersection of two particle.
    * @param particle Particle to test
+   * @return true if there is an intersection
    */
   public boolean intersect(final Particle3D particle) {
 
@@ -1041,6 +1042,7 @@ public final class Particle3D {
 
   /**
    * Public constructor.
+   * @param initialCapatity Initial capacity of the list of points
    */
   public Particle3D(final int initialCapatity) {
     count++;

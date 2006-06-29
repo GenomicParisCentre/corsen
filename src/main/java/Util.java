@@ -32,6 +32,7 @@ public final class Util {
   /**
    * Extract the X value from a coded point.
    * @param point The coded location
+   * @param precision of the value
    * @return The meta row from the coded location
    */
   public static float getX(final long point, final float precision) {
@@ -42,6 +43,7 @@ public final class Util {
   /**
    * Extract the X value from a coded point.
    * @param point The coded location
+   * @param precision of the value
    * @return The meta row from the coded location
    */
   public static float getY(final long point, final float precision) {
@@ -52,6 +54,7 @@ public final class Util {
   /**
    * Extract the X value from a coded point.
    * @param point The coded location
+   * @param precision of the value
    * @return The meta row from the coded location
    */
   public static float getZ(final long point, final float precision) {
@@ -73,6 +76,7 @@ public final class Util {
    * Set the X in coded point.
    * @param point The coded location
    * @param value The value of X to set
+   * @param precision of the value
    * @return The new coded point
    */
   public static long setX(final long point, final float value,
@@ -87,6 +91,7 @@ public final class Util {
    * Set the Y in coded point.
    * @param point The coded location
    * @param value The value of Y to set
+   * @param precision of the value
    * @return The new coded point
    */
   public static long setY(final long point, final float value,
@@ -101,6 +106,7 @@ public final class Util {
    * Set the Z in coded point.
    * @param point The coded location
    * @param value The value of Z to set
+   * @param precision of the value
    * @return The new coded point
    */
   public static long setZ(final long point, final float value,
@@ -122,6 +128,13 @@ public final class Util {
     return (point & MASK_I) | ((value & MASK_16BITS) << SHIFT_I);
   }
 
+  /**
+   *  Get the equation of a plan
+   * @param p1
+   * @param p2
+   * @param p3
+   * @return the equation of a plan
+   */
   public static double eq(final Point3D p1, final Point3D p2, final Point3D p3) {
 
     if (p1 == null || p2 == null || p3 == null)
@@ -136,8 +149,6 @@ public final class Util {
         * (p3.getX() * diff21Z + p3.getZ() * diff12X - p1.getX() - p1.getZ()
             * diff12X)
         / (p3.getY() * diff21Z + 9 * diff12Y - p1.getY() - p1.getZ() * diff12Y);
-
-    
 
     double c = (a * diff12X + b * diff12Y) / diff21Z;
     double d = -a * p1.getX() - b * p1.getY() - c * p1.getZ();

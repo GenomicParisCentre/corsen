@@ -1,37 +1,65 @@
-
 import java.util.StringTokenizer;
 
-/*
- * By Laurent Jourdren
+/**
+ * This abstract class define a point 2D
+ * @author Laurent Jourdren
  */
-
 public abstract class Point2D {
 
   //
   // Getters
   //
 
+  /**
+   * Get the x value of the point.
+   * @return the x value of the point
+   */
   public abstract float getX();
 
+  /**
+   * Get the y value of the point.
+   * @return the y value of the point
+   */
   public abstract float getY();
 
+  /**
+   * Get the intensity value of the point.
+   * @return the intensity value of the point
+   */
   public abstract int getI();
 
   //
   // Setters
   //
 
+  /**
+   * Set the x value of the point.
+   * @param x The x value to set
+   */
   public abstract void setX(final float x);
 
+  /**
+   * Set the y value of the point.
+   * @param y The x value to set
+   */
   public abstract void setY(final float y);
 
+  /**
+   * Set the intensity value of the point.
+   * @param i The intensity value to set
+   */
   public abstract void setI(final int i);
 
   //
   // Other methods
   //
 
-  public final float distance(Point2D p) {
+  /**
+   * Get the distance between 2 points.
+   * @param p The other point
+   * @return the distance between the 2 points
+   */
+  public final float distance(final Point2D p) {
     float dx, dy;
 
     dx = getX() - p.getX();
@@ -59,12 +87,13 @@ public abstract class Point2D {
   /**
    * Set a point from a string (each coordinate is separated by comma.
    * @param s String to parse
+   * @return a new intance of a Point2D created from a string
    */
-  public static Point2D parse(String s) {
+  public static Point2D parse(final String s) {
 
     if (s == null)
       return null;
-    
+
     Point2D p = new SimplePoint2DImpl();
 
     StringTokenizer st = new StringTokenizer(s, ",");
@@ -74,14 +103,12 @@ public abstract class Point2D {
       p.setY(Float.parseFloat(st.nextToken()));
     if (st.hasMoreElements())
       p.setI(Integer.parseInt(st.nextToken()));
-    
+
     return p;
   }
 
   //
   // Constructor
   //
-
-  
 
 }

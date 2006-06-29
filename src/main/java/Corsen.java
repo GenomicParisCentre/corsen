@@ -15,8 +15,10 @@ import javax.swing.filechooser.FileFilter;
 
 public class Corsen {
 
+  /** The name of the application. */
   public static final String APP_NAME = "Corsen";
-  public static final String APP_VERSION = "0.14";
+  /** The version of the application. */
+  public static final String APP_VERSION = "0.16";
 
   // Windows Look and Feel
   private static final String WINDOWS_PLAF = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
@@ -30,14 +32,14 @@ public class Corsen {
 
   private class StatusInfo {
 
-    public int currentFile;
-    public int maxFiles;
-    public int currentPhase;
-    public int phaseIndex;
-    public int phaseEnd;
-    public long phaseStart;
-    public long cellStart;
-    public long initStart;
+    int currentFile;
+    int maxFiles;
+    int currentPhase;
+    int phaseIndex;
+    int phaseEnd;
+    long phaseStart;
+    long cellStart;
+    long initStart;
 
   }
 
@@ -47,6 +49,10 @@ public class Corsen {
   // Getter
   //
 
+  /**
+   * Get the singleton of the The class.
+   * @return the unique instance of Corsen
+   */
   public static final Corsen getCorsen() {
 
     return corsen;
@@ -56,6 +62,9 @@ public class Corsen {
   //
   //
 
+  /**
+   * Show the application.
+   */
   public void show() {
 
     this.gui.show();
@@ -114,13 +123,12 @@ public class Corsen {
     this.gui.setZCoef(Z_COEF_DEFAULT);
     this.gui.setCubeLen(LEN_CUBE_DEFAULT);
     this.gui.setPixelSize(PIXEL_SIZE_DEFAULT);
-    
 
     this.gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     gui.addActionListener(new ActionListener() {
 
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed(final ActionEvent e) {
 
         CorsenCore cc = new CorsenCore();
 
@@ -174,6 +182,10 @@ public class Corsen {
   // Progress status
   //
 
+  /**
+   * Update the status bar.
+   * @param e event to show
+   */
   public void updateStatus(final ProgressEvent e) {
 
     if (e == null)
@@ -264,7 +276,7 @@ public class Corsen {
 
   }
 
-  private static String getPhaseName(int phase) {
+  private static String getPhaseName(final int phase) {
 
     switch (phase) {
     case ProgressEvent.START_READ_MESSENGERS_EVENT:
@@ -381,8 +393,6 @@ public class Corsen {
 
     JFrame.setDefaultLookAndFeelDecorated(true);
     Toolkit.getDefaultToolkit().setDynamicLayout(true);
-
-    
 
     getCorsen().show();
   }

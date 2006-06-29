@@ -1,11 +1,15 @@
-import java.awt.Color;
-
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
 
-public class CorsenImageJUtil {
+import java.awt.Color;
+
+/**
+ * This contains some utils methods for Corsen.
+ * @author Laurent Jourdren
+ */
+public final class CorsenImageJUtil {
 
   /**
    * Create an ImagePlus from a Particle3D object
@@ -108,6 +112,16 @@ public class CorsenImageJUtil {
       }
     }
 
+  }
+
+  //
+  // Constructor
+  //
+
+  /**
+   * Private constructor.
+   */
+  private CorsenImageJUtil() {
   }
 
 }

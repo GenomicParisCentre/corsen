@@ -293,7 +293,7 @@ public final class ListPoint3D {
 
   /**
    * Public constructor.
-   * @param initialCapacity
+   * @param initialCapacity Initial capacity of the list
    */
   public ListPoint3D(final int initialCapacity) {
 

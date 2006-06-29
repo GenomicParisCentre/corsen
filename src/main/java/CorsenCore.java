@@ -29,13 +29,13 @@ public class CorsenCore implements Runnable {
   private boolean multipleFiles;
 
   //
-  // innet class
+  // inner class
   //
 
   private class InputFiles {
 
-    public File inputrnaFile;
-    public File inputmitoFile;
+    File inputrnaFile;
+    File inputmitoFile;
   }
 
   //
@@ -194,7 +194,7 @@ public class CorsenCore implements Runnable {
    * Set if there are multiple files to read.
    * @param multipleFiles The multipleFiles to set
    */
-  public void setMultipleFiles(boolean multipleFiles) {
+  public void setMultipleFiles(final boolean multipleFiles) {
     this.multipleFiles = multipleFiles;
   }
 
@@ -368,7 +368,7 @@ public class CorsenCore implements Runnable {
    * @return a new Particle3D created from data readed
    * @throws IOException IOException if an error occurs while readinf data
    */
-  private final Particle3D[] readmageJPlugingOutputFile(final File file)
+  private Particle3D[] readmageJPlugingOutputFile(final File file)
       throws IOException {
 
     if (file == null)
@@ -434,9 +434,10 @@ public class CorsenCore implements Runnable {
    * @param plotCenter true if center and barycenter must be plot
    * @throws IOException if an error occurs while writing file
    */
-  private static void writeRPlots(final File file, Particle3D[] particles,
-      String color, final boolean plotCenter,
-      final float minDistanceBetweenTwoPoints) throws IOException {
+  private static void writeRPlots(final File file,
+      final Particle3D[] particles, final String color,
+      final boolean plotCenter, final float minDistanceBetweenTwoPoints)
+      throws IOException {
 
     long start = System.currentTimeMillis();
 
@@ -486,14 +487,13 @@ public class CorsenCore implements Runnable {
 
       particles[i].innerPointstoRPlot(out, false, "corsen.sizepoints", color);
       out.write("z <- z - ");
-      out.write(""+size);
+      out.write("" + size);
       out.write("\n");
       particles[i].innerPointstoRPlot(out, false, "corsen.sizepoints", color);
       out.write("z <- z +");
-      out.write(""+(size*2));
+      out.write("" + (size * 2));
       out.write("\n");
       particles[i].innerPointstoRPlot(out, false, "corsen.sizepoints", color);
-      
 
       out.write("} else {\n");
 
@@ -517,11 +517,11 @@ public class CorsenCore implements Runnable {
 
       particles[i].surfacePointstoRPlot(out, 1.0f, "dark" + color);
       out.write("z <- z - ");
-      out.write(""+size);
+      out.write("" + size);
       out.write("\n");
       particles[i].surfacePointstoRPlot(out, 1.0f, "dark" + color);
       out.write("z <- z +");
-      out.write(""+(size*2));
+      out.write("" + (size * 2));
       out.write("\n");
       particles[i].surfacePointstoRPlot(out, 1.0f, "dark" + color);
 
@@ -563,7 +563,7 @@ public class CorsenCore implements Runnable {
    *         barycenter is in a mitochondria
    */
   private double bestDistance(final Particle3D messenger,
-      final Particle3D[] mitos, float minDistanceBetweenTwoPoints) {
+      final Particle3D[] mitos, final float minDistanceBetweenTwoPoints) {
 
     if (messenger == null || mitos == null || messenger.getIntensity() == 0)
       return -1;
@@ -817,12 +817,12 @@ public class CorsenCore implements Runnable {
     Corsen.getCorsen().updateStatus(new ProgressEvent(id));
   }
 
-  public void sendEvent(final int id, final int value1) {
+  private void sendEvent(final int id, final int value1) {
 
     Corsen.getCorsen().updateStatus(new ProgressEvent(id, value1));
   }
 
-  public void sendEvent(final int id, final int value1, final int value2) {
+  private void sendEvent(final int id, final int value1, final int value2) {
 
     Corsen.getCorsen().updateStatus(new ProgressEvent(id, value1, value2));
   }
@@ -830,10 +830,11 @@ public class CorsenCore implements Runnable {
   /**
    * Create cuboids particles from messengers particles.
    * @param messagers Messagers
-   * @param Lenght of the cuboid
+   * @param lenght of the cuboid
    * @return An array of Particle3D
    */
-  private Particle3D[] calcCuboid(final Particle3D[] messagers, final float len) {
+  private Particle3D[] calcCuboid(final Particle3D[] messagers,
+      final float lenght) {
 
     if (messagers == null)
       return null;
@@ -849,18 +850,19 @@ public class CorsenCore implements Runnable {
       final Particle3D messenger = messagers[m];
       ListPoint3D lp = messenger.getInnerPoints();
 
-      final float Xmax = lp.getXMax() + 1.0f;
-      final float Ymax = lp.getYMax() + 1.0f;
-      final float Zmax = lp.getZMax() + 1.0f;
-      final float Xmin = (float) (Math.floor(lp.getXMin() / len) * len);
-      final float Ymin = (float) (Math.floor(lp.getYMin() / len) * len);
-      final float Zmin = (float) (Math.floor(lp.getZMin() / len) * len);
+      final float xMax = lp.getXMax() + 1.0f;
+      final float yMax = lp.getYMax() + 1.0f;
+      final float zMax = lp.getZMax() + 1.0f;
+      final float xMin = (float) (Math.floor(lp.getXMin() / lenght) * lenght);
+      final float yMin = (float) (Math.floor(lp.getYMin() / lenght) * lenght);
+      final float zMin = (float) (Math.floor(lp.getZMin() / lenght) * lenght);
 
-      for (float i = Xmin; i < Xmax; i += len)
-        for (float j = Ymin; j < Ymax; j += len)
-          for (float k = Zmin; k < Zmax; k += len) {
+      for (float i = xMin; i < xMax; i += lenght)
+        for (float j = yMin; j < yMax; j += lenght)
+          for (float k = zMin; k < zMax; k += lenght) {
 
-            Particle3D r = createCuboid(messenger, i, j, k, len, "cuboid", 48);
+            Particle3D r = createCuboid(messenger, i, j, k, lenght, "cuboid",
+                48);
 
             if (r != null) {
               if (al == null)

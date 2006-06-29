@@ -12,8 +12,8 @@ public final class Particle2D {
 
   public static int count;
 
-  public int id = count;
-  public String name = "" + id;
+  private int id = count;
+  private String name = "" + id;
 
   private ListPoint2D surfacePoints = new ListPoint2D();
   private ListPoint2D innerPoints = new ListPoint2D();
@@ -90,7 +90,7 @@ public final class Particle2D {
    * Get the number of surface points in the particle.
    * @return The number of surface point in the particle
    */
-  public final int surfacePointsCount() {
+  public int surfacePointsCount() {
 
     return this.surfacePoints.size();
   }
@@ -99,36 +99,36 @@ public final class Particle2D {
    * Get the number of inner points in the particle.
    * @return The number of inner point in the particle
    */
-  public final int innerPointsCount() {
+  public int innerPointsCount() {
 
     return this.innerPoints.size();
   }
 
-  public final void addInnerPoint(final Point2D p) {
+  public void addInnerPoint(final Point2D p) {
 
     if (p != null)
       addInnerPoint(p.getY(), p.getY(), p.getI());
   }
 
-  public final void addInnerPoint(final float x, final float y, final int i) {
+  public void addInnerPoint(final float x, final float y, final int i) {
 
     this.innerPoints.add(x, y, i);
     this.intensity += i;
   }
 
-  public final void addSurfacePoint(final Point2D p) {
+  public void addSurfacePoint(final Point2D p) {
 
     if (p != null)
       addSurfacePoint(p.getY(), p.getY(), p.getI());
   }
 
-  public final void addSurfacePoint(final float x, final float y, final int i) {
+  public void addSurfacePoint(final float x, final float y, final int i) {
 
     this.surfacePoints.add(x, y, i);
 
   }
 
-  public final void addSurfacePoint(final float x, final float y) {
+  public void addSurfacePoint(final float x, final float y) {
 
     this.surfacePoints.add(x, y);
 
@@ -139,7 +139,7 @@ public final class Particle2D {
    * @param index Index of the point
    * @return The surface point at the index if exists.
    */
-  public final Point2D getSurfacePoint(final int index) {
+  public Point2D getSurfacePoint(final int index) {
 
     return this.surfacePoints.get(index);
   }
@@ -149,13 +149,14 @@ public final class Particle2D {
    * @param index Index of the point
    * @return The inner point at the index if exists.
    */
-  public final Point2D getInnerPoint(final int index) {
+  public Point2D getInnerPoint(final int index) {
 
     return this.innerPoints.get(index);
   }
 
   /**
    * Add a particle 2D to the particle 3D.
+   * @param imp Image of the particle to add
    * @param roi particle 2D to add
    */
   public void add(final ImagePlus imp, final PolygonRoi roi) {
@@ -464,6 +465,11 @@ public final class Particle2D {
     return (area < 0 ? -area : area);
   }
 
+  /**
+   * Test if the segmentation is correcy.
+   * @param distanceMax Distance maximal
+   * @return true if the segmentation is correct
+   */
   public boolean isGoodSegmentation(final float distanceMax) {
 
     ListPoint2D listA = this.surfacePoints.copy();
@@ -539,6 +545,7 @@ public final class Particle2D {
    * Public constructor
    * @param pixelWidth The width of a pixel
    * @param pixelHeight The height of a pixel
+   * @param imp Image of the polygon to add
    * @param roi particle 2D to add
    */
   public Particle2D(final float pixelWidth, final float pixelHeight,

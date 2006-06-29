@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 
-
-
 public class CorsenUI extends JFrame {
 
   private JPanel jContentPane = null;
@@ -31,7 +28,7 @@ public class CorsenUI extends JFrame {
   private JTextField cubeSizeTextField = new JTextField("");
   private JTextField zCoefTextField = new JTextField("");
   private JCheckBox zCoefCheckBox = new JCheckBox();
-  private JTextField pixelSizeTextField =  new JTextField("");
+  private JTextField pixelSizeTextField = new JTextField("");
   private JLabel statusBar = new JLabel("Ready");
 
   private JButton startButton = new JButton("Start");
@@ -96,7 +93,7 @@ public class CorsenUI extends JFrame {
 
     this.pixelSizeTextField.setText("" + pixelSize);
   }
-  
+
   public float getZCoef() {
 
     String s = zCoefTextField.getText();
@@ -165,14 +162,14 @@ public class CorsenUI extends JFrame {
    * @return javax.swing.JPanel
    */
   private JPanel getJContentPane() {
-    
+
     if (jContentPane == null) {
       jContentPane = new JPanel();
       jContentPane.setLayout(new BorderLayout());
 
       JPanel superPanel = new JPanel();
       superPanel.setLayout(new BorderLayout());
-      
+
       superPanel.add(this.startButton, BorderLayout.SOUTH);
 
       JPanel panel = new JPanel();
@@ -279,12 +276,6 @@ public class CorsenUI extends JFrame {
       panelCubeSize.setEnabled(false);
       cubeSizeTextField.setHorizontalAlignment(JLabel.RIGHT);
       panelCubeSize.add(cubeSizeTextField, BorderLayout.EAST);
-      
-      
-
-      
-      
-      
 
       /*
        * JButton mitoButton = new JButton("Browse");
@@ -319,8 +310,7 @@ public class CorsenUI extends JFrame {
       panelPixelSize.setEnabled(false);
       pixelSizeTextField.setHorizontalAlignment(JLabel.RIGHT);
       panelPixelSize.add(pixelSizeTextField, BorderLayout.EAST);
-      
-      
+
       superPanel.add(panel, BorderLayout.CENTER);
       jContentPane.add(superPanel, BorderLayout.CENTER);
       jContentPane.add(this.statusBar, BorderLayout.SOUTH);

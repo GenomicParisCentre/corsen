@@ -67,7 +67,7 @@ public class ListPoint2D {
    * Remove a point from the list.
    * @param p Point to remove
    */
-  public void remove(Point2D p) {
+  public void remove(final Point2D p) {
 
     remove(p.getX(), p.getY(), p.getI());
   }
