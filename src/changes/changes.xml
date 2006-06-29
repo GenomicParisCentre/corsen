@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="latin1"?>
+<!--
+	/*
+	*                      Corsen development code
+	*
+	* This code may be freely distributed and modified under the
+	* terms of the GNU Lesser General Public Licence.  This should
+	* be distributed with the code.  If you do not have a copy,
+	* see:
+	*
+	*      http://www.gnu.org/copyleft/lesser.html
+	*
+	* Copyright for this code is held jointly by the microarray platform
+	* of the École Normale Supérieure and the individual authors.
+	* These should be listed in @author doc comments.
+	*
+	* For more information on the Nividic project and its aims,
+	* or to join the Nividic mailing list, visit the home page
+	* at:
+	*
+	*      http://www.transcriptome.ens.fr/corsen
+	*
+	*/
+-->
+
+<!--
+	For more information about changes.xml tags see:
+	http://maven.apache.org/reference/plugins/changes/
+-->
+
+
+<document>
+	<properties>
+		<title>Change log</title>
+		<author email="jourdren@biologie.ens.fr">
+			Laurent Jourdren
+		</author>
+	</properties>
+	<body>
+
+		<release version="0.15" date="2006-06-20">
+			<action dev="jourdren" type="add">
+				Insertion de points intermediaires pour l'affichage 3d.
+			</action>
+		</release>
+
+
+		<release version="0.14" date="2006-06-16">
+			<action dev="jourdren" type="add">
+				Nouvelle methode pour tester si un barycentre d'arn
+				appartient à une mito pour des distances inférieure à 1.
+			</action>
+			<action dev="jourdren" type="fix">
+				Correction bogue nClass dans calc.R
+			</action>
+			<action dev="jourdren" type="add">
+				La taille des points sur la représentation 3D est
+				modifiable
+			</action>
+			<action dev="jourdren" type="add">
+				Le décallage de l'affichage fonctionne aussi pour les
+				surfaces 3D.
+			</action>
+		</release>
+
+		<release version="0.13" date="2006-06-15">
+			<action dev="jourdren" type="add">
+				Chargement automatique de rgl lors de l'execution des
+				scripts R d'affichage des particles 3D.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de variable pour désactiver l'affichage des
+				surfaces et des centres et barycentres.
+			</action>
+			<action dev="jourdren" type="update">
+				Optimisation de la vitesse de vérification de points
+				doublon lors de la lecture des fichiers .par
+			</action>
+			<action dev="jourdren" type="add">
+				Option pour remplacer les points par des spheres.
+			</action>
+			<action dev="jourdren" type="add">
+				Le nombre de classes peut être passé en parametre dans
+				calc.R.
+			</action>
+			<action dev="jourdren" type="update">
+				Les distances de messagers inclus dans les mitos sont
+				négatives.
+			</action>
+			<action dev="jourdren" type="add">
+				On peut spécifier un décalage des objets 3d pour les
+				representation des particles 3D
+			</action>
+		</release>
+
+
+		<release version="0.12" date="2006-06-14">
+			<action dev="jourdren" type="fix">
+				Correction d'un bogue lors de la segmentation. Les tests
+				d'intersections n'était pas effectués entre les bonnes
+				particules 2D lors des premieres segmentations.
+			</action>
+		</release>
+
+		<release version="0.11" date="2006-06-13">
+			<action dev="jourdren" type="fix">
+				Correction du bogue concernant le calcul des distances
+				entre les messagers et les mitochondries.
+			</action>
+			<action dev="jourdren" type="fix">
+				Suppression des points qui font doublons dans les
+				particules (uniquement dans le programme de calcul des
+				distances).
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout d'une zone de texte pour fixer la taille d'un
+				pixel
+			</action>
+		</release>
+
+		<release version="0.10" date="2006-06-13">
+			<action dev="jourdren" type="fix">
+				Correction du bogue supprimant des particles 3D lors
+				d'une tentative d'ajout à elle même.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de la possiblité d'affiche en 2D les particles 3D
+				segmentées
+			</action>
+			<action dev="jourdren" type="add">
+				Windows Look and Feel under Windows (don't work).
+			</action>
+		</release>
+
+		<release version="0.9" date="2006-05-18">
+			<action dev="jourdren" type="add">
+				Ajout des seuils utilisés dans les fichiers ".par".
+			</action>
+			<action dev="jourdren" type="update">
+				Optimisation de la création des cuboids. Maintenant
+				beaucoup beaucoup plus rapide.
+			</action>
+		</release>
+
+		<release version="0.8" date="2006-05-12">
+			<action dev="jourdren" type="fix">
+				Correction du bogue d'ouverture des fichiers.
+			</action>
+			<action dev="jourdren" type="update">
+				Optimisation du calcul des cuboids.
+			</action>
+			<action dev="jourdren" type="update">
+				Réorganisation de l'ordre des taches (les graphiques R
+				sont crées juste après lecture des fichiers ".par" (et
+				calcul des cuboids).
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de nouvelles méthodes dans Particle3D Afin
+				d'écrire la sortie des graphiques R directement dans un
+				fichiers afin d'économiser de la mémoire vive.
+			</action>
+			<action dev="jourdren" type="add">
+				Affiche un message d'erreur quand le repertoire à
+				traiter n'existe pas ou qu'aucun fichier à traiter
+				n'existe
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout d'une barre de statut avec progression en
+				pourcentage pour le calcul des cuboids
+			</action>
+			<action dev="jourdren" type="add">
+				L'interface est maintenant rafraichie lors des
+				traitements.
+			</action>
+		</release>
+
+		<release version="0.7" date="2006-05-11">
+			<action dev="jourdren" type="update">
+				Nouveau nom pour Distance : Corsen
+			</action>
+			action>
+			<action dev="jourdren" type="update">
+				Le fichier de sortie du plugin imageJ se termine par
+				l'extension ".par"
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout dans le fichier de sortie d'imageJ des information
+				sur le nom et la date de dernière modification de
+				l'image initiale.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout dans le fichier de sortie d'ImageJ du nom et de la
+				version du programme
+			</action>
+			<action dev="jourdren" type="update">
+				Supression de la sortie de deboguage.
+			</action>
+		</release>
+
+		<release version="0.6" date="2006-05-05">
+			<action dev="jourdren" type="update">
+				Les particules dont l'intensitée est nulle ne sont plus
+				enregistrées.
+			</action>
+			<action dev="jourdren" type="add">
+				La taille des cubes est paramétrable dans Distance.
+			</action>
+			<action dev="jourdren" type="add">
+				Le rapport des distances en Z est modifiable dans
+				distance
+			</action>
+			<action dev="jourdren" type="add">
+				L'extension du fichier de l'image n'apparait plus dans
+				le nom du fichier en sortie du plugin ImageJ.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de graphique supplémentaire dans R.
+			</action>
+			<action dev="jourdren" type="add">
+				Les graphiques et les résumés sont optionnels.
+			</action>
+			<action dev="jourdren" type="add">
+				Le script R est commenté.
+			</action>
+		</release>
+
+
+		<release version="0.5" date="2006-05-04">
+			<action dev="jourdren" type="add">
+				Script R pour analyser automatiquement les sorties de
+				Distance
+			</action>
+			<action dev="jourdren" type="add">
+				Un seul fichier (.R) est générer pour chaque type de
+				particule
+			</action>
+			<action dev="jourdren" type="add">
+				L'extension ".data" est utilisé pour les données à
+				analyser ultérieurement dans R
+			</action>
+			<action dev="jourdren" type="add">
+				L'extension ".result" pour le fichier de résultat
+				complet
+			</action>
+			<action dev="jourdren" type="add">
+				Dans Distance, on peut maintenant spécifier un
+				répertoire. Tous les fichiers répondant à un certain
+				motif seront analysés.
+			</action>
+			<action dev="jourdren" type="add">
+				Dans le plugin, la boite de confirmation de sauvegarde
+				est maintenant optionnelle
+			</action>
+		</release>
+
+
+		<release version="0.4">
+			<action dev="jourdren" type="add">
+				Les objets particle 3D contienent tous les points de
+				l'objet avec leurs intensités.
+			</action>
+			<action dev="jourdren" type="update">
+				Gestion plus efficace de la mémoire pour le stockage des
+				points
+			</action>
+			<action dev="jourdren" type="add">
+				Generation automatique du nom de fichier de résultats
+				(avec option dans les parametres de l'algorithme)
+			</action>
+			<action dev="jourdren" type="add">
+				Calcul du barycentre des particle3D
+			</action>
+			<action dev="jourdren" type="add">
+				Calcul des barycentre des cuboids
+			</action>
+			<action dev="jourdren" type="add">
+				calcul des distances entre les cubes composant les ARN
+			</action>
+			<action dev="jourdren" type="add">
+				Calcul des barycentre des cuboids
+			</action>
+			<action dev="jourdren" type="add">
+				calcul des distances entre les cubes composant les ARN
+			</action>
+			<action dev="jourdren" type="add">
+				Generation automatique de fichiers source R pour
+				visualiser les amats de points
+			</action>
+		</release>
+
+
+		<release version="0.4">
+			<action dev="jourdren" type="add">
+				Test de l'inclusion des ARN dans les mito
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de la distance minimale pour chaque ARN
+			</action>
+			<action dev="jourdren" type="add">
+				Sauve le répertoire courant dans l'application Distance
+			</action>
+			<action dev="jourdren" type="add">
+				Fait la somme des intensités pour chaque objet
+			</action>
+			<action dev="jourdren" type="add">
+				Utilise les algorirthme d'Image-J pour le calcul des
+				aires
+			</action>
+		</release>
+
+
+		<release version="0.4">
+			<action dev="jourdren" type="add">
+				Test de l'inclusion des ARN dans les mito
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de la distance minimale pour chaque ARN
+			</action>
+			<action dev="jourdren" type="add">
+				Sauve le répertoire courant dans l'application Distance
+			</action>
+			<action dev="jourdren" type="add">
+				Fait la somme des intensités pour chaque objet
+			</action>
+			<action dev="jourdren" type="add">
+				Utilise les algorirthme d'Image-J pour le calcul des
+				aires
+			</action>
+		</release>
+
+		<release version="0.3">
+			<action dev="jourdren" type="add">
+				Test de l'inclusion des ARN dans les mito
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de la distance minimale pour chaque ARN
+			</action>
+			<action dev="jourdren" type="add">
+				Sauve le répertoire courant dans l'application Distance
+			</action>
+			<action dev="jourdren" type="add">
+				Fait la somme des intensités pour chaque objet
+			</action>
+			<action dev="jourdren" type="add">
+				Utilise les algorirthme d'Image-J pour le calcul des
+				aires
+			</action>
+		</release>
+
+		<release version="0.2">
+			<action dev="jourdren" type="add">
+				Ajout d'une interface graphique pour le calcul des
+				distances
+			</action>
+			<action dev="jourdren" type="add">
+				Utilise les parametres globaux d'image-J pour calculer
+				les distances (1px=0.1mm par ex.)
+			</action>
+		</release>
+
+		<release version="0.1" date="" desc="Initial release">
+			<action dev="jourdren" type="add">
+				Version initiale.
+			</action>
+		</release>
+
+	</body>
+</document>
