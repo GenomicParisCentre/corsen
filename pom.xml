@@ -1,18 +1,116 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>fr.ens.transcriptome</groupId>
-  <artifactId>corsen</artifactId>
-  <packaging>jar</packaging>
-  <version>0.14-SNAPSHOT</version>
-  <name>A tool to calc distance between mitochondria and RNA</name>
-  <url>http://transcriptome.ens.fr/corsen</url>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.ens.transcriptome</groupId>
+	<artifactId>corsen</artifactId>
+	<packaging>jar</packaging>
+	<version>0.15</version>
+	<name>Corsen</name>
+	<description>A tool to calc distance between mitochondria and RNA</description>
+	<url>http://transcriptome.ens.fr/corsen</url>
+
+	<organization>
+		<name>École Normale Supérieure Microarray platform</name>
+		<url>http://transcriptome.ens.fr/sgdb</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>jourdren</id>
+			<name>Laurent Jourdren</name>
+			<email>jourdren 0 biologie ens fr</email>
+			<url />
+			<organization>
+				École Normale Supérieure Microarray platform
+			</organization>
+			<organizationUrl>
+				http://transcriptome.ens.fr/sgdb
+			</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>1</timezone>
+			<properties />
+		</developer>
+		<developer>
+			<id>mgarcia</id>
+			<name>Mathilde Garcia</name>
+			<email>mgarcia 0 biologie ens fr</email>
+			<url />
+			<organization>
+				École Normale Supérieure Laboratoire de Génétique
+				Moléculaire
+			</organization>
+			<organizationUrl>
+				http://www.biologie.ens.fr/lgmgml
+			</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>1</timezone>
+			<properties />
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>GNU General Public License</name>
+			<url>http://www.gnu.org/licenses/gpl.txt</url>
+			<distribution>repo</distribution>
+			<comments />
+		</license>
+	</licenses>
+
+
+	<scm>
+		<connection>
+			scm:svn:https://anosgdb@subversion.biologie.ens.fr/svn/leburon/trunk/corsen
+		</connection>
+		<url>
+			http://skadi.ens.fr/websvn/listing.php?repname=leburon
+		</url>
+	</scm>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>imagej</groupId>
+			<artifactId>ij</artifactId>
+			<version>1.36b</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<!--<plugin>
+				<artifactId>maven-plugin-plugin</artifactId>
+				</plugin>-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>changes-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jxr-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
+
 </project>
