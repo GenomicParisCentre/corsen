@@ -18,7 +18,7 @@ public class SimplePoint2DImpl extends Point2D {
    * @return the X coordinate of the point
    */
   public final float getX() {
-    return x;
+    return this.x;
   }
 
   /**
@@ -26,7 +26,7 @@ public class SimplePoint2DImpl extends Point2D {
    * @return the Y coordinate of the point
    */
   public final float getY() {
-    return y;
+    return this.y;
   }
 
   /**
@@ -34,7 +34,7 @@ public class SimplePoint2DImpl extends Point2D {
    * @return the intensity of the point
    */
   public final int getI() {
-    return i;
+    return this.i;
   }
 
   //

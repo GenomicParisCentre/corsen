@@ -74,7 +74,7 @@ public abstract class Point2D {
    */
   public String toString() {
 
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append(getX());
     sb.append(',');
     sb.append(getY());
@@ -94,9 +94,9 @@ public abstract class Point2D {
     if (s == null)
       return null;
 
-    Point2D p = new SimplePoint2DImpl();
+    final Point2D p = new SimplePoint2DImpl();
 
-    StringTokenizer st = new StringTokenizer(s, ",");
+    final StringTokenizer st = new StringTokenizer(s, ",");
     if (st.hasMoreElements())
       p.setX(Float.parseFloat(st.nextToken()));
     if (st.hasMoreElements())

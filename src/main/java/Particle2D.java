@@ -12,11 +12,11 @@ public final class Particle2D {
 
   public static int count;
 
-  private int id = count;
-  private String name = "" + id;
+  private final int id = count;
+  private String name = "" + this.id;
 
-  private ListPoint2D surfacePoints = new ListPoint2D();
-  private ListPoint2D innerPoints = new ListPoint2D();
+  private final ListPoint2D surfacePoints = new ListPoint2D();
+  private final ListPoint2D innerPoints = new ListPoint2D();
 
   private float pixelWidth = 1.0f;
   private float pixelHeight = 1.0f;
@@ -35,7 +35,7 @@ public final class Particle2D {
    * @return The id of the particle
    */
   public final int getId() {
-    return id;
+    return this.id;
   }
 
   /**
@@ -43,7 +43,7 @@ public final class Particle2D {
    * @return Returns the name of the particle
    */
   public String getName() {
-    return name;
+    return this.name;
   }
 
   /**
@@ -51,7 +51,7 @@ public final class Particle2D {
    * @return Returns the intensity of the particle
    */
   public long getIntensity() {
-    return intensity;
+    return this.intensity;
   }
 
   /**
@@ -59,7 +59,7 @@ public final class Particle2D {
    * @return Returns the mean intensity of the particle
    */
   public double getMean() {
-    return mean;
+    return this.mean;
   }
 
   /**
@@ -67,7 +67,7 @@ public final class Particle2D {
    * @return Returns the area of the particle
    */
   public double getArea() {
-    return area;
+    return this.area;
   }
 
   //
@@ -162,19 +162,19 @@ public final class Particle2D {
   public void add(final ImagePlus imp, final PolygonRoi roi) {
 
     imp.setRoi(roi);
-    ImageStatistics stats = imp.getStatistics(); // mesurement
+    final ImageStatistics stats = imp.getStatistics(); // mesurement
 
     // Get the x0 and y0 of the Roi
-    Rectangle r = roi.getBounds();
+    final Rectangle r = roi.getBounds();
     final int nPoints = roi.getNCoordinates();
-    int[] xp = roi.getXCoordinates();
-    int[] yp = roi.getYCoordinates();
+    final int[] xp = roi.getXCoordinates();
+    final int[] yp = roi.getYCoordinates();
 
-    int x0 = r.x;
-    int y0 = r.y;
+    final int x0 = r.x;
+    final int y0 = r.y;
 
     // Get the inner points
-    ImageProcessor ip = imp.getMask();
+    final ImageProcessor ip = imp.getMask();
 
     final int height = ip.getHeight();
     final int width = ip.getWidth();
@@ -255,22 +255,22 @@ public final class Particle2D {
 
     int n = surfacePointsCount();
 
-    Polygon p1 = new Polygon();
+    final Polygon p1 = new Polygon();
     for (int i = 0; i < n; i++) {
-      Point2D pt = getSurfacePoint(i);
+      final Point2D pt = getSurfacePoint(i);
       p1.addPoint((int) pt.getX(), (int) pt.getY());
     }
 
     n = particle.surfacePointsCount();
 
-    Polygon p2 = new Polygon();
+    final Polygon p2 = new Polygon();
     for (int i = 0; i < n; i++) {
-      Point2D pt = particle.getSurfacePoint(i);
+      final Point2D pt = particle.getSurfacePoint(i);
       p2.addPoint((int) pt.getX(), (int) pt.getY());
     }
 
-    Area a1 = new Area(p1);
-    Area a2 = new Area(p2);
+    final Area a1 = new Area(p1);
+    final Area a2 = new Area(p2);
     a1.intersect(a2);
 
     return !a1.isEmpty();
@@ -290,7 +290,7 @@ public final class Particle2D {
 
     for (int i = 0; i < n; i++) {
 
-      Point2D p = particle.getInnerPoint(i);
+      final Point2D p = particle.getInnerPoint(i);
       if (isInnerPoint(p.getX(), p.getY()))
         return true;
     }
@@ -338,7 +338,7 @@ public final class Particle2D {
    */
   public String toString() {
 
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append(getName());
     sb.append(';');
     sb.append(getCenter());
@@ -379,23 +379,21 @@ public final class Particle2D {
     if (s == null)
       return null;
 
-    Particle2D par = new Particle2D();
+    final Particle2D par = new Particle2D();
 
-    StringTokenizer st = new StringTokenizer(s, ";");
+    final StringTokenizer st = new StringTokenizer(s, ";");
 
-    if (st.hasMoreElements()) {
+    if (st.hasMoreElements())
       par.setName(st.nextToken());
-    }
 
-    if (st.hasMoreElements()) {
+    if (st.hasMoreElements())
       st.nextToken(); // center
-    }
 
     if (st.hasMoreElements()) {
 
       final String points = st.nextToken();
 
-      StringTokenizer st2 = new StringTokenizer(points, ")");
+      final StringTokenizer st2 = new StringTokenizer(points, ")");
 
       boolean first = true;
       while (st2.hasMoreTokens()) {
@@ -408,7 +406,7 @@ public final class Particle2D {
         } else
           s2 = s2.substring(2, s2.length());
 
-        Point2D p = Point2D.parse(s2);
+        final Point2D p = Point2D.parse(s2);
 
         par.surfacePoints.add(p.getX(), p.getY());
       }
@@ -418,7 +416,7 @@ public final class Particle2D {
 
       final String points = st.nextToken();
 
-      StringTokenizer st2 = new StringTokenizer(points, ")");
+      final StringTokenizer st2 = new StringTokenizer(points, ")");
 
       boolean first = true;
       while (st2.hasMoreTokens()) {
@@ -431,7 +429,7 @@ public final class Particle2D {
         } else
           s2 = s2.substring(2, s2.length());
 
-        Point2D p = Point2D.parse(s2);
+        final Point2D p = Point2D.parse(s2);
 
         par.innerPoints.add(p.getX(), p.getY(), p.getI());
       }
@@ -462,7 +460,7 @@ public final class Particle2D {
     }
     area /= 2.0;
 
-    return (area < 0 ? -area : area);
+    return area < 0 ? -area : area;
   }
 
   /**
@@ -472,20 +470,20 @@ public final class Particle2D {
    */
   public boolean isGoodSegmentation(final float distanceMax) {
 
-    ListPoint2D listA = this.surfacePoints.copy();
-    ListPoint2D listB = new ListPoint2D();
+    final ListPoint2D listA = this.surfacePoints.copy();
+    final ListPoint2D listB = new ListPoint2D();
 
-    Point2D p0 = listA.get(0);
+    final Point2D p0 = listA.get(0);
     listA.remove(p0);
     listB.add(p0);
 
     for (int i = 0; i < listB.size(); i++) {
 
-      Point2D p1 = listB.get(i);
+      final Point2D p1 = listB.get(i);
 
       for (int j = 0; j < listA.size(); j++) {
 
-        Point2D p2 = listA.get(j);
+        final Point2D p2 = listA.get(j);
 
         if (p1.distance(p2) <= distanceMax) {
           listB.add(p2);

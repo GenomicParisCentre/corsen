@@ -27,7 +27,7 @@ public class Corsen {
   private static final float LEN_CUBE_DEFAULT = 2.5f;
   private static final float PIXEL_SIZE_DEFAULT = 1.0f;
 
-  private static Corsen corsen = new Corsen();
+  private static final Corsen corsen = new Corsen();
   private CorsenUI gui;
 
   private class StatusInfo {
@@ -43,7 +43,7 @@ public class Corsen {
 
   }
 
-  private StatusInfo status = new StatusInfo();
+  private final StatusInfo status = new StatusInfo();
 
   //
   // Getter
@@ -126,42 +126,42 @@ public class Corsen {
 
     this.gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    gui.addActionListener(new ActionListener() {
+    this.gui.addActionListener(new ActionListener() {
 
       public void actionPerformed(final ActionEvent e) {
 
-        CorsenCore cc = new CorsenCore();
+        final CorsenCore cc = new CorsenCore();
 
-        cc.setLenCuboid(gui.getCubeLen());
-        cc.setZCoef(gui.getZCoef());
-        cc.setUpdateZ(gui.isUpdateZ());
-        cc.setPixelSize(gui.getPixelSize());
+        cc.setLenCuboid(Corsen.this.gui.getCubeLen());
+        cc.setZCoef(Corsen.this.gui.getZCoef());
+        cc.setUpdateZ(Corsen.this.gui.isUpdateZ());
+        cc.setPixelSize(Corsen.this.gui.getPixelSize());
 
-        if (gui.getDirFile() != null) {
+        if (Corsen.this.gui.getDirFile() != null) {
 
-          cc.setDirFiles(gui.getDirFile());
+          cc.setDirFiles(Corsen.this.gui.getDirFile());
           cc.setMultipleFiles(true);
 
           new Thread(cc).start();
           // SwingUtilities.invokeLater(cc);
 
-        } else if (gui.getARNFile() == null || gui.getMitoFile() == null) {
+        } else if (Corsen.this.gui.getARNFile() == null || Corsen.this.gui.getMitoFile() == null) {
 
-          if (gui.getARNFile() == null)
-            gui.showError("No messager file specified.");
+          if (Corsen.this.gui.getARNFile() == null)
+            Corsen.this.gui.showError("No messager file specified.");
           else
-            gui.showError("No mito file specified.");
+            Corsen.this.gui.showError("No mito file specified.");
 
         } else {
-          JFileChooser jfc = new JFileChooser();
-          if (gui.getCurrentDirectory() != null)
-            jfc.setCurrentDirectory(gui.getCurrentDirectory());
+          final JFileChooser jfc = new JFileChooser();
+          if (Corsen.this.gui.getCurrentDirectory() != null)
+            jfc.setCurrentDirectory(Corsen.this.gui.getCurrentDirectory());
 
-          int result = jfc.showSaveDialog(gui);
+          final int result = jfc.showSaveDialog(Corsen.this.gui);
           if (result == JFileChooser.APPROVE_OPTION) {
 
-            cc.setMitoFile(gui.getMitoFile());
-            cc.setRnaFile(gui.getARNFile());
+            cc.setMitoFile(Corsen.this.gui.getMitoFile());
+            cc.setRnaFile(Corsen.this.gui.getARNFile());
             cc.setResultDir(jfc.getSelectedFile().getParentFile());
             cc.setResultFilename(jfc.getSelectedFile().getName());
             cc.setMultipleFiles(false);
@@ -194,7 +194,7 @@ public class Corsen {
     switch (e.getId()) {
 
     case ProgressEvent.START_CELL_EVENT:
-      long last = this.status.cellStart;
+      final long last = this.status.cellStart;
       this.status.cellStart = System.currentTimeMillis();
       this.status.currentFile = e.getIntValue1();
       this.status.maxFiles = e.getIntValue2();
@@ -235,7 +235,7 @@ public class Corsen {
       break;
 
     case ProgressEvent.END_SUCCESSFULL_EVENT:
-      long end = System.currentTimeMillis();
+      final long end = System.currentTimeMillis();
       System.out.println("Finish in" + (this.status.initStart - end) + " ms");
       this.gui.setStartEnable(true);
       this.gui.setStatusMessage("Ready");
@@ -250,7 +250,7 @@ public class Corsen {
       return;
     }
 
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append("Cell: ");
     sb.append(this.status.currentFile);
     sb.append("/");
@@ -321,49 +321,45 @@ public class Corsen {
     if (uiClassName == null)
       return;
 
-    if (!javax.swing.SwingUtilities.isEventDispatchThread()) {
+    if (!javax.swing.SwingUtilities.isEventDispatchThread())
       try {
         javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
           public void run() {
             setLookAndFeel(uiClassName);
           }
         });
-      } catch (InterruptedException e) {
+      } catch (final InterruptedException e) {
         System.err
             .println("Error when trying to use the Event dispatch thread.");
-      } catch (InvocationTargetException e) {
+      } catch (final InvocationTargetException e) {
         System.err
             .println("Error when trying to use the Event dispatch thread.");
       }
-
-    } else {
-
+    else
       try {
 
         // UIManager.setLookAndFeel(uiClassName);
 
-        Class c = Corsen.class.getClassLoader().loadClass(uiClassName);
-        LookAndFeel laf = (LookAndFeel) c.newInstance();
+        final Class c = Corsen.class.getClassLoader().loadClass(uiClassName);
+        final LookAndFeel laf = (LookAndFeel) c.newInstance();
 
         UIManager.setLookAndFeel(laf);
 
-      } catch (ClassNotFoundException e) {
+      } catch (final ClassNotFoundException e) {
         System.err.println("PLAF error, class not found: " + uiClassName);
         return;
-      } catch (InstantiationException e) {
+      } catch (final InstantiationException e) {
         System.err.println("PLAF error, instantiation exception: "
             + uiClassName);
         return;
-      } catch (IllegalAccessException e) {
+      } catch (final IllegalAccessException e) {
         System.err.println("PLAF error, illegal access: " + uiClassName);
         return;
-      } catch (UnsupportedLookAndFeelException e) {
+      } catch (final UnsupportedLookAndFeelException e) {
         System.err.println("PLAF error, unssopported look and feel: "
             + uiClassName);
         return;
       }
-
-    }
 
   }
 

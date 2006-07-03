@@ -47,7 +47,7 @@ public class CorsenCore implements Runnable {
    * @return Returns the dirFiles
    */
   public File getDirFiles() {
-    return dirFiles;
+    return this.dirFiles;
   }
 
   /**
@@ -55,7 +55,7 @@ public class CorsenCore implements Runnable {
    * @return Returns the mitoFile
    */
   public File getMitoFile() {
-    return mitoFile;
+    return this.mitoFile;
   }
 
   /**
@@ -63,7 +63,7 @@ public class CorsenCore implements Runnable {
    * @return Returns the resultDir
    */
   public File getResultDir() {
-    return resultDir;
+    return this.resultDir;
   }
 
   /**
@@ -71,7 +71,7 @@ public class CorsenCore implements Runnable {
    * @return Returns the resultFilename
    */
   public String getResultFilename() {
-    return resultFilename;
+    return this.resultFilename;
   }
 
   /**
@@ -79,7 +79,7 @@ public class CorsenCore implements Runnable {
    * @return Returns the rnaFile
    */
   public File getRnaFile() {
-    return rnaFile;
+    return this.rnaFile;
   }
 
   /**
@@ -87,7 +87,7 @@ public class CorsenCore implements Runnable {
    * @return Returns the multipleFiles
    */
   public boolean isMultipleFiles() {
-    return multipleFiles;
+    return this.multipleFiles;
   }
 
   //
@@ -147,7 +147,7 @@ public class CorsenCore implements Runnable {
    * @param coef the coef of the update of the Z values
    */
   public void setZCoef(final float coef) {
-    zCoef = coef;
+    this.zCoef = coef;
   }
 
   /**
@@ -218,7 +218,7 @@ public class CorsenCore implements Runnable {
     final Particle3D[] messengers = readmageJPlugingOutputFile(rnaFile);
     final float minDistanceBetweenTwoPoints = getMinDistanceBetweenTwoPoints(messengers);
     sendEvent(ProgressEvent.START_WRITE_RPLOT_MESSENGERS_EVENT);
-    File messengersFile = new File(resultDir, resultFilename + "_messengers.R");
+    final File messengersFile = new File(resultDir, resultFilename + "_messengers.R");
     writeRPlots(messengersFile, messengers, "green", true,
         minDistanceBetweenTwoPoints);
 
@@ -226,7 +226,7 @@ public class CorsenCore implements Runnable {
     sendEvent(ProgressEvent.START_READ_MITOS_EVENT);
     final Particle3D[] mitos = readmageJPlugingOutputFile(mitoFile);
 
-    File mitosFile = new File(resultDir, resultFilename + "_mitos.R");
+    final File mitosFile = new File(resultDir, resultFilename + "_mitos.R");
     sendEvent(ProgressEvent.START_WRITE_RPLOT_MITOS_EVENT);
     writeRPlots(mitosFile, mitos, "red", false, minDistanceBetweenTwoPoints);
 
@@ -234,7 +234,7 @@ public class CorsenCore implements Runnable {
     sendEvent(ProgressEvent.START_CALC_CUBOIDS_EVENT);
     final Particle3D[] cuboids = calcCuboid(messengers, this.lenCube);
 
-    File cuboidsFile = new File(resultDir, resultFilename + "_cuboids.R");
+    final File cuboidsFile = new File(resultDir, resultFilename + "_cuboids.R");
     sendEvent(ProgressEvent.START_WRITE_RPLOT_CUBOIDS_EVENT);
     writeRPlots(cuboidsFile, cuboids, "green", true,
         minDistanceBetweenTwoPoints);
@@ -290,7 +290,7 @@ public class CorsenCore implements Runnable {
   private void writeFullResultFile(final Particle3D[] messengers,
       final Particle3D[] mitos, final Writer out) throws IOException {
 
-    long start = System.currentTimeMillis();
+    final long start = System.currentTimeMillis();
 
     out.write("messager");
     out.write("\t");
@@ -330,8 +330,8 @@ public class CorsenCore implements Runnable {
 
       for (int j = 0; j < mitos.length; j++) {
 
-        double dss = messengers[i].getSurfaceToSurfaceDistance(mitos[j]);
-        double dcs = messengers[i].getBarycenterToSurfaceDistance(mitos[j]);
+        final double dss = messengers[i].getSurfaceToSurfaceDistance(mitos[j]);
+        final double dcs = messengers[i].getBarycenterToSurfaceDistance(mitos[j]);
 
         if (dss < minss)
           minss = dss;
@@ -357,7 +357,7 @@ public class CorsenCore implements Runnable {
       out.write("\n");
     }
 
-    long end = System.currentTimeMillis();
+    final long end = System.currentTimeMillis();
     System.out.println("Write full result file : " + (end - start) + " ms");
   }
 
@@ -374,28 +374,27 @@ public class CorsenCore implements Runnable {
     if (file == null)
       return null;
 
-    ArrayList al = new ArrayList();
+    final ArrayList al = new ArrayList();
 
-    BufferedReader in = new BufferedReader(new FileReader(file));
+    final BufferedReader in = new BufferedReader(new FileReader(file));
 
     String line;
     int count = 0;
-    while ((line = in.readLine()) != null) {
-
+    while ((line = in.readLine()) != null)
       if (!line.startsWith("#")) {
         if (count == 0) {
-          String[] ch = line.split("\t");
+          final String[] ch = line.split("\t");
           if (ch.length != 4)
             throw new RuntimeException(
                 "Invalid input file (Bad dimension field).");
 
-          float maxX = Float.parseFloat(ch[1].trim());
-          float maxY = Float.parseFloat(ch[2].trim());
-          float maxZ = Float.parseFloat(ch[3].trim());
+          final float maxX = Float.parseFloat(ch[1].trim());
+          final float maxY = Float.parseFloat(ch[2].trim());
+          final float maxZ = Float.parseFloat(ch[3].trim());
 
-          if ((this.maxX != -1 && this.maxX != maxX)
-              || (this.maxY != -1 && this.maxY != maxY)
-              || (this.maxZ != -1 && this.maxZ != maxZ))
+          if (this.maxX != -1 && this.maxX != maxX
+              || this.maxY != -1 && this.maxY != maxY
+              || this.maxZ != -1 && this.maxZ != maxZ)
             throw new RuntimeException(
                 "The dimensitions of the two files are not the same.");
 
@@ -404,22 +403,20 @@ public class CorsenCore implements Runnable {
           this.maxZ = maxZ;
 
         } else if (count > 1) {
-          Particle3D p = new Particle3D(line);
+          final Particle3D p = new Particle3D(line);
 
           // Update z coords
-          if (this.updateZ) {
+          if (this.updateZ)
             changeZCoord(p);
-          }
 
           al.add(p);
         }
         count++;
       }
-    }
 
     in.close();
 
-    Particle3D[] array = new Particle3D[al.size()];
+    final Particle3D[] array = new Particle3D[al.size()];
 
     al.toArray(array);
 
@@ -439,13 +436,13 @@ public class CorsenCore implements Runnable {
       final boolean plotCenter, final float minDistanceBetweenTwoPoints)
       throws IOException {
 
-    long start = System.currentTimeMillis();
+    final long start = System.currentTimeMillis();
 
     if (particles == null)
       return;
 
-    FileOutputStream fos = new FileOutputStream(file);
-    Writer out = new OutputStreamWriter(fos);
+    final FileOutputStream fos = new FileOutputStream(file);
+    final Writer out = new OutputStreamWriter(fos);
 
     out.write("# Generated by ");
     out.write(Corsen.APP_NAME);
@@ -466,7 +463,7 @@ public class CorsenCore implements Runnable {
 
       particles[i].innerPointstoRData(out);
 
-      float size = (float) (minDistanceBetweenTwoPoints * 1.0);
+      final float size = (float) (minDistanceBetweenTwoPoints * 1.0);
 
       out.write("\nif ( exists(\"corsen.shift\") && corsen.shift>0 ) {\n");
 
@@ -491,7 +488,7 @@ public class CorsenCore implements Runnable {
       out.write("\n");
       particles[i].innerPointstoRPlot(out, false, "corsen.sizepoints", color);
       out.write("z <- z +");
-      out.write("" + (size * 2));
+      out.write("" + size * 2);
       out.write("\n");
       particles[i].innerPointstoRPlot(out, false, "corsen.sizepoints", color);
 
@@ -521,7 +518,7 @@ public class CorsenCore implements Runnable {
       out.write("\n");
       particles[i].surfacePointstoRPlot(out, 1.0f, "dark" + color);
       out.write("z <- z +");
-      out.write("" + (size * 2));
+      out.write("" + size * 2);
       out.write("\n");
       particles[i].surfacePointstoRPlot(out, 1.0f, "dark" + color);
 
@@ -550,7 +547,7 @@ public class CorsenCore implements Runnable {
     }
     out.close();
 
-    long end = System.currentTimeMillis();
+    final long end = System.currentTimeMillis();
     System.out.println("Write R plot : " + (end - start) + " ms");
   }
 
@@ -609,7 +606,7 @@ public class CorsenCore implements Runnable {
     float minDistance = Float.MAX_VALUE;
     for (int i = 0; i < particles.length; i++) {
 
-      float d = particles[i].getMinDistance();
+      final float d = particles[i].getMinDistance();
 
       if (d < minDistance && d != 0.0)
         minDistance = d;
@@ -632,7 +629,7 @@ public class CorsenCore implements Runnable {
       final Particle3D[] mitos, final float minDistanceBetweenTwoPoints,
       final Writer out) throws IOException {
 
-    long start = System.currentTimeMillis();
+    final long start = System.currentTimeMillis();
 
     final float pixelLen = this.pixelSize;
 
@@ -650,7 +647,7 @@ public class CorsenCore implements Runnable {
 
     }
 
-    long end = System.currentTimeMillis();
+    final long end = System.currentTimeMillis();
     System.out.println("Write R result file: " + (end - start) + " ms");
   }
 
@@ -660,7 +657,7 @@ public class CorsenCore implements Runnable {
       return false;
 
     // Obtient la liste des fichiers du répertoire
-    File[] files = directory.listFiles();
+    final File[] files = directory.listFiles();
 
     // Maintenant crée un table de hachage pour y stoquer les fichier en entrée
     final HashMap map = new HashMap();
@@ -673,12 +670,12 @@ public class CorsenCore implements Runnable {
 
       final String filename = files[i].getName();
 
-      Matcher m = p.matcher(filename);
+      final Matcher m = p.matcher(filename);
 
       if (m.matches()) {
 
-        int field = Integer.parseInt(m.group(1));
-        int cell = Integer.parseInt(m.group(2));
+        final int field = Integer.parseInt(m.group(1));
+        final int cell = Integer.parseInt(m.group(2));
 
         InputFiles iFiles;
         final String key = "ch" + field + "_ce" + cell;
@@ -699,7 +696,7 @@ public class CorsenCore implements Runnable {
 
     // Lance les traitement
 
-    Iterator it = map.keySet().iterator();
+    final Iterator it = map.keySet().iterator();
 
     int n = 0;
     final int count = map.size();
@@ -710,9 +707,9 @@ public class CorsenCore implements Runnable {
     while (it.hasNext()) {
 
       n++;
-      String key = (String) it.next();
+      final String key = (String) it.next();
 
-      InputFiles iFiles = (InputFiles) map.get(key);
+      final InputFiles iFiles = (InputFiles) map.get(key);
 
       if (iFiles.inputmitoFile != null && iFiles.inputrnaFile != null) {
 
@@ -741,7 +738,7 @@ public class CorsenCore implements Runnable {
 
     for (int i = 0; i < ni; i++) {
 
-      Point3D p = particle.getInnerPoint(i);
+      final Point3D p = particle.getInnerPoint(i);
       p.setZ(p.getZ() * this.zCoef);
     }
 
@@ -749,7 +746,7 @@ public class CorsenCore implements Runnable {
 
     for (int i = 0; i < ns; i++) {
 
-      Point3D p = particle.getSurfacePoint(i);
+      final Point3D p = particle.getSurfacePoint(i);
       p.setZ(p.getZ() * this.zCoef);
     }
 
@@ -848,7 +845,7 @@ public class CorsenCore implements Runnable {
     for (int m = 0; m < nMessagers; m++) {
 
       final Particle3D messenger = messagers[m];
-      ListPoint3D lp = messenger.getInnerPoints();
+      final ListPoint3D lp = messenger.getInnerPoints();
 
       final float xMax = lp.getXMax() + 1.0f;
       final float yMax = lp.getYMax() + 1.0f;
@@ -861,7 +858,7 @@ public class CorsenCore implements Runnable {
         for (float j = yMin; j < yMax; j += lenght)
           for (float k = zMin; k < zMax; k += lenght) {
 
-            Particle3D r = createCuboid(messenger, i, j, k, lenght, "cuboid",
+            final Particle3D r = createCuboid(messenger, i, j, k, lenght, "cuboid",
                 48);
 
             if (r != null) {
@@ -873,7 +870,7 @@ public class CorsenCore implements Runnable {
           }
 
       count += lp.size();
-      double p = ((double) count) / ((double) countMax) * 1000.0;
+      final double p = (double) count / (double) countMax * 1000.0;
       sendEvent(ProgressEvent.PROGRESS_CALC_CUBOIDS_EVENT, (int) p);
     }
 
@@ -900,10 +897,9 @@ public class CorsenCore implements Runnable {
         if (processMultipleCells(getDirFiles())) {
           sendEvent(ProgressEvent.END_SUCCESSFULL_EVENT, 1, 1);
           Corsen.getCorsen().showMessage("Outputs files creations successful.");
-        } else {
+        } else
           Corsen.getCorsen().showError(
               "Directory not exists or no files to process");
-        }
       } else {
         sendEvent(ProgressEvent.START_CELL_EVENT, 1, 1);
         processACell(getMitoFile(), getRnaFile(), getResultDir(),
@@ -912,7 +908,7 @@ public class CorsenCore implements Runnable {
         Corsen.getCorsen().showMessage("Output file creation successful.");
       }
 
-    } catch (IOException e) {
+    } catch (final IOException e) {
       Corsen.getCorsen().showError(e.getMessage());
     }
 

@@ -9,9 +9,9 @@ public final class ArrayLongList {
 
   private static final int MERGE_BUFFER_SIZE = 500000;
 
-  public long get(int index) {
+  public long get(final int index) {
     checkRange(index);
-    return _data[index + _firstElement];
+    return this._data[index + this._firstElement];
   }
 
   /**
@@ -22,14 +22,14 @@ public final class ArrayLongList {
    * @throws UnsupportedOperationException when this operation is not supported
    * @throws IndexOutOfBoundsException if the specified index is out of range
    */
-  public void set(int index, long element) {
+  public void set(final int index, final long element) {
     checkRange(index);
-    _data[index + _firstElement] = element;
+    this._data[index + this._firstElement] = element;
 
   }
 
   public int size() {
-    return _size;
+    return this._size;
   }
 
   /**
@@ -42,20 +42,20 @@ public final class ArrayLongList {
    */
   public void add(final long element) {
 
-    ensureCapacity(_size + 1);
-    _data[_size] = element;
-    _size++;
+    ensureCapacity(this._size + 1);
+    this._data[this._size] = element;
+    this._size++;
   }
 
   public long removeFirstElement() {
 
-    if (_size == 0)
+    if (this._size == 0)
       throw new IndexOutOfBoundsException("The ArrayList is empty");
-    long oldElement = _data[_firstElement];
-    _firstElement++;
-    _size--;
+    final long oldElement = this._data[this._firstElement];
+    this._firstElement++;
+    this._size--;
 
-    if (_size * 3 > _data.length && _data.length > 50000)
+    if (this._size * 3 > this._data.length && this._data.length > 50000)
       trimToSize();
 
     return oldElement;
@@ -66,10 +66,9 @@ public final class ArrayLongList {
   }
 
   private final void checkRange(final int index) {
-    if (index < 0 || index >= _size) {
+    if (index < 0 || index >= this._size)
       throw new IndexOutOfBoundsException("Should be at least 0 and less than "
-          + _size + ", found " + index);
-    }
+          + this._size + ", found " + index);
   }
 
   /**
@@ -83,21 +82,21 @@ public final class ArrayLongList {
   }
 
   private void ensureCapacity(final int mincap, final boolean merge) {
-    if (mincap > (_data.length - _firstElement)) {
+    if (mincap > this._data.length - this._firstElement) {
 
       // int newcap = ((_size) * 3) / 2 + 1;
       int newcap;
 
       if (merge)
         newcap = mincap;
-      else if (_size < 100000)
-        newcap = ((_size) * 3) / 2 + 1;
+      else if (this._size < 100000)
+        newcap = this._size * 3 / 2 + 1;
       else
         newcap = mincap * 110 / 100;
 
-      long[] olddata = _data;
-      _data = new long[newcap < mincap ? mincap : newcap];
-      System.arraycopy(olddata, _firstElement, _data, 0, _size);
+      final long[] olddata = this._data;
+      this._data = new long[newcap < mincap ? mincap : newcap];
+      System.arraycopy(olddata, this._firstElement, this._data, 0, this._size);
 
       /*
        * System.out.println(this.hashCode() + " old data=" + olddata.length + "
@@ -105,7 +104,7 @@ public final class ArrayLongList {
        * _size);
        */
 
-      _firstElement = 0;
+      this._firstElement = 0;
     }
   }
 
@@ -114,18 +113,18 @@ public final class ArrayLongList {
    */
   public void trimToSize() {
 
-    if (_size < _data.length) {
+    if (this._size < this._data.length) {
       // System.out.println("Trim to size");
       // System.out.println("New size: " + _size);
-      long[] olddata = _data;
-      _data = new long[_size];
-      System.arraycopy(olddata, _firstElement, _data, 0, _size);
-      _firstElement = 0;
+      final long[] olddata = this._data;
+      this._data = new long[this._size];
+      System.arraycopy(olddata, this._firstElement, this._data, 0, this._size);
+      this._firstElement = 0;
     }
   }
 
   public boolean isEmpty() {
-    return (0 == size());
+    return 0 == size();
   }
 
   //
@@ -144,11 +143,10 @@ public final class ArrayLongList {
       final int n = list._size < MERGE_BUFFER_SIZE ? list._size
           : MERGE_BUFFER_SIZE;
 
-      ensureCapacity(_size + n, n == MERGE_BUFFER_SIZE);
+      ensureCapacity(this._size + n, n == MERGE_BUFFER_SIZE);
 
-      for (int i = 0; i < n; i++) {
-        _data[_firstElement + _size + i] = list._data[list._firstElement + i];
-      }
+      for (int i = 0; i < n; i++)
+        this._data[this._firstElement + this._size + i] = list._data[list._firstElement + i];
 
       current._size += n;
 
@@ -163,16 +161,15 @@ public final class ArrayLongList {
   // Constructors
   //
 
-  public ArrayLongList(int initialCapacity) {
+  public ArrayLongList(final int initialCapacity) {
 
     this.id = count++;
 
-    if (initialCapacity < 0) {
+    if (initialCapacity < 0)
       throw new IllegalArgumentException("capacity " + initialCapacity);
-    }
-    _data = new long[initialCapacity];
-    _size = 0;
-    _firstElement = 0;
+    this._data = new long[initialCapacity];
+    this._size = 0;
+    this._firstElement = 0;
   }
 
   /**
@@ -180,11 +177,11 @@ public final class ArrayLongList {
    * @param array the array to initialize the collection with
    * @throws NullPointerException if the array is <code>null</code>
    */
-  public ArrayLongList(long[] array) {
+  public ArrayLongList(final long[] array) {
     this(array.length);
-    System.arraycopy(array, 0, _data, 0, array.length);
-    _size = array.length;
-    _firstElement = 0;
+    System.arraycopy(array, 0, this._data, 0, array.length);
+    this._size = array.length;
+    this._firstElement = 0;
   }
 
   /**

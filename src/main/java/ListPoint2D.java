@@ -4,7 +4,7 @@
  */
 public class ListPoint2D {
 
-  private ArrayLongList values = new ArrayLongList();
+  private final ArrayLongList values = new ArrayLongList();
   private static final float PRECISION = 10.0f;
 
   /**
@@ -108,8 +108,8 @@ public class ListPoint2D {
 
       final long val = this.values.get(i);
 
-      float xVal = Util.getX(val, PRECISION);
-      float yVal = Util.getY(val, PRECISION);
+      final float xVal = Util.getX(val, PRECISION);
+      final float yVal = Util.getY(val, PRECISION);
 
       if (xVal == x && yVal == y)
         return true;
@@ -133,9 +133,9 @@ public class ListPoint2D {
 
       final long val = this.values.get(j);
 
-      float xVal = Util.getX(val, PRECISION);
-      float yVal = Util.getY(val, PRECISION);
-      float iVal = Util.getI(val);
+      final float xVal = Util.getX(val, PRECISION);
+      final float yVal = Util.getY(val, PRECISION);
+      final float iVal = Util.getI(val);
 
       if (xVal == x && yVal == y && iVal == i)
         return true;
@@ -161,11 +161,11 @@ public class ListPoint2D {
    */
   public ListPoint2D copy() {
 
-    ListPoint2D result = new ListPoint2D();
+    final ListPoint2D result = new ListPoint2D();
     final int n = size();
 
     for (int i = 0; i < n; i++) {
-      Point2D p = get(i);
+      final Point2D p = get(i);
       result.add(p);
     }
 

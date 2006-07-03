@@ -16,8 +16,8 @@ public final class Particle3D {
 
   private static int count;
 
-  private int id = count;
-  private String name = "" + id;
+  private final int id = count;
+  private String name = "" + this.id;
 
   private final ListPoint3D surfacePoints;
   private final ListPoint3D innerPoints;
@@ -44,7 +44,7 @@ public final class Particle3D {
    * @return The id of the particle
    */
   public int getId() {
-    return id;
+    return this.id;
   }
 
   /**
@@ -52,7 +52,7 @@ public final class Particle3D {
    * @return Returns the name of the particle
    */
   public String getName() {
-    return name;
+    return this.name;
   }
 
   /**
@@ -60,7 +60,7 @@ public final class Particle3D {
    * @return Returns the intensity of the particle
    */
   public long getIntensity() {
-    return intensity;
+    return this.intensity;
   }
 
   //
@@ -266,7 +266,7 @@ public final class Particle3D {
     this.surfacePoints.ensureCapacity(n);
 
     for (int i = 0; i < n; i++) {
-      Point2D pt = particle.getSurfacePoint(i);
+      final Point2D pt = particle.getSurfacePoint(i);
       addSurfacePoint(pt.getX(), pt.getY(), slice * this.pixelDepth);
     }
 
@@ -274,7 +274,7 @@ public final class Particle3D {
     this.innerPoints.ensureCapacity(n);
 
     for (int i = 0; i < n; i++) {
-      Point2D pt = particle.getInnerPoint(i);
+      final Point2D pt = particle.getInnerPoint(i);
       addInnerPoint(pt.getX(), pt.getY(), slice * this.pixelDepth, pt.getI());
     }
 
@@ -376,7 +376,7 @@ public final class Particle3D {
 
         final Point3D p2 = p.getSurfacePoint(j);
 
-        double d = p1.distance(p2);
+        final double d = p1.distance(p2);
 
         if (d < min)
           min = d;
@@ -407,7 +407,7 @@ public final class Particle3D {
 
       final Point3D p2 = p.getSurfacePoint(i);
 
-      double d = p1.distance(p2);
+      final double d = p1.distance(p2);
       if (d < min)
         min = d;
     }
@@ -436,7 +436,7 @@ public final class Particle3D {
 
       final Point3D p2 = p.getInnerPoint(i);
 
-      double d = p1.distance(p2);
+      final double d = p1.distance(p2);
       if (d < min)
         min = d;
     }
@@ -451,7 +451,7 @@ public final class Particle3D {
    */
   public double getCenterToCenterDistance(final Particle3D p) {
 
-    double min = Double.MAX_VALUE;
+    final double min = Double.MAX_VALUE;
 
     if (p == null)
       return min;
@@ -464,13 +464,13 @@ public final class Particle3D {
 
   private static Map getSurfacePointSlices(final Particle3D particle) {
 
-    Map slices = new HashMap();
+    final Map slices = new HashMap();
 
     final int nPoints = particle.surfacePointsCount();
 
     for (int i = 0; i < nPoints; i++) {
-      Point3D p = particle.getSurfacePoint(i);
-      String key = "" + p.getZ();
+      final Point3D p = particle.getSurfacePoint(i);
+      final String key = "" + p.getZ();
       Particle2D par = (Particle2D) slices.get(key);
       if (par == null) {
         par = new Particle2D();
@@ -484,13 +484,13 @@ public final class Particle3D {
 
   private static Map getSurfaceAndInnerPointSlices(final Particle3D particle) {
 
-    Map slices = new HashMap();
+    final Map slices = new HashMap();
 
     final int nSurfacePoints = particle.surfacePointsCount();
 
     for (int i = 0; i < nSurfacePoints; i++) {
-      Point3D p = particle.getSurfacePoint(i);
-      String key = "" + p.getZ();
+      final Point3D p = particle.getSurfacePoint(i);
+      final String key = "" + p.getZ();
       Particle2D par = (Particle2D) slices.get(key);
       if (par == null) {
         par = new Particle2D();
@@ -502,8 +502,8 @@ public final class Particle3D {
     final int nInnerPoints = particle.innerPointsCount();
 
     for (int i = 0; i < nInnerPoints; i++) {
-      Point3D p = particle.getInnerPoint(i);
-      String key = "" + p.getZ();
+      final Point3D p = particle.getInnerPoint(i);
+      final String key = "" + p.getZ();
       Particle2D par = (Particle2D) slices.get(key);
       if (par == null) {
         par = new Particle2D();
@@ -521,16 +521,16 @@ public final class Particle3D {
    */
   public Particle2D[] toParticles2D() {
 
-    Map slices = getSurfaceAndInnerPointSlices(this);
+    final Map slices = getSurfaceAndInnerPointSlices(this);
 
     if (slices == null || slices.size() == 0)
       return null;
 
     final int n = slices.size();
 
-    float[] keys = new float[n];
+    final float[] keys = new float[n];
 
-    Iterator it = slices.keySet().iterator();
+    final Iterator it = slices.keySet().iterator();
 
     int i = 0;
     while (it.hasNext()) {
@@ -541,7 +541,7 @@ public final class Particle3D {
 
     Arrays.sort(keys);
 
-    Particle2D[] result = new Particle2D[n];
+    final Particle2D[] result = new Particle2D[n];
 
     for (int j = 0; j < n; j++)
       result[j] = (Particle2D) slices.get("" + keys[j]);
@@ -575,15 +575,15 @@ public final class Particle3D {
     if (particle == null)
       return false;
 
-    Map slices = getSurfacePointSlices(this);
-    Map particlesSlices = getSurfacePointSlices(particle);
+    final Map slices = getSurfacePointSlices(this);
+    final Map particlesSlices = getSurfacePointSlices(particle);
 
-    Iterator it = slices.keySet().iterator();
+    final Iterator it = slices.keySet().iterator();
     while (it.hasNext()) {
-      String z = (String) it.next();
+      final String z = (String) it.next();
 
-      Particle2D p1 = (Particle2D) slices.get(z);
-      Particle2D p2 = (Particle2D) particlesSlices.get(z);
+      final Particle2D p1 = (Particle2D) slices.get(z);
+      final Particle2D p2 = (Particle2D) particlesSlices.get(z);
 
       if (p1 != null && p2 != null && p1.intersect(p2))
         return true;
@@ -599,7 +599,7 @@ public final class Particle3D {
    */
   public String toString() {
 
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append(getName());
     sb.append('\t');
     sb.append(getCenter());
@@ -640,34 +640,29 @@ public final class Particle3D {
     if (s == null)
       return;
 
-    StringTokenizer st = new StringTokenizer(s, "\t");
+    final StringTokenizer st = new StringTokenizer(s, "\t");
 
-    if (st.hasMoreElements()) {
+    if (st.hasMoreElements())
       setName(st.nextToken());
-    }
 
-    if (st.hasMoreElements()) {
+    if (st.hasMoreElements())
       st.nextToken(); // center
-    }
 
-    if (st.hasMoreElements()) {
+    if (st.hasMoreElements())
       st.nextToken(); // barycenter
-    }
 
-    if (st.hasMoreElements()) {
-      this.volume = (Double.parseDouble(st.nextToken()));
-    }
-    if (st.hasMoreElements()) {
-      this.intensity = (Long.parseLong(st.nextToken()));
-    }
+    if (st.hasMoreElements())
+      this.volume = Double.parseDouble(st.nextToken());
+    if (st.hasMoreElements())
+      this.intensity = Long.parseLong(st.nextToken());
 
-    Set existingPoints = new HashSet();
+    final Set existingPoints = new HashSet();
 
     if (st.hasMoreElements()) {
 
       final String points = st.nextToken();
 
-      StringTokenizer st2 = new StringTokenizer(points, ")");
+      final StringTokenizer st2 = new StringTokenizer(points, ")");
 
       boolean first = true;
       while (st2.hasMoreTokens()) {
@@ -680,8 +675,8 @@ public final class Particle3D {
         } else
           s2 = s2.substring(2, s2.length());
 
-        final Point3D p = SimplePoint3DImpl.parse(s2);
-        String key = p.toStringWithoutIntensity();
+        final Point3D p = Point3D.parse(s2);
+        final String key = p.toStringWithoutIntensity();
 
         if (!existingPoints.contains(key)) {
           addSurfacePoint(p, false);
@@ -696,7 +691,7 @@ public final class Particle3D {
 
       final String points = st.nextToken();
 
-      StringTokenizer st2 = new StringTokenizer(points, ")");
+      final StringTokenizer st2 = new StringTokenizer(points, ")");
 
       boolean first = true;
       while (st2.hasMoreTokens()) {
@@ -709,8 +704,8 @@ public final class Particle3D {
         } else
           s2 = s2.substring(2, s2.length());
 
-        final Point3D p = SimplePoint3DImpl.parse(s2);
-        String key = p.toStringWithoutIntensity();
+        final Point3D p = Point3D.parse(s2);
+        final String key = p.toStringWithoutIntensity();
 
         if (!existingPoints.contains(key)) {
           addInnerPoint(p, false);
@@ -838,7 +833,7 @@ public final class Particle3D {
     if (n == 0)
       return "";
 
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
 
     sb.append("x <- c(");
 
@@ -903,15 +898,15 @@ public final class Particle3D {
     if (surfacePointsCount() == 0)
       return;
 
-    Map slices = getSurfacePointSlices(this);
+    final Map slices = getSurfacePointSlices(this);
 
-    Iterator it = slices.keySet().iterator();
+    final Iterator it = slices.keySet().iterator();
 
     while (it.hasNext()) {
 
-      String z = (String) it.next();
+      final String z = (String) it.next();
 
-      Particle2D par = (Particle2D) slices.get(z);
+      final Particle2D par = (Particle2D) slices.get(z);
       final int n = par.surfacePointsCount();
 
       if (par.surfacePointsCount() == 0)

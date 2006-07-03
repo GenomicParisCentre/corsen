@@ -37,7 +37,7 @@ public final class Util {
    */
   public static float getX(final long point, final float precision) {
 
-    return (((point & (~MASK_X)) >> SHIFT_X) & MASK_16BITS) / precision;
+    return ((point & ~MASK_X) >> SHIFT_X & MASK_16BITS) / precision;
   }
 
   /**
@@ -48,7 +48,7 @@ public final class Util {
    */
   public static float getY(final long point, final float precision) {
 
-    return (((point & (~MASK_Y)) >> SHIFT_Y) & MASK_16BITS) / precision;
+    return ((point & ~MASK_Y) >> SHIFT_Y & MASK_16BITS) / precision;
   }
 
   /**
@@ -59,7 +59,7 @@ public final class Util {
    */
   public static float getZ(final long point, final float precision) {
 
-    return (((point & (~MASK_Z)) >> SHIFT_Z) & MASK_16BITS) / precision;
+    return ((point & ~MASK_Z) >> SHIFT_Z & MASK_16BITS) / precision;
   }
 
   /**
@@ -69,7 +69,7 @@ public final class Util {
    */
   public static int getI(final long point) {
 
-    return (int) (((point & (~MASK_I)) >> SHIFT_I) & MASK_16BITS);
+    return (int) ((point & ~MASK_I) >> SHIFT_I & MASK_16BITS);
   }
 
   /**
@@ -84,7 +84,7 @@ public final class Util {
 
     final long v = (long) (value * precision);
 
-    return (point & MASK_X) | ((v & MASK_16BITS) << SHIFT_X);
+    return point & MASK_X | (v & MASK_16BITS) << SHIFT_X;
   }
 
   /**
@@ -99,7 +99,7 @@ public final class Util {
 
     final long v = (long) (value * precision);
 
-    return (point & MASK_Y) | ((v & MASK_16BITS) << SHIFT_Y);
+    return point & MASK_Y | (v & MASK_16BITS) << SHIFT_Y;
   }
 
   /**
@@ -114,7 +114,7 @@ public final class Util {
 
     final long v = (long) (value * precision);
 
-    return (point & MASK_Z) | ((v & MASK_16BITS) << SHIFT_Z);
+    return point & MASK_Z | (v & MASK_16BITS) << SHIFT_Z;
   }
 
   /**
@@ -125,7 +125,7 @@ public final class Util {
    */
   public static long setI(final long point, final long value) {
 
-    return (point & MASK_I) | ((value & MASK_16BITS) << SHIFT_I);
+    return point & MASK_I | (value & MASK_16BITS) << SHIFT_I;
   }
 
   /**
@@ -145,13 +145,13 @@ public final class Util {
     final double diff12Y = p1.getY() - p2.getY();
 
     double a = 1;
-    double b = -a
+    final double b = -a
         * (p3.getX() * diff21Z + p3.getZ() * diff12X - p1.getX() - p1.getZ()
             * diff12X)
         / (p3.getY() * diff21Z + 9 * diff12Y - p1.getY() - p1.getZ() * diff12Y);
 
-    double c = (a * diff12X + b * diff12Y) / diff21Z;
-    double d = -a * p1.getX() - b * p1.getY() - c * p1.getZ();
+    final double c = (a * diff12X + b * diff12Y) / diff21Z;
+    final double d = -a * p1.getX() - b * p1.getY() - c * p1.getZ();
 
     System.out.println("a=" + a);
     System.out.println("b=" + b);

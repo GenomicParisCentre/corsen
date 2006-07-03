@@ -56,11 +56,11 @@ public final class CorsenImageJUtil {
     if (particles == null || particles.length == 0 || width < 0 || height < 0)
       return null;
 
-    ImageStack stack = new ImageStack(width, height);
+    final ImageStack stack = new ImageStack(width, height);
 
     for (int i = 0; i < particles.length; i++) {
 
-      ImageProcessor drawIP = new ByteProcessor(width, height);
+      final ImageProcessor drawIP = new ByteProcessor(width, height);
       stack.addSlice(null, drawIP);
 
       drawIP.setColor(Color.white);
@@ -88,7 +88,7 @@ public final class CorsenImageJUtil {
 
     for (int i = 0; i < nInner; i++) {
 
-      Point2D pt = particle.getInnerPoint(i);
+      final Point2D pt = particle.getInnerPoint(i);
       final int x = (int) pt.getX();
       final int y = (int) pt.getY();
       ip.drawPixel(x, y);
@@ -99,12 +99,12 @@ public final class CorsenImageJUtil {
     ip.setColor(Color.BLACK);
     if (nSurface > 0) {
 
-      Point2D pt0 = particle.getSurfacePoint(0);
+      final Point2D pt0 = particle.getSurfacePoint(0);
       ip.moveTo((int) pt0.getX(), (int) pt0.getY());
 
       for (int i = 1; i < nSurface; i++) {
 
-        Point2D pt = particle.getSurfacePoint(i);
+        final Point2D pt = particle.getSurfacePoint(i);
         final int x = (int) pt.getX();
         final int y = (int) pt.getY();
         ip.lineTo(x, y);

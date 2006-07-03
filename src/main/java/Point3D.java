@@ -106,7 +106,7 @@ abstract public class Point3D {
    */
   public String toString() {
 
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append(this.getX());
     sb.append(',');
     sb.append(this.getY());
@@ -124,7 +124,7 @@ abstract public class Point3D {
    */
   public String toStringWithoutIntensity() {
 
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
     sb.append(this.getX());
     sb.append(',');
     sb.append(this.getY());
@@ -142,7 +142,7 @@ abstract public class Point3D {
    */
   public String toR(final float size, final String colorName) {
 
-    StringBuffer sb = new StringBuffer();
+    final StringBuffer sb = new StringBuffer();
 
     sb.append("x <- c(");
     sb.append(getX());
@@ -169,14 +169,14 @@ abstract public class Point3D {
    * @param s String to parse
    * @return a new intance of a Point2D created from a string
    */
-  public static Point3D parse(String s) {
+  public static Point3D parse(final String s) {
 
     if (s == null)
       return null;
 
-    Point3D p = new SimplePoint3DImpl();
+    final Point3D p = new SimplePoint3DImpl();
 
-    StringTokenizer st = new StringTokenizer(s, ",");
+    final StringTokenizer st = new StringTokenizer(s, ",");
     if (st.hasMoreElements())
       p.setX(Float.parseFloat(st.nextToken()));
     if (st.hasMoreElements())

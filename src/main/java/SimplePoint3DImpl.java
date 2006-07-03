@@ -17,7 +17,7 @@ public class SimplePoint3DImpl extends Point3D {
    * @return the X coordinate of the point
    */
   public final float getX() {
-    return x;
+    return this.x;
   }
 
   /**
@@ -25,7 +25,7 @@ public class SimplePoint3DImpl extends Point3D {
    * @return the Y coordinate of the point
    */
   public final float getY() {
-    return y;
+    return this.y;
   }
 
   /**
@@ -33,7 +33,7 @@ public class SimplePoint3DImpl extends Point3D {
    * @return the Z coordinate of the point
    */
   public float getZ() {
-    return z;
+    return this.z;
   }
 
   /**
@@ -41,7 +41,7 @@ public class SimplePoint3DImpl extends Point3D {
    * @return the intensity of the point
    */
   public final int getI() {
-    return i;
+    return this.i;
   }
 
   //

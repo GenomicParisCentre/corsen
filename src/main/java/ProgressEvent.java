@@ -24,7 +24,7 @@ public class ProgressEvent {
    * @return Returns the id
    */
   public int getId() {
-    return id;
+    return this.id;
   }
 
   /**
@@ -32,7 +32,7 @@ public class ProgressEvent {
    * @return Returns the intValue1
    */
   public int getIntValue1() {
-    return intValue1;
+    return this.intValue1;
   }
 
   /**
@@ -40,7 +40,7 @@ public class ProgressEvent {
    * @return Returns the intValue2
    */
   public int getIntValue2() {
-    return intValue2;
+    return this.intValue2;
   }
 
   //
