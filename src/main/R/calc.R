@@ -58,7 +58,7 @@ cellsDistances <- function(plot=FALSE, summary=FALSE, nclass=50) {
   for (f in files) {
 
     # Lit le fichier
-    fdata <- as.matrix(read.table(f ,header=F))
+    fdata <- as.matrix(read.table(f ,header=T))
 
     if (summary==TRUE) {
 
@@ -88,7 +88,7 @@ poolDistances <- function(plot=F, summary=FALSE, nclass=50) {
   for (f in files) {
 
      # Lit le fichier
-    fdata <- as.matrix(read.table(f ,header=F))
+    fdata <- as.matrix(read.table(f ,header=T))
 
     # Ajoute à la suite de la matrice les données lues
     mat <- rbind(mat, fdata)
