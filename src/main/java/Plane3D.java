@@ -115,8 +115,13 @@ public class Plane3D {
     return Math.abs(this.a * p.getX() + this.b * p.getY() + this.c * p.getZ()
         + this.d)
         / Math.sqrt(this.a * this.a + this.b * this.b + this.c * this.c);
-
   }
+  
+  /*public Point3D getProjection(final Point3D p) {
+    
+    
+    
+  } */
 
   /**
    * Test if the plane contains a point.
