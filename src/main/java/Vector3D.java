@@ -135,11 +135,11 @@ public class Vector3D {
   }
 
   /**
-   * Multiplication of the vector.
-   * @param f The facreur
-   * @return a new vector as the result of the multiplication
+   * Returns the product of the vector.
+   * @param f The factor
+   * @return a new vector as the result of the product
    */
-  public Vector3D multiplication(final float f) {
+  public Vector3D product(final float f) {
 
     Vector3D r = new Vector3D();
 
@@ -151,30 +151,24 @@ public class Vector3D {
   }
 
   /**
-   * Calc the dot product of two vectors.
-   * @param v The second vector
-   * @return a new vector as the result of the dot product
+   * Returns the dot product of this vector and another vector
+   * @param v the other vector
+   * @return the dot product of this and v
    */
-  public Vector3D dotProduct(final Vector3D v) {
+  public final double dot(final Vector3D v) {
 
     if (v == null)
       new NullPointerException("The vector3D in argument is null");
 
-    Vector3D r = new Vector3D();
-
-    r.x = this.x * v.x;
-    r.y = this.y * v.y;
-    r.z = this.z * v.z;
-
-    return r;
+    return (this.x * v.x + this.y * v.y + this.z * v.z);
   }
 
   /**
-   * Calc the cross product of two vectors.
+   * Returns  the cross product of two vectors.
    * @param v The second vector
    * @return a new vector as the result of the cross product
    */
-  public Vector3D crossProduct(final Vector3D v) {
+  public Vector3D cross(final Vector3D v) {
 
     if (v == null)
       new NullPointerException("The vector3D in argument is null");
@@ -186,6 +180,15 @@ public class Vector3D {
     r.z = this.x * v.y - this.y * v.x;
 
     return r;
+  }
+
+  /**
+   * Returns the length of this vector.
+   * @return the length of this vector
+   */
+  public final double length() {
+
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
   }
 
   //
