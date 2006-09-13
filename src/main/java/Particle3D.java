@@ -1,5 +1,3 @@
-import java.io.IOException;
-import java.io.Writer;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -416,6 +414,62 @@ public final class Particle3D {
   }
 
   /**
+   * Calc the minimal distance between a point and an inner point of the
+   * particle.
+   * @param p Point to test
+   * @return the minimal distance between a point and an inner point of the
+   *         particle
+   */
+  public double getMinDistanceToInnerPoint(final Point3D p) {
+
+    double min = Double.MAX_VALUE;
+
+    if (p == null)
+      throw new NullPointerException("Point is null");
+
+    final int n = innerPointsCount();
+
+    for (int i = 0; i < n; i++) {
+
+      final Point3D p2 = getInnerPoint(i);
+
+      final double d = p.distance(p2);
+      if (d < min)
+        min = d;
+    }
+
+    return min;
+  }
+
+  /**
+   * Calc the maximal distance between a point and an inner point of the
+   * particle.
+   * @param p Point to test
+   * @return the maximal distance between a point and an inner point of the
+   *         particle
+   */
+  public double getMaxDistanceToInnerPoint(final Point3D p) {
+
+    double max = Double.MIN_VALUE;
+
+    if (p == null)
+      throw new NullPointerException("Point is null");
+
+    final int n = innerPointsCount();
+
+    for (int i = 0; i < n; i++) {
+
+      final Point3D p2 = getInnerPoint(i);
+
+      final double d = p.distance(p2);
+      if (d > max)
+        max = d;
+    }
+
+    return max;
+  }
+
+  /**
    * Calc the distance between 2 objects from the center to the surface of the
    * second object.
    * @param p Particle to get the distance
@@ -423,25 +477,10 @@ public final class Particle3D {
    */
   public double getBarycenterToInnerDistance(final Particle3D p) {
 
-    double min = Double.MAX_VALUE;
-
     if (p == null)
-      return min;
+      throw new NullPointerException("Particle is null");
 
-    final int pn = p.innerPointsCount();
-
-    final Point3D p1 = getBarycenter();
-
-    for (int i = 0; i < pn; i++) {
-
-      final Point3D p2 = p.getInnerPoint(i);
-
-      final double d = p1.distance(p2);
-      if (d < min)
-        min = d;
-    }
-
-    return min;
+    return p.getMinDistanceToInnerPoint(getBarycenter());
   }
 
   /**
@@ -462,7 +501,7 @@ public final class Particle3D {
     return p1.distance(p2);
   }
 
-  private static Map getSurfacePointSlices(final Particle3D particle) {
+  public static final Map getSurfacePointSlices(final Particle3D particle) {
 
     final Map slices = new HashMap();
 
@@ -470,7 +509,7 @@ public final class Particle3D {
 
     for (int i = 0; i < nPoints; i++) {
       final Point3D p = particle.getSurfacePoint(i);
-      final String key = "" + p.getZ();
+      final Float key = new Float(p.getZ());
       Particle2D par = (Particle2D) slices.get(key);
       if (par == null) {
         par = new Particle2D();
@@ -513,6 +552,96 @@ public final class Particle3D {
     }
 
     return slices;
+  }
+
+  /**
+   * Get the minimal distances in the 3 axes between the point in the particle.
+   * @return An array of float with the 3 minimal distances (minX,minY and minZ)
+   */
+  public float[] getMinInnerDistancesNotNull0() {
+
+    final int nInnerPoints = innerPointsCount();
+
+    float minX = Float.MAX_VALUE;
+    float minY = Float.MAX_VALUE;
+    float minZ = Float.MAX_VALUE;
+
+    for (int i = 0; i < nInnerPoints; i++) {
+
+      final Point3D pt1 = getInnerPoint(i);
+
+      for (int j = i + 1; j < nInnerPoints; j++) {
+
+        final Point3D pt2 = getInnerPoint(j);
+
+        float x = Math.abs(pt1.getX() - pt2.getX());
+        float y = Math.abs(pt1.getY() - pt2.getY());
+        float z = Math.abs(pt1.getZ() - pt2.getZ());
+
+        if (x > 0.0f && x < minX)
+          minX = x;
+        if (x > 0.0f && y < minY)
+          minY = y;
+        if (x > 0.0f && z < minZ)
+          minZ = z;
+
+      }
+    }
+
+    return new float[] {minX, minY, minZ};
+  }
+
+  private float getMinDiffNotNull(final Set s) {
+
+    if (s == null)
+      throw new NullPointerException("The set is null ");
+
+    if (s.size() == 1)
+      return 1.0f;
+
+    Float[] data = new Float[s.size()];
+    s.toArray(data);
+
+    float min = Float.MAX_VALUE;
+
+    for (int i = 0; i < data.length; i++) {
+
+      final float f1 = data[i].floatValue();
+
+      for (int j = i + 1; j < data.length; j++) {
+
+        float d = Math.abs(data[j].floatValue() - f1);
+
+        if (d != 0.0f && d < min)
+          min = d;
+      }
+    }
+
+    return min;
+  }
+
+  /**
+   * Get the minimal distances in the 3 axes between the point in the particle.
+   * @return An array of float with the 3 minimal distances (minX,minY and minZ)
+   */
+  public float[] getMinInnerDistancesNotNull() {
+
+    final int nInnerPoints = innerPointsCount();
+
+    Set setX = new HashSet();
+    Set setY = new HashSet();
+    Set setZ = new HashSet();
+
+    for (int i = 0; i < nInnerPoints; i++) {
+
+      final Point3D pt1 = getInnerPoint(i);
+      setX.add(new Float(pt1.getX()));
+      setY.add(new Float(pt1.getY()));
+      setZ.add(new Float(pt1.getZ()));
+    }
+
+    return new float[] {getMinDiffNotNull(setX), getMinDiffNotNull(setY),
+        getMinDiffNotNull(setZ)};
   }
 
   /**
@@ -580,7 +709,8 @@ public final class Particle3D {
 
     final Iterator it = slices.keySet().iterator();
     while (it.hasNext()) {
-      final String z = (String) it.next();
+
+      final Float z = (Float) it.next();
 
       final Particle2D p1 = (Particle2D) slices.get(z);
       final Particle2D p2 = (Particle2D) particlesSlices.get(z);
@@ -719,263 +849,6 @@ public final class Particle3D {
   }
 
   /**
-   * Generate R code to plot the inners points
-   * @param size Size of the points
-   * @param colorName Name of the color of the points
-   * @return A String with the R code to plot the points
-   */
-  /*
-   * public String innerPointstoR(final float size, final String colorName) {
-   * final int n = innerPointsCount(); if (n == 0) return ""; StringBuffer sb =
-   * new StringBuffer(); sb.append("x <- c("); for (int i = 0; i < n; i++) { if
-   * (i > 0) sb.append(","); final Point3D p; p = getInnerPoint(i);
-   * sb.append(p.getX()); } sb.append(")\ny <- c("); for (int i = 0; i < n; i++) {
-   * if (i > 0) sb.append(","); final Point3D p; p = getInnerPoint(i);
-   * sb.append(p.getY()); } sb.append(")\nz <- c("); for (int i = 0; i < n; i++) {
-   * if (i > 0) sb.append(","); final Point3D p; p = getInnerPoint(i);
-   * sb.append(p.getZ()); } sb.append(")\n"); sb.append("points3d(x, y, z,
-   * size="); sb.append(size); if (colorName != null) { sb.append(",color=\"");
-   * sb.append(colorName); sb.append("\""); } sb.append(")\n"); return
-   * sb.toString(); }
-   */
-
-  /**
-   * Generate R code to plot the inners points
-   * @param out Writer used to write data
-   * @throws IOException if an error occurs while write data
-   */
-  public void innerPointstoRData(final Writer out) throws IOException {
-
-    if (out == null)
-      return;
-
-    final int n = innerPointsCount();
-
-    if (n == 0)
-      return;
-
-    out.write("x <- c(");
-
-    for (int i = 0; i < n; i++) {
-      if (i > 0)
-        out.write(",");
-
-      final Point3D p;
-
-      p = getInnerPoint(i);
-
-      out.write("" + p.getX());
-    }
-
-    out.write(")\ny <- c(");
-    for (int i = 0; i < n; i++) {
-      if (i > 0)
-        out.write(",");
-
-      final Point3D p;
-
-      p = getInnerPoint(i);
-
-      out.write("" + p.getY());
-    }
-
-    out.write(")\nz <- c(");
-    for (int i = 0; i < n; i++) {
-      if (i > 0)
-        out.write(",");
-
-      final Point3D p;
-
-      p = getInnerPoint(i);
-
-      out.write("" + p.getZ());
-    }
-
-    out.write(")\n");
-
-  }
-
-  /**
-   * Generate R code to plot the inners points
-   * @param out Writer used to write data
-   * @param sphere plot spheres
-   * @param size Size of the points
-   * @param colorName Name of the color of the points
-   * @throws IOException if an error occurs while write data
-   */
-  public void innerPointstoRPlot(final Writer out, final boolean sphere,
-      final String size, final String colorName) throws IOException {
-
-    if (sphere)
-      out.write("rgl.spheres(x, y, z, r=" + size);
-    else
-      out.write("points3d(x, y, z, size=" + size);
-
-    if (colorName != null) {
-      out.write(",color=\"");
-      out.write(colorName);
-      out.write("\"");
-    }
-    out.write(")\n");
-
-  }
-
-  /**
-   * Generate R code to plot the inners points
-   * @param size Size of the points
-   * @param colorName Name of the color of the points
-   * @return A String with the R code to plot the points
-   */
-  public String surfacePointLinestoR(final float size, final String colorName) {
-
-    final int n = surfacePointsCount();
-
-    if (n == 0)
-      return "";
-
-    final StringBuffer sb = new StringBuffer();
-
-    sb.append("x <- c(");
-
-    for (int i = 0; i < n; i++) {
-      if (i > 0)
-        sb.append(",");
-
-      final Point3D p;
-
-      p = getSurfacePoint(i);
-
-      sb.append(p.getX());
-    }
-
-    sb.append(")\ny <- c(");
-    for (int i = 0; i < n; i++) {
-      if (i > 0)
-        sb.append(",");
-
-      final Point3D p;
-
-      p = getSurfacePoint(i);
-
-      sb.append(p.getY());
-    }
-
-    sb.append(")\nz <- c(");
-    for (int i = 0; i < n; i++) {
-      if (i > 0)
-        sb.append(",");
-
-      final Point3D p;
-
-      p = getSurfacePoint(i);
-
-      sb.append(p.getZ());
-    }
-
-    sb.append(")\n");
-    sb.append("points3d(x, y, z, size=");
-    sb.append(size);
-    if (colorName != null) {
-      sb.append(",color=\"");
-      sb.append(colorName);
-      sb.append("\"");
-    }
-    sb.append(")\n");
-
-    return sb.toString();
-  }
-
-  /**
-   * Generate R code to plot the surface points
-   * @param out Writer used to write data
-   * @throws IOException if an error occurs while writing data
-   */
-  public void surfacePointstoRData(final Writer out) throws IOException {
-
-    if (out == null)
-      return;
-
-    if (surfacePointsCount() == 0)
-      return;
-
-    final Map slices = getSurfacePointSlices(this);
-
-    final Iterator it = slices.keySet().iterator();
-
-    while (it.hasNext()) {
-
-      final String z = (String) it.next();
-
-      final Particle2D par = (Particle2D) slices.get(z);
-      final int n = par.surfacePointsCount();
-
-      if (par.surfacePointsCount() == 0)
-        continue;
-
-      out.write("x <- c(");
-
-      for (int i = 0; i < n; i++) {
-        final Point2D p;
-        if (i > 0)
-          out.write(",");
-        p = par.getSurfacePoint(i);
-
-        out.write("" + p.getX());
-        // sb.append(",");
-      }
-      // sb.append("" + getSurfacePoint(0).getX());
-
-      out.write(")\ny <- c(");
-      for (int i = 0; i < n; i++) {
-        if (i > 0)
-          out.write(",");
-        final Point2D p;
-
-        p = par.getSurfacePoint(i);
-
-        out.write("" + p.getY());
-        // sb.append(",");
-      }
-      // sb.append("" + getSurfacePoint(0).getY());
-
-      out.write(")\nz <- c(");
-      for (int i = 0; i < n + 1; i++) {
-        if (i > 0)
-          out.write(",");
-
-        out.write(z);
-      }
-
-      out.write(")\n");
-
-    }
-
-  }
-
-  /**
-   * Generate R code to plot the surface points
-   * @param out Writer used to write data
-   * @param size Size of the points
-   * @param colorName Name of the color of the points
-   * @throws IOException if an error occurs while writing data
-   */
-  public void surfacePointstoRPlot(final Writer out, final float size,
-      final String colorName) throws IOException {
-
-    if (out == null)
-      return;
-
-    out.write("lines3d(x, y, z, size=" + size);
-    if (colorName != null) {
-      out.write(",color=\"");
-      out.write(colorName);
-      out.write("\"");
-    }
-    out.write(")\n");
-
-  }
-
-  /**
    * Recalc the intensity of the particle from the inners points.
    */
   public void setIntensityFromInnerPoints() {
@@ -1022,6 +895,72 @@ public final class Particle3D {
     }
 
     return min;
+  }
+
+  /**
+   * Find the nearst inner point of the particle from another point.
+   * @param p Point to test.
+   * @return the nearst point or null if there is no nearest point
+   */
+  public Point3D getNearestInnerPoint(final Point3D p) {
+
+    Point3D nearest = null;
+    float minDistance = Float.MAX_VALUE;
+
+    final int n = innerPointsCount();
+
+    for (int j = 0; j < n; j++) {
+      final Point3D p2 = getInnerPoint(j);
+
+      if (nearest == null) {
+        nearest = p2;
+        minDistance = p2.distance(p);
+      } else {
+
+        float d = p2.distance(p);
+        if (d < minDistance) {
+          minDistance = d;
+          nearest = p2;
+        }
+
+      }
+
+    }
+
+    return nearest;
+  }
+
+  /**
+   * Find the furthest inner point of the particle from another point.
+   * @param p Point to test.
+   * @return the furthest point or null if there is no nearest point
+   */
+  public Point3D getFurthestInnerPoint(final Point3D p) {
+
+    Point3D furthest = null;
+    float maxDistance = Float.MIN_VALUE;
+
+    final int n = innerPointsCount();
+
+    for (int j = 0; j < n; j++) {
+      final Point3D p2 = getInnerPoint(j);
+
+      if (furthest == null) {
+        furthest = p2;
+        maxDistance = p2.distance(p);
+      } else {
+
+        float d = p2.distance(p);
+        if (d > maxDistance) {
+          maxDistance = d;
+          furthest = p2;
+        }
+
+      }
+
+    }
+
+    return furthest;
   }
 
   //
