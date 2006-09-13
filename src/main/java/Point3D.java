@@ -4,7 +4,7 @@ import java.util.StringTokenizer;
  * By Laurent Jourdren
  */
 
-abstract public class Point3D {
+abstract public class Point3D implements Comparable {
 
   //
   // Getters
@@ -101,6 +101,25 @@ abstract public class Point3D {
   }
 
   /**
+   * Test if the point is near another point.
+   * @param p Point to test
+   * @param xlen Maximal distance in x
+   * @param ylen Maximal distance in y
+   * @param zlen Maximal distance in z
+   * @return true if this point is near the point
+   */
+  public final boolean isNear(final Point3D p, final float xlen,
+      final float ylen, final float zlen) {
+
+    if (p == null || xlen < 0.0f || ylen < 0.0f || zlen < 0.0f)
+      return false;
+
+    return (Math.abs(getX() - p.getX()) < xlen)
+        && (Math.abs(getY() - p.getY()) < ylen)
+        && (Math.abs(getZ() - p.getZ()) < zlen);
+  }
+
+  /**
    * Overide toString() method.
    * @return A string describing the point.
    */
@@ -130,36 +149,6 @@ abstract public class Point3D {
     sb.append(this.getY());
     sb.append(',');
     sb.append(this.getZ());
-
-    return sb.toString();
-  }
-
-  /**
-   * Generate R code to plot the point
-   * @param size Size of the points
-   * @param colorName Name of the color of the point
-   * @return A String with the R code to plot the point
-   */
-  public String toR(final float size, final String colorName) {
-
-    final StringBuffer sb = new StringBuffer();
-
-    sb.append("x <- c(");
-    sb.append(getX());
-    sb.append(")\ny <- c(");
-    sb.append(getY());
-    sb.append(")\nz <- c(");
-    sb.append(getZ());
-
-    sb.append(")\n");
-    sb.append("points3d(x, y, z, size=");
-    sb.append(size);
-    if (colorName != null) {
-      sb.append(",color=\"");
-      sb.append(colorName);
-      sb.append("\"");
-    }
-    sb.append(")\n");
 
     return sb.toString();
   }
@@ -205,6 +194,47 @@ abstract public class Point3D {
       return true;
 
     return false;
+  }
+
+  /**
+   * Implements Comparable interface
+   * @param point Point to test
+   * @return the result of the comparaison
+   */
+  public int compareTo(final Object point) {
+
+    return compareTo((Point3D) point);
+  }
+
+  /**
+   * Implements Comparable interface
+   * @param point Point to test
+   * @return the result of the comparaison
+   */
+  public int compareTo(final Point3D point) {
+
+    if (point == null)
+      throw new NullPointerException();
+
+    float diffX = this.getX() - point.getX();
+    if (diffX != 0)
+      return diffX < 0 ? -1 : 1;
+
+    float diffY = this.getY() - point.getY();
+    if (diffY != 0)
+      return diffY < 0 ? -1 : 1;
+
+    float diffZ = this.getZ() - point.getZ();
+    if (diffZ != 0)
+      return diffZ < 0 ? -1 : 1;
+
+    float diffI = this.getI() - point.getI();
+    if (diffI < 0)
+      return -1;
+    if (diffI == 0)
+      return 0;
+
+    return 1;
   }
 
 }
