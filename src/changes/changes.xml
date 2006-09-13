@@ -38,6 +38,36 @@
 	</properties>
 	<body>
 
+		<release version="0.16" date="2006-09-13">
+			<action dev="jourdren" type="update">
+				Optimisation des calculs.
+			</action>
+			<action dev="jourdren" type="update">
+				Changement du format des fichiers .par. Les fichiers
+				utilisant l'ancien format reste utilisables.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout dans le fichier de resultats d'un entete et d'une
+				colonne des distances maximales.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout d'une échelle dans les représentations RGL.
+			</action>
+			<action dev="jourdren" type="update">
+				Deplacement du générateur de code RGL dans une unique
+				classe.
+			</action>
+			<action dev="jourdren" type="add">
+				Mise en place d'une methode de calcul des distances
+				correcte.
+			</action>
+			<action dev="jourdren" type="add">
+				Creation de nouveau fichiers (.iv) contenant les
+				intensités et les volumes des mitos, messagers et
+				cuboids.
+			</action>
+		</release>
+
 		<release version="0.15" date="2006-06-20">
 			<action dev="jourdren" type="add">
 				Insertion de points intermediaires pour l'affichage 3d.
@@ -359,9 +389,7 @@
 		</release>
 
 		<release version="0.1" date="" desc="Initial release">
-			<action dev="jourdren" type="add">
-				Version initiale.
-			</action>
+			<action dev="jourdren" type="add">Version initiale.</action>
 		</release>
 
 	</body>
