@@ -6,6 +6,7 @@ import ij.process.ImageStatistics;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public final class Particle2D {
@@ -296,6 +297,93 @@ public final class Particle2D {
     }
 
     return false;
+  }
+
+  /**
+   * Find the nearest inner point of the particle from a another point.
+   * @param p Point to Test
+   * @return the nearest point of the particle
+   */
+  public Point2D findNearestInnerPoint(final Point2D p) {
+
+    final int n = innerPointsCount();
+
+    if (p == null || n == 0)
+      return null;
+
+    float minDistance = Float.MAX_VALUE;
+    Point2D nearestPoint = null;
+
+    for (int i = 0; i < n; i++) {
+
+      Point2D ip = getInnerPoint(i);
+      final float distance = ip.distance(p);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestPoint = ip;
+      }
+    }
+
+    return nearestPoint;
+  }
+
+  /**
+   * Find the nearest surface point of the particle from a another point.
+   * @param p Point to Test
+   * @return the nearest point of the particle
+   */
+  public Point2D findNearestSurfacePoint(final Point2D p) {
+
+    final int n = surfacePointsCount();
+
+    if (p == null || n == 0)
+      return null;
+
+    float minDistance = Float.MAX_VALUE;
+    Point2D nearestPoint = null;
+
+    for (int i = 0; i < n; i++) {
+
+      Point2D ip = getSurfacePoint(i);
+      final float distance = ip.distance(p);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestPoint = ip;
+      }
+    }
+
+    return nearestPoint;
+  }
+
+  /**
+   * Find the nearests surface points of the particle from a another point.
+   * @param p Point to Test
+   * @param d Maximal distance
+   * @return an array of the nearests points of the particle
+   */
+  public Point2D[] findNearestsSurfacePoints(final Point2D p, final float maxDistance) {
+
+    final int n = surfacePointsCount();
+
+    if (p == null || n == 0)
+      return null;
+
+    ArrayList al = new ArrayList();
+
+    
+    for (int i = 0; i < n; i++) {
+
+      Point2D ip = getSurfacePoint(i);
+      final float distance = ip.distance(p);
+      if (distance < maxDistance) {
+        al.add(ip);
+      } 
+    }
+
+    Point2D [] result = new Point2D[al.size()];
+    al.toArray(result);
+
+    return result;
   }
 
   /**
