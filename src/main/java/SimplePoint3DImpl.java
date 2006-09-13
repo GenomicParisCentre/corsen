@@ -113,6 +113,16 @@ public class SimplePoint3DImpl extends Point3D {
 
   /**
    * Public constructor.
+   * @param p Point2D
+   * @param z Z Coordinate
+   */
+  public SimplePoint3DImpl(final Point2D p, final float z) {
+
+    this(p.getX(), p.getY(), z, p.getI());
+  }
+
+  /**
+   * Public constructor.
    */
   public SimplePoint3DImpl() {
   }
