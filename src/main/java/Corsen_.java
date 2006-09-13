@@ -57,14 +57,14 @@ import javax.swing.JOptionPane;
  * <p>
  * 
  * <pre>
- *                                                 for each line do
- *                                                 for each pixel in this line do
- *                                                 if the pixel value is &quot;inside&quot; the threshold range then
- *                                                 trace the edge to mark the object
- *                                                 do the measurement
- *                                                 fill the object with a color outside the threshold range
- *                                                 else
- *                                                 continue the scan
+ *                                                   for each line do
+ *                                                   for each pixel in this line do
+ *                                                   if the pixel value is &quot;inside&quot; the threshold range then
+ *                                                   trace the edge to mark the object
+ *                                                   do the measurement
+ *                                                   fill the object with a color outside the threshold range
+ *                                                   else
+ *                                                   continue the scan
  * </pre>
  */
 public class Corsen_ implements PlugInFilter, Measurements {
@@ -186,9 +186,10 @@ public class Corsen_ implements PlugInFilter, Measurements {
 
     // double zHeight= 2.0;
 
-    final double pixelWidth = imp.pixelWidth;
-    final double pixelHeight = imp.pixelHeight;
-    final double pixelDepth = imp.pixelDepth;
+    Calibration cal = imp.getCalibration();
+    final double pixelWidth = cal.pixelWidth;
+    final double pixelHeight = cal.pixelHeight;
+    final double pixelDepth = cal.pixelDepth;
 
     final int slice = imp.getCurrentSlice();
 
@@ -304,13 +305,30 @@ public class Corsen_ implements PlugInFilter, Measurements {
     writer.write(new Date(f.lastModified()).toString());
 
     ImageProcessor ip = this.imp.getProcessor();
+    Calibration cal = imp.getCalibration();
 
-    writer.write("\n# Min threshold: " + ip.getMinThreshold());
-    writer.write("\n# Max threshold: " + ip.getMaxThreshold());
-    writer.write("\nDimensions");
-    writer.write("\t" + (this.imp.getWidth() * imp.pixelWidth));
-    writer.write("\t" + (this.imp.getHeight() * imp.pixelHeight));
-    writer.write("\t" + (this.imp.getNSlices() * imp.pixelDepth));
+    writer.write("\nParFileVersion=1.1");
+
+    writer.write("\n"+ Particles3D.WIDTH_KEY + "=" + this.imp.getWidth());
+    writer.write("\n"+ Particles3D.HEIGHT_KEY + "=" + this.imp.getHeight());
+    writer.write("\n" +Particles3D.ZSLICES_KEY +"=" + this.imp.getNSlices());
+
+    writer.write("\n" +Particles3D.PIXEL_WIDTH_KEY +"=" + cal.pixelWidth);
+    writer.write("\n" +Particles3D.PIXEL_HEIGHT_KEY +"=" + cal.pixelHeight);
+    writer.write("\n" +Particles3D.PIXEL_DEPTH_KEY +"=" + cal.pixelDepth);
+    writer.write("\n" +Particles3D.UNIT_OF_LENGHT_KEY +"=" + cal.getUnit());
+
+    writer.write("\n" +Particles3D.MIN_THRESHOLD_KEY +"=" + ip.getMinThreshold());
+    writer.write("\n" +Particles3D.MAX_THRESHOLD_KEY +"=" + ip.getMaxThreshold());
+
+    /*
+     * writer.write("\n# Min threshold: " + ip.getMinThreshold());
+     * writer.write("\n# Max threshold: " + ip.getMaxThreshold());
+     * writer.write("\nDimensions"); writer.write("\t" + (this.imp.getWidth() *
+     * imp.pixelWidth)); writer.write("\t" + (this.imp.getHeight() *
+     * imp.pixelHeight)); writer.write("\t" + (this.imp.getNSlices() *
+     * imp.pixelDepth));
+     */
 
     writer
         .write("\nName\tCenter\tBarycenter\tVolume\tIntensity\tSurface points\tInner points\n");
