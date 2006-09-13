@@ -146,7 +146,8 @@ public final class ArrayLongList {
       ensureCapacity(this._size + n, n == MERGE_BUFFER_SIZE);
 
       for (int i = 0; i < n; i++)
-        this._data[this._firstElement + this._size + i] = list._data[list._firstElement + i];
+        this._data[this._firstElement + this._size + i] = list._data[list._firstElement
+            + i];
 
       current._size += n;
 
