@@ -31,7 +31,6 @@ public class CorsenUI extends JFrame {
   private final JLabel dirLabel = new JLabel("no derectory set");
   private final JLabel arnLabel = new JLabel("no file set");
   private final JLabel mitoLabel = new JLabel("no file set");
-  private final JTextField cubeSizeTextField = new JTextField("");
   private final JTextField zCoefTextField = new JTextField("");
   private final JCheckBox zCoefCheckBox = new JCheckBox();
   private final JTextField pixelSizeTextField = new JTextField("");
@@ -60,25 +59,6 @@ public class CorsenUI extends JFrame {
 
   public File getCurrentDirectory() {
     return this.currentDirectory;
-  }
-
-  public float getCubeLen() {
-
-    final String s = this.cubeSizeTextField.getText();
-    if (s == null)
-      return 0.0f;
-
-    try {
-      return Float.parseFloat(s);
-    } catch (final NumberFormatException e) {
-
-      return 0.0f;
-    }
-  }
-
-  public void setCubeLen(final float cubeSize) {
-
-    this.cubeSizeTextField.setText("" + cubeSize);
   }
 
   public float getPixelSize() {
@@ -204,7 +184,8 @@ public class CorsenUI extends JFrame {
           if (result == JFileChooser.APPROVE_OPTION) {
             CorsenUI.this.dirFile = jfc.getSelectedFile();
             CorsenUI.this.dirLabel.setText(CorsenUI.this.dirFile.getName());
-            CorsenUI.this.currentDirectory = CorsenUI.this.dirFile.getParentFile();
+            CorsenUI.this.currentDirectory = CorsenUI.this.dirFile
+                .getParentFile();
           }
 
         }
@@ -235,7 +216,8 @@ public class CorsenUI extends JFrame {
           if (result == JFileChooser.APPROVE_OPTION) {
             CorsenUI.this.arnFile = jfc.getSelectedFile();
             CorsenUI.this.arnLabel.setText(CorsenUI.this.arnFile.getName());
-            CorsenUI.this.currentDirectory = CorsenUI.this.arnFile.getParentFile();
+            CorsenUI.this.currentDirectory = CorsenUI.this.arnFile
+                .getParentFile();
           }
 
         }
@@ -265,22 +247,14 @@ public class CorsenUI extends JFrame {
           if (result == JFileChooser.APPROVE_OPTION) {
             CorsenUI.this.mitoFile = jfc.getSelectedFile();
             CorsenUI.this.mitoLabel.setText(CorsenUI.this.mitoFile.getName());
-            CorsenUI.this.currentDirectory = CorsenUI.this.mitoFile.getParentFile();
+            CorsenUI.this.currentDirectory = CorsenUI.this.mitoFile
+                .getParentFile();
           }
 
         }
       });
 
       panelMito.add(mitoButton, BorderLayout.EAST);
-
-      final JPanel panelCubeSize = new JPanel();
-      panelCubeSize.setLayout(new BorderLayout());
-      panel.add(panelCubeSize);
-
-      panelCubeSize.add(new JLabel("Cube size: "), BorderLayout.WEST);
-      panelCubeSize.setEnabled(false);
-      this.cubeSizeTextField.setHorizontalAlignment(SwingConstants.RIGHT);
-      panelCubeSize.add(this.cubeSizeTextField, BorderLayout.EAST);
 
       /*
        * JButton mitoButton = new JButton("Browse");

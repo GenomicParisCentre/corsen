@@ -24,7 +24,7 @@ public class Corsen {
   private static final String WINDOWS_PLAF = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
 
   private static final float Z_COEF_DEFAULT = 2.96f;
-  private static final float LEN_CUBE_DEFAULT = 2.5f;
+  public static final float CUBOID_SIZE_FACTOR = 2.1f;
   private static final float PIXEL_SIZE_DEFAULT = 1.0f;
 
   private static final Corsen corsen = new Corsen();
@@ -121,7 +121,6 @@ public class Corsen {
 
     this.gui = new CorsenUI(ffPar);
     this.gui.setZCoef(Z_COEF_DEFAULT);
-    this.gui.setCubeLen(LEN_CUBE_DEFAULT);
     this.gui.setPixelSize(PIXEL_SIZE_DEFAULT);
 
     this.gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -132,7 +131,6 @@ public class Corsen {
 
         final CorsenCore cc = new CorsenCore();
 
-        cc.setLenCuboid(Corsen.this.gui.getCubeLen());
         cc.setZCoef(Corsen.this.gui.getZCoef());
         cc.setUpdateZ(Corsen.this.gui.isUpdateZ());
         cc.setPixelSize(Corsen.this.gui.getPixelSize());
@@ -145,7 +143,8 @@ public class Corsen {
           new Thread(cc).start();
           // SwingUtilities.invokeLater(cc);
 
-        } else if (Corsen.this.gui.getARNFile() == null || Corsen.this.gui.getMitoFile() == null) {
+        } else if (Corsen.this.gui.getARNFile() == null
+            || Corsen.this.gui.getMitoFile() == null) {
 
           if (Corsen.this.gui.getARNFile() == null)
             Corsen.this.gui.showError("No messager file specified.");

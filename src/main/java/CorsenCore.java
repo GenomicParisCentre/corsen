@@ -13,7 +13,6 @@ public class CorsenCore implements Runnable {
 
   private float pixelSize = 1.0f;
   private float zCoef;
-  private float lenCube;
   private boolean updateZ;
   private boolean writeFullResults;
 
@@ -99,14 +98,6 @@ public class CorsenCore implements Runnable {
   //
   // Setters
   //
-
-  /**
-   * Set the length of a cuboid.
-   * @param lenCube The new length of a cuboid
-   */
-  public void setLenCuboid(final float lenCube) {
-    this.lenCube = lenCube;
-  }
 
   /**
    * Set the size of pixel.
@@ -236,7 +227,7 @@ public class CorsenCore implements Runnable {
 
     // Calc cuboids and write R plot for cuboids
     sendEvent(ProgressEvent.START_CALC_CUBOIDS_EVENT);
-    final Particles3D cuboids = calcCuboid(messengersParticles, this.lenCube);
+    final Particles3D cuboids = calcCuboid(messengersParticles);
 
     sendEvent(ProgressEvent.START_WRITE_RPLOT_CUBOIDS_EVENT);
 
@@ -522,7 +513,7 @@ public class CorsenCore implements Runnable {
    * @param lenght of the cuboid
    * @return An array of Particle3D
    */
-  public Particles3D calcCuboid(final Particles3D particles, final float lenght) {
+  public Particles3D calcCuboid(final Particles3D particles) {
 
     if (particles == null)
       return null;
@@ -538,8 +529,15 @@ public class CorsenCore implements Runnable {
 
       final Particle3D messenger = particles.getParticle(m);
 
-      ArrayList cuboids = Particle3DUtil.createCuboid(messenger, lenght,
-          lenght, lenght);
+      float len = particles.getPixelDepth();
+      if (particles.getPixelWidth() > len)
+        len = particles.getPixelWidth();
+      if (particles.getPixelHeight() > len)
+        len = particles.getPixelHeight();
+
+      len = len * Corsen.CUBOID_SIZE_FACTOR;
+
+      ArrayList cuboids = Particle3DUtil.createCuboid(messenger, len, len, len);
 
       if (cuboids != null) {
         if (al == null)
