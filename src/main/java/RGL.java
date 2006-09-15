@@ -10,6 +10,7 @@ import java.util.Map;
 public class RGL {
 
   private Writer out;
+  private String unit = "pixel";
 
   public static final String COLOR_CYAN = "cyan";
   public static final String COLOR_GREEN = "green";
@@ -27,6 +28,14 @@ public class RGL {
    */
   public Writer getWriter() {
     return out;
+  }
+
+  /**
+   * Get the unit
+   * @return Returns the unit
+   */
+  public String getUnit() {
+    return unit;
   }
 
   //
@@ -62,6 +71,15 @@ public class RGL {
     setFile(new File(file));
   }
 
+  /**
+   * Set the unit
+   * @param unit The unit to set
+   */
+  public void setUnit(String unit) {
+    if (unit != null)
+      this.unit = unit;
+  }
+
   //
   // Other methods
   //
@@ -86,6 +104,10 @@ public class RGL {
     out
         .write("if (length( grep(\"package:rgl\",search()) )==0) { library(rgl) }\n\n");
 
+    out
+        .write("rgl.bg(color=c(\"" + COLOR_BLACK
+            + "\"), fogtype=\"linear\" )\n");
+
     writeLegend();
   }
 
@@ -98,13 +120,14 @@ public class RGL {
     Point3D y = new SimplePoint3DImpl(0, 10, 0);
     Point3D z = new SimplePoint3DImpl(0, 0, 10);
 
-    writeLine(o, x, COLOR_BLACK);
-    writeLine(o, y, COLOR_BLACK);
-    writeLine(o, z, COLOR_BLACK);
+    writeLine(o, x, COLOR_WHITE);
+    writeLine(o, y, COLOR_WHITE);
+    writeLine(o, z, COLOR_WHITE);
 
-    String text = "10 u";
+    String text = "10 " + getUnit();
 
-    out.write("text3d(x=-1,y=-1,z=-1,text=\"" + text + "\")\n");
+    out.write("text3d(x=-1,y=-1,z=-1,text=\"" + text + "\",color=\""
+        + COLOR_WHITE + "\")\n");
 
   }
 
@@ -546,12 +569,14 @@ public class RGL {
 
   /**
    * Public constructor.
+   * @param unit of the 3d view
    * @param file File to write
    * @throws IOException if an error occurs while writing the header
    */
-  public RGL(final File file) throws IOException {
+  public RGL(String unit, final File file) throws IOException {
 
     setFile(file);
+    setUnit(unit);
     writeHeader();
   }
 
@@ -563,7 +588,20 @@ public class RGL {
    */
   public RGL(final File parent, final String filename) throws IOException {
 
-    this(new File(parent, filename));
+    this(null, new File(parent, filename));
+  }
+
+  /**
+   * Public constructor.
+   * @param parent Parent directory of the file to write
+   * @param unit of the 3d view
+   * @param filename Name of the file to write
+   * @throws IOException if an error occurs while writing the header
+   */
+  public RGL(final String unit, final File parent, final String filename)
+      throws IOException {
+
+    this(unit, new File(parent, filename));
   }
 
 }

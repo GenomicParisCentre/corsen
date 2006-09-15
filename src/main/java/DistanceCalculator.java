@@ -110,7 +110,8 @@ public class DistanceCalculator {
     // Write the mito cuboids
 
     if (this.fileRGLMitoCuboids != null) {
-      RGL rgl = new RGL(this.fileRGLMitoCuboids);
+      RGL rgl = new RGL(this.mitoParticles.getUnitOfLength(),
+          this.fileRGLMitoCuboids);
       rgl.writeRPlots(mitoCuboids, "red", false, 1.0f);
       rgl.close();
     }
@@ -354,7 +355,7 @@ public class DistanceCalculator {
 
     if (fileRGLDistances != null) {
 
-      this.rglDistances = new RGL(fileRGLDistances);
+      this.rglDistances = new RGL(mitos.getUnitOfLength(), fileRGLDistances);
 
     }
 
