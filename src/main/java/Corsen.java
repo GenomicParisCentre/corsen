@@ -18,7 +18,7 @@ public class Corsen {
   /** The name of the application. */
   public static final String APP_NAME = "Corsen";
   /** The version of the application. */
-  public static final String APP_VERSION = "0.16";
+  public static final String APP_VERSION = "0.17";
 
   // Windows Look and Feel
   private static final String WINDOWS_PLAF = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
