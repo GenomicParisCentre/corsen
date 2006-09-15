@@ -25,8 +25,8 @@ public class Particles3D {
   private float pixelDepth = 1.0f;
 
   private String unitOfLength = "";
-  private int minThreshold;
-  private int maxThreshold;
+  private double minThreshold;
+  private double maxThreshold;
 
   Particle3D[] particles;
 
@@ -46,7 +46,7 @@ public class Particles3D {
    * Get the maximun threshold of the image.
    * @return Returns the maxThreshold
    */
-  public int getMaxThreshold() {
+  public double getMaxThreshold() {
     return maxThreshold;
   }
 
@@ -54,7 +54,7 @@ public class Particles3D {
    * Get the minimum threshold of the image.
    * @return Returns the minThreshold
    */
-  public int getMinThreshold() {
+  public double getMinThreshold() {
     return minThreshold;
   }
 
@@ -230,9 +230,9 @@ public class Particles3D {
               else if (UNIT_OF_LENGHT_KEY.endsWith(key))
                 this.unitOfLength = value.trim();
               else if (MIN_THRESHOLD_KEY.endsWith(key))
-                this.minThreshold = Integer.parseInt(value.trim());
+                this.minThreshold = Double.parseDouble(value.trim());
               else if (MAX_THRESHOLD_KEY.endsWith(key))
-                this.maxThreshold = Integer.parseInt(value.trim());
+                this.maxThreshold = Double.parseDouble(value.trim());
             }
           }
 
