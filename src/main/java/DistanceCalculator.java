@@ -89,8 +89,12 @@ public class DistanceCalculator {
     ArrayList al = new ArrayList();
 
     final Particle3D[] mp = this.mitoParticles.getParticles();
+    final int n = mp.length;
 
-    for (int i = 0; i < mp.length; i++) {
+    for (int i = 0; i < n; i++) {
+
+      final double p = (double) i / (double) n * 1000.0;
+      sendEvent(ProgressEvent.PROGRESS_CALC_MITOS_CUBOIDS_EVENT, (int) p);
 
       final Particle3D mito = mp[i];
 
@@ -335,6 +339,11 @@ public class DistanceCalculator {
   public void closeRGLDistances() throws IOException {
 
     this.rglDistances.close();
+  }
+
+  private void sendEvent(final int id, final int value1) {
+
+    Corsen.getCorsen().updateStatus(new ProgressEvent(id, value1));
   }
 
   //

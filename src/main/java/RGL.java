@@ -167,8 +167,6 @@ public class RGL {
       final boolean plotCenter, final float minDistanceBetweenTwoPoints)
       throws IOException {
 
-    final long start = System.currentTimeMillis();
-
     if (particles == null)
       return;
 
@@ -247,9 +245,6 @@ public class RGL {
       out.write("\n");
 
     }
-
-    final long end = System.currentTimeMillis();
-    System.out.println("Write R plot : " + (end - start) + " ms");
   }
 
   /**

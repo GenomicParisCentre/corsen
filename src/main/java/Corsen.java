@@ -210,32 +210,30 @@ public class Corsen {
     case ProgressEvent.START_READ_MITOS_EVENT:
     case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_EVENT:
     case ProgressEvent.START_WRITE_RPLOT_MITOS_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_CUBOIDS_EVENT:
-    case ProgressEvent.START_CALC_CUBOIDS_EVENT:
+    case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT:
+    case ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT:
+    case ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT:
     case ProgressEvent.START_WRITE_FULLRESULT_MESSAGERS_EVENT:
     case ProgressEvent.START_WRITE_FULLRESULT_CUBOIDS_EVENT:
-    case ProgressEvent.START_WRITE_RRESULT_CUBOIDS_EVENT:
+    case ProgressEvent.START_WRITE_RESULT_CUBOIDS_EVENT:
+    case ProgressEvent.START_WRITE_INTENSITIES_VOLUMES_EVENT:
 
-      // long lastPhase = this.status.phaseStart;
       this.status.phaseStart = System.currentTimeMillis();
       this.status.currentPhase = e.getId();
       this.status.phaseIndex = 0;
       this.status.phaseEnd = 0;
-      /*
-       * if (lastPhase != 0) { System.out.println("Last phase (#" +
-       * this.status.currentPhase + ") in " + (this.status.phaseStart -
-       * lastPhase) + " ms\n"); top(); }
-       */
 
       break;
 
-    case ProgressEvent.PROGRESS_CALC_CUBOIDS_EVENT:
+    case ProgressEvent.PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT:
+    case ProgressEvent.PROGRESS_CALC_MITOS_CUBOIDS_EVENT:
+
       this.status.phaseIndex = e.getIntValue1();
       break;
 
     case ProgressEvent.END_SUCCESSFULL_EVENT:
       final long end = System.currentTimeMillis();
-      System.out.println("Finish in" + (this.status.initStart - end) + " ms");
+      System.out.println("Finish in " + (end - this.status.initStart) + " ms");
       this.gui.setStartEnable(true);
       this.gui.setStatusMessage("Ready");
       return;
@@ -255,11 +253,13 @@ public class Corsen {
     sb.append("/");
     sb.append(this.status.maxFiles);
     sb.append(" Phase: ");
+
     sb.append(this.status.currentPhase);
-    sb.append("/9 (");
+    sb.append("/11 (");
     sb.append(getPhaseName(this.status.currentPhase));
 
-    if (this.status.currentPhase == ProgressEvent.START_CALC_CUBOIDS_EVENT) {
+    if (this.status.currentPhase == ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT
+        || this.status.currentPhase == ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT) {
       sb.append(" ");
       sb.append((double) this.status.phaseIndex / 10);
       sb.append("%");
@@ -268,7 +268,7 @@ public class Corsen {
     sb.append(")");
 
     this.gui.setStatusMessage(sb.toString());
-    // System.out.println(sb.toString());
+    // System.out.println("[+" + e.getId() + "]\t" + sb.toString());
 
     if (false)
       top();
@@ -286,16 +286,20 @@ public class Corsen {
       return "Write messengers R plot file";
     case ProgressEvent.START_WRITE_RPLOT_MITOS_EVENT:
       return "Write mitos R plot file";
-    case ProgressEvent.START_WRITE_RPLOT_CUBOIDS_EVENT:
+    case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT:
       return "Write cuboids R plot file";
-    case ProgressEvent.START_CALC_CUBOIDS_EVENT:
-      return "Calc cuboids";
+    case ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT:
+      return "Calc messengers cuboids";
     case ProgressEvent.START_WRITE_FULLRESULT_MESSAGERS_EVENT:
       return "Write full results for messengers";
     case ProgressEvent.START_WRITE_FULLRESULT_CUBOIDS_EVENT:
       return "Write full results for cuboids";
-    case ProgressEvent.START_WRITE_RRESULT_CUBOIDS_EVENT:
+    case ProgressEvent.START_WRITE_RESULT_CUBOIDS_EVENT:
       return "Write results data file for R";
+    case ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT:
+      return "Calc mitochondrions cuboids";
+    case ProgressEvent.START_WRITE_INTENSITIES_VOLUMES_EVENT:
+      return "Write intensities and volumes";
 
     default:
       return "";

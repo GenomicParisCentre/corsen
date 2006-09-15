@@ -226,14 +226,32 @@ public class CorsenCore implements Runnable {
     writeIntensityVolume(mitosIVFile, mitosParticles);
 
     // Calc cuboids and write R plot for cuboids
-    sendEvent(ProgressEvent.START_CALC_CUBOIDS_EVENT);
+    sendEvent(ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT);
     final Particles3D cuboids = calcCuboid(messengersParticles);
 
-    sendEvent(ProgressEvent.START_WRITE_RPLOT_CUBOIDS_EVENT);
+    sendEvent(ProgressEvent.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT);
 
     rgl = new RGL(resultDir, resultFilename + EXTENSION_CUBOIDS_RGL_FILE);
     rgl.writeRPlots(cuboids, "green", true);
     rgl.close();
+
+    // Write R result file
+    File resultDataFile = new File(resultDir, resultFilename
+        + EXTENSION_DATA_FILE);
+
+    File fileRGLDistances = new File(resultDir, resultFilename
+        + EXTENSION_DISTANCES_FILE);
+
+    File fileRGLMitoCuboids = new File(resultDir, resultFilename
+        + EXTENSION_MITOS_CUBOIDS_RGL_FILE);
+
+    writeRResultFile(cuboids, mitosParticles, resultDataFile, fileRGLDistances,
+        fileRGLMitoCuboids);
+
+    sendEvent(ProgressEvent.START_WRITE_INTENSITIES_VOLUMES_EVENT);
+    final File cuboidsIVFile = new File(resultDir, resultFilename
+        + EXTENSION_CUBOIDS_IV_FILE);
+    writeIntensityVolume(cuboidsIVFile, cuboids);
 
     // Write full result final
 
@@ -251,27 +269,6 @@ public class CorsenCore implements Runnable {
 
       out.close();
     }
-
-    // Write R result file
-    FileOutputStream fos = new FileOutputStream(new File(resultDir,
-        resultFilename + EXTENSION_DATA_FILE));
-    Writer out = new OutputStreamWriter(fos);
-
-    File fileRGLDistances = new File(resultDir, resultFilename
-        + EXTENSION_DISTANCES_FILE);
-
-    File fileRGLMitoCuboids = new File(resultDir, resultFilename
-        + EXTENSION_MITOS_CUBOIDS_RGL_FILE);
-
-    sendEvent(ProgressEvent.START_WRITE_RRESULT_CUBOIDS_EVENT);
-    writeRResultFile(cuboids, mitosParticles, out, fileRGLDistances,
-        fileRGLMitoCuboids);
-
-    final File cuboidsIVFile = new File(resultDir, resultFilename
-        + EXTENSION_CUBOIDS_IV_FILE);
-    writeIntensityVolume(cuboidsIVFile, cuboids);
-
-    out.close();
 
   }
 
@@ -368,46 +365,35 @@ public class CorsenCore implements Runnable {
    * @throws IOException if an error occurs while writing
    */
   private void writeRResultFile(final Particles3D messengers,
-      final Particles3D mitos, final Writer outResult,
-      final File fileDistances, final File fileMitoCuboids) throws IOException {
+      final Particles3D mitos, final File outFile, final File fileDistances,
+      final File fileMitoCuboids) throws IOException {
 
-    final long start = System.currentTimeMillis();
-
-    // final float pixelLen = this.pixelSize;
-
+    sendEvent(ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT);
     final DistanceCalculator dc = new DistanceCalculator(mitos, fileDistances,
         fileMitoCuboids);
 
-    outResult.write("#Intensity\tmin distance\tmax distance\n");
+    sendEvent(ProgressEvent.START_WRITE_RESULT_CUBOIDS_EVENT);
+    FileOutputStream fos = new FileOutputStream(outFile);
+    Writer out = new OutputStreamWriter(fos);
+
+    out.write("#Intensity\tmin distance\tmax distance\n");
 
     final Particle3D[] mes = messengers.getParticles();
 
     for (int i = 0; i < mes.length; i++) {
 
-      outResult.write("" + mes[i].getIntensity());
-      outResult.write("\t");
-
-      /*
-       * final double d = bestDistance(messengers[i], mitos,
-       * minDistanceBetweenTwoPoints) pixelLen;
-       */
+      out.write("" + mes[i].getIntensity());
+      out.write("\t");
       final double min = dc.minimalDistance(mes[i]);
-
-      outResult.write("" + min);
-
-      outResult.write("\t");
+      out.write("" + min);
+      out.write("\t");
       final double max = dc.maximalDistance(mes[i]);
-
-      outResult.write("" + max);
-
-      outResult.write("\n");
-
+      out.write("" + max);
+      out.write("\n");
     }
 
     dc.closeRGLDistances();
-
-    final long end = System.currentTimeMillis();
-    System.out.println("Write R result file: " + (end - start) + " ms");
+    out.close();
   }
 
   private boolean processMultipleCells(final File directory) throws IOException {
@@ -547,7 +533,7 @@ public class CorsenCore implements Runnable {
 
       count += messenger.innerPointsCount();
       final double p = (double) count / (double) countMax * 1000.0;
-      sendEvent(ProgressEvent.PROGRESS_CALC_CUBOIDS_EVENT, (int) p);
+      sendEvent(ProgressEvent.PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT, (int) p);
     }
 
     if (al == null)
