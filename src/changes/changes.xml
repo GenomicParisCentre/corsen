@@ -38,6 +38,26 @@
 	</properties>
 	<body>
 
+		<release version="0.17" date="2006-09-15">
+			<action dev="jourdren" type="update">
+				Mise à jour documentation fonctions calc.R.
+			</action>
+			<action dev="jourdren" type="update">
+				Les informations sur le déroullement de Corsen sont
+				maintenant correctes.
+			</action>
+			<action dev="jourdren" type="fix">
+				Correction du bogue de lecture des fichiers ".par".
+			</action>
+			<action dev="jourdren" type="add">
+				Choix automatique de la taille des cuboids.
+			</action>
+			<action dev="jourdren" type="update">
+				Fixe le fond des représentation 3D en noir, ajout d'un
+				brouillard.
+			</action>
+		</release>
+
 		<release version="0.16" date="2006-09-13">
 			<action dev="jourdren" type="update">
 				Optimisation des calculs.
