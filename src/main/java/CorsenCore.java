@@ -190,9 +190,9 @@ public class CorsenCore implements Runnable {
     sendEvent(ProgressEvent.START_READ_MESSENGERS_EVENT);
 
     final Particles3D messengersParticles = new Particles3D(rnaFile);
-    if (this.updateZ) {
+    if (this.updateZ)
       messengersParticles.changeZCoord(this.zCoef);
-    }
+
     messengersParticles.changeCoord(this.pixelSize);
 
     // final Particle3D[] messengers = readmageJPlugingOutputFile(rnaFile);
