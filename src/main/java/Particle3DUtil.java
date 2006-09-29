@@ -113,8 +113,6 @@ public final class Particle3DUtil {
     if (particle == null)
       throw new NullPointerException("Particle is null");
 
-    System.out.println("CREATE CUBOID");
-
     Map mapCuboids = initCuboids(particle, xlenght, ylenght, zlenght);
     fillCuboids(particle, mapCuboids, xlenght, ylenght, zlenght);
 
