@@ -35,8 +35,38 @@ public class DistanceCalculator {
   // Other methods
   //
 
+  private final static int[] keyParser(final String s) {
+
+    String[] values = s.split("\\,");
+
+    final int[] result = new int[3];
+    result[0] = Integer.parseInt(values[0]);
+    result[1] = Integer.parseInt(values[1]);
+    result[2] = Integer.parseInt(values[2]);
+
+    return result;
+  }
+
+  private static final String createKey(final int x, final int y, final int z) {
+
+    return "" + x + "," + y + "," + z;
+  }
+
+  private static final boolean isFullCuboid(final Map cuboids, final int x,
+      final int y, final int z) {
+
+    final String key = createKey(x, y, z);
+
+    if (!cuboids.containsKey(key))
+      return false;
+
+    Particle3D p = (Particle3D) cuboids.get(key);
+
+    return p.innerPointsCount() == 8;
+  }
+
   /**
-   * Calc the cuboids from a particle. The cuboids can't contains more than 4
+   * Calc the cuboids from a particle. The cuboids can't contains more than 8
    * points in a cuboid.
    * @param particle Input partcile
    */
@@ -46,21 +76,42 @@ public class DistanceCalculator {
     if (particle == null)
       throw new NullPointerException("Particle is null");
 
-    ArrayList cuboids = Particle3DUtil.createCuboid(particle, xlen * 2,
+    Map cuboids = Particle3DUtil.createCuboidToMap(particle, xlen * 2,
         ylen * 2, zlen * 2);
 
-    Iterator it = cuboids.iterator();
+    Iterator it = cuboids.keySet().iterator();
 
     Set toRemove = new HashSet();
 
     while (it.hasNext()) {
 
-      Particle3D p = (Particle3D) it.next();
+      String key = (String) it.next();
+
+      Particle3D p = (Particle3D) cuboids.get(key);
 
       final int count = p.innerPointsCount();
 
-      if (count == 0 || count == 8)
+      if (count == 0)
         toRemove.add(p);
+      else if (count == 8) {
+
+        // test if all the nearst cuboids are full to remove this cuboid
+
+        final int[] coords = keyParser(key);
+
+        final int x = coords[0];
+        final int y = coords[1];
+        final int z = coords[2];
+
+        if (isFullCuboid(cuboids, x - 1, y, z)
+            && isFullCuboid(cuboids, x, y + 1, z)
+            && isFullCuboid(cuboids, x, y - 1, z)
+            && isFullCuboid(cuboids, x + 1, y, z)
+            && isFullCuboid(cuboids, x, y, z + 1)
+            && isFullCuboid(cuboids, x, y, z - 1))
+          toRemove.add(p);
+
+      }
     }
 
     it = toRemove.iterator();
@@ -68,7 +119,7 @@ public class DistanceCalculator {
       cuboids.remove(it.next());
 
     final Particle3D[] result = new Particle3D[cuboids.size()];
-    cuboids.toArray(result);
+    cuboids.values().toArray(result);
 
     return result;
   }

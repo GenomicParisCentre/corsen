@@ -107,13 +107,13 @@ public final class Particle3DUtil {
    * @param ylenght y length of cuboids
    * @param zlenght z length of cuboids
    */
-  public static ArrayList createCuboid(final Particle3D particle,
+  public static ArrayList createCuboidToArrayList(final Particle3D particle,
       final float xlenght, final float ylenght, final float zlenght) {
 
     if (particle == null)
       throw new NullPointerException("Particle is null");
 
-    Map mapCuboids = initCuboids(particle, xlenght, ylenght, zlenght);
+    final Map mapCuboids = initCuboids(particle, xlenght, ylenght, zlenght);
     fillCuboids(particle, mapCuboids, xlenght, ylenght, zlenght);
 
     ArrayList cuboidArrayList = null;
@@ -147,6 +147,55 @@ public final class Particle3DUtil {
     }
 
     return cuboidArrayList;
+  }
+
+  /**
+   * Create an arraylist of cuboids from a particle.
+   * @param particle Input Particle
+   * @param xlenght x length of cuboids
+   * @param ylenght y length of cuboids
+   * @param zlenght z length of cuboids
+   */
+  public static Map createCuboidToMap(final Particle3D particle,
+      final float xlenght, final float ylenght, final float zlenght) {
+
+    if (particle == null)
+      throw new NullPointerException("Particle is null");
+
+    final Map mapCuboids = initCuboids(particle, xlenght, ylenght, zlenght);
+    fillCuboids(particle, mapCuboids, xlenght, ylenght, zlenght);
+
+    Map result = null;
+
+    Iterator mapXIt = mapCuboids.keySet().iterator();
+
+    while (mapXIt.hasNext()) {
+
+      Object keyX = mapXIt.next();
+      Map mapY = (Map) mapCuboids.get(keyX);
+      Iterator mapYIt = mapY.keySet().iterator();
+
+      while (mapYIt.hasNext()) {
+
+        Object keyY = mapYIt.next();
+        Map mapZ = (Map) mapY.get(keyY);
+        Iterator mapZIt = mapZ.keySet().iterator();
+
+        while (mapZIt.hasNext()) {
+
+          Object keyZ = mapZIt.next();
+          Particle3D p = (Particle3D) mapZ.get(keyZ);
+
+          if (p.innerPointsCount() > 0) {
+            if (result == null)
+              result = new HashMap();
+            result.put("" + keyX + "," + keyY + "," + keyZ, p);
+          }
+        }
+      }
+    }
+
+    return result;
   }
 
   /**
