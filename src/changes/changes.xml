@@ -38,6 +38,17 @@
 	</properties>
 	<body>
 
+		<release version="0.18" date="2006-09-15">
+			<action dev="jourdren" type="update">
+				Pour qu'un cuboid mitochondrial soit supprimé, il faut
+				que ses plus proches voisin soient pleins.
+			</action>
+			<action dev="jourdren" type="update">
+				Nouvel alhorithme bien plus rapide pour la création des
+				cuboids.
+			</action>
+		</release>
+
 		<release version="0.17" date="2006-09-15">
 			<action dev="jourdren" type="update">
 				Mise à jour documentation fonctions calc.R.
