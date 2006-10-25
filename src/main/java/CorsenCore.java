@@ -523,7 +523,8 @@ public class CorsenCore implements Runnable {
 
       len = len * Corsen.CUBOID_SIZE_FACTOR;
 
-      ArrayList cuboids = Particle3DUtil.createCuboidToArrayList(messenger, len, len, len);
+      ArrayList cuboids = Particle3DUtil.createCuboidToArrayList(messenger,
+          len, len, len);
 
       if (cuboids != null) {
         if (al == null)

@@ -715,7 +715,7 @@ public final class Particle3D {
       final Particle2D p1 = (Particle2D) slices.get(z);
       final Particle2D p2 = (Particle2D) particlesSlices.get(z);
 
-      if (p1 != null && p2 != null && p1.intersect(p2))
+      if (p1 != null && p2 != null && p1.innerPointIntersect(p2))
         return true;
 
     }

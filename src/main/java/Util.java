@@ -129,7 +129,18 @@ public final class Util {
   }
 
   /**
-   *  Get the equation of a plan
+   * Get the encode value of a point without the intensity data (which set to
+   * 0). This method is useful to compare two points.
+   * @param point The coded location
+   * @return a encoded point with intensity set to 0 
+   */
+  public static long valueWithoutI(final long point) {
+
+    return point & MASK_I;
+  }
+
+  /**
+   * Get the equation of a plan
    * @param p1
    * @param p2
    * @param p3

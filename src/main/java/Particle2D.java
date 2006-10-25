@@ -249,7 +249,7 @@ public final class Particle2D {
    * @param particle Particle to test
    * @return true if an intersection exists
    */
-  public boolean intersect(final Particle2D particle) {
+  public boolean surfacePointIntersect(final Particle2D particle) {
 
     if (particle == null)
       return false;
@@ -282,21 +282,15 @@ public final class Particle2D {
    * @param particle Particle to test
    * @return true if there is an intersection of the two particles
    */
-  public boolean innnerPointIntersect(final Particle2D particle) {
+  public boolean innerPointIntersect(final Particle2D particle) {
 
-    final int n = particle.innerPointsCount();
-
-    if (particle == null || n == 0)
+    if (particle == null)
       return false;
 
-    for (int i = 0; i < n; i++) {
+    ListPoint2D l1 = this.innerPoints;
+    ListPoint2D l2 = particle.innerPoints;
 
-      final Point2D p = particle.getInnerPoint(i);
-      if (isInnerPoint(p.getX(), p.getY()))
-        return true;
-    }
-
-    return false;
+    return l1.intersect(l2);
   }
 
   /**
@@ -361,7 +355,8 @@ public final class Particle2D {
    * @param d Maximal distance
    * @return an array of the nearests points of the particle
    */
-  public Point2D[] findNearestsSurfacePoints(final Point2D p, final float maxDistance) {
+  public Point2D[] findNearestsSurfacePoints(final Point2D p,
+      final float maxDistance) {
 
     final int n = surfacePointsCount();
 
@@ -370,17 +365,16 @@ public final class Particle2D {
 
     ArrayList al = new ArrayList();
 
-    
     for (int i = 0; i < n; i++) {
 
       Point2D ip = getSurfacePoint(i);
       final float distance = ip.distance(p);
       if (distance < maxDistance) {
         al.add(ip);
-      } 
+      }
     }
 
-    Point2D [] result = new Point2D[al.size()];
+    Point2D[] result = new Point2D[al.size()];
     al.toArray(result);
 
     return result;
