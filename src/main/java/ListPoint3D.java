@@ -5,7 +5,7 @@
 public final class ListPoint3D {
 
   private ArrayLongList values = new ArrayLongList();
-  private static final float PRECISION = 10.0f;
+  private static final float PRECISION = 100.0f;
 
   /**
    * Get the number of points in the list.

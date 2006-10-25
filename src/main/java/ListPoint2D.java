@@ -5,7 +5,7 @@
 public class ListPoint2D {
 
   private final ArrayLongList values = new ArrayLongList();
-  private static final float PRECISION = 10.0f;
+  private static final float PRECISION = 100.0f;
 
   /**
    * Get the number of points in the list.
@@ -170,6 +170,31 @@ public class ListPoint2D {
     }
 
     return result;
+  }
+
+  /**
+   * Test if two list of point contains one or more points in common.
+   * @param listPoints List to test
+   * @return true if the two list of point contains one or more points in common
+   */
+  public boolean intersect(final ListPoint2D listPoints) {
+
+    if (listPoints == null)
+      return false;
+
+    final ArrayLongList l1 = this.values;
+    final ArrayLongList l2 = listPoints.values;
+
+    final int n1 = l1.size();
+    final int n2 = l2.size();
+
+    for (int i = 0; i < n1; i++)
+      for (int j = 0; j < n2; j++)
+
+        if (Util.valueWithoutI(l1.get(i)) == Util.valueWithoutI(l2.get(j)))
+          return true;
+
+    return false;
   }
 
 }
