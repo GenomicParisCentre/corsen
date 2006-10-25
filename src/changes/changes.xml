@@ -38,6 +38,18 @@
 	</properties>
 	<body>
 
+		<release version="0.19" date="2006-10-25">
+			<action dev="jourdren" type="update">
+				Utilise les points internes des Particles2D pour tester
+				l'intersection de 2 Particles2D. Cette methode est bien
+				plus précise et évite de nombreuses erreurs.
+			</action>
+			<action dev="jourdren" type="add">
+				Nouvelle option dans R ("corsen.unicolor") pour
+				visualiser les particules dans des couleurs différentes.
+			</action>
+		</release>
+
 		<release version="0.18" date="2006-10-24">
 			<action dev="jourdren" type="update">
 				Pour qu'un cuboid mitochondrial soit supprimé, il faut
