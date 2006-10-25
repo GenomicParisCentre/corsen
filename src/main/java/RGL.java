@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -6,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Random;
 
 public class RGL {
 
@@ -172,8 +174,11 @@ public class RGL {
 
     final Writer out = this.out;
 
+    Random random = new Random(System.currentTimeMillis());
+    
     for (int i = 0; i < particles.length; i++) {
 
+          
       out.write("#\n# Particle #");
       out.write("" + particles[i].getId());
       out.write(" (");
@@ -183,6 +188,17 @@ public class RGL {
       innerPointstoRData(particles[i]);
 
       final float size = (float) (minDistanceBetweenTwoPoints * 1.0);
+      
+      out.write("\nplotColor <- \"");
+      out.write(color);
+      out.write("\"\n");
+      
+      out.write("\nif (exists(\"corsen.unicolor\") && corsen.unicolor==F ) {\nplotColor <- \"#");
+      Color c = new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255));
+      
+      out.write(Integer.toHexString(c.getRGB()));
+ 
+      out.write("\"\n}\n");
 
       out.write("\nif ( exists(\"corsen.shift\") && corsen.shift>0 ) {\n");
 
@@ -201,7 +217,9 @@ public class RGL {
       out.write("\nif (!exists(\"corsen.points3d\") "
           + "|| ( exists(\"corsen.points3d\") && corsen.points3d==T )) {\n");
 
-      innerPointstoRPlot(false, "corsen.sizepoints", color);
+      
+      String plotColor = "plotColor";
+      innerPointstoRPlot(false, "corsen.sizepoints", plotColor,true);
       /*
        * out.write("z <- z - "); out.write("" + size); out.write("\n");
        * innerPointstoRPlot(false, "corsen.sizepoints", color); out.write("z <-
@@ -211,14 +229,15 @@ public class RGL {
 
       out.write("} else {\n");
 
-      innerPointstoRPlot(true, "corsen.sizepoints", color);
+      innerPointstoRPlot(true, "corsen.sizepoints", plotColor,true);
       out.write("}\n");
 
       out
           .write("\nif (!exists(\"corsen.surfaces3d\") "
               + "|| ( exists(\"corsen.surfaces3d\") && corsen.surfaces3d==T )) {\n");
 
-      surfacePointstoR(particles[i], 1.0f, "dark" + color);
+      //surfacePointstoR(particles[i], 1.0f, "dark" + plotColor);
+      surfacePointstoR(particles[i], 1.0f, plotColor,true);
 
       // RParticle3DWriter rpw = new RParticle3DWriter(particles[i],out,"red");
       // rpw.writeTriangleSurface();
@@ -253,10 +272,11 @@ public class RGL {
    * @param sphere plot spheres
    * @param size Size of the points
    * @param colorName Name of the color of the points
+   * @param colorNameVariable if the color name is a R variable
    * @throws IOException if an error occurs while write data
    */
   public void innerPointstoRPlot(final boolean sphere, final String size,
-      final String colorName) throws IOException {
+      final String colorName, final boolean colorNameVariable) throws IOException {
 
     final Writer out = this.out;
 
@@ -266,9 +286,11 @@ public class RGL {
       out.write("points3d(x, y, z, size=" + size);
 
     if (colorName != null) {
-      out.write(",color=\"");
+      
+      out.write(",color=");
+      if (!colorNameVariable) out.write("\"");
       out.write(colorName);
-      out.write("\"");
+      if (!colorNameVariable) out.write("\"");
     }
     out.write(")\n");
 
@@ -367,10 +389,11 @@ public class RGL {
    * @param par Particle to write
    * @param size Size of the points
    * @param colorName Name of the color of the points
+   * @param colorNameVariable if the color name is a R variable
    * @throws IOException if an error occurs while writing data
    */
   public void surfacePointstoR(final Particle3D par, final float size,
-      final String colorName) throws IOException {
+      final String colorName, final boolean colorNameVariable) throws IOException {
 
     final Writer out = this.out;
 
@@ -423,9 +446,10 @@ public class RGL {
 
       out.write("lines3d(x, y, z, size=" + size);
       if (colorName != null) {
-        out.write(",color=\"");
+        out.write(",color=");
+        if (!colorNameVariable) out.write(",color=");
         out.write(colorName);
-        out.write("\"");
+        if (!colorNameVariable) out.write("\"");
       }
       out.write(")\n");
 
