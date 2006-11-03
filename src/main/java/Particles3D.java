@@ -237,7 +237,7 @@ public class Particles3D {
           }
 
         } else
-          al.add(new Particle3D(line));
+          al.add(new Particle3D(pixelWidth, pixelHeight, pixelDepth, line));
 
       }
 
@@ -273,22 +273,7 @@ public class Particles3D {
     if (particle == null)
       return;
 
-    final int ni = particle.innerPointsCount();
-
-    for (int i = 0; i < ni; i++) {
-
-      final Point3D p = particle.getInnerPoint(i);
-      p.setZ(p.getZ() * zCoef);
-    }
-
-    final int ns = particle.surfacePointsCount();
-
-    for (int i = 0; i < ns; i++) {
-
-      final Point3D p = particle.getSurfacePoint(i);
-      p.setZ(p.getZ() * zCoef);
-    }
-
+    particle.applyZFactor(zCoef);
   }
 
   /**
@@ -315,26 +300,9 @@ public class Particles3D {
     if (particle == null)
       return;
 
-    final int ni = particle.innerPointsCount();
-
-    for (int i = 0; i < ni; i++) {
-
-      final Point3D p = particle.getInnerPoint(i);
-      p.setX(p.getX() * coef);
-      p.setY(p.getY() * coef);
-      p.setZ(p.getZ() * coef);
-    }
-
-    final int ns = particle.surfacePointsCount();
-
-    for (int i = 0; i < ns; i++) {
-
-      final Point3D p = particle.getSurfacePoint(i);
-      p.setX(p.getX() * coef);
-      p.setY(p.getY() * coef);
-      p.setZ(p.getZ() * coef);
-    }
-
+    particle.applyXFactor(coef);
+    particle.applyYFactor(coef);
+    particle.applyZFactor(coef);
   }
 
   public String toString() {

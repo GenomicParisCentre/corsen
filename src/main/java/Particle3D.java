@@ -20,6 +20,8 @@ public final class Particle3D {
   private final ListPoint3D surfacePoints;
   private final ListPoint3D innerPoints;
 
+  private float pixelWidth = 1.0f;
+  private float pixelHeight = 1.0f;
   private float pixelDepth = 1.0f;
 
   private double volume;
@@ -59,6 +61,30 @@ public final class Particle3D {
    */
   public long getIntensity() {
     return this.intensity;
+  }
+
+  /**
+   * Get the pixelDepth.
+   * @return Returns the pixelDepth
+   */
+  public float getPixelDepth() {
+    return pixelDepth;
+  }
+
+  /**
+   * Get the pixelHeight.
+   * @return Returns the pixelHeight
+   */
+  public float getPixelHeight() {
+    return pixelHeight;
+  }
+
+  /**
+   * Get the pixel width
+   * @return Returns the pixelWidth
+   */
+  public float getPixelWidth() {
+    return pixelWidth;
   }
 
   //
@@ -512,7 +538,8 @@ public final class Particle3D {
       final Float key = new Float(p.getZ());
       Particle2D par = (Particle2D) slices.get(key);
       if (par == null) {
-        par = new Particle2D();
+        par = new Particle2D(particle.getPixelWidth(), particle
+            .getPixelHeight());
         slices.put(key, par);
       }
       par.addSurfacePoint(p.getX(), p.getY());
@@ -532,7 +559,8 @@ public final class Particle3D {
       final String key = "" + p.getZ();
       Particle2D par = (Particle2D) slices.get(key);
       if (par == null) {
-        par = new Particle2D();
+        par = new Particle2D(particle.getPixelWidth(), particle
+            .getPixelHeight());
         slices.put(key, par);
       }
       par.addSurfacePoint(p.getX(), p.getY());
@@ -545,7 +573,8 @@ public final class Particle3D {
       final String key = "" + p.getZ();
       Particle2D par = (Particle2D) slices.get(key);
       if (par == null) {
-        par = new Particle2D();
+        par = new Particle2D(particle.getPixelWidth(), particle
+            .getPixelHeight());
         slices.put(key, par);
       }
       par.addInnerPoint(p.getX(), p.getY(), p.getI());
@@ -963,38 +992,57 @@ public final class Particle3D {
     return furthest;
   }
 
+  /**
+   * Apply a factor to all values of the x coordinates.
+   * @param xFactor factor to apply
+   */
+  public void applyXFactor(final float xFactor) {
+
+    this.surfacePoints.applyXFactor(xFactor);
+    this.innerPoints.applyXFactor(xFactor);
+  }
+
+  /**
+   * Apply a factor to all values of the y coordinates.
+   * @param yFactor factor to apply
+   */
+  public void applyYFactor(final float yFactor) {
+
+    this.surfacePoints.applyYFactor(yFactor);
+    this.innerPoints.applyYFactor(yFactor);
+  }
+
+  /**
+   * Apply a factor to all values of the z coordinates.
+   * @param zFactor factor to apply
+   */
+  public void applyZFactor(final float zFactor) {
+
+    this.surfacePoints.applyZFactor(zFactor);
+    this.innerPoints.applyZFactor(zFactor);
+  }
+
   //
   // Constructor
   //
 
   /**
-   * Public constructor.
+   * Public constructor
+   * @param pixelDepth The voxel Depth
    */
-  public Particle3D() {
-    this((int) 0L);
-  }
+  public Particle3D(final float pixelWidth, final float pixelHeight,
+      final float pixelDepth) {
 
-  /**
-   * Public constructor.
-   * @param initialCapatity Initial capacity of the list of points
-   */
-  public Particle3D(final int initialCapatity) {
     count++;
-    this.surfacePoints = new ListPoint3D(initialCapatity);
-    this.innerPoints = new ListPoint3D(initialCapatity);
-  }
 
-  /**
-   * Public constructor
-   * @param pixelDepth The voxel Depth
-   */
-  public Particle3D(final float pixelDepth) {
-
-    this();
-
-    // this.pixelHeight = pixelHeight;
-    // this.pixelWidth = pixelWidth;
+    this.pixelWidth = pixelWidth;
+    this.pixelHeight = pixelHeight;
     this.pixelDepth = pixelDepth;
+
+    this.surfacePoints = new ListPoint3D(this.pixelWidth, this.pixelHeight,
+        this.pixelDepth);
+    this.innerPoints = new ListPoint3D(this.pixelWidth, this.pixelHeight,
+        this.pixelDepth);
   }
 
   /**
@@ -1002,19 +1050,10 @@ public final class Particle3D {
    * @param pixelDepth The voxel Depth
    * @param s String to parse
    */
-  public Particle3D(final float pixelDepth, final String s) {
+  public Particle3D(final float pixelWidth, final float pixelHeight,
+      final float pixelDepth, final String s) {
 
-    this(pixelDepth);
-    parse(s);
-  }
-
-  /**
-   * Public constructor
-   * @param s String to parse
-   */
-  public Particle3D(final String s) {
-
-    this();
+    this(pixelWidth, pixelHeight, pixelDepth);
     parse(s);
   }
 

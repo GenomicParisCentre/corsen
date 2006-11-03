@@ -16,8 +16,8 @@ public final class Particle2D {
   private final int id = count;
   private String name = "" + this.id;
 
-  private final ListPoint2D surfacePoints = new ListPoint2D();
-  private final ListPoint2D innerPoints = new ListPoint2D();
+  private ListPoint2D surfacePoints;
+  private ListPoint2D innerPoints;
 
   private float pixelWidth = 1.0f;
   private float pixelHeight = 1.0f;
@@ -553,7 +553,7 @@ public final class Particle2D {
   public boolean isGoodSegmentation(final float distanceMax) {
 
     final ListPoint2D listA = this.surfacePoints.copy();
-    final ListPoint2D listB = new ListPoint2D();
+    final ListPoint2D listB = new ListPoint2D(this.pixelWidth, this.pixelHeight);
 
     final Point2D p0 = listA.get(0);
     listA.remove(p0);
@@ -584,6 +584,26 @@ public final class Particle2D {
     return true;
   }
 
+  /**
+   * Apply a factor to all values of the x coordinates.
+   * @param xFactor factor to apply
+   */
+  public void applyXFactor(final float xFactor) {
+
+    this.surfacePoints.applyXFactor(xFactor);
+    this.innerPoints.applyXFactor(xFactor);
+  }
+
+  /**
+   * Apply a factor to all values of the y coordinates.
+   * @param yFactor factor to apply
+   */
+  public void applyYFactor(final float yFactor) {
+
+    this.surfacePoints.applyYFactor(yFactor);
+    this.innerPoints.applyYFactor(yFactor);
+  }
+
   //
   // Constructor
   //
@@ -591,7 +611,7 @@ public final class Particle2D {
   /**
    * Public constructor.
    */
-  public Particle2D() {
+  private Particle2D() {
     count++;
   }
 
@@ -606,6 +626,7 @@ public final class Particle2D {
 
     this.pixelHeight = pixelHeight;
     this.pixelWidth = pixelWidth;
+    this.surfacePoints = new ListPoint2D(this.pixelWidth, this.pixelHeight);
   }
 
   /**
@@ -633,16 +654,6 @@ public final class Particle2D {
 
     this(pixelWidth, pixelHeight);
     add(imp, roi);
-  }
-
-  /**
-   * Public constructor
-   * @param s String to parse
-   */
-  public Particle2D(final String s) {
-
-    this();
-    parse(s);
   }
 
 }

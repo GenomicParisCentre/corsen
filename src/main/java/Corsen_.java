@@ -57,14 +57,14 @@ import javax.swing.JOptionPane;
  * <p>
  * 
  * <pre>
- *                                                        for each line do
- *                                                        for each pixel in this line do
- *                                                        if the pixel value is &quot;inside&quot; the threshold range then
- *                                                        trace the edge to mark the object
- *                                                        do the measurement
- *                                                        fill the object with a color outside the threshold range
- *                                                        else
- *                                                        continue the scan
+ *                                                         for each line do
+ *                                                         for each pixel in this line do
+ *                                                         if the pixel value is &quot;inside&quot; the threshold range then
+ *                                                         trace the edge to mark the object
+ *                                                         do the measurement
+ *                                                         fill the object with a color outside the threshold range
+ *                                                         else
+ *                                                         continue the scan
  * </pre>
  */
 public class Corsen_ implements PlugInFilter, Measurements {
@@ -250,7 +250,8 @@ public class Corsen_ implements PlugInFilter, Measurements {
 
     if (!find) {
 
-      Particle3D newP3D = new Particle3D((float) pixelDepth);
+      Particle3D newP3D = new Particle3D((float) pixelWidth,
+          (float)pixelHeight, (float) pixelDepth);
       newP3D.setName(imp.getTitle() + "-" + newP3D.getId());
       newP3D.add(p2D, slice);
 

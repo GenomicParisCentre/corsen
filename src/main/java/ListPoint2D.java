@@ -5,7 +5,8 @@
 public class ListPoint2D {
 
   private final ArrayLongList values = new ArrayLongList();
-  private static final float PRECISION = 100.0f;
+  private float xPrecision = 100.0f;
+  private float yPrecision = 100.0f;
 
   /**
    * Get the number of points in the list.
@@ -22,7 +23,8 @@ public class ListPoint2D {
    */
   public Point2D get(final int index) {
 
-    return new ArrayListPoint2DImpl(this.values, PRECISION, index);
+    return new ArrayListPoint2DImpl(this.values, this.xPrecision,
+        this.yPrecision, index);
   }
 
   /**
@@ -46,8 +48,8 @@ public class ListPoint2D {
 
     long val = 0;
 
-    val = Util.setX(val, x, PRECISION);
-    val = Util.setY(val, y, PRECISION);
+    val = Util.setX(val, x, this.xPrecision);
+    val = Util.setY(val, y, this.yPrecision);
     val = Util.setI(val, i);
 
     this.values.add(val);
@@ -108,8 +110,8 @@ public class ListPoint2D {
 
       final long val = this.values.get(i);
 
-      final float xVal = Util.getX(val, PRECISION);
-      final float yVal = Util.getY(val, PRECISION);
+      final float xVal = Util.getX(val, this.xPrecision);
+      final float yVal = Util.getY(val, this.yPrecision);
 
       if (xVal == x && yVal == y)
         return true;
@@ -133,8 +135,8 @@ public class ListPoint2D {
 
       final long val = this.values.get(j);
 
-      final float xVal = Util.getX(val, PRECISION);
-      final float yVal = Util.getY(val, PRECISION);
+      final float xVal = Util.getX(val, this.xPrecision);
+      final float yVal = Util.getY(val, this.yPrecision);
       final float iVal = Util.getI(val);
 
       if (xVal == x && yVal == y && iVal == i)
@@ -161,7 +163,7 @@ public class ListPoint2D {
    */
   public ListPoint2D copy() {
 
-    final ListPoint2D result = new ListPoint2D();
+    final ListPoint2D result = new ListPoint2D(this.xPrecision, this.yPrecision);
     final int n = size();
 
     for (int i = 0; i < n; i++) {
@@ -195,6 +197,39 @@ public class ListPoint2D {
           return true;
 
     return false;
+  }
+  
+  /**
+   * Apply a factor to all values of the x coordinates.
+   * @param xFactor factor to apply
+   */
+  public void applyXFactor(final float xFactor) {
+
+    this.xPrecision = this.xPrecision / xFactor;
+  }
+
+  /**
+   * Apply a factor to all values of the y coordinates.
+   * @param yFactor factor to apply
+   */
+  public void applyYFactor(final float yFactor) {
+
+    this.yPrecision = this.yPrecision / yFactor;
+  }
+
+  //
+  // Constructor
+  //
+
+  /**
+   * Public constructor.
+   * @param xPrecision Precision for x values
+   * @param yPrecision Precision for y values
+   */
+  public ListPoint2D(final float xPrecision, final float yPrecision) {
+
+    this.xPrecision = xPrecision;
+    this.yPrecision = yPrecision;
   }
 
 }

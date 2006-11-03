@@ -6,7 +6,8 @@
 public class ArrayListPoint2DImpl extends Point2D {
 
   private ArrayLongList values;
-  private float precision;
+  private float xPrecision;
+  private float yPrecision;
   private int index;
 
   //
@@ -21,7 +22,7 @@ public class ArrayListPoint2DImpl extends Point2D {
 
     final long val = this.values.get(this.index);
 
-    return Util.getX(val, this.precision);
+    return Util.getX(val, this.xPrecision);
   }
 
   /**
@@ -32,7 +33,7 @@ public class ArrayListPoint2DImpl extends Point2D {
 
     final long val = this.values.get(this.index);
 
-    return Util.getY(val, this.precision);
+    return Util.getY(val, this.yPrecision);
   }
 
   /**
@@ -58,7 +59,7 @@ public class ArrayListPoint2DImpl extends Point2D {
 
     long val = this.values.get(this.index);
 
-    val = Util.setX(val, x, this.precision);
+    val = Util.setX(val, x, this.xPrecision);
 
     this.values.set(this.index, val);
   }
@@ -71,7 +72,7 @@ public class ArrayListPoint2DImpl extends Point2D {
 
     long val = this.values.get(this.index);
 
-    val = Util.setY(val, y, this.precision);
+    val = Util.setY(val, y, this.yPrecision);
 
     this.values.set(this.index, val);
   }
@@ -87,6 +88,28 @@ public class ArrayListPoint2DImpl extends Point2D {
     val = Util.setI(val, i);
 
     this.values.set(this.index, val);
+  }
+
+  //
+  // Others methods
+  //
+
+  /**
+   * Apply a factor to all values of the x coordinates.
+   * @param xFactor factor to apply
+   */
+  public void applyXFactor(final float xFactor) {
+
+    this.xPrecision = this.xPrecision / xFactor;
+  }
+
+  /**
+   * Apply a factor to all values of the y coordinates.
+   * @param yFactor factor to apply
+   */
+  public void applyYFactor(final float yFactor) {
+
+    this.yPrecision = this.yPrecision / yFactor;
   }
 
   //
@@ -106,9 +129,10 @@ public class ArrayListPoint2DImpl extends Point2D {
    * @param index Index of the point in arraylists
    */
   public ArrayListPoint2DImpl(final ArrayLongList values,
-      final float precision, final int index) {
+      final float xPrecision, final float yPrecision, final int index) {
     this.values = values;
-    this.precision = precision;
+    this.xPrecision = xPrecision;
+    this.yPrecision = yPrecision;
     this.index = index;
   }
 

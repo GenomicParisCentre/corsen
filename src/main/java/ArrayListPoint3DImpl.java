@@ -6,7 +6,9 @@
 public class ArrayListPoint3DImpl extends Point3D {
 
   private ArrayLongList values;
-  private float precision;
+  private float xPrecision;
+  private float yPrecision;
+  private float zPrecision;
   private int index;
 
   //
@@ -21,7 +23,7 @@ public class ArrayListPoint3DImpl extends Point3D {
 
     final long val = this.values.get(this.index);
 
-    return Util.getX(val, this.precision);
+    return Util.getX(val, this.xPrecision);
   }
 
   /**
@@ -32,7 +34,7 @@ public class ArrayListPoint3DImpl extends Point3D {
 
     final long val = this.values.get(this.index);
 
-    return Util.getY(val, this.precision);
+    return Util.getY(val, this.yPrecision);
   }
 
   /**
@@ -43,7 +45,7 @@ public class ArrayListPoint3DImpl extends Point3D {
 
     final long val = this.values.get(this.index);
 
-    return Util.getZ(val, this.precision);
+    return Util.getZ(val, this.zPrecision);
   }
 
   /**
@@ -69,7 +71,7 @@ public class ArrayListPoint3DImpl extends Point3D {
 
     long val = this.values.get(this.index);
 
-    val = Util.setX(val, x, this.precision);
+    val = Util.setX(val, x, this.xPrecision);
 
     this.values.set(this.index, val);
   }
@@ -82,7 +84,7 @@ public class ArrayListPoint3DImpl extends Point3D {
 
     long val = this.values.get(this.index);
 
-    val = Util.setY(val, y, this.precision);
+    val = Util.setY(val, y, this.yPrecision);
 
     this.values.set(this.index, val);
   }
@@ -95,7 +97,7 @@ public class ArrayListPoint3DImpl extends Point3D {
 
     long val = this.values.get(this.index);
 
-    val = Util.setZ(val, z, this.precision);
+    val = Util.setZ(val, z, this.zPrecision);
 
     this.values.set(this.index, val);
   }
@@ -114,6 +116,37 @@ public class ArrayListPoint3DImpl extends Point3D {
   }
 
   //
+  // Others methods
+  //
+
+  /**
+   * Apply a factor to all values of the x coordinates.
+   * @param xFactor factor to apply
+   */
+  public void applyXFactor(final float xFactor) {
+
+    this.xPrecision = this.xPrecision / xFactor;
+  }
+
+  /**
+   * Apply a factor to all values of the y coordinates.
+   * @param yFactor factor to apply
+   */
+  public void applyYFactor(final float yFactor) {
+
+    this.yPrecision = this.yPrecision / yFactor;
+  }
+  
+  /**
+   * Apply a factor to all values of the z coordinates.
+   * @param zFactor factor to apply
+   */
+  public void applyZFactor(final float zFactor) {
+
+    this.zPrecision = this.zPrecision / zFactor;
+  }
+  
+  //
   // Constructor
   //
 
@@ -126,13 +159,18 @@ public class ArrayListPoint3DImpl extends Point3D {
   /**
    * Public constructor.
    * @param values The arraylist of the x coordinates
-   * @param precision Precision of the data
+   * @param xPrecision Precision of x values
+   * @param yPrecision Precision of y values
+   * @param zPrecision Precision of z values
    * @param index Index of the point in arraylists
    */
   public ArrayListPoint3DImpl(final ArrayLongList values,
-      final float precision, final int index) {
+      final float xPrecision, final float yPrecision, final float zPrecision,
+      final int index) {
     this.values = values;
-    this.precision = precision;
+    this.xPrecision = xPrecision;
+    this.yPrecision = yPrecision;
+    this.zPrecision = zPrecision;
     this.index = index;
   }
 

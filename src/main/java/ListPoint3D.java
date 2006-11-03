@@ -5,7 +5,10 @@
 public final class ListPoint3D {
 
   private ArrayLongList values = new ArrayLongList();
-  private static final float PRECISION = 100.0f;
+
+  private float xPrecision = 100.0f;
+  private float yPrecision = 100.0f;
+  private float zPrecision = 100.0f;
 
   /**
    * Get the number of points in the list.
@@ -22,7 +25,8 @@ public final class ListPoint3D {
    */
   public Point3D get(final int index) {
 
-    return new ArrayListPoint3DImpl(this.values, PRECISION, index);
+    return new ArrayListPoint3DImpl(this.values, xPrecision, yPrecision,
+        zPrecision, index);
   }
 
   /**
@@ -47,9 +51,9 @@ public final class ListPoint3D {
 
     long val = 0;
 
-    val = Util.setX(val, x, PRECISION);
-    val = Util.setY(val, y, PRECISION);
-    val = Util.setZ(val, z, PRECISION);
+    val = Util.setX(val, x, xPrecision);
+    val = Util.setY(val, y, yPrecision);
+    val = Util.setZ(val, z, zPrecision);
     val = Util.setI(val, i);
 
     this.values.add(val);
@@ -87,7 +91,7 @@ public final class ListPoint3D {
 
     final long val = this.values.get(index);
 
-    return Util.getX(val, PRECISION);
+    return Util.getX(val, xPrecision);
   }
 
   /**
@@ -99,7 +103,7 @@ public final class ListPoint3D {
 
     final long val = this.values.get(index);
 
-    return Util.getY(val, PRECISION);
+    return Util.getY(val, yPrecision);
   }
 
   /**
@@ -111,7 +115,7 @@ public final class ListPoint3D {
 
     final long val = this.values.get(index);
 
-    return Util.getZ(val, PRECISION);
+    return Util.getZ(val, zPrecision);
   }
 
   /**
@@ -287,6 +291,33 @@ public final class ListPoint3D {
 
   }
 
+  /**
+   * Apply a factor to all values of the x coordinates.
+   * @param xFactor factor to apply
+   */
+  public void applyXFactor(final float xFactor) {
+
+    this.xPrecision = this.xPrecision / xFactor;
+  }
+
+  /**
+   * Apply a factor to all values of the y coordinates.
+   * @param yFactor factor to apply
+   */
+  public void applyYFactor(final float yFactor) {
+
+    this.yPrecision = this.yPrecision / yFactor;
+  }
+  
+  /**
+   * Apply a factor to all values of the z coordinates.
+   * @param zFactor factor to apply
+   */
+  public void applyZFactor(final float zFactor) {
+
+    this.zPrecision = this.zPrecision / zFactor;
+  }
+  
   //
   // Constructor
   //
@@ -295,16 +326,20 @@ public final class ListPoint3D {
    * Public constructor.
    * @param initialCapacity Initial capacity of the list
    */
-  public ListPoint3D(final int initialCapacity) {
-
-    this.values = new ArrayLongList(initialCapacity);
-  }
+  /*
+   * public ListPoint3D(final int initialCapacity) { this.values = new
+   * ArrayLongList(initialCapacity); }
+   */
 
   /**
    * Public constructor.
    */
-  public ListPoint3D() {
+  public ListPoint3D(final float xPrecision, final float yPrecision,
+      final float zPrecision) {
 
+    this.xPrecision = xPrecision;
+    this.yPrecision = yPrecision;
+    this.zPrecision = zPrecision;
     this.values = new ArrayLongList();
   }
 
