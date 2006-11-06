@@ -184,7 +184,6 @@ public class Particles3D {
       throw new NullPointerException("The file is null");
 
     final ArrayList al = new ArrayList();
-
     final BufferedReader in = new BufferedReader(new FileReader(file));
 
     String line;

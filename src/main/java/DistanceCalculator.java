@@ -18,6 +18,7 @@ public class DistanceCalculator {
   private Point3D nearestPoint;
   private String colorDistanceInside = "deeppink";
   private String colorDistanceOutside = "cyan";
+  private UpdateStatus updateStatus;
 
   //
   // Getters
@@ -394,7 +395,7 @@ public class DistanceCalculator {
 
   private void sendEvent(final int id, final int value1) {
 
-    Corsen.getCorsen().updateStatus(new ProgressEvent(id, value1));
+    updateStatus.updateStatus(new ProgressEvent(id, value1));
   }
 
   //
@@ -407,8 +408,8 @@ public class DistanceCalculator {
    * @throws IOException
    */
   public DistanceCalculator(final Particles3D mitos,
-      final File fileRGLDistances, final File fileRGLMitoCuboids)
-      throws IOException {
+      final File fileRGLDistances, final File fileRGLMitoCuboids,
+      final UpdateStatus updateStatus) throws IOException {
 
     this.mitoParticles = mitos;
     this.fileRGLMitoCuboids = fileRGLMitoCuboids;
@@ -418,6 +419,8 @@ public class DistanceCalculator {
       this.rglDistances = new RGL(mitos.getUnitOfLength(), fileRGLDistances);
 
     }
+
+    this.updateStatus = updateStatus;
 
     // calcMitoMinDistances();
     calcCuboids();

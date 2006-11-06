@@ -1,7 +1,5 @@
-
 public class ProgressEvent {
 
-  public static final int START_CELL_EVENT = 0;
   public static final int START_READ_MESSENGERS_EVENT = 1;
   public static final int START_WRITE_RPLOT_MESSENGERS_EVENT = 2;
   public static final int START_READ_MITOS_EVENT = 3;
@@ -15,12 +13,23 @@ public class ProgressEvent {
   public static final int START_WRITE_FULLRESULT_CUBOIDS_EVENT = 11;
   public static final int PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT = 100;
   public static final int PROGRESS_CALC_MITOS_CUBOIDS_EVENT = 101;
-  public static final int END_SUCCESSFULL_EVENT = 1000;
-  public static final int END_ERROR_EVENT = 2000;
+
+  public static final int START_CELLS_EVENT = 1000;
+  public static final int START_CELL_EVENT = 1001;
+
+  public static final int END_CELLS_SUCCESSFULL_EVENT = 2000;
+  public static final int END_CELL_EVENT = 2001;
+  public static final int END_ERROR_EVENT = 3000;
+
+  public static final int PHASE_COUNT = START_WRITE_FULLRESULT_CUBOIDS_EVENT;
+  public static final int INDEX_IN_PHASE_MAX = 1000;
 
   private int id;
   private int intValue1;
   private int intValue2;
+  private String stringValue1;
+  private String stringValue2;
+  private String stringValue3;
 
   /**
    * Get the event id.
@@ -46,6 +55,57 @@ public class ProgressEvent {
     return this.intValue2;
   }
 
+  /**
+   * Get the String value1
+   * @return Returns the stringValue1
+   */
+  public String getStringValue1() {
+    return stringValue1;
+  }
+
+  /**
+   * Get the String value2
+   * @return Returns the stringValue2
+   */
+  public String getStringValue2() {
+    return stringValue2;
+  }
+  
+  /**
+   * Get the String value3
+   * @return Returns the stringValue3
+   */
+  public String getStringValue3() {
+    return stringValue3;
+  }
+
+  //
+  // Other methods
+  //
+
+  public static int countPhase(final Settings settings) {
+
+    if (settings == null)
+      return 0;
+
+    int count = PHASE_COUNT;
+
+    if (!settings.isSaveMito3dFile())
+      count--;
+    if (!settings.isSaveMessengers3dFile())
+      count--;
+    if (!settings.isSaveMessengers3dFile())
+      count--;
+    if (!settings.isSaveDataFile())
+      count--;
+    if (!settings.isSaveIVFile())
+      count--;
+    if (!settings.isSaveFullResultsFile())
+      count = count - 2;
+
+    return count;
+  }
+
   //
   // Constructors
   //
@@ -64,6 +124,15 @@ public class ProgressEvent {
 
     this(id, value1);
     this.intValue2 = value2;
+  }
+
+  public ProgressEvent(final int id, final int intValue1, final int intValue2,
+      final String stringValue1, final String stringValue2, final String stringValue3) {
+
+    this(id, intValue1, intValue2);
+    this.stringValue1 = stringValue1;
+    this.stringValue2 = stringValue2;
+    this.stringValue3 = stringValue3;
   }
 
 }

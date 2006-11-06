@@ -13,19 +13,10 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 
-public class Corsen {
-
-  /** The name of the application. */
-  public static final String APP_NAME = "Corsen";
-  /** The version of the application. */
-  public static final String APP_VERSION = "0.17";
+public class Corsen implements UpdateStatus {
 
   // Windows Look and Feel
   private static final String WINDOWS_PLAF = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
-
-  private static final float Z_COEF_DEFAULT = 2.96f;
-  public static final float CUBOID_SIZE_FACTOR = 2.1f;
-  private static final float PIXEL_SIZE_DEFAULT = 1.0f;
 
   private static final Corsen corsen = new Corsen();
   private CorsenUI gui;
@@ -53,15 +44,13 @@ public class Corsen {
    * Get the singleton of the The class.
    * @return the unique instance of Corsen
    */
-  public static final Corsen getCorsen() {
-
-    return corsen;
-  }
+  /*
+   * public static final Corsen getCorsen() { return corsen; }
+   */
 
   //
   //
   //
-
   /**
    * Show the application.
    */
@@ -115,25 +104,24 @@ public class Corsen {
       }
 
       public String getDescription() {
-        return APP_NAME + " ImageJ plugin result file";
+        return Globals.APP_NAME + " ImageJ plugin result file";
       }
     };
 
     this.gui = new CorsenUI(ffPar);
-    this.gui.setZCoef(Z_COEF_DEFAULT);
-    this.gui.setPixelSize(PIXEL_SIZE_DEFAULT);
+    this.gui.setZCoef(Globals.Z_COEF_DEFAULT);
+    this.gui.setPixelSize(Globals.PIXEL_SIZE_DEFAULT);
 
     this.gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     this.gui.addActionListener(new ActionListener() {
 
       public void actionPerformed(final ActionEvent e) {
 
         final CorsenCore cc = new CorsenCore();
 
-        cc.setZCoef(Corsen.this.gui.getZCoef());
-        cc.setUpdateZ(Corsen.this.gui.isUpdateZ());
-        cc.setPixelSize(Corsen.this.gui.getPixelSize());
+        cc.getSettings().setZFactor(Corsen.this.gui.getZCoef());
+        cc.getSettings().setFactor(Corsen.this.gui.getPixelSize());
+        cc.setUpdateStatus(Corsen.this);
 
         if (Corsen.this.gui.getDirFile() != null) {
 
@@ -161,8 +149,7 @@ public class Corsen {
 
             cc.setMitoFile(Corsen.this.gui.getMitoFile());
             cc.setRnaFile(Corsen.this.gui.getARNFile());
-            cc.setResultDir(jfc.getSelectedFile().getParentFile());
-            cc.setResultFilename(jfc.getSelectedFile().getName());
+            cc.setResultFile(jfc.getSelectedFile());
             cc.setMultipleFiles(false);
 
             new Thread(cc).start();
@@ -231,7 +218,7 @@ public class Corsen {
       this.status.phaseIndex = e.getIntValue1();
       break;
 
-    case ProgressEvent.END_SUCCESSFULL_EVENT:
+    case ProgressEvent.END_CELLS_SUCCESSFULL_EVENT:
       final long end = System.currentTimeMillis();
       System.out.println("Finish in " + (end - this.status.initStart) + " ms");
       this.gui.setStartEnable(true);
@@ -393,7 +380,7 @@ public class Corsen {
     JFrame.setDefaultLookAndFeelDecorated(true);
     Toolkit.getDefaultToolkit().setDynamicLayout(true);
 
-    getCorsen().show();
+    new Corsen().show();
   }
 
 }

@@ -50,7 +50,8 @@ public final class Particle3DUtil {
           y1 = j + ylenght;
           z1 = k + zlenght;
 
-          final Particle3D p = new Particle3D(INITIAL_CAPACITY_CUBOID);
+          final Particle3D p = new Particle3D(particle.getPixelWidth(),
+              particle.getPixelHeight(), particle.getPixelDepth());
           // p.setName(prefix + "-" + result.getId());
           addSurfacePoint(p, i, j, k);
           addSurfacePoint(p, x1, j, k);
