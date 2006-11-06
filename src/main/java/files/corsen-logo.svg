@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.44.1"
+   sodipodi:docbase="/home/jourdren/workspace/corsen/src/main/java/files"
+   sodipodi:docname="corsen-logo.svg"
+   inkscape:export-filename="/home/jourdren/workspace/corsen/src/main/java/files/corsen-logo.png"
+   inkscape:export-xdpi="16.457142"
+   inkscape:export-ydpi="16.457142">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.5184886"
+     inkscape:cx="372.04724"
+     inkscape:cy="380.23558"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1016"
+     inkscape:window-height="789"
+     inkscape:window-x="143"
+     inkscape:window-y="176" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="opacity:1">
+    <rect
+       style="opacity:1;fill:white;fill-opacity:1;fill-rule:nonzero;stroke:#0e0e0e;stroke-width:2.32576704;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6594"
+       width="347.67422"
+       height="347.67422"
+       x="213.43719"
+       y="505.78912"
+       inkscape:export-filename="/home/jourdren/workspace/corsen/src/main/java/files/corsen-logo.png"
+       inkscape:export-xdpi="16.457142"
+       inkscape:export-ydpi="16.457142" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot1886"
+       style="font-size:144px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#1a1a1a;font-family:Samanata"
+       transform="matrix(0.5,0,0,0.5,241.688,542.977)"><flowRegion
+         id="flowRegion1888"><rect
+           id="rect1890"
+           width="702.85712"
+           height="320"
+           x="51.42857"
+           y="178.07646"
+           style="font-size:144px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#1a1a1a;font-family:Samanata" /></flowRegion><flowPara
+         id="flowPara6644">corsen</flowPara></flowRoot>    <path
+       style="fill:red;fill-opacity:1;fill-rule:nonzero;stroke:#0e0e0e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path6640"
+       d="M 521.84851,635.70021 C 524.06037,641.58557 525.38125,647.7094 526.44312,653.88894 C 527.79053,663.59751 528.3299,673.39672 527.95033,683.18736 C 527.73835,690.88436 526.43956,698.46248 524.52184,705.9007 C 523.27455,710.67605 521.42807,715.24552 518.83617,719.44289 C 518.13762,720.55043 517.27929,721.53619 516.46759,722.55681 L 509.68439,725.41034 C 510.56233,724.40441 511.49525,723.44404 512.2555,722.3369 C 514.99684,718.19948 516.97716,713.65286 518.30743,708.86719 C 520.32297,701.44191 521.72967,693.87656 522.03606,686.16845 C 522.50792,676.42599 522.0603,666.6565 520.58374,657.00614 C 519.4623,650.96421 518.11962,644.93426 515.36152,639.39379 L 521.84851,635.70021 z " />
+    <path
+       style="fill:red;fill-opacity:1;fill-rule:nonzero;stroke:#0e0e0e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path6642"
+       d="M 268.79159,633.72131 C 267.10415,635.20733 265.88011,637.08173 264.66376,638.9502 C 261.59212,643.88436 258.90398,649.05065 256.69979,654.42654 C 254.31262,660.95041 253.31252,667.80014 252.72765,674.68467 C 252.26187,681.08275 253.6525,687.32064 255.2987,693.45141 C 256.86134,698.84231 258.79339,704.12397 260.76319,709.37827 C 262.08304,712.87854 263.94333,716.10447 265.93572,719.24996 C 266.55519,720.12908 267.30347,720.8978 268.01017,721.70129 L 261.68743,725.53116 C 260.99803,724.67259 260.27265,723.84177 259.65939,722.92283 C 257.70122,719.69222 255.88976,716.36929 254.57966,712.81003 C 252.64639,707.51041 250.81866,702.16426 249.21484,696.75592 C 247.53505,690.55163 246.10639,684.23754 246.56725,677.75779 C 247.16159,670.82142 248.14682,663.91865 250.45201,657.31393 C 252.5746,651.96127 255.17155,646.81052 258.09249,641.84733 C 259.20224,640.00569 260.27786,638.12461 261.82467,636.6071 L 268.79159,633.72131 z " />
+  </g>
+</svg>

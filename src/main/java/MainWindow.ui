@@ -1,0 +1,542 @@
+<ui version="4.0" >
+ <author>Laurent Jourdren</author>
+ <comment>This is the main window of Corsen</comment>
+ <exportmacro></exportmacro>
+ <class>CorsenMainWindow</class>
+ <widget class="QMainWindow" name="CorsenMainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>564</width>
+    <height>586</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Corsen</string>
+  </property>
+  <property name="toolTip" >
+   <string>Directory of input particle files</string>
+  </property>
+  <property name="statusTip" >
+   <string>Directory of input particle files</string>
+  </property>
+  <property name="whatsThis" >
+   <string/>
+  </property>
+  <widget class="QWidget" name="centralwidget" >
+   <layout class="QVBoxLayout" >
+    <property name="margin" >
+     <number>9</number>
+    </property>
+    <property name="spacing" >
+     <number>6</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="tabWidget" >
+      <property name="toolTip" >
+       <string/>
+      </property>
+      <property name="statusTip" >
+       <string/>
+      </property>
+      <property name="currentIndex" >
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="mainTab" >
+       <attribute name="title" >
+        <string>&amp;Main</string>
+       </attribute>
+       <attribute name="toolTip" >
+        <string>Main and status tab</string>
+       </attribute>
+       <layout class="QVBoxLayout" >
+        <property name="margin" >
+         <number>9</number>
+        </property>
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="filesGroupBox" >
+          <property name="toolTip" >
+           <string>Path of the files to process</string>
+          </property>
+          <property name="statusTip" >
+           <string>Path of the files to process</string>
+          </property>
+          <property name="title" >
+           <string>Files</string>
+          </property>
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>9</number>
+           </property>
+           <property name="spacing" >
+            <number>6</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" >
+             <property name="margin" >
+              <number>0</number>
+             </property>
+             <property name="spacing" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label" >
+               <property name="toolTip" >
+                <string/>
+               </property>
+               <property name="text" >
+                <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Directory to process:&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>171</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="directoryPathLabel" >
+               <property name="toolTip" >
+                <string>Directory of input particle files</string>
+               </property>
+               <property name="statusTip" >
+                <string>Directory of input particle files</string>
+               </property>
+               <property name="text" >
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <property name="margin" >
+              <number>0</number>
+             </property>
+             <property name="spacing" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_3" >
+               <property name="toolTip" >
+                <string>Messenger particle file path</string>
+               </property>
+               <property name="statusTip" >
+                <string>Messenger particle file path</string>
+               </property>
+               <property name="text" >
+                <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Messengers particles file:&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>171</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="messengerPathLabel" >
+               <property name="toolTip" >
+                <string>Messenger particle file path</string>
+               </property>
+               <property name="statusTip" >
+                <string>Messenger particle file path</string>
+               </property>
+               <property name="text" >
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <property name="margin" >
+              <number>0</number>
+             </property>
+             <property name="spacing" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_5" >
+               <property name="toolTip" >
+                <string>Mitochondria particle file path</string>
+               </property>
+               <property name="statusTip" >
+                <string>Mitochondria particle file path</string>
+               </property>
+               <property name="text" >
+                <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Mitocondria particle file:&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>171</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="mitoPathLabel" >
+               <property name="toolTip" >
+                <string>Mitochondria particle file path</string>
+               </property>
+               <property name="statusTip" >
+                <string>Mitochondria particle file path</string>
+               </property>
+               <property name="text" >
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <property name="margin" >
+              <number>0</number>
+             </property>
+             <property name="spacing" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_9" >
+               <property name="toolTip" >
+                <string>Path and prefix of the output files</string>
+               </property>
+               <property name="statusTip" >
+                <string>Path and prefix of the output files</string>
+               </property>
+               <property name="text" >
+                <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Output files prefix:&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>171</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="outputFilesPathLabel" >
+               <property name="toolTip" >
+                <string>Path and prefix of the output files</string>
+               </property>
+               <property name="statusTip" >
+                <string>Path and prefix of the output files</string>
+               </property>
+               <property name="text" >
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="statusGroupBox" >
+          <property name="toolTip" >
+           <string>Status of the process</string>
+          </property>
+          <property name="statusTip" >
+           <string>Status of the process</string>
+          </property>
+          <property name="title" >
+           <string>Status</string>
+          </property>
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>9</number>
+           </property>
+           <property name="spacing" >
+            <number>6</number>
+           </property>
+           <item>
+            <widget class="QTextEdit" name="logTextEdit" >
+             <property name="toolTip" >
+              <string>Log of the process</string>
+             </property>
+             <property name="statusTip" >
+              <string>Log of the process</string>
+             </property>
+             <property name="readOnly" >
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" >
+             <property name="margin" >
+              <number>0</number>
+             </property>
+             <property name="spacing" >
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="progressLabel" >
+               <property name="toolTip" >
+                <string>Progress of the number of particle to process</string>
+               </property>
+               <property name="statusTip" >
+                <string>Progress of the number of particle to process</string>
+               </property>
+               <property name="text" >
+                <string>Process 0 of 0 cell</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QProgressBar" name="progressBar" >
+               <property name="toolTip" >
+                <string>Progress of the current process</string>
+               </property>
+               <property name="statusTip" >
+                <string>Progress of the current process</string>
+               </property>
+               <property name="value" >
+                <number>0</number>
+               </property>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>131</width>
+              <height>31</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="launchButton" >
+            <property name="toolTip" >
+             <string>Start the process</string>
+            </property>
+            <property name="statusTip" >
+             <string>Start the process</string>
+            </property>
+            <property name="text" >
+             <string>&amp;Launch</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="viewTab" >
+       <attribute name="title" >
+        <string>3D &amp;View</string>
+       </attribute>
+       <attribute name="toolTip" >
+        <string>3D result view</string>
+       </attribute>
+       <layout class="QVBoxLayout" >
+        <property name="margin" >
+         <number>9</number>
+        </property>
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_8" >
+          <property name="text" >
+           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:24pt;">Not yet implemented.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>564</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_Launch" >
+    <property name="title" >
+     <string>&amp;Launch</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Help" >
+    <property name="title" >
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionCorsen_Handbook" />
+    <addaction name="separator" />
+    <addaction name="actionCorsen_Website" />
+    <addaction name="action_Report_Bug" />
+    <addaction name="separator" />
+    <addaction name="actionAbout_Corsen" />
+   </widget>
+   <widget class="QMenu" name="menu_Settings" >
+    <property name="title" >
+     <string>&amp;Settings</string>
+    </property>
+    <addaction name="action_Configure_Corsen" />
+    <addaction name="actionSave_settings" />
+   </widget>
+   <widget class="QMenu" name="menu_File" >
+    <property name="title" >
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionOpen_messenger_particle" />
+    <addaction name="actionOpen_mi_tochondrial_particle" />
+    <addaction name="separator" />
+    <addaction name="actionOpen_a_directory" />
+    <addaction name="separator" />
+    <addaction name="action_Quit" />
+   </widget>
+   <addaction name="menu_File" />
+   <addaction name="menu_Settings" />
+   <addaction name="menu_Help" />
+  </widget>
+  <widget class="QStatusBar" name="statusbar" />
+  <action name="actionOpen_messenger_particle" >
+   <property name="text" >
+    <string>Open &amp;messenger particle...</string>
+   </property>
+  </action>
+  <action name="actionOpen_mi_tochondrial_particle" >
+   <property name="text" >
+    <string>Open mi&amp;tochondrial particle...</string>
+   </property>
+  </action>
+  <action name="actionOpen_a_directory" >
+   <property name="text" >
+    <string>Open a &amp;directory...</string>
+   </property>
+  </action>
+  <action name="action_Quit" >
+   <property name="text" >
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="action_Start_analysis" >
+   <property name="text" >
+    <string>&amp;Start analysis</string>
+   </property>
+  </action>
+  <action name="action_Configure_Corsen" >
+   <property name="text" >
+    <string>&amp;Configure Corsen...</string>
+   </property>
+  </action>
+  <action name="actionCorsen_Handbook" >
+   <property name="text" >
+    <string>Corsen &amp;Handbook</string>
+   </property>
+  </action>
+  <action name="actionCorsen_Website" >
+   <property name="text" >
+    <string>Corsen &amp;Website</string>
+   </property>
+  </action>
+  <action name="action_Report_Bug" >
+   <property name="text" >
+    <string>&amp;Report Bug</string>
+   </property>
+  </action>
+  <action name="actionAbout_Corsen" >
+   <property name="text" >
+    <string>&amp;About Corsen</string>
+   </property>
+  </action>
+  <action name="actionSave_settings" >
+   <property name="text" >
+    <string>&amp;Save settings</string>
+   </property>
+  </action>
+  <action name="actionCoucou" >
+   <property name="text" >
+    <string>coucou</string>
+   </property>
+  </action>
+ </widget>
+ <pixmapfunction></pixmapfunction>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>logTextEdit</tabstop>
+  <tabstop>launchButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
