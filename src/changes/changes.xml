@@ -39,6 +39,21 @@
 	<body>
 
 		<release version="0.19" date="2006-10-25">
+			<action dev="jourdren" type="add">
+				Nouvelle interface Graphique réalisée avec QtJambi.
+				Réorganisation interne pour pouvoir supporter plusieurs
+				interface graphique différentes.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout d'une classe pour la gestion des paramètres.
+			</action>
+			<action dev="jourdren" type="update">
+				Amélioration de la précision du stockage interne des
+				données.
+			</action>
+		</release>
+
+		<release version="0.19" date="2006-10-25">
 			<action dev="jourdren" type="update">
 				Utilise les points internes des Particles2D pour tester
 				l'intersection de 2 Particles2D. Cette methode est bien
