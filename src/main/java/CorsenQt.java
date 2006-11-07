@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 import com.trolltech.qt.core.QMutex;
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QUrl;
@@ -48,7 +49,9 @@ public class CorsenQt extends QMainWindow {
   Ui_CorsenMainWindow mainWindowUi = new Ui_CorsenMainWindow();
   QMutex mutex = new QMutex();
   private Settings settings = new Settings();
-  private String lastDir; //"/home/jourdren/Desktop/atp16";
+  private String lastDir = "/home/jourdren/Desktop/atp16";
+
+  // private String lastDir = ""; // "/home/jourdren/Desktop/atp16";
 
   private class UpdateStatusQt extends QObject implements UpdateStatus {
 
@@ -74,6 +77,7 @@ public class CorsenQt extends QMainWindow {
     int currentCellToProcess;
     int cellToProcessCount;
     int currentPhase;
+    int nbPhaseDone;
     int maxPhase;
     int indexInPhase;
     long timeStartPhase;
@@ -143,7 +147,7 @@ public class CorsenQt extends QMainWindow {
   private void saveSettings() {
 
     try {
-      this.settings.saveOptions();
+      this.settings.saveSettings();
     } catch (IOException e) {
       QMessageBox.critical(this, Globals.APP_NAME,
           "An error occurs while writing the setting on the disk.");
@@ -366,8 +370,7 @@ public class CorsenQt extends QMainWindow {
 
     final CorsenCore cc = new CorsenCore();
 
-    cc.getSettings().setZFactor(this.settings.getZFactor());
-    cc.getSettings().setFactor(this.settings.getFactor());
+    cc.setSettings(this.settings);
     UpdateStatusQt updateStatus = new UpdateStatusQt();
 
     cc.setUpdateStatus(updateStatus);
@@ -473,10 +476,9 @@ public class CorsenQt extends QMainWindow {
         * ProgressEvent.INDEX_IN_PHASE_MAX + (phase - 1)
         * ProgressEvent.INDEX_IN_PHASE_MAX + indexInPhase;
 
-    /*
-     * showStatusMessage("Phase=" + phase + "/" + maxPhase + " index=" +
-     * indexInPhase + " val=" + value + "/" + max);
-     */
+    if (false)
+      showStatusMessage("Phase=" + phase + "/" + maxPhase + " index="
+          + indexInPhase + " val=" + value + "/" + max);
 
     mainWindowUi.progressBar.setMinimum(0);
     mainWindowUi.progressBar.setMaximum(max);
@@ -523,6 +525,7 @@ public class CorsenQt extends QMainWindow {
       setMessengerPathLabelText("");
       setMitoPathLabelText("");
       clearStatusMessage();
+      this.status.currentPhase = 0;
 
       break;
 
@@ -537,6 +540,7 @@ public class CorsenQt extends QMainWindow {
       setMessengerPathLabelText(this.status.rnaFilePath);
       setMitoPathLabelText(this.status.mitoFilePath);
       this.status.currentPhase = 0;
+      this.status.nbPhaseDone = 0;
 
       showProgressMessage("Progress: " + this.status.currentCellToProcess
           + " of " + this.status.cellToProcessCount + " cells");
@@ -552,25 +556,35 @@ public class CorsenQt extends QMainWindow {
 
     case ProgressEvent.START_READ_MESSENGERS_EVENT:
     case ProgressEvent.START_READ_MITOS_EVENT:
+    case ProgressEvent.START_CHANGE_Z_COORDINATES_EVENT:
+    case ProgressEvent.START_CHANGE_ALL_COORDINATES_EVENT:
+    case ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT:
+    case ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT:
+    case ProgressEvent.START_CALC_MIN_DISTANCES_EVENT:
+    case ProgressEvent.START_CALC_MAX_DISTANCES_EVENT:
+    case ProgressEvent.START_WRITE_DATA_EVENT:
+    case ProgressEvent.START_WRITE_IV_MESSENGERS_EVENT:
+    case ProgressEvent.START_WRITE_IV_MITOS_EVENT:
+    case ProgressEvent.START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT:
+    case ProgressEvent.START_WRITE_FULLRESULT_EVENT:
     case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_EVENT:
     case ProgressEvent.START_WRITE_RPLOT_MITOS_EVENT:
     case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT:
-    case ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT:
-    case ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT:
-    case ProgressEvent.START_WRITE_FULLRESULT_MESSAGERS_EVENT:
-    case ProgressEvent.START_WRITE_FULLRESULT_CUBOIDS_EVENT:
-    case ProgressEvent.START_WRITE_RESULT_CUBOIDS_EVENT:
-    case ProgressEvent.START_WRITE_INTENSITIES_VOLUMES_EVENT:
+    case ProgressEvent.START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT:
+    case ProgressEvent.START_WRITE_RPLOT_DISTANCES_EVENT:
 
       this.status.timeStartPhase = System.currentTimeMillis();
-      this.status.currentPhase++;
+      this.status.currentPhase = e.getId();
       this.status.indexInPhase = 0;
+      this.status.nbPhaseDone++;
       showCurrentPhase();
 
       break;
 
     case ProgressEvent.PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT:
     case ProgressEvent.PROGRESS_CALC_MITOS_CUBOIDS_EVENT:
+    case ProgressEvent.PROGRESS_CALC_MIN_DISTANCES_EVENT:
+    case ProgressEvent.PROGRESS_CALC_MAX_DISTANCES_EVENT:
 
       this.status.indexInPhase = e.getIntValue1();
 
@@ -606,10 +620,11 @@ public class CorsenQt extends QMainWindow {
       return;
     }
 
-    showProgressBarProgress(this.status.currentCellToProcess,
-        this.status.cellToProcessCount, this.status.currentPhase,
-        this.status.maxPhase, endEvent ? ProgressEvent.INDEX_IN_PHASE_MAX
-            : this.status.indexInPhase);
+    if (this.status.currentPhase != 0)
+      showProgressBarProgress(this.status.currentCellToProcess,
+          this.status.cellToProcessCount, this.status.nbPhaseDone,
+          this.status.maxPhase, endEvent ? ProgressEvent.INDEX_IN_PHASE_MAX
+              : this.status.indexInPhase);
 
   }
 
@@ -618,11 +633,11 @@ public class CorsenQt extends QMainWindow {
     final StringBuffer sb = new StringBuffer();
     sb.append(" Phase: ");
 
-    sb.append(this.status.currentPhase);
+    sb.append(this.status.nbPhaseDone);
     sb.append("/");
     sb.append(this.status.maxPhase);
     sb.append(" (");
-    sb.append(getPhaseName(this.status.currentPhase));
+    sb.append(ProgressEvent.getPhaseName(this.status.currentPhase));
     sb.append(")");
 
     showStatusMessage(sb.toString());
@@ -633,38 +648,6 @@ public class CorsenQt extends QMainWindow {
     DateFormat df = DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.UK);
 
     return df.format(new Date(time));
-  }
-
-  private static String getPhaseName(final int phase) {
-
-    switch (phase) {
-    case ProgressEvent.START_READ_MESSENGERS_EVENT:
-      return "Read messengers PAR file";
-    case ProgressEvent.START_READ_MITOS_EVENT:
-      return "Read mitos PAR file";
-    case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_EVENT:
-      return "Write messengers R plot file";
-    case ProgressEvent.START_WRITE_RPLOT_MITOS_EVENT:
-      return "Write mitos R plot file";
-    case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT:
-      return "Write cuboids R plot file";
-    case ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT:
-      return "Calc messengers cuboids";
-    case ProgressEvent.START_WRITE_FULLRESULT_MESSAGERS_EVENT:
-      return "Write full results for messengers";
-    case ProgressEvent.START_WRITE_FULLRESULT_CUBOIDS_EVENT:
-      return "Write full results for cuboids";
-    case ProgressEvent.START_WRITE_RESULT_CUBOIDS_EVENT:
-      return "Write results data file for R";
-    case ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT:
-      return "Calc mitochondrions cuboids";
-    case ProgressEvent.START_WRITE_INTENSITIES_VOLUMES_EVENT:
-      return "Write intensities and volumes";
-
-    default:
-      return "";
-    }
-
   }
 
   /**
@@ -701,6 +684,13 @@ public class CorsenQt extends QMainWindow {
   //
 
   public CorsenQt() {
+
+    // load settings
+    try {
+      this.settings.loadSettings();
+    } catch (IOException e) {
+    }
+
     // Place what you made in Designer onto the main window.
     mainWindowUi.setupUi(this);
     setWindowTitle(Globals.APP_NAME + " " + Globals.APP_VERSION);
