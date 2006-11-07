@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
@@ -134,6 +135,30 @@ public class RGL {
   }
 
   /**
+   * Write the lines of distances.
+   * @param distances Distances to draw
+   * @param color Color of the lines
+   * @throws IOException if an error occurs while writing the distances
+   */
+  public void writeDistances(final Map<Particle3D, Distance> distances,
+      final String color) throws IOException {
+
+    if (distances != null) {
+
+      Iterator<Particle3D> it = distances.keySet().iterator();
+
+      while (it.hasNext()) {
+
+        Distance d = distances.get(it.next());
+
+        writeLine(d.getPointMessenger(), d.getPointMito(), color);
+      }
+    }
+
+    close();
+  }
+
+  /**
    * Close the file
    * @throws IOException if an error occurs while closing the file
    */
@@ -155,6 +180,7 @@ public class RGL {
 
     writeRPlots(particles.getParticles(), color, plotCenter, particles
         .getPixelWidth());
+    close();
   }
 
   /**
@@ -607,37 +633,26 @@ public class RGL {
 
   /**
    * Public constructor.
-   * @param parent Parent directory of the file to write
-   * @param filename Name of the file to write
+   * @param file File to write
+   * @param suffix Suffix of the file to write
    * @throws IOException if an error occurs while writing the header
    */
-  public RGL(final File parent, final String filename) throws IOException {
+  public RGL(final File file, final String suffix) throws IOException {
 
-    this(null, new File(parent, filename));
+    this(null, CorsenResultWriter.createFileWithSuffix(file, suffix));
   }
 
   /**
    * Public constructor.
-   * @param parent Parent directory of the file to write
-   * @param file Name of the file to write
-   * @throws IOException if an error occurs while writing the header
-   */
-  public RGL(final File file) throws IOException {
-
-    this(null, file);
-  }
-
-  /**
-   * Public constructor.
-   * @param parent Parent directory of the file to write
+   * @param file File to write
    * @param unit of the 3d view
-   * @param filename Name of the file to write
+   * @param suffix Suffix of the file to write
    * @throws IOException if an error occurs while writing the header
    */
-  public RGL(final String unit, final File parent, final String filename)
+  public RGL(final String unit, final File file, final String suffix)
       throws IOException {
 
-    this(unit, new File(parent, filename));
+    this(unit, CorsenResultWriter.createFileWithSuffix(file, suffix));
   }
 
 }
