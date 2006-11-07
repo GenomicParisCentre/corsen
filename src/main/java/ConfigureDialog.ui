@@ -25,7 +25,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox" >
      <property name="title" >
-      <string>GroupBox</string>
+      <string>Coordinates</string>
      </property>
      <layout class="QVBoxLayout" >
       <property name="margin" >
