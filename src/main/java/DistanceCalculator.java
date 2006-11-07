@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,27 +8,45 @@ import java.util.Set;
 
 public class DistanceCalculator {
 
-  private Particles3D mitoParticles;
+  // private Particles3D mitoParticles;
 
-  private Map cuboidsMitos = new HashMap();
+  private Map<Particle3D, Particle3D[]> cuboidsMitos = new HashMap<Particle3D, Particle3D[]>();
   private Point3D pointToTest;
-  private File fileRGLMitoCuboids;
-  private RGL rglDistances;
   private Point3D nearestPoint;
-  private String colorDistanceInside = "deeppink";
-  private String colorDistanceOutside = "cyan";
+  private Point3D furthestPoint;
   private UpdateStatus updateStatus;
+  private CorsenResult result;
 
   //
   // Getters
   //
 
   /**
-   * Get the mito particles
-   * @return Returns the mitoParticles
+   * Get the corsen result.
+   * @return Returns the result
    */
-  public Particles3D getMitoParticles() {
-    return mitoParticles;
+  public CorsenResult getResult() {
+    return result;
+  }
+
+  /**
+   * Get the update status
+   * @return Returns the updateStatus
+   */
+  public UpdateStatus getUpdateStatus() {
+    return updateStatus;
+  }
+
+  //
+  // Setters
+  //
+
+  /**
+   * Set the update status
+   * @param updateStatus The updateStatus to set
+   */
+  public void setUpdateStatus(UpdateStatus updateStatus) {
+    this.updateStatus = updateStatus;
   }
 
   //
@@ -82,7 +99,7 @@ public class DistanceCalculator {
 
     Iterator it = cuboids.keySet().iterator();
 
-    Set toRemove = new HashSet();
+    Set<Particle3D> toRemove = new HashSet<Particle3D>();
 
     while (it.hasNext()) {
 
@@ -129,18 +146,20 @@ public class DistanceCalculator {
    * Calc the cuboids for all the mito particles.
    * @throws IOException
    */
-  private void calcCuboids() throws IOException {
+  private void calcCuboids() {
 
-    if (this.mitoParticles == null)
+    final Particles3D mitoParticles = getResult().getMitosParticles();
+
+    if (mitoParticles == null)
       return;
 
-    final float xlen = this.mitoParticles.getPixelWidth();
-    final float ylen = this.mitoParticles.getPixelHeight();
-    final float zlen = this.mitoParticles.getPixelDepth();
+    final float xlen = mitoParticles.getPixelWidth();
+    final float ylen = mitoParticles.getPixelHeight();
+    final float zlen = mitoParticles.getPixelDepth();
 
-    ArrayList al = new ArrayList();
+    ArrayList<Particle3D> al = new ArrayList<Particle3D>();
 
-    final Particle3D[] mp = this.mitoParticles.getParticles();
+    final Particle3D[] mp = mitoParticles.getParticles();
     final int n = mp.length;
 
     for (int i = 0; i < n; i++) {
@@ -163,14 +182,8 @@ public class DistanceCalculator {
 
     al.toArray(mitoCuboids);
 
-    // Write the mito cuboids
-
-    if (this.fileRGLMitoCuboids != null) {
-      RGL rgl = new RGL(this.mitoParticles.getUnitOfLength(),
-          this.fileRGLMitoCuboids);
-      rgl.writeRPlots(mitoCuboids, "red", false, 1.0f);
-      rgl.close();
-    }
+    getResult().setCuboidsMitosParticles(
+        new Particles3D(mitoParticles, mitoCuboids));
 
   }
 
@@ -225,16 +238,11 @@ public class DistanceCalculator {
   private double calcMinimalDistanceToPointNotIncludeInMito(
       final Particle3D mito) {
 
-    if (this.rglDistances != null) {
+    Point3D p = mito.getNearestInnerPoint(this.pointToTest);
 
-      Point3D p = mito.getNearestInnerPoint(this.pointToTest);
+    this.nearestPoint = p;
 
-      this.nearestPoint = p;
-
-      return p.distance(this.pointToTest);
-    }
-
-    return mito.getMinDistanceToInnerPoint(this.pointToTest);
+    return p.distance(this.pointToTest);
   }
 
   /**
@@ -246,7 +254,11 @@ public class DistanceCalculator {
   private double calcMaximalDistanceToPointNotIncludeInMito(
       final Particle3D mito) {
 
-    return mito.getMaxDistanceToInnerPoint(this.pointToTest);
+    Point3D p = mito.getFurthestInnerPoint(this.pointToTest);
+
+    this.furthestPoint = p;
+
+    return p.distance(this.pointToTest);
   }
 
   /**
@@ -254,43 +266,24 @@ public class DistanceCalculator {
    * the case where the point is inside the mito.
    * @param mito The mito particle
    * @return the distance between the point and the mito
-   * @throws IOException
    */
-  private double calcMinimalDistanceToPointIncludeInMito(final Particle3D mito)
-      throws IOException {
+  private double calcMinimalDistanceToPointIncludeInMito(final Particle3D mito) {
 
-    Particle3D[] cuboids = (Particle3D[]) this.cuboidsMitos.get(mito);
+    Particle3D[] cuboids = this.cuboidsMitos.get(mito);
 
     double min = Double.MAX_VALUE;
     final Point3D p = this.pointToTest;
-    Point3D p2 = null;
-
-    final boolean output = this.rglDistances != null;
 
     for (int i = 0; i < cuboids.length; i++) {
 
-      if (output) {
+      Point3D np = cuboids[i].getNearestInnerPoint(p);
+      
+      final double d = np.distance(p);
 
-        Point3D p3 = cuboids[i].getNearestInnerPoint(p);
-        final double d = p.distance(p3);
-
-        if (d < min) {
-          min = d;
-          p2 = p3;
-        }
-
-      } else {
-        final double d = cuboids[i].getMinDistanceToInnerPoint(p);
-
-        if (d < min) {
-          min = d;
-        }
+      if (d < min) {
+        min = d;
+        this.nearestPoint=np;
       }
-
-    }
-
-    if (output) {
-      this.rglDistances.writeLine(p, p2, this.colorDistanceInside);
     }
 
     return min;
@@ -303,9 +296,8 @@ public class DistanceCalculator {
    * @param messenger
    * @return the best distance between a messenger and a mitocondria. This
    *         distance can be negative
-   * @throws IOException
    */
-  public double minimalDistance(final Particle3D messenger) throws IOException {
+  public Distance minimalDistance(final Particle3D messenger) {
 
     if (messenger == null)
       throw new NullPointerException("Messenger is null");
@@ -313,40 +305,46 @@ public class DistanceCalculator {
     final Point3D barycenter = messenger.getBarycenter();
 
     if (barycenter == null)
-      return Double.NaN;
+      return null;
 
     this.pointToTest = barycenter;
 
     double min = Double.MAX_VALUE;
     Point3D p = null;
 
-    final float xlen = this.mitoParticles.getPixelWidth();
-    final float ylen = this.mitoParticles.getPixelHeight();
-    final float zlen = this.mitoParticles.getPixelDepth();
+    // final Particles3D mitoParticles = getResult().getCuboidsMitosParticles();
+    final Particles3D mitoParticles = getResult().getMitosParticles();
 
-    final int n = this.mitoParticles.getParticlesNumber();
+    final float xlen = mitoParticles.getPixelWidth();
+    final float ylen = mitoParticles.getPixelHeight();
+    final float zlen = mitoParticles.getPixelDepth();
+
+    final int n = mitoParticles.getParticlesNumber();
+
+    Particle3D nearestMito = null;
 
     for (int i = 0; i < n; i++) {
 
-      Particle3D mito = this.mitoParticles.getParticle(i);
+      final Particle3D mito = mitoParticles.getParticle(i);
 
-      if (isPointInMito(mito, xlen, ylen, zlen))
-        return -calcMinimalDistanceToPointIncludeInMito(mito);
+      if (isPointInMito(mito, xlen, ylen, zlen)) {
+        min = -calcMinimalDistanceToPointIncludeInMito(mito);
+        nearestMito = mito;
+        p = this.nearestPoint;
+        break;
+      }
 
       double d = calcMinimalDistanceToPointNotIncludeInMito(mito);
 
       if (d < min) {
         min = d;
         p = this.nearestPoint;
+        nearestMito = mito;
       }
 
     }
 
-    if (this.rglDistances != null)
-      this.rglDistances.writeLine(this.pointToTest, p,
-          this.colorDistanceOutside);
-
-    return min;
+    return new Distance(messenger, nearestMito, barycenter, p, (float) min);
   }
 
   /**
@@ -358,7 +356,7 @@ public class DistanceCalculator {
    *         distance can be negative
    * @throws IOException
    */
-  public double maximalDistance(final Particle3D messenger) throws IOException {
+  public Distance maximalDistance(final Particle3D messenger) {
 
     if (messenger == null)
       throw new NullPointerException("Messenger is null");
@@ -366,36 +364,41 @@ public class DistanceCalculator {
     final Point3D barycenter = messenger.getBarycenter();
 
     if (barycenter == null)
-      return Double.NaN;
+      return null;
 
     this.pointToTest = barycenter;
 
+    final Particles3D mitoParticles = getResult().getMitosParticles();
+
     double max = Double.MIN_VALUE;
-    final int n = this.mitoParticles.getParticlesNumber();
+    final int n = mitoParticles.getParticlesNumber();
+
+    Particle3D furthestMito = null;
+    Point3D p = null;
 
     for (int i = 0; i < n; i++) {
 
-      Particle3D mito = this.mitoParticles.getParticle(i);
+      Particle3D mito = mitoParticles.getParticle(i);
 
       double d = calcMaximalDistanceToPointNotIncludeInMito(mito);
 
-      if (d > max)
+      if (d > max) {
         max = d;
+        furthestMito = mito;
+        p = this.furthestPoint;
+      }
 
     }
 
-    return max;
-
-  }
-
-  public void closeRGLDistances() throws IOException {
-
-    this.rglDistances.close();
+    return new Distance(messenger, furthestMito, barycenter, p, (float) max);
   }
 
   private void sendEvent(final int id, final int value1) {
 
-    updateStatus.updateStatus(new ProgressEvent(id, value1));
+    if (this.updateStatus == null)
+      return;
+
+    this.updateStatus.updateStatus(new ProgressEvent(id, value1));
   }
 
   //
@@ -407,22 +410,10 @@ public class DistanceCalculator {
    * @param mitos mito Particles
    * @throws IOException
    */
-  public DistanceCalculator(final Particles3D mitos,
-      final File fileRGLDistances, final File fileRGLMitoCuboids,
-      final UpdateStatus updateStatus) throws IOException {
+  public DistanceCalculator(final CorsenResult result) {
 
-    this.mitoParticles = mitos;
-    this.fileRGLMitoCuboids = fileRGLMitoCuboids;
+    this.result = result;
 
-    if (fileRGLDistances != null) {
-
-      this.rglDistances = new RGL(mitos.getUnitOfLength(), fileRGLDistances);
-
-    }
-
-    this.updateStatus = updateStatus;
-
-    // calcMitoMinDistances();
     calcCuboids();
   }
 

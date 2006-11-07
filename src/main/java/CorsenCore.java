@@ -30,6 +30,7 @@ public class CorsenCore implements Runnable {
   private static final String EXTENSION_CUBOIDS_RGL_FILE = "_cuboids.R";
   private static final String EXTENSION_DISTANCES_FILE = "_distances.R";
   private static final String EXTENSION_DATA_FILE = ".data";
+  private static final String EXTENSION_FULL_RESULT_FILE = ".result";
 
   //
   // inner class
@@ -62,7 +63,8 @@ public class CorsenCore implements Runnable {
 
     return this.settings;
   }
-
+  
+  
   /**
    * Get the Directory of the files to read
    * @return Returns the dirFiles
@@ -124,6 +126,15 @@ public class CorsenCore implements Runnable {
     this.updateStatus = updateStatus;
   }
 
+  /**
+   * Set the settings.
+   * @param setting The setting to set
+   */
+  public void setSettings(final Settings settings) {
+    
+    this.settings = settings;
+  }
+  
   /**
    * Set the size of pixel.
    * @param pixelSize The size of a pixel
@@ -223,230 +234,109 @@ public class CorsenCore implements Runnable {
   private void doACell(final File mitoFile, final File rnaFile,
       final File resultFile, int currentCell, int cellCount) throws IOException {
 
+    final Settings s = this.getSettings();
+
     // Send Start cell event
     sendEvent(ProgressEvent.START_CELL_EVENT, currentCell, cellCount, mitoFile
         .getAbsolutePath(), rnaFile.getAbsolutePath(), resultFile
         .getAbsolutePath());
 
-    // Read messengers and write R plot for messengers
+    // Create result and writer objects
+    final CorsenResult result = new CorsenResult(mitoFile, rnaFile,getUpdateStatus());
+    final CorsenResultWriter writer = new CorsenResultWriter(result);
+
+    // Read messengers file
     sendEvent(ProgressEvent.START_READ_MESSENGERS_EVENT);
+    result.loadMessengersParticlesFile();
 
-    final Particles3D messengersParticles = new Particles3D(rnaFile);
-
-    if (getSettings().getZFactor() != 1.0f)
-      messengersParticles.changeZCoord(getSettings().getZFactor());
-
-    if (getSettings().getFactor() != 1.0f)
-      messengersParticles.changeCoord(getSettings().getFactor());
-
-    // final Particle3D[] messengers = readmageJPlugingOutputFile(rnaFile);
-    sendEvent(ProgressEvent.START_WRITE_RPLOT_MESSENGERS_EVENT);
-
-    RGL rgl = new RGL(new File(resultFile.getAbsolutePath()
-        + EXTENSION_MESSENGERS_RGL_FILE));
-    rgl.writeRPlots(messengersParticles, "green", true);
-    rgl.close();
-
-    final File messengersIVFile = new File(resultFile.getAbsolutePath()
-        + EXTENSION_MESSENGERS_IV_FILE);
-    writeIntensityVolume(messengersIVFile, messengersParticles);
-
-    // Read mitos and write R plot for mitos
+    // Read mito file
     sendEvent(ProgressEvent.START_READ_MITOS_EVENT);
+    result.loadMitosPartcilesFile();
 
-    final Particles3D mitosParticles = new Particles3D(mitoFile);
-    if (getSettings().getZFactor() != 1.0f) {
-      mitosParticles.changeZCoord(getSettings().getZFactor());
+    // Changes the coordinates
+    sendEvent(ProgressEvent.START_CHANGE_Z_COORDINATES_EVENT);
+    result.changeZCoordinates(getSettings().getZFactor());
+    sendEvent(ProgressEvent.START_CHANGE_ALL_COORDINATES_EVENT);
+    result.changeAllCoordinates(getSettings().getFactor());
+
+    // Calc the cuboids
+    sendEvent(ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT);
+    result.calcMessengerCuboids();
+    sendEvent(ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT);
+    result.calcMitosCuboids();
+
+    // Calc the distances
+    sendEvent(ProgressEvent.START_CALC_MIN_DISTANCES_EVENT);
+    result.calcMinimalDistances();
+    sendEvent(ProgressEvent.START_CALC_MAX_DISTANCES_EVENT);
+    result.calcMaximalDistances();
+
+    //
+    // Write results
+    //
+
+    if (s.isSaveDataFile()) {
+      sendEvent(ProgressEvent.START_WRITE_DATA_EVENT);
+      writer.writeDataFile(resultFile, EXTENSION_DATA_FILE);
     }
 
-    if (getSettings().getFactor() != 1.0f)
-      mitosParticles.changeCoord(getSettings().getFactor());
+    if (s.isSaveIVFile()) {
+      sendEvent(ProgressEvent.START_WRITE_IV_MESSENGERS_EVENT);
+      writer.writeMessengersIntensityVolume(resultFile,
+          EXTENSION_MESSENGERS_IV_FILE);
+      sendEvent(ProgressEvent.START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT);
+      writer.writeCuboidsMessengersIntensityVolume(resultFile,
+          EXTENSION_CUBOIDS_IV_FILE);
+      sendEvent(ProgressEvent.START_WRITE_IV_MITOS_EVENT);
+      writer.writeMitosIntensityVolume(resultFile,
+          EXTENSION_MITOS_IV_FILE);
+    }
 
-    sendEvent(ProgressEvent.START_WRITE_RPLOT_MITOS_EVENT);
+    if (s.isSaveFullResultsFile()) {
+      sendEvent(ProgressEvent.START_WRITE_FULLRESULT_EVENT);
+      writer.writeFullResult(resultFile, EXTENSION_FULL_RESULT_FILE);
+    }
 
-    rgl = new RGL(new File(resultFile.getAbsolutePath()
-        + EXTENSION_MITOS_RGL_FILE));
-    rgl.writeRPlots(mitosParticles, "red", false);
-    rgl.close();
+    //
+    // Write RGL files
+    //
 
-    final File mitosIVFile = new File(resultFile.getAbsolutePath()
-        + EXTENSION_MITOS_IV_FILE);
-    writeIntensityVolume(mitosIVFile, mitosParticles);
+    if (s.isSaveVisualizationFiles()) {
 
-    // Calc cuboids and write R plot for cuboids
-    sendEvent(ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT);
-    final Particles3D cuboids = calcCuboid(messengersParticles);
+      if (s.isSaveMessengers3dFile()) {
+        sendEvent(ProgressEvent.START_WRITE_RPLOT_MESSENGERS_EVENT);
+        new RGL(resultFile, EXTENSION_MESSENGERS_RGL_FILE).writeRPlots(result
+            .getMessengersParticles(), "green", true);
+      }
 
-    sendEvent(ProgressEvent.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT);
+      if (s.isSaveMito3dFile()) {
+        sendEvent(ProgressEvent.START_WRITE_RPLOT_MITOS_EVENT);
+        new RGL(resultFile, EXTENSION_MITOS_RGL_FILE).writeRPlots(result
+            .getMitosParticles(), "red", false);
+      }
 
-    rgl = new RGL(new File(resultFile.getAbsolutePath()
-        + EXTENSION_CUBOIDS_RGL_FILE));
-    rgl.writeRPlots(cuboids, "green", true);
-    rgl.close();
+      if (s.isSaveMessengersCuboids3dFile()) {
+        sendEvent(ProgressEvent.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT);
+        new RGL(null, resultFile, EXTENSION_CUBOIDS_RGL_FILE).writeRPlots(
+            result.getCuboidsMessengersParticles(), "green", true);
+      }
 
-    // Write R result file
-    File resultDataFile = new File(resultFile.getAbsolutePath()
-        + EXTENSION_DATA_FILE);
+      if (s.isSaveMitoCuboids3dFile()) {
+        sendEvent(ProgressEvent.START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT);
+        new RGL(null, resultFile, EXTENSION_MITOS_CUBOIDS_RGL_FILE)
+            .writeRPlots(result.getCuboidsMitosParticles(), "red", false);
+      }
 
-    File fileRGLDistances = new File(resultFile.getAbsolutePath()
-        + EXTENSION_DISTANCES_FILE);
+      if (s.isSaveDistances3dFile()) {
+        sendEvent(ProgressEvent.START_WRITE_RPLOT_DISTANCES_EVENT);
+        new RGL(null, resultFile, EXTENSION_DISTANCES_FILE)
+            .writeDistances(result.getMinDistances(), "cyan");
+      }
 
-    File fileRGLMitoCuboids = new File(resultFile.getAbsolutePath()
-        + EXTENSION_MITOS_CUBOIDS_RGL_FILE);
-
-    writeRResultFile(cuboids, mitosParticles, resultDataFile, fileRGLDistances,
-        fileRGLMitoCuboids);
-
-    sendEvent(ProgressEvent.START_WRITE_INTENSITIES_VOLUMES_EVENT);
-    final File cuboidsIVFile = new File(resultFile.getAbsolutePath()
-        + EXTENSION_CUBOIDS_IV_FILE);
-    writeIntensityVolume(cuboidsIVFile, cuboids);
-
-    // Write full result final
-
-    if (this.getSettings().isSaveFullResultsFile()) {
-
-      FileOutputStream fos = new FileOutputStream(new File(resultFile
-          .getAbsolutePath()
-          + ".result"));
-      Writer out = new OutputStreamWriter(fos);
-
-      sendEvent(ProgressEvent.START_WRITE_FULLRESULT_MESSAGERS_EVENT);
-      writeFullResultFile(messengersParticles, mitosParticles, out);
-
-      sendEvent(ProgressEvent.START_WRITE_FULLRESULT_CUBOIDS_EVENT);
-      writeFullResultFile(cuboids, mitosParticles, out);
-
-      out.close();
     }
 
     // Send End cell event
     sendEvent(ProgressEvent.END_CELL_EVENT);
-
-  }
-
-  /**
-   * Write data in full resut file
-   * @param messengers Messengers particles
-   * @param mitos Mitochondia particles
-   * @param out Writer
-   * @throws IOException if an error occurs while writing data
-   */
-  private void writeFullResultFile(final Particles3D messengersParticles,
-      final Particles3D mitosParticles, final Writer out) throws IOException {
-
-    final long start = System.currentTimeMillis();
-
-    out.write("messager");
-    out.write("\t");
-    out.write("volume");
-    out.write("\t");
-    out.write("intensity");
-    out.write("\t");
-
-    final Particle3D[] mitos = mitosParticles.getParticles();
-    final Particle3D[] messengers = messengersParticles.getParticles();
-
-    for (int j = 0; j < mitos.length; j++) {
-
-      out.write("d(s,s)[");
-      out.write(mitos[j].getName());
-      out.write("]");
-      out.write("\t");
-      out.write("d(c,s)[");
-      out.write(mitos[j].getName());
-      out.write("]");
-      out.write("\t");
-      out.write("include[");
-      out.write(mitos[j].getName());
-      out.write("]");
-      out.write("\t");
-    }
-    out.write("min(s,s)\tmin(c,s)\n");
-
-    for (int i = 0; i < messengers.length; i++) {
-
-      out.write(messengers[i].getName());
-      out.write("\t");
-      out.write("" + messengers[i].getVolume());
-      out.write("\t");
-      out.write("" + messengers[i].getIntensity());
-      out.write("\t");
-
-      double minss = java.lang.Double.MAX_VALUE;
-      double mincs = java.lang.Double.MAX_VALUE;
-
-      for (int j = 0; j < mitos.length; j++) {
-
-        final double dss = messengers[i].getSurfaceToSurfaceDistance(mitos[j]);
-        final double dcs = messengers[i]
-            .getBarycenterToSurfaceDistance(mitos[j]);
-
-        if (dss < minss)
-          minss = dss;
-        if (dcs < mincs)
-          mincs = dcs;
-
-        out.write("" + dss);
-        out.write("\t");
-        out.write("" + dcs);
-        out.write("\t");
-
-        final boolean include = messengers[i].intersect(mitos[j]);
-        if (include)
-          out.write("1");
-        else
-          out.write("0");
-        out.write("\t");
-      }
-
-      out.write("" + minss);
-      out.write("\t");
-      out.write("" + mincs);
-      out.write("\n");
-    }
-
-    final long end = System.currentTimeMillis();
-    System.out.println("Write full result file : " + (end - start) + " ms");
-  }
-
-  /**
-   * Write R result file.
-   * @param messengers Messengers
-   * @param mitos Mitochondria
-   * @param fileDistances Writer for result
-   * @throws IOException if an error occurs while writing
-   */
-  private void writeRResultFile(final Particles3D messengers,
-      final Particles3D mitos, final File outFile, final File fileDistances,
-      final File fileMitoCuboids) throws IOException {
-
-    sendEvent(ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT);
-    final DistanceCalculator dc = new DistanceCalculator(mitos, fileDistances,
-        fileMitoCuboids, getUpdateStatus());
-
-    sendEvent(ProgressEvent.START_WRITE_RESULT_CUBOIDS_EVENT);
-    FileOutputStream fos = new FileOutputStream(outFile);
-    Writer out = new OutputStreamWriter(fos);
-
-    out.write("#Intensity\tmin distance\tmax distance\n");
-
-    final Particle3D[] mes = messengers.getParticles();
-
-    for (int i = 0; i < mes.length; i++) {
-
-      out.write("" + mes[i].getIntensity());
-      out.write("\t");
-      final double min = dc.minimalDistance(mes[i]);
-      out.write("" + min);
-      out.write("\t");
-      final double max = dc.maximalDistance(mes[i]);
-      out.write("" + max);
-      out.write("\n");
-    }
-
-    dc.closeRGLDistances();
-    out.close();
   }
 
   private boolean processMultipleCells(final File directory) throws IOException {
@@ -554,90 +444,6 @@ public class CorsenCore implements Runnable {
 
     getUpdateStatus().updateStatus(
         new ProgressEvent(id, value1, value2, value3, value4, value5));
-  }
-
-  /**
-   * Create cuboids particles from messengers particles.
-   * @param messengers Messengers
-   * @param lenght of the cuboid
-   * @return An array of Particle3D
-   */
-  public Particles3D calcCuboid(final Particles3D particles) {
-
-    if (particles == null)
-      return null;
-
-    ArrayList al = null;
-
-    final int nParticles = particles.getParticlesNumber();
-    final int countMax = Particle3DUtil.countInnerPointsInParticles(particles
-        .getParticles());
-    int count = 0;
-
-    for (int m = 0; m < nParticles; m++) {
-
-      final Particle3D messenger = particles.getParticle(m);
-
-      float len = particles.getPixelDepth();
-      if (particles.getPixelWidth() > len)
-        len = particles.getPixelWidth();
-      if (particles.getPixelHeight() > len)
-        len = particles.getPixelHeight();
-
-      len = len * Globals.CUBOID_SIZE_FACTOR;
-
-      ArrayList cuboids = Particle3DUtil.createCuboidToArrayList(messenger,
-          len, len, len);
-
-      if (cuboids != null) {
-        if (al == null)
-          al = new ArrayList();
-        al.addAll(cuboids);
-      }
-
-      count += messenger.innerPointsCount();
-      final double p = (double) count / (double) countMax
-          * (double) ProgressEvent.INDEX_IN_PHASE_MAX;
-      sendEvent(ProgressEvent.PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT, (int) p);
-    }
-
-    if (al == null)
-      return null;
-    final Particle3D[] result = new Particle3D[al.size()];
-    al.toArray(result);
-
-    Particles3D pars = new Particles3D(particles);
-
-    pars.setParticles(result);
-
-    return pars;
-  }
-
-  private void writeIntensityVolume(final File file, final Particles3D particles)
-      throws IOException {
-
-    if (particles == null || file == null)
-      return;
-
-    Particle3D[] pars = particles.getParticles();
-
-    if (pars == null)
-      return;
-
-    final FileOutputStream fos = new FileOutputStream(file);
-    final Writer out = new OutputStreamWriter(fos);
-
-    out.write("# Intensity\tVolume\n");
-
-    for (int i = 0; i < pars.length; i++) {
-      if (i != 0)
-        out.write("\n");
-      out.write(Long.toString(pars[i].getIntensity()));
-      out.write("\t");
-      out.write(Double.toString(pars[i].getVolume()));
-    }
-
-    out.close();
   }
 
   //

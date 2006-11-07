@@ -279,7 +279,7 @@ public class Particles3D {
    * Update Coords
    * @param coef Coef
    */
-  public void changeCoord(final float coef) {
+  public void changeAllCoord(final float coef) {
 
     if (coef == 1.0f)
       return;
@@ -331,6 +331,17 @@ public class Particles3D {
     this.unitOfLength = pars.unitOfLength;
     this.minThreshold = pars.minThreshold;
     this.maxThreshold = pars.maxThreshold;
+  }
+  
+  /**
+   * Public constructor. Create a new particle with the dimension of another
+   * object.
+   * @param Particle File to read to create object
+   */
+  public Particles3D(final Particles3D pars, final Particle3D [] particles) {
+
+    this(pars);
+    setParticles(particles);
   }
 
   /**
