@@ -360,9 +360,9 @@ public final class Settings {
   /**
    * Save Corsen options
    */
-  public void saveOptions() throws IOException {
+  public void saveSettings() throws IOException {
 
-    saveOptions(new File(getConfigurationFilePath()));
+    saveSettings(new File(getConfigurationFilePath()));
   }
 
   /**
@@ -370,7 +370,7 @@ public final class Settings {
    * @param file File to save.
    * @throws IOException if an error occurs while writing the file
    */
-  public void saveOptions(final File file) throws IOException {
+  public void saveSettings(final File file) throws IOException {
 
     FileOutputStream fos = new FileOutputStream(file);
 
@@ -382,9 +382,9 @@ public final class Settings {
   /**
    * Load Corsen options
    */
-  public void loadOptions() throws IOException {
+  public void loadSettings() throws IOException {
 
-    loadOptions(new File(getConfigurationFilePath()));
+    loadSettings(new File(getConfigurationFilePath()));
   }
 
   /**
@@ -392,7 +392,7 @@ public final class Settings {
    * @param file
    * @throws IOException if an error occurs while reading the file
    */
-  public void loadOptions(final File file) throws IOException {
+  public void loadSettings(final File file) throws IOException {
 
     FileInputStream fis = new FileInputStream(file);
 
