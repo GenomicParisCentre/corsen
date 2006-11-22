@@ -113,9 +113,9 @@ public class CorsenResultWriter {
       Particle3D p = it.next();
       out.write("" + p.getIntensity());
       out.write("\t");
-      out.write("" + mins.get(p));
+      out.write(Float.toString(mins.get(p).getDistance()));
       out.write("\t");
-      out.write("" + maxs.get(p));
+      out.write(Float.toString( maxs.get(p).getDistance()));
       out.write("\n");
     }
 
