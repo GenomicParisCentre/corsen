@@ -52,7 +52,7 @@ public final class Particle3DUtil {
 
           final Particle3D p = new Particle3D(particle.getPixelWidth(),
               particle.getPixelHeight(), particle.getPixelDepth());
-          // p.setName(prefix + "-" + result.getId());
+          p.setName(particle.getName() + "-" + p.getId());
           addSurfacePoint(p, i, j, k);
           addSurfacePoint(p, x1, j, k);
           addSurfacePoint(p, x1, y1, k);
