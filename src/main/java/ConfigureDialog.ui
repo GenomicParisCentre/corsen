@@ -8,8 +8,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>347</width>
-    <height>555</height>
+    <width>416</width>
+    <height>641</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -23,268 +23,518 @@
     <number>6</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="title" >
-      <string>Coordinates</string>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
      </property>
-     <layout class="QVBoxLayout" >
-      <property name="margin" >
-       <number>9</number>
-      </property>
-      <property name="spacing" >
-       <number>6</number>
-      </property>
-      <item>
-       <layout class="QGridLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
-        <item row="0" column="1" >
-         <widget class="QLineEdit" name="zFactorLineEdit" />
-        </item>
-        <item row="0" column="0" >
-         <widget class="QLabel" name="label" >
-          <property name="text" >
-           <string>&amp;Z factor:</string>
+     <widget class="QWidget" name="tab" >
+      <attribute name="title" >
+       <string>Main</string>
+      </attribute>
+      <layout class="QVBoxLayout" >
+       <property name="margin" >
+        <number>9</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="groupBox" >
+         <property name="title" >
+          <string>Coordinates</string>
+         </property>
+         <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>9</number>
           </property>
-          <property name="buddy" >
-           <cstring>zFactorLineEdit</cstring>
+          <property name="spacing" >
+           <number>6</number>
           </property>
-         </widget>
-        </item>
-        <item row="2" column="1" >
-         <widget class="QLineEdit" name="unitLineEdit" />
-        </item>
-        <item row="2" column="0" >
-         <widget class="QLabel" name="label_3" >
-          <property name="text" >
-           <string>&amp;Unit:</string>
+          <item>
+           <layout class="QGridLayout" >
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <property name="spacing" >
+             <number>6</number>
+            </property>
+            <item row="0" column="1" >
+             <widget class="QLineEdit" name="zFactorLineEdit" />
+            </item>
+            <item row="0" column="0" >
+             <widget class="QLabel" name="label" >
+              <property name="text" >
+               <string>&amp;Z factor:</string>
+              </property>
+              <property name="buddy" >
+               <cstring>zFactorLineEdit</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" >
+             <widget class="QLineEdit" name="unitLineEdit" />
+            </item>
+            <item row="2" column="0" >
+             <widget class="QLabel" name="label_3" >
+              <property name="text" >
+               <string>&amp;Unit:</string>
+              </property>
+              <property name="buddy" >
+               <cstring>unitLineEdit</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" >
+             <widget class="QLabel" name="label_2" >
+              <property name="text" >
+               <string>Coordinates &amp;factor:</string>
+              </property>
+              <property name="buddy" >
+               <cstring>factorLineEdit</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" >
+             <widget class="QLineEdit" name="factorLineEdit" />
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2" >
+         <property name="title" >
+          <string>Cuboid size</string>
+         </property>
+         <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>9</number>
           </property>
-          <property name="buddy" >
-           <cstring>unitLineEdit</cstring>
+          <property name="spacing" >
+           <number>6</number>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="0" >
-         <widget class="QLabel" name="label_2" >
-          <property name="text" >
-           <string>Coordinates &amp;factor:</string>
+          <item>
+           <layout class="QGridLayout" >
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <property name="spacing" >
+             <number>6</number>
+            </property>
+            <item row="1" column="0" >
+             <widget class="QRadioButton" name="customRadioButton" >
+              <property name="text" >
+               <string>Cus&amp;tom</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" >
+             <widget class="QLabel" name="cuboidSizeValueLabel" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="text" >
+               <string>&amp;Value</string>
+              </property>
+              <property name="buddy" >
+               <cstring>cuboidSizeLineEdit</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2" >
+             <widget class="QLineEdit" name="cuboidSizeLineEdit" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" >
+             <widget class="QRadioButton" name="automaticRadioButton" >
+              <property name="text" >
+               <string>&amp;Automatic</string>
+              </property>
+              <property name="checked" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_3" >
+         <property name="title" >
+          <string>Output files</string>
+         </property>
+         <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>9</number>
           </property>
-          <property name="buddy" >
-           <cstring>factorLineEdit</cstring>
+          <property name="spacing" >
+           <number>6</number>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="1" >
-         <widget class="QLineEdit" name="factorLineEdit" />
-        </item>
-       </layout>
-      </item>
-     </layout>
+          <item>
+           <layout class="QGridLayout" >
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <property name="spacing" >
+             <number>6</number>
+            </property>
+            <item row="5" column="2" >
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>21</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="7" column="1" >
+             <widget class="QCheckBox" name="mitosCuboidsCheckBox" >
+              <property name="text" >
+               <string>Mitocondria cuboid&amp;s</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1" >
+             <widget class="QCheckBox" name="distancesCheckBox" >
+              <property name="text" >
+               <string>Dista&amp;nces</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" >
+             <widget class="QCheckBox" name="ivFileCheckBox" >
+              <property name="text" >
+               <string>&amp;Intensity and volumes (.iv)</string>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1" >
+             <widget class="QCheckBox" name="messengersCheckBox" >
+              <property name="text" >
+               <string>&amp;Messengers</string>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" >
+             <widget class="QCheckBox" name="fullResultCheckBox" >
+              <property name="text" >
+               <string>Full &amp;results</string>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0" >
+             <widget class="QCheckBox" name="visualizationCheckBox" >
+              <property name="text" >
+               <string>3d &amp;visualization</string>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" >
+             <widget class="QCheckBox" name="dataFileCheckBox" >
+              <property name="text" >
+               <string>&amp;Distance data (.data)</string>
+              </property>
+              <property name="shortcut" >
+               <string/>
+              </property>
+              <property name="checkable" >
+               <bool>true</bool>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1" >
+             <widget class="QCheckBox" name="messengersCuboidsCheckBox" >
+              <property name="text" >
+               <string>Messengers cu&amp;boids</string>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1" colspan="2" >
+             <widget class="QCheckBox" name="mitosCheckBox" >
+              <property name="text" >
+               <string>Mit&amp;ochondria</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>329</width>
+           <height>61</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <attribute name="title" >
+       <string>Visualisation</string>
+      </attribute>
+      <layout class="QVBoxLayout" >
+       <property name="margin" >
+        <number>9</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="groupBox_4" >
+         <property name="title" >
+          <string>General</string>
+         </property>
+         <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>9</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <layout class="QGridLayout" >
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <property name="spacing" >
+             <number>6</number>
+            </property>
+            <item row="2" column="0" >
+             <widget class="QLabel" name="label_4" >
+              <property name="text" >
+               <string>Surface line size</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" colspan="2" >
+             <widget class="QCheckBox" name="showDistancesNegativeCheckBox" >
+              <property name="text" >
+               <string>Show negative in a different color</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1" >
+             <widget class="QLineEdit" name="distanceLineSizelineEdit" />
+            </item>
+            <item row="1" column="0" >
+             <widget class="QCheckBox" name="showSurfaceLinesCheckBox" >
+              <property name="text" >
+               <string>Show surface lines</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" >
+             <widget class="QLineEdit" name="surfaceLineSizeLineEdit" />
+            </item>
+            <item row="0" column="0" >
+             <widget class="QLabel" name="label_5" >
+              <property name="text" >
+               <string>Point Size</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0" >
+             <widget class="QLabel" name="label_6" >
+              <property name="text" >
+               <string>distance line size</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" >
+             <widget class="QLineEdit" name="pointSizeLineEdit" />
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_5" >
+         <property name="title" >
+          <string>Colors</string>
+         </property>
+         <layout class="QGridLayout" >
+          <property name="margin" >
+           <number>9</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_10" >
+            <property name="text" >
+             <string>Messengers color:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_9" >
+            <property name="text" >
+             <string>Mitochondria color:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" >
+           <widget class="QLabel" name="label_8" >
+            <property name="text" >
+             <string>Barycenters color:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" >
+           <widget class="QLabel" name="label_7" >
+            <property name="text" >
+             <string>Distances color:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" >
+           <widget class="QLabel" name="label_15" >
+            <property name="text" >
+             <string>Background color:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" >
+           <widget class="QLabel" name="label_16" >
+            <property name="text" >
+             <string>Legend color:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1" >
+           <widget class="QPushButton" name="legendColorPushButton" >
+            <property name="text" >
+             <string/>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>32</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1" >
+           <widget class="QPushButton" name="backgroundColorPushButton" >
+            <property name="text" >
+             <string/>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>32</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" >
+           <widget class="QPushButton" name="distancesColorPushButton" >
+            <property name="text" >
+             <string/>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>32</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" >
+           <widget class="QPushButton" name="barycentersColorPushButton" >
+            <property name="text" >
+             <string/>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>32</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QPushButton" name="mitosColorPushButton" >
+            <property name="text" >
+             <string/>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>32</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QPushButton" name="messengersColorPushButton" >
+            <property name="text" >
+             <string/>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>32</width>
+              <height>16</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox_2" >
-     <property name="title" >
-      <string>Cuboid size</string>
-     </property>
-     <layout class="QVBoxLayout" >
-      <property name="margin" >
-       <number>9</number>
-      </property>
-      <property name="spacing" >
-       <number>6</number>
-      </property>
-      <item>
-       <layout class="QGridLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
-        <item row="1" column="0" >
-         <widget class="QRadioButton" name="customRadioButton" >
-          <property name="text" >
-           <string>Cus&amp;tom</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1" >
-         <widget class="QLabel" name="cuboidSizeValueLabel" >
-          <property name="enabled" >
-           <bool>false</bool>
-          </property>
-          <property name="text" >
-           <string>&amp;Value</string>
-          </property>
-          <property name="buddy" >
-           <cstring>cuboidSizeLineEdit</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2" >
-         <widget class="QLineEdit" name="cuboidSizeLineEdit" >
-          <property name="enabled" >
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" >
-         <widget class="QRadioButton" name="automaticRadioButton" >
-          <property name="text" >
-           <string>&amp;Automatic</string>
-          </property>
-          <property name="checked" >
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox_3" >
-     <property name="title" >
-      <string>Output files</string>
-     </property>
-     <layout class="QVBoxLayout" >
-      <property name="margin" >
-       <number>9</number>
-      </property>
-      <property name="spacing" >
-       <number>6</number>
-      </property>
-      <item>
-       <layout class="QGridLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
-        <item row="5" column="2" >
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>21</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="7" column="1" >
-         <widget class="QCheckBox" name="mitosCuboidsCheckBox" >
-          <property name="text" >
-           <string>Mitocondria cuboid&amp;s</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="1" >
-         <widget class="QCheckBox" name="distancesCheckBox" >
-          <property name="text" >
-           <string>Dista&amp;nces</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" >
-         <widget class="QCheckBox" name="ivFileCheckBox" >
-          <property name="text" >
-           <string>&amp;Intensity and volumes (.iv)</string>
-          </property>
-          <property name="checked" >
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1" >
-         <widget class="QCheckBox" name="messengersCheckBox" >
-          <property name="text" >
-           <string>&amp;Messengers</string>
-          </property>
-          <property name="checked" >
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" >
-         <widget class="QCheckBox" name="fullResultCheckBox" >
-          <property name="text" >
-           <string>Full &amp;results</string>
-          </property>
-          <property name="checked" >
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" >
-         <widget class="QCheckBox" name="visualizationCheckBox" >
-          <property name="text" >
-           <string>3d &amp;visualization</string>
-          </property>
-          <property name="checked" >
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" >
-         <widget class="QCheckBox" name="dataFileCheckBox" >
-          <property name="text" >
-           <string>&amp;Distance data (.data)</string>
-          </property>
-          <property name="shortcut" >
-           <string/>
-          </property>
-          <property name="checkable" >
-           <bool>true</bool>
-          </property>
-          <property name="checked" >
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1" >
-         <widget class="QCheckBox" name="messengersCuboidsCheckBox" >
-          <property name="text" >
-           <string>Messengers cu&amp;boids</string>
-          </property>
-          <property name="checked" >
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1" colspan="2" >
-         <widget class="QCheckBox" name="mitosCheckBox" >
-          <property name="text" >
-           <string>Mit&amp;ochondria</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <spacer>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" >
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <layout class="QHBoxLayout" >
@@ -332,12 +582,6 @@
  <tabstops>
   <tabstop>okButton</tabstop>
   <tabstop>cancelButton</tabstop>
-  <tabstop>zFactorLineEdit</tabstop>
-  <tabstop>factorLineEdit</tabstop>
-  <tabstop>unitLineEdit</tabstop>
-  <tabstop>automaticRadioButton</tabstop>
-  <tabstop>customRadioButton</tabstop>
-  <tabstop>cuboidSizeLineEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

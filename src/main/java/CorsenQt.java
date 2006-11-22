@@ -5,10 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
-import com.trolltech.qt.core.QMutex;
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QUrl;
+import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QDesktopServices;
@@ -17,6 +16,8 @@ import com.trolltech.qt.gui.QFileDialog;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QAbstractItemView.SelectionBehavior;
+import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 import com.trolltech.qt.gui.QFileDialog.FileMode;
 
 /*
@@ -46,18 +47,19 @@ import com.trolltech.qt.gui.QFileDialog.FileMode;
 // TODO When alt-f4 -> System.exit(0)
 public class CorsenQt extends QMainWindow {
 
-  Ui_CorsenMainWindow mainWindowUi = new Ui_CorsenMainWindow();
-  QMutex mutex = new QMutex();
-  private Settings settings = new Settings();
-  private String lastDir = "/home/jourdren/Desktop/atp16";
+  private Ui_CorsenMainWindow mainWindowUi = new Ui_CorsenMainWindow();
 
-  // private String lastDir = ""; // "/home/jourdren/Desktop/atp16";
+  private DataModelQt models = new DataModelQt();
+  private Settings settings = new Settings();
+  private String lastDir = Globals.DEBUG_HOME_DIR ? "/home/jourdren/Desktop/atp16"
+      : "";
 
   private class UpdateStatusQt extends QObject implements UpdateStatus {
 
     public QObject.Signal1<ProgressEvent> statusSignal = new QObject.Signal1<ProgressEvent>();
     public QObject.Signal1<String> messageSignal = new QObject.Signal1<String>();
     public QObject.Signal1<String> errorSignal = new QObject.Signal1<String>();
+    public QObject.Signal1<CorsenResult> resultSignal = new QObject.Signal1<CorsenResult>();
 
     public void showError(String msg) {
       this.errorSignal.emit(msg);
@@ -69,6 +71,10 @@ public class CorsenQt extends QMainWindow {
 
     public void updateStatus(ProgressEvent e) {
       this.statusSignal.emit(e);
+    }
+
+    public void endProcess(CorsenResult result) {
+      this.resultSignal.emit(result);
     }
   }
 
@@ -118,6 +124,10 @@ public class CorsenQt extends QMainWindow {
   // Qt triggered methods
   //
 
+  /**
+   * Show About dialog box.
+   */
+  @SuppressWarnings("unused")
   private void about() {
     QMessageBox
         .about(
@@ -151,130 +161,6 @@ public class CorsenQt extends QMainWindow {
     } catch (IOException e) {
       QMessageBox.critical(this, Globals.APP_NAME,
           "An error occurs while writing the setting on the disk.");
-    }
-
-  }
-
-  @SuppressWarnings("unused")
-  private void configureDialog() {
-    // Make the dialog.
-
-    final Ui_ConfigureDialog dialogUi = new Ui_ConfigureDialog();
-    QDialog dialog = new QDialog(this);
-    dialogUi.setupUi(dialog);
-
-    final QObject o = new QObject() {
-      public void enableCustomCuboidSize() {
-        dialogUi.cuboidSizeValueLabel.setEnabled(true);
-        dialogUi.cuboidSizeLineEdit.setEnabled(true);
-      }
-
-      public void disableCustomCuboidSize() {
-        dialogUi.cuboidSizeValueLabel.setEnabled(false);
-        dialogUi.cuboidSizeLineEdit.setEnabled(false);
-      }
-
-      public void enable3DVisalisation() {
-
-        dialogUi.messengersCheckBox.setEnabled(true);
-        dialogUi.messengersCuboidsCheckBox.setEnabled(true);
-        dialogUi.distancesCheckBox.setEnabled(true);
-        dialogUi.mitosCheckBox.setEnabled(true);
-        dialogUi.mitosCuboidsCheckBox.setEnabled(true);
-      }
-
-      public void disable3DVisalisation() {
-
-        dialogUi.messengersCheckBox.setEnabled(false);
-        dialogUi.messengersCuboidsCheckBox.setEnabled(false);
-        dialogUi.distancesCheckBox.setEnabled(false);
-        dialogUi.mitosCheckBox.setEnabled(false);
-        dialogUi.mitosCuboidsCheckBox.setEnabled(false);
-      }
-
-      public void stateChanged3DVisualisation(final int value) {
-
-        if (value == 0)
-          disable3DVisalisation();
-        else
-          enable3DVisalisation();
-
-      }
-
-    };
-
-    dialogUi.customRadioButton.toggled.connect(o, "enableCustomCuboidSize()");
-    dialogUi.automaticRadioButton.toggled.connect(o,
-        "disableCustomCuboidSize()");
-
-    dialogUi.visualizationCheckBox.stateChanged.connect(o,
-        "stateChanged3DVisualisation(int)");
-
-    dialogUi.visualizationCheckBox.setChecked(true);
-    dialogUi.visualizationCheckBox.setChecked(false);
-
-    final Settings s = this.settings;
-
-    dialogUi.zFactorLineEdit.setText("" + s.getZFactor());
-    dialogUi.factorLineEdit.setText("" + s.getFactor());
-
-    if (s.getUnit() != null)
-      dialogUi.unitLineEdit.setText(s.getUnit().trim());
-
-    if (s.isAutoCuboidSize())
-      dialogUi.automaticRadioButton.setChecked(true);
-    else
-      dialogUi.customRadioButton.setChecked(true);
-
-    dialogUi.cuboidSizeLineEdit.setText("" + s.getCuboidSize());
-
-    dialogUi.dataFileCheckBox.setChecked(s.isSaveDataFile());
-    dialogUi.ivFileCheckBox.setChecked(s.isSaveIVFile());
-    dialogUi.fullResultCheckBox.setChecked(s.isSaveFullResultsFile());
-    dialogUi.visualizationCheckBox.setChecked(s.isSaveVisualizationFiles());
-    dialogUi.messengersCheckBox.setChecked(s.isSaveMessengers3dFile());
-    dialogUi.messengersCuboidsCheckBox.setChecked(s
-        .isSaveMessengersCuboids3dFile());
-    dialogUi.mitosCheckBox.setChecked(s.isSaveMito3dFile());
-    dialogUi.mitosCuboidsCheckBox.setChecked(s.isSaveMitoCuboids3dFile());
-    dialogUi.distancesCheckBox.setChecked(s.isSaveDistances3dFile());
-
-    if (dialog.exec() == QDialog.DialogCode.Accepted.value()) {
-
-      try {
-        s.setZFactor(Float.parseFloat(dialogUi.zFactorLineEdit.text().trim()));
-      } catch (NumberFormatException e) {
-      }
-      try {
-        s.setFactor(Float.parseFloat(dialogUi.factorLineEdit.text().trim()));
-      } catch (NumberFormatException e) {
-      }
-
-      String unitValue;
-
-      if (dialogUi.unitLineEdit.text() != null
-          && !((unitValue = dialogUi.unitLineEdit.text().trim()).equals("")))
-        s.setUnit(unitValue);
-
-      s.setAutoCuboidSize(dialogUi.automaticRadioButton.isChecked());
-
-      try {
-        s.setCuboidSize(Float.parseFloat(dialogUi.cuboidSizeLineEdit.text()
-            .trim()));
-      } catch (NumberFormatException e) {
-      }
-
-      s.setSaveDataFile(dialogUi.dataFileCheckBox.isChecked());
-      s.setSaveIVFile(dialogUi.ivFileCheckBox.isChecked());
-      s.setSaveFullResultFile(dialogUi.fullResultCheckBox.isChecked());
-      s.setSaveVisualizationFiles(dialogUi.visualizationCheckBox.isChecked());
-      s.setSaveMessengers3dFile(dialogUi.messengersCheckBox.isChecked());
-      s.setSaveMessengersCuboids3dFile(dialogUi.messengersCuboidsCheckBox
-          .isChecked());
-      s.setSaveMito3dFile(dialogUi.mitosCheckBox.isChecked());
-      s.setSaveMitoCuboids3dFile(dialogUi.mitosCuboidsCheckBox.isChecked());
-      s.setSaveDistances3dFile(dialogUi.distancesCheckBox.isChecked());
-
     }
 
   }
@@ -363,10 +249,78 @@ public class CorsenQt extends QMainWindow {
   }
 
   /**
+   * Set the prefix path.
+   * @throws IOException
+   */
+  @SuppressWarnings("unused")
+  private void saveResultFile() {
+
+    final int modelView = mainWindowUi.resultViewComboBox.currentIndex();
+
+    String ext = this.models.getSaveFileExtension(modelView);
+
+    String fileName = QFileDialog.getSaveFileName(this, "Save result",
+        this.lastDir, "Result file (*" + ext + ")");
+    if (fileName.length() != 0) {
+
+      try {
+        this.models.saveViewl(modelView, fileName);
+      } catch (IOException e) {
+        showError("An error occurs while writing result file.");
+      }
+    }
+
+  }
+
+  /**
+   * Set the result to the visualisation tabs
+   */
+  @SuppressWarnings("unused")
+  private void endProcess(final CorsenResult result) {
+
+    mainWindowUi.viewOGL.setResult(result);
+    this.models.setResult(result);
+    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+        .currentIndex()));
+
+  }
+
+  /**
+   * Update visalisation.
+   */
+  @SuppressWarnings("unused")
+  private void updateVisualisation() {
+
+    System.out.println("update visualisation");
+
+    final ViewOGL v = mainWindowUi.viewOGL;
+
+    // v.setMitosColor(null);
+    // v.setMessengersColor(null);
+    // v.setBarycenterColor(null);
+    // v.setDistanceColor(null);
+
+    v.setDrawBaryCenter(mainWindowUi.showBarycentersCheckBox.isChecked());
+    v.setDrawDistances(mainWindowUi.showDistancesCheckBox.isChecked());
+    v.setDrawMessengersCuboids(mainWindowUi.messengersCuboidsRadioButton
+        .isChecked());
+    v.setDrawMitosCuboids(mainWindowUi.mitosCuboidsRadioButton.isChecked());
+    v.setDrawDistances(mainWindowUi.showDistancesCheckBox.isChecked());
+
+    v.setRemakeObject(true);
+    v.repaint();
+  }
+
+  /**
    * Launch.
    */
   @SuppressWarnings("unused")
   private void launch() {
+
+    mainWindowUi.viewOGL.clear();
+    this.models.setResult(null);
+    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+        .currentIndex()));
 
     final CorsenCore cc = new CorsenCore();
 
@@ -377,6 +331,7 @@ public class CorsenQt extends QMainWindow {
     updateStatus.errorSignal.connect(this, "showError(String)");
     updateStatus.messageSignal.connect(this, "showMessage(String)");
     updateStatus.statusSignal.connect(this, "updateStatus(ProgressEvent)");
+    updateStatus.resultSignal.connect(this, "endProcess(CorsenResult)");
 
     String dirFile = mainWindowUi.directoryPathLabel.text();
     String arnFile = mainWindowUi.messengerPathLabel.text();
@@ -436,6 +391,13 @@ public class CorsenQt extends QMainWindow {
   private void setStartEnable(final boolean value) {
 
     this.mainWindowUi.launchButton.setEnabled(value);
+    this.mainWindowUi.updateViewPushButton.setEnabled(value);
+    this.mainWindowUi.viewOGL.setRemakeObject(value);
+    if (value == true && this.models.getResult() != null)
+      this.mainWindowUi.saveResultPushButton.setEnabled(true);
+    else
+      this.mainWindowUi.saveResultPushButton.setEnabled(false);
+
   }
 
   private void showStatusMessage(final String message) {
@@ -492,9 +454,30 @@ public class CorsenQt extends QMainWindow {
 
   }
 
+  @SuppressWarnings("unused")
+  public void configureDialog() {
+
+    CorsenConfigureQt cc = new CorsenConfigureQt(this, this.settings);
+    cc.configureDialog();
+
+  }
+
+  @SuppressWarnings("unused")
+  private void resultViewChanged(Object o) {
+
+    int i = ((Integer) o).intValue();
+    mainWindowUi.resultTableView.setModel(this.models.getModel(i));
+
+    mainWindowUi.resultTableView.setAlternatingRowColors(true);
+    mainWindowUi.resultTableView.setSortingEnabled(true);
+    mainWindowUi.resultTableView.sortByColumn(1, Qt.SortOrder.AscendingOrder);
+
+  }
+
   public void closeEvent(QCloseEvent event) {
 
     quit();
+    System.exit(0);
   }
 
   //
@@ -643,13 +626,6 @@ public class CorsenQt extends QMainWindow {
     showStatusMessage(sb.toString());
   }
 
-  private String toTimeHumanReadable(final long time) {
-
-    DateFormat df = DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.UK);
-
-    return df.format(new Date(time));
-  }
-
   /**
    * Show an error message.
    * @param msg Message to display
@@ -669,10 +645,46 @@ public class CorsenQt extends QMainWindow {
   }
 
   //
+  // Init tabs methods
+  //
+
+  private void initResultTab() {
+
+    int n = this.models.getViewCount();
+
+    for (int i = 0; i < n; i++)
+      mainWindowUi.resultViewComboBox.addItem(
+          this.models.getViewDescription(i), new Integer(i));
+
+    mainWindowUi.resultViewComboBox.currentIndexChanged.connect(this,
+        "resultViewChanged(Object)");
+
+    resultViewChanged(new Integer(0));
+
+    mainWindowUi.saveResultPushButton.clicked.connect(this, "saveResultFile()");
+
+  }
+
+  //
+  // Utility methods
+  //
+
+  private String toTimeHumanReadable(final long time) {
+
+    DateFormat df = DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.UK);
+
+    return df.format(new Date(time));
+  }
+
+  //
   // Main method
   //
 
-  public static void main(String[] args) {
+  /**
+   * Main method.
+   * @param application args
+   */
+  public static void main(final String[] args) {
     QApplication.initialize(args);
     CorsenQt mainw = new CorsenQt();
     mainw.show();
@@ -714,16 +726,14 @@ public class CorsenQt extends QMainWindow {
 
     mainWindowUi.launchButton.clicked.connect(this, "launch()");
     mainWindowUi.action_Quit.triggered.connect(this, "quit()");
-    // mainWindowUi.
+    mainWindowUi.updateViewPushButton.clicked.connect(this,
+        "updateVisualisation()");
+
+    initResultTab();
 
     setWindowIcon(new QIcon("classpath:files/corsen-logo.png"));
 
     setStartEnable(true);
-
-    // setWindowIcon(new QIcon("classpath:com/trolltech/images/qt-logo.png"));
-
-    // Connect the OpenDialog button to the showDialog method.
-    // mainWindowUi.pushButton_OpenDialog.clicked.connect(this, "showDialog()");
 
   }
 

@@ -111,12 +111,17 @@ public class RGL {
         .write("rgl.bg(color=c(\"" + COLOR_BLACK
             + "\"), fogtype=\"linear\" )\n");
 
-    writeLegend();
+    writeLegend(getUnit());
   }
 
-  private void writeLegend() throws IOException {
+  /**
+   * Draw the legend
+   * @param unit Unit of the legend
+   * @throws IOException
+   */
+  public void writeLegend(final String unit) throws IOException {
 
-    final Writer out = this.out;
+    // final Writer out = this.out;
 
     Point3D o = new SimplePoint3DImpl(0, 0, 0);
     Point3D x = new SimplePoint3DImpl(10, 0, 0);
@@ -127,7 +132,7 @@ public class RGL {
     writeLine(o, y, COLOR_WHITE);
     writeLine(o, z, COLOR_WHITE);
 
-    String text = "10 " + getUnit();
+    String text = "10 " + unit;
 
     out.write("text3d(x=-1,y=-1,z=-1,text=\"" + text + "\",color=\""
         + COLOR_WHITE + "\")\n");
