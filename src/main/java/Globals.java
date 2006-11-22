@@ -26,8 +26,12 @@ public final class Globals {
   public static final String APP_NAME = "Corsen";
 
   /** The version of the application. */
-  public static final String APP_VERSION = "0.20";
+  public static final String APP_VERSION = "0.21";
 
+  public static final boolean DEBUG = false;
+  public static final boolean DEBUG_HOME_DIR = false;
+  
+  
   public static final float Z_COEF_DEFAULT = 2.96f;
   public static final float CUBOID_SIZE_FACTOR = 2.1f;
   public static final float PIXEL_SIZE_DEFAULT = 1.0f;
