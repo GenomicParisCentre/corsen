@@ -178,6 +178,7 @@ public class CorsenResult {
   public void calcMessengerCuboids() {
 
     this.cuboidsMessengers = calcMessengersCuboidInternal(getMessengersParticles());
+
   }
 
   /**
@@ -254,6 +255,7 @@ public class CorsenResult {
       return null;
 
     ArrayList al = null;
+    float volume = 0;
 
     final int nParticles = particles.getParticlesNumber();
     final int countMax = Particle3DUtil.countInnerPointsInParticles(particles
@@ -271,6 +273,7 @@ public class CorsenResult {
         len = particles.getPixelHeight();
 
       len = len * Globals.CUBOID_SIZE_FACTOR;
+      volume = len*len*len;
 
       ArrayList cuboids = Particle3DUtil.createCuboidToArrayList(messenger,
           len, len, len);
@@ -291,6 +294,11 @@ public class CorsenResult {
       return null;
     final Particle3D[] result = new Particle3D[al.size()];
     al.toArray(result);
+
+    for (int i = 0; i < result.length; i++) {
+      result[i].setIntensityFromInnerPoints();
+      result[i].setVolume(volume);
+    }
 
     Particles3D pars = new Particles3D(particles);
 

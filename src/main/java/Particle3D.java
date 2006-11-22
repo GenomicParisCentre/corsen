@@ -98,6 +98,15 @@ public final class Particle3D {
   public void setName(final String name) {
     this.name = name;
   }
+  
+  /**
+   * Set the volume of the particle
+   * @param volume
+   */
+   void setVolume(final float volume) {
+    
+    this.volume=volume;
+  }
 
   //
   // Other methods
@@ -894,6 +903,10 @@ public final class Particle3D {
 
   ListPoint3D getInnerPoints() {
     return this.innerPoints;
+  }
+  
+  ListPoint3D getSurfacePoints() {
+    return this.surfacePoints;
   }
 
   /**
