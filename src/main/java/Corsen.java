@@ -169,6 +169,14 @@ public class Corsen implements UpdateStatus {
   //
 
   /**
+   * Send corsen result at the end of the process.
+   * @param result The corsen result
+   */
+  public void endProcess(CorsenResult result)  {
+    
+  }
+  
+  /**
    * Update the status bar.
    * @param e event to show
    */

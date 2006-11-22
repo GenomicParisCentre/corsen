@@ -1,9 +1,5 @@
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -21,16 +17,16 @@ public class CorsenCore implements Runnable {
   private File resultFile;
   private boolean multipleFiles;
 
-  private static final String EXTENSION_MESSENGERS_IV_FILE = "_messengers.iv";
-  private static final String EXTENSION_MESSENGERS_RGL_FILE = "_messengers.R";
-  private static final String EXTENSION_CUBOIDS_IV_FILE = "_cuboids.iv";
-  private static final String EXTENSION_MITOS_CUBOIDS_RGL_FILE = "_mitos_cuboids.R";
-  private static final String EXTENSION_MITOS_RGL_FILE = "_mitos.R";
-  private static final String EXTENSION_MITOS_IV_FILE = "_mitos.iv";
-  private static final String EXTENSION_CUBOIDS_RGL_FILE = "_cuboids.R";
-  private static final String EXTENSION_DISTANCES_FILE = "_distances.R";
-  private static final String EXTENSION_DATA_FILE = ".data";
-  private static final String EXTENSION_FULL_RESULT_FILE = ".result";
+  public static final String EXTENSION_MESSENGERS_IV_FILE = "_messengers.iv";
+  public static final String EXTENSION_MESSENGERS_RGL_FILE = "_messengers.R";
+  public static final String EXTENSION_CUBOIDS_IV_FILE = "_cuboids.iv";
+  public static final String EXTENSION_MITOS_CUBOIDS_RGL_FILE = "_mitos_cuboids.R";
+  public static final String EXTENSION_MITOS_RGL_FILE = "_mitos.R";
+  public static final String EXTENSION_MITOS_IV_FILE = "_mitos.iv";
+  public static final String EXTENSION_CUBOIDS_RGL_FILE = "_cuboids.R";
+  public static final String EXTENSION_DISTANCES_FILE = "_distances.R";
+  public static final String EXTENSION_DATA_FILE = ".data";
+  public static final String EXTENSION_FULL_RESULT_FILE = ".result";
 
   //
   // inner class
@@ -335,6 +331,9 @@ public class CorsenCore implements Runnable {
 
     }
 
+    // Send result to visualisation
+    getUpdateStatus().endProcess(result);
+    
     // Send End cell event
     sendEvent(ProgressEvent.END_CELL_EVENT);
   }
@@ -475,5 +474,7 @@ public class CorsenCore implements Runnable {
       getUpdateStatus().showError(e.getMessage());
     }
 
+   
+    
   }
 }

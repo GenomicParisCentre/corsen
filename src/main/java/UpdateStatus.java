@@ -40,4 +40,10 @@ public interface UpdateStatus {
    */
   void showMessage(final String msg);
   
+  /**
+   * Send corsen result at the end of the process.
+   * @param result The corsen result
+   */
+  void endProcess(CorsenResult result) ;
+  
 }
