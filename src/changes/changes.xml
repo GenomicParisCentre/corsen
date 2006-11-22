@@ -38,7 +38,7 @@
 	</properties>
 	<body>
 
-		<release version="0.19" date="2006-10-25">
+	<release version="0.21" date="2006-10-22">
 			<action dev="jourdren" type="add">
 				Nouvelle interface Graphique réalisée avec QtJambi.
 				Réorganisation interne pour pouvoir supporter plusieurs
@@ -50,6 +50,21 @@
 			<action dev="jourdren" type="update">
 				Amélioration de la précision du stockage interne des
 				données.
+			</action>
+		</release>
+
+		<release version="0.20" date="2006-10-25">
+			<action dev="jourdren" type="add">
+				Visualisation sous forme de tableaux des résultats.
+			</action>
+			<action dev="jourdren" type="add">
+				Visualisation 3D des particules.
+			</action>
+			<action dev="jourdren" type="fix">
+				Calcule maintenant le volume et l'intensité des cuboids. Les cuboids ont maintenant un nom compréhensible.
+			</action>
+			<action dev="jourdren" type="fix">
+				Corrige les erreurs dans le fichier de sortie ".data".
 			</action>
 		</release>
 
