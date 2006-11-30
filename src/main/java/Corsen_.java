@@ -1,3 +1,9 @@
+import fr.ens.transcriptome.corsen.Globals;
+import fr.ens.transcriptome.corsen.RGL;
+import fr.ens.transcriptome.corsen.model.Particle2D;
+import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particles3D;
+import fr.ens.transcriptome.corsen.util.CorsenImageJUtil;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
