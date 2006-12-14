@@ -1,8 +1,9 @@
 import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.RGL;
+import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle2D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
-import fr.ens.transcriptome.corsen.model.Particles3D;
+import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
 import fr.ens.transcriptome.corsen.util.CorsenImageJUtil;
 import ij.IJ;
 import ij.ImagePlus;
@@ -63,14 +64,14 @@ import javax.swing.JOptionPane;
  * <p>
  * 
  * <pre>
- *                                                         for each line do
- *                                                         for each pixel in this line do
- *                                                         if the pixel value is &quot;inside&quot; the threshold range then
- *                                                         trace the edge to mark the object
- *                                                         do the measurement
- *                                                         fill the object with a color outside the threshold range
- *                                                         else
- *                                                         continue the scan
+ *                                                          for each line do
+ *                                                          for each pixel in this line do
+ *                                                          if the pixel value is &quot;inside&quot; the threshold range then
+ *                                                          trace the edge to mark the object
+ *                                                          do the measurement
+ *                                                          fill the object with a color outside the threshold range
+ *                                                          else
+ *                                                          continue the scan
  * </pre>
  */
 public class Corsen_ implements PlugInFilter, Measurements {
@@ -175,11 +176,11 @@ public class Corsen_ implements PlugInFilter, Measurements {
   private Polygon polygon;
 
   // Add by Laurent Jourdren
-  private Set particles3D = new HashSet();
-  private Set previousParticules2D = new HashSet();
-  private Set currentParticles2D = new HashSet();
-  private Map previousParticles3D = new HashMap();
-  private Map currentParticles3D = new HashMap();
+  private Set<Particle3DBuilder> particles3D = new HashSet<Particle3DBuilder>();
+  private Set<Particle2D> previousParticules2D = new HashSet<Particle2D>();
+  private Set<Particle2D> currentParticles2D = new HashSet<Particle2D>();
+  private Map<Particle2D, Particle3DBuilder> previousParticles3D = new HashMap<Particle2D, Particle3DBuilder>();
+  private Map<Particle2D, Particle3DBuilder> currentParticles3D = new HashMap<Particle2D, Particle3DBuilder>();
   private int previousZ = -1;
   private static final boolean DEBUG = false;
 
@@ -201,9 +202,9 @@ public class Corsen_ implements PlugInFilter, Measurements {
 
     if (slice - 1 != this.previousZ) {
       this.previousParticules2D = this.currentParticles2D;
-      this.currentParticles2D = new HashSet();
+      this.currentParticles2D = new HashSet<Particle2D>();
       this.previousParticles3D = this.currentParticles3D;
-      this.currentParticles3D = new HashMap();
+      this.currentParticles3D = new HashMap<Particle2D, Particle3DBuilder>();
 
       if (this.previousZ == -1)
         this.previousZ = slice - 1;
@@ -224,7 +225,7 @@ public class Corsen_ implements PlugInFilter, Measurements {
 
       if (p2DToTest.innerPointIntersect(p2D)) {
 
-        Particle3D existingP3D = (Particle3D) this.previousParticles3D
+        Particle3DBuilder existingP3D = this.previousParticles3D
             .get(p2DToTest);
 
         existingP3D.add(p2D, slice);
@@ -234,10 +235,10 @@ public class Corsen_ implements PlugInFilter, Measurements {
               + slice + " (" + p2D.innerPointsCount() + " points)");
 
         if (this.currentParticles3D.containsKey(p2D)) {
-          Particle3D particle2 = (Particle3D) this.currentParticles3D.get(p2D);
+          Particle3DBuilder particle2 = this.currentParticles3D.get(p2D);
 
           if (particle2.getId() != existingP3D.getId()) {
-            particle2.add(existingP3D);
+            particle2.add(existingP3D.getParticle());
             this.particles3D.remove(existingP3D);
 
           }
@@ -256,8 +257,8 @@ public class Corsen_ implements PlugInFilter, Measurements {
 
     if (!find) {
 
-      Particle3D newP3D = new Particle3D((float) pixelWidth,
-          (float)pixelHeight, (float) pixelDepth);
+      Particle3DBuilder newP3D = new Particle3DBuilder((float) pixelWidth,
+          (float) pixelHeight, (float) pixelDepth);
       newP3D.setName(imp.getTitle() + "-" + newP3D.getId());
       newP3D.add(p2D, slice);
 
@@ -345,7 +346,7 @@ public class Corsen_ implements PlugInFilter, Measurements {
 
     while (it.hasNext()) {
 
-      Particle3D p = (Particle3D) it.next();
+      Particle3D p = ((Particle3DBuilder) it.next()).getParticle();
 
       if (p.getIntensity() == 0)
         continue;

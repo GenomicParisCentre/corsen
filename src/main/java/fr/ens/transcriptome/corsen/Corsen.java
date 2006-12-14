@@ -1,6 +1,3 @@
-package fr.ens.transcriptome.corsen;
-
-import fr.ens.transcriptome.corsen.calc.CorsenResult;
 /*
  *                      Nividic development code
  *
@@ -23,30 +20,38 @@ import fr.ens.transcriptome.corsen.calc.CorsenResult;
  *
  */
 
-public interface UpdateStatus {
+package fr.ens.transcriptome.corsen;
 
-  /**
-   * Update the status bar.
-   * @param e event to show
-   */
-  void updateStatus(final ProgressEvent e);
+import java.io.IOException;
 
-  /**
-   * Show an error message.
-   * @param msg Message to display
-   */
-  void showError(final String msg);
+import fr.ens.transcriptome.corsen.gui.CorsenFakeGui;
+import fr.ens.transcriptome.corsen.gui.qt.CorsenQt;
+import fr.ens.transcriptome.corsen.gui.swing.CorsenSwing;
 
-  /**
-   * Show a message.
-   * @param msg Message to display
-   */
-  void showMessage(final String msg);
-  
-  /**
-   * Send corsen result at the end of the process.
-   * @param result The corsen result
-   */
-  void endProcess(CorsenResult result) ;
-  
+public class Corsen {
+
+  public static void main(final String[] args) throws IOException {
+
+    switch (Globals.DEFAULT_GUI) {
+
+    case FAKE:
+      CorsenFakeGui.main(args);
+      return;
+
+    case SWING:
+      CorsenSwing.main(args);
+      return;
+
+    case QT:
+      CorsenQt.main(args);
+      return;
+
+    default:
+      System.err.println("No GUI defined.");
+      System.exit(1);
+      break;
+    }
+
+  }
+
 }

@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
-import fr.ens.transcriptome.corsen.Distance;
+import fr.ens.transcriptome.corsen.calc.Distance;
+import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.ListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
-import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
 
@@ -59,7 +59,7 @@ public abstract class CorsenGL {
    * @param unit Unit of the legend
    * @throws IOException
    */
-  public void drawLegend(final String unit)  {
+  public void drawLegend(final String unit) {
 
     // final Writer out = this.out;
 
@@ -100,7 +100,7 @@ public abstract class CorsenGL {
 
         Distance d = distances.get(it.next());
 
-        drawLine3D(d.getPointMessenger(), d.getPointMito(), color);
+        drawLine3D(d.getPointA(), d.getPointB(), color);
       }
     }
 
@@ -120,10 +120,11 @@ public abstract class CorsenGL {
       return;
 
     drawPoints3D(particle.getInnerPoints(), color);
-    //drawPolygon3D(particle.getSurfacePoints(), getLowColor(color));
+    // drawPolygon3D(particle.getSurfacePoints(), getLowColor(color));
 
-   /* if (barycentre)
-      drawPoint3D(particle.getBarycenter(), colorBaryCentre);*/
+    /*
+     * if (barycentre) drawPoint3D(particle.getBarycenter(), colorBaryCentre);
+     */
   }
 
   public void drawParticles(final Particles3D particles, final Color color,
@@ -132,10 +133,8 @@ public abstract class CorsenGL {
     if (particles == null)
       return;
 
-    final int n = particles.getParticlesNumber();
-
-    for (int i = 0; i < n; i++)
-      drawParticle(particles.getParticle(i), color, barycentre, colorBaryCentre);
+    for (Particle3D par : particles.getParticles())
+      drawParticle(par, color, barycentre, colorBaryCentre);
 
   }
 

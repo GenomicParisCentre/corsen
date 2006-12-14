@@ -16,17 +16,18 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 
 import fr.ens.transcriptome.corsen.CorsenCore;
-import fr.ens.transcriptome.corsen.CorsenResult;
 import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.UpdateStatus;
+import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
+import fr.ens.transcriptome.corsen.calc.CorsenResult;
 
-public class Corsen implements UpdateStatus {
+public class CorsenSwing implements UpdateStatus {
 
   // Windows Look and Feel
   private static final String WINDOWS_PLAF = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
 
-  private static final Corsen corsen = new Corsen();
+  private static final CorsenSwing corsen = new CorsenSwing();
   private CorsenUI gui;
 
   private class StatusInfo {
@@ -50,10 +51,10 @@ public class Corsen implements UpdateStatus {
 
   /**
    * Get the singleton of the The class.
-   * @return the unique instance of Corsen
+   * @return the unique instance of CorsenSwing
    */
   /*
-   * public static final Corsen getCorsen() { return corsen; }
+   * public static final CorsenSwing getCorsen() { return corsen; }
    */
 
   //
@@ -97,7 +98,7 @@ public class Corsen implements UpdateStatus {
   /**
    * Private constructor.
    */
-  private Corsen() {
+  private CorsenSwing() {
 
     final FileFilter ffPar = new FileFilter() {
       public boolean accept(final File f) {
@@ -127,36 +128,36 @@ public class Corsen implements UpdateStatus {
 
         final CorsenCore cc = new CorsenCore();
 
-        cc.getSettings().setZFactor(Corsen.this.gui.getZCoef());
-        cc.getSettings().setFactor(Corsen.this.gui.getPixelSize());
-        cc.setUpdateStatus(Corsen.this);
+        cc.getSettings().setZFactor(CorsenSwing.this.gui.getZCoef());
+        cc.getSettings().setFactor(CorsenSwing.this.gui.getPixelSize());
+        cc.setUpdateStatus(CorsenSwing.this);
 
-        if (Corsen.this.gui.getDirFile() != null) {
+        if (CorsenSwing.this.gui.getDirFile() != null) {
 
-          cc.setDirFiles(Corsen.this.gui.getDirFile());
+          cc.setDirFiles(CorsenSwing.this.gui.getDirFile());
           cc.setMultipleFiles(true);
 
           new Thread(cc).start();
           // SwingUtilities.invokeLater(cc);
 
-        } else if (Corsen.this.gui.getARNFile() == null
-            || Corsen.this.gui.getMitoFile() == null) {
+        } else if (CorsenSwing.this.gui.getARNFile() == null
+            || CorsenSwing.this.gui.getMitoFile() == null) {
 
-          if (Corsen.this.gui.getARNFile() == null)
-            Corsen.this.gui.showError("No messager file specified.");
+          if (CorsenSwing.this.gui.getARNFile() == null)
+            CorsenSwing.this.gui.showError("No messager file specified.");
           else
-            Corsen.this.gui.showError("No mito file specified.");
+            CorsenSwing.this.gui.showError("No mito file specified.");
 
         } else {
           final JFileChooser jfc = new JFileChooser();
-          if (Corsen.this.gui.getCurrentDirectory() != null)
-            jfc.setCurrentDirectory(Corsen.this.gui.getCurrentDirectory());
+          if (CorsenSwing.this.gui.getCurrentDirectory() != null)
+            jfc.setCurrentDirectory(CorsenSwing.this.gui.getCurrentDirectory());
 
-          final int result = jfc.showSaveDialog(Corsen.this.gui);
+          final int result = jfc.showSaveDialog(CorsenSwing.this.gui);
           if (result == JFileChooser.APPROVE_OPTION) {
 
-            cc.setMitoFile(Corsen.this.gui.getMitoFile());
-            cc.setRnaFile(Corsen.this.gui.getARNFile());
+            cc.setMitoFile(CorsenSwing.this.gui.getMitoFile());
+            cc.setRnaFile(CorsenSwing.this.gui.getARNFile());
             cc.setResultFile(jfc.getSelectedFile());
             cc.setMultipleFiles(false);
 
@@ -193,9 +194,9 @@ public class Corsen implements UpdateStatus {
     if (e == null)
       return;
 
-    switch (e.getId()) {
+    switch (e.getType()) {
 
-    case ProgressEvent.START_CELL_EVENT:
+    case START_CELL_EVENT:
       final long last = this.status.cellStart;
       this.status.cellStart = System.currentTimeMillis();
       this.status.currentFile = e.getIntValue1();
@@ -209,46 +210,45 @@ public class Corsen implements UpdateStatus {
             + (this.status.currentFile - last));
       break;
 
-    case ProgressEvent.START_READ_MESSENGERS_EVENT:
-    case ProgressEvent.START_READ_MITOS_EVENT:
-    case ProgressEvent.START_CHANGE_Z_COORDINATES_EVENT:
-    case ProgressEvent.START_CHANGE_ALL_COORDINATES_EVENT:
-    case ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT:
-    case ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT:
-    case ProgressEvent.START_CALC_MIN_DISTANCES_EVENT:
-    case ProgressEvent.START_CALC_MAX_DISTANCES_EVENT:
-    case ProgressEvent.START_WRITE_DATA_EVENT:
-    case ProgressEvent.START_WRITE_IV_MESSENGERS_EVENT:
-    case ProgressEvent.START_WRITE_IV_MITOS_EVENT:
-    case ProgressEvent.START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT:
-    case ProgressEvent.START_WRITE_FULLRESULT_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_MITOS_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_DISTANCES_EVENT:
+    case START_READ_MESSENGERS_EVENT:
+    case START_READ_MITOS_EVENT:
+    case START_CHANGE_MESSENGERS_COORDINATES_EVENT:
+    case START_CHANGE_MITOS_COORDINATES_EVENT:
+    case START_CALC_MESSENGERS_CUBOIDS_EVENT:
+    case START_CALC_MITOS_CUBOIDS_EVENT:
+    case START_CALC_MIN_DISTANCES_EVENT:
+    case START_WRITE_DATA_EVENT:
+    case START_WRITE_IV_MESSENGERS_EVENT:
+    case START_WRITE_IV_MITOS_EVENT:
+    case START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT:
+    case START_WRITE_FULLRESULT_EVENT:
+    case START_WRITE_RPLOT_MESSENGERS_EVENT:
+    case START_WRITE_RPLOT_MITOS_EVENT:
+    case START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT:
+    case START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT:
+    case START_WRITE_RPLOT_DISTANCES_EVENT:
 
       this.status.phaseStart = System.currentTimeMillis();
-      this.status.currentPhase = e.getId();
+      this.status.currentPhase = e.getType().ordinal();
       this.status.phaseIndex = 0;
       this.status.phaseEnd = 0;
 
       break;
 
-    case ProgressEvent.PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT:
-    case ProgressEvent.PROGRESS_CALC_MITOS_CUBOIDS_EVENT:
+    case PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT:
+    case PROGRESS_CALC_MITOS_CUBOIDS_EVENT:
 
       this.status.phaseIndex = e.getIntValue1();
       break;
 
-    case ProgressEvent.END_CELLS_SUCCESSFULL_EVENT:
+    case END_CELLS_SUCCESSFULL_EVENT:
       final long end = System.currentTimeMillis();
       System.out.println("Finish in " + (end - this.status.initStart) + " ms");
       this.gui.setStartEnable(true);
       this.gui.setStatusMessage("Ready");
       return;
 
-    case ProgressEvent.END_ERROR_EVENT:
+    case END_ERROR_EVENT:
       this.gui.setStartEnable(true);
       this.gui.setStatusMessage("Ready");
       return;
@@ -266,10 +266,10 @@ public class Corsen implements UpdateStatus {
 
     sb.append(this.status.currentPhase);
     sb.append("/11 (");
-    sb.append(ProgressEvent.getPhaseName(this.status.currentPhase));
+    sb.append(e.getType().toString());
 
-    if (this.status.currentPhase == ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT
-        || this.status.currentPhase == ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT) {
+    if (this.status.currentPhase == ProgressEventType.START_CALC_MESSENGERS_CUBOIDS_EVENT.ordinal()
+        || this.status.currentPhase == ProgressEventType.START_CALC_MITOS_CUBOIDS_EVENT.ordinal()) {
       sb.append(" ");
       sb.append((double) this.status.phaseIndex / 10);
       sb.append("%");
@@ -323,7 +323,7 @@ public class Corsen implements UpdateStatus {
 
         // UIManager.setLookAndFeel(uiClassName);
 
-        final Class c = Corsen.class.getClassLoader().loadClass(uiClassName);
+        final Class c = CorsenSwing.class.getClassLoader().loadClass(uiClassName);
         final LookAndFeel laf = (LookAndFeel) c.newInstance();
 
         UIManager.setLookAndFeel(laf);
@@ -373,7 +373,7 @@ public class Corsen implements UpdateStatus {
     JFrame.setDefaultLookAndFeelDecorated(true);
     Toolkit.getDefaultToolkit().setDynamicLayout(true);
 
-    new Corsen().show();
+    new CorsenSwing().show();
   }
 
 }

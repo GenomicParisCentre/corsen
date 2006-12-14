@@ -73,7 +73,7 @@ abstract public class Point3D implements Comparable {
    * @return the distance of this point to another point
    */
   public final float distance(final Point3D p) {
-    double dx, dy, dz;
+    final double dx, dy, dz;
 
     if (p == null)
       return -1;
@@ -238,4 +238,17 @@ abstract public class Point3D implements Comparable {
     return 1;
   }
 
+  public int hashCode() {
+    
+    int iTotal =17;
+    final int iConstant = 37;
+    
+    iTotal = iTotal * iConstant + Float.floatToIntBits(getX());
+    iTotal = iTotal * iConstant + Float.floatToIntBits(getY());
+    iTotal = iTotal * iConstant + Float.floatToIntBits(getZ());
+    iTotal = iTotal * iConstant + getI();
+    
+    return 0;
+  }
+  
 }

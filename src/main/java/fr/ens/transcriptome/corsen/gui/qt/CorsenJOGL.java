@@ -9,7 +9,7 @@ import javax.media.opengl.GL;
 import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.opengl.QGLWidget;
 
-import fr.ens.transcriptome.corsen.Distance;
+import fr.ens.transcriptome.corsen.calc.Distance;
 import fr.ens.transcriptome.corsen.model.ListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
@@ -47,7 +47,7 @@ public class CorsenJOGL extends CorsenGL {
     if (point == null)
       return;
 
-    drawDiamondPoint(point.getX(), point.getY(), point.getZ(), 10f, color);
+    drawDiamondPoint(point.getX(), point.getY(), point.getZ(), 0.1f, color);
 
     /*
      * this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_POINT);
@@ -137,7 +137,7 @@ public class CorsenJOGL extends CorsenGL {
       Particle3D p = it.next();
       Distance d = distances.get(p);
 
-      drawLine3D(d.getPointMessenger(), d.getPointMito(), color);
+      drawLine3D(d.getPointA(), d.getPointB(), color);
     }
   }
 

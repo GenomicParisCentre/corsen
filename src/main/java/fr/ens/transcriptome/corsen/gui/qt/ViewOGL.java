@@ -17,8 +17,8 @@ import com.trolltech.qt.gui.QWheelEvent;
 import com.trolltech.qt.gui.QWidget;
 import com.trolltech.qt.opengl.QGLWidget;
 
-import fr.ens.transcriptome.corsen.CorsenResult;
 import fr.ens.transcriptome.corsen.Settings;
+import fr.ens.transcriptome.corsen.calc.CorsenResult;
 
 public class ViewOGL extends QGLWidget {
 

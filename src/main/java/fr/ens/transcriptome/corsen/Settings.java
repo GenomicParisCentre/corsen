@@ -658,7 +658,7 @@ public final class Settings {
   }
 
   /**
-   * Save Corsen options
+   * Save CorsenSwing options
    */
   public void saveSettings() throws IOException {
 
@@ -666,7 +666,7 @@ public final class Settings {
   }
 
   /**
-   * Save Corsen options
+   * Save CorsenSwing options
    * @param file File to save.
    * @throws IOException if an error occurs while writing the file
    */
@@ -680,7 +680,7 @@ public final class Settings {
   }
 
   /**
-   * Load Corsen options
+   * Load CorsenSwing options
    */
   public void loadSettings() throws IOException {
 
@@ -688,7 +688,7 @@ public final class Settings {
   }
 
   /**
-   * Load Corsen options
+   * Load CorsenSwing options
    * @param file
    * @throws IOException if an error occurs while reading the file
    */

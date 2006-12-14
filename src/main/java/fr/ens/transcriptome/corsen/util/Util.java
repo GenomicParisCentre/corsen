@@ -38,7 +38,7 @@ public final class Util {
    * @param precision of the value
    * @return The meta row from the coded location
    */
-  public static float getX(final long point, final float precision) {
+  public static final float getX(final long point, final float precision) {
 
     return ((point & ~MASK_X) >> SHIFT_X & MASK_16BITS) / precision;
   }
@@ -49,7 +49,7 @@ public final class Util {
    * @param precision of the value
    * @return The meta row from the coded location
    */
-  public static float getY(final long point, final float precision) {
+  public static final float getY(final long point, final float precision) {
 
     return ((point & ~MASK_Y) >> SHIFT_Y & MASK_16BITS) / precision;
   }
@@ -60,7 +60,7 @@ public final class Util {
    * @param precision of the value
    * @return The meta row from the coded location
    */
-  public static float getZ(final long point, final float precision) {
+  public static final float getZ(final long point, final float precision) {
 
     return ((point & ~MASK_Z) >> SHIFT_Z & MASK_16BITS) / precision;
   }
@@ -70,7 +70,7 @@ public final class Util {
    * @param point The coded location
    * @return The meta row from the coded location
    */
-  public static int getI(final long point) {
+  public static final int getI(final long point) {
 
     return (int) ((point & ~MASK_I) >> SHIFT_I & MASK_16BITS);
   }
@@ -82,7 +82,7 @@ public final class Util {
    * @param precision of the value
    * @return The new coded point
    */
-  public static long setX(final long point, final float value,
+  public static final long setX(final long point, final float value,
       final float precision) {
 
     final long v = (long) (value * precision);
@@ -97,7 +97,7 @@ public final class Util {
    * @param precision of the value
    * @return The new coded point
    */
-  public static long setY(final long point, final float value,
+  public static final long setY(final long point, final float value,
       final float precision) {
 
     final long v = (long) (value * precision);
@@ -112,7 +112,7 @@ public final class Util {
    * @param precision of the value
    * @return The new coded point
    */
-  public static long setZ(final long point, final float value,
+  public static final long setZ(final long point, final float value,
       final float precision) {
 
     final long v = (long) (value * precision);
@@ -126,7 +126,7 @@ public final class Util {
    * @param value The value of intensity to set
    * @return The new coded point
    */
-  public static long setI(final long point, final long value) {
+  public static final long setI(final long point, final long value) {
 
     return point & MASK_I | (value & MASK_16BITS) << SHIFT_I;
   }
@@ -137,7 +137,7 @@ public final class Util {
    * @param point The coded location
    * @return a encoded point with intensity set to 0 
    */
-  public static long valueWithoutI(final long point) {
+  public static final long valueWithoutI(final long point) {
 
     return point & MASK_I;
   }
@@ -149,7 +149,7 @@ public final class Util {
    * @param p3
    * @return the equation of a plan
    */
-  public static double eq(final Point3D p1, final Point3D p2, final Point3D p3) {
+  public static final double eq(final Point3D p1, final Point3D p2, final Point3D p3) {
 
     if (p1 == null || p2 == null || p3 == null)
       return -1;
@@ -179,7 +179,7 @@ public final class Util {
     return -1;
   }
 
-  public static double eqTest(final double a, final double b, final double c,
+  public static final double eqTest(final double a, final double b, final double c,
       final double d, final Point3D p) {
 
     if (p == null)
@@ -187,6 +187,27 @@ public final class Util {
 
     return a * p.getX() + b * p.getY() + c * p.getZ() + d;
 
+  }
+  
+  /**
+   * Get the number of the occurence of a char in a string.
+   * @param s String to parse
+   * @param c Char to find
+   * @return the number of the char occurence
+   */
+  public static final int charCount(final String s, final char c) {
+
+    if (s == null)
+      return 0;
+
+    final int len = s.length();
+    int count = 0;
+
+    for (int i = 0; i < len; i++)
+      if (s.charAt(i) == c)
+        count++;
+
+    return count;
   }
 
 }

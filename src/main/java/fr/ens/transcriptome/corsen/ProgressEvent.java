@@ -2,46 +2,62 @@ package fr.ens.transcriptome.corsen;
 
 public class ProgressEvent {
 
-  public static final int START_READ_MESSENGERS_EVENT = 1;
-  public static final int START_READ_MITOS_EVENT = 2;
+  public enum ProgressEventType {
 
-  public static final int START_CHANGE_Z_COORDINATES_EVENT = 3;
-  public static final int START_CHANGE_ALL_COORDINATES_EVENT = 4;
+    START_READ_MESSENGERS_EVENT("Read messengers PAR file"),
 
-  public static final int START_CALC_MESSENGERS_CUBOIDS_EVENT = 5;
-  public static final int START_CALC_MITOS_CUBOIDS_EVENT = 6;
+    START_READ_MITOS_EVENT("Read mitos PAR file"),
 
-  public static final int START_CALC_MIN_DISTANCES_EVENT = 7;
-  public static final int START_CALC_MAX_DISTANCES_EVENT = 8;
+    START_CHANGE_MESSENGERS_COORDINATES_EVENT("Transform messengers coordinates"), START_CHANGE_MITOS_COORDINATES_EVENT(
+        "Transform mitos coordinates"), START_CALC_MESSENGERS_CUBOIDS_EVENT(
+        "Calc messengers cuboids"), START_CALC_MITOS_CUBOIDS_EVENT(
+        "Calc mitochondrions cuboids"), START_CALC_MIN_DISTANCES_EVENT(
+        "Calc distances"),  START_WRITE_DATA_EVENT(
+        "Write results data file for R"), START_WRITE_IV_MESSENGERS_EVENT(
+        "Write messengers intensities and volumes"), START_WRITE_IV_MITOS_EVENT(
+        "Write mitocondria intensities and volumes"), START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT(
+        "Write messengers cuboids intensities and volumes"), START_WRITE_FULLRESULT_EVENT(
+        "Write full results"), START_WRITE_RPLOT_MESSENGERS_EVENT(
+        "Write messengers R plot file"), START_WRITE_RPLOT_MITOS_EVENT(
+        "Write mitos R plot file"), START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT(
+        "Write messengers cuboids R plot file"), START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT(
+        "Write cuboids cuboids R plot file"), START_WRITE_RPLOT_DISTANCES_EVENT(
+        "Write distances R plot file"), PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT(
+        ""), PROGRESS_CALC_MITOS_CUBOIDS_EVENT(""), PROGRESS_CALC_DISTANCES_EVENT(
+        ""),  START_CELLS_EVENT(""), START_CELL_EVENT(
+        ""), END_CELLS_SUCCESSFULL_EVENT(""), END_CELL_EVENT(""), END_ERROR_EVENT(
+        "");
 
-  public static final int START_WRITE_DATA_EVENT = 9;
-  public static final int START_WRITE_IV_MESSENGERS_EVENT = 10;
-  public static final int START_WRITE_IV_MITOS_EVENT = 11;
-  public static final int START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT = 12;
-  public static final int START_WRITE_FULLRESULT_EVENT = 13;
+    private String description;
 
-  public static final int START_WRITE_RPLOT_MESSENGERS_EVENT = 14;
-  public static final int START_WRITE_RPLOT_MITOS_EVENT = 15;
-  public static final int START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT = 16;
-  public static final int START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT = 17;
-  public static final int START_WRITE_RPLOT_DISTANCES_EVENT = 18;
+    /**
+     * Get the description of the type of the particle.
+     * @return the description of the particle
+     */
+    public String toString() {
 
-  public static final int PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT = 100;
-  public static final int PROGRESS_CALC_MITOS_CUBOIDS_EVENT = 101;
-  public static final int PROGRESS_CALC_MIN_DISTANCES_EVENT = 102;
-  public static final int PROGRESS_CALC_MAX_DISTANCES_EVENT = 103;
+      return this.description;
+    }
 
-  public static final int START_CELLS_EVENT = 1000;
-  public static final int START_CELL_EVENT = 1001;
+    //
+    // Constructor
+    //
 
-  public static final int END_CELLS_SUCCESSFULL_EVENT = 2000;
-  public static final int END_CELL_EVENT = 2001;
-  public static final int END_ERROR_EVENT = 3000;
+    /**
+     * Private constructor.
+     * @param description The description of the particle
+     */
+    private ProgressEventType(final String description) {
 
-  public static final int PHASE_COUNT = START_WRITE_RPLOT_DISTANCES_EVENT;
+      this.description = description;
+    }
+  }
+
+  public static final int PHASE_COUNT = ProgressEventType.START_WRITE_RPLOT_DISTANCES_EVENT
+      .ordinal();
   public static final int INDEX_IN_PHASE_MAX = 1000;
 
-  private int id;
+  private ProgressEventType type;
   private int intValue1;
   private int intValue2;
   private String stringValue1;
@@ -49,11 +65,11 @@ public class ProgressEvent {
   private String stringValue3;
 
   /**
-   * Get the event id.
-   * @return Returns the id
+   * Get the event type.
+   * @return Returns the type
    */
-  public int getId() {
-    return this.id;
+  public ProgressEventType getType() {
+    return this.type;
   }
 
   /**
@@ -133,77 +149,32 @@ public class ProgressEvent {
     return count;
   }
 
-  public static final String getPhaseName(final int phase) {
-
-    switch (phase) {
-    case ProgressEvent.START_READ_MESSENGERS_EVENT:
-      return "Read messengers PAR file";
-    case ProgressEvent.START_READ_MITOS_EVENT:
-      return "Read mitos PAR file";
-    case ProgressEvent.START_CHANGE_Z_COORDINATES_EVENT:
-      return "Transform Z coordinates";
-    case ProgressEvent.START_CHANGE_ALL_COORDINATES_EVENT:
-      return "Transform all coordinates";
-    case ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT:
-      return "Calc messengers cuboids";
-    case ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT:
-      return "Calc mitochondrions cuboids";
-    case ProgressEvent.START_CALC_MIN_DISTANCES_EVENT:
-      return "Calc minimal distances";
-    case ProgressEvent.START_CALC_MAX_DISTANCES_EVENT:
-      return "Calc maximal distances";
-    case ProgressEvent.START_WRITE_DATA_EVENT:
-      return "Write results data file for R";
-    case ProgressEvent.START_WRITE_IV_MESSENGERS_EVENT:
-      return "Write messengers intensities and volumes";
-    case ProgressEvent.START_WRITE_IV_MITOS_EVENT:
-      return "Write mitocondria intensities and volumes";
-    case ProgressEvent.START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT:
-      return "Write messengers cuboids intensities and volumes";
-    case ProgressEvent.START_WRITE_FULLRESULT_EVENT:
-      return "Write full results";
-    case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_EVENT:
-      return "Write messengers R plot file";
-    case ProgressEvent.START_WRITE_RPLOT_MITOS_EVENT:
-      return "Write mitos R plot file";
-    case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT:
-      return "Write messengers cuboids R plot file";
-    case ProgressEvent.START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT:
-      return "Write cuboids cuboids R plot file";
-    case ProgressEvent.START_WRITE_RPLOT_DISTANCES_EVENT:
-      return "Write distances R plot file";
-
-    default:
-      return "";
-    }
-
-  }
-
   //
   // Constructors
   //
 
-  public ProgressEvent(final int id) {
-    this.id = id;
+  public ProgressEvent(final ProgressEventType type) {
+    this.type = type;
   }
 
-  public ProgressEvent(final int id, final int value1) {
+  public ProgressEvent(final ProgressEventType type, final int value1) {
 
-    this(id);
+    this(type);
     this.intValue1 = value1;
   }
 
-  public ProgressEvent(final int id, final int value1, final int value2) {
+  public ProgressEvent(final ProgressEventType type, final int value1,
+      final int value2) {
 
-    this(id, value1);
+    this(type, value1);
     this.intValue2 = value2;
   }
 
-  public ProgressEvent(final int id, final int intValue1, final int intValue2,
-      final String stringValue1, final String stringValue2,
-      final String stringValue3) {
+  public ProgressEvent(final ProgressEventType type, final int intValue1,
+      final int intValue2, final String stringValue1,
+      final String stringValue2, final String stringValue3) {
 
-    this(id, intValue1, intValue2);
+    this(type, intValue1, intValue2);
     this.stringValue1 = stringValue1;
     this.stringValue2 = stringValue2;
     this.stringValue3 = stringValue3;

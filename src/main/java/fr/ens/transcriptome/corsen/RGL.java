@@ -8,12 +8,14 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import fr.ens.transcriptome.corsen.calc.Distance;
+import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle2D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
-import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Point2D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
@@ -164,7 +166,7 @@ public class RGL {
 
         Distance d = distances.get(it.next());
 
-        writeLine(d.getPointMessenger(), d.getPointMito(), color);
+        writeLine(d.getPointA(), d.getPointB(), color);
       }
     }
 
@@ -204,7 +206,7 @@ public class RGL {
    * @param plotCenter true if center and barycenter must be plot
    * @throws IOException if an error occurs while writing file
    */
-  public void writeRPlots(final Particle3D[] particles, final String color,
+  public void writeRPlots(final List<Particle3D> particles, final String color,
       final boolean plotCenter, final float minDistanceBetweenTwoPoints)
       throws IOException {
 
@@ -215,15 +217,16 @@ public class RGL {
 
     Random random = new Random(System.currentTimeMillis());
 
-    for (int i = 0; i < particles.length; i++) {
+    for (Particle3D par: particles) {
+    //for (int i = 0; i < particles.length; i++) {
 
       out.write("#\n# Particle #");
-      out.write("" + particles[i].getId());
+      out.write("" + par.getId());
       out.write(" (");
-      out.write(particles[i].getName());
+      out.write(par.getName());
       out.write(")\n#\n\n");
 
-      innerPointstoRData(particles[i]);
+      innerPointstoRData(par);
 
       final float size = (float) (minDistanceBetweenTwoPoints * 1.0);
 
@@ -276,7 +279,7 @@ public class RGL {
               + "|| ( exists(\"corsen.surfaces3d\") && corsen.surfaces3d==T )) {\n");
 
       // surfacePointstoR(particles[i], 1.0f, "dark" + plotColor);
-      surfacePointstoR(particles[i], 1.0f, plotColor, true);
+      surfacePointstoR(par, 1.0f, plotColor, true);
 
       // RParticle3DWriter rpw = new RParticle3DWriter(particles[i],out,"red");
       // rpw.writeTriangleSurface();
@@ -288,14 +291,14 @@ public class RGL {
 
         out.write("if (exists(\"corsen.centers\") && corsen.centers==T) {\n");
 
-        writePoint(particles[i].getCenter(), 5, "darkblue");
+        writePoint(par.getSurfacePoints().getCenter(), 5, "darkblue");
 
         out.write("}\n\n");
 
         out
             .write("if (!exists(\"corsen.barycenters\") || (exists(\"corsen.barycenters\") && corsen.barycenters==T)) {\n");
 
-        writePoint(particles[i].getBarycenter(), 5, "blue");
+        writePoint(par.getInnerPoints().getBarycenter(), 5, "blue");
 
         out.write("}\n");
       }

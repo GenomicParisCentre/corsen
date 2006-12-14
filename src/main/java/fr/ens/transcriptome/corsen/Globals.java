@@ -23,14 +23,16 @@ package fr.ens.transcriptome.corsen;
 
 public final class Globals {
 
+  
+  
   /** The name of the application. */
-  public static final String APP_NAME = "Corsen";
+  public static final String APP_NAME = "CorsenSwing";
 
   /** The version of the application. */
-  public static final String APP_VERSION = "0.21";
+  public static final String APP_VERSION = "0.21-dev";
 
-  public static final boolean DEBUG = false;
-  public static final boolean DEBUG_HOME_DIR = false;
+  public static final boolean DEBUG = true;
+  public static final boolean DEBUG_HOME_DIR = true;
   
   
   public static final float Z_COEF_DEFAULT = 2.96f;
@@ -39,6 +41,10 @@ public final class Globals {
 
   public static final String WEBSITE_URL = "http://transcriptome.ens.fr/corsen";
   public static final String HANDBOOK_URL = "http://transcriptome.ens.fr/corsen/handbook.html";
-  public static final String REPORT_BUG_URL = "mailto:jourdren@biologie.ens.fr?subject=Corsen Report Bug&body=Report here the Corsen bug";
+  public static final String REPORT_BUG_URL = "mailto:jourdren@biologie.ens.fr?subject=CorsenSwing Report Bug&body=Report here the CorsenSwing bug";
+  
+  public static enum GUI { SWING, QT, FAKE}; 
+  
+  public static final GUI DEFAULT_GUI = GUI.FAKE;
 
 }

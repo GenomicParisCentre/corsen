@@ -1,5 +1,7 @@
 package fr.ens.transcriptome.corsen.model;
-import fr.ens.transcriptome.corsen.util.ArrayLongList;
+
+import java.util.ArrayList;
+
 import fr.ens.transcriptome.corsen.util.Util;
 
 /**
@@ -9,7 +11,7 @@ import fr.ens.transcriptome.corsen.util.Util;
  */
 public class ArrayListPoint3DImpl extends Point3D {
 
-  private ArrayLongList values;
+  private ArrayList<Long> values;
   private float xPrecision;
   private float yPrecision;
   private float zPrecision;
@@ -140,7 +142,7 @@ public class ArrayListPoint3DImpl extends Point3D {
 
     this.yPrecision = this.yPrecision / yFactor;
   }
-  
+
   /**
    * Apply a factor to all values of the z coordinates.
    * @param zFactor factor to apply
@@ -149,7 +151,7 @@ public class ArrayListPoint3DImpl extends Point3D {
 
     this.zPrecision = this.zPrecision / zFactor;
   }
-  
+
   //
   // Constructor
   //
@@ -168,7 +170,7 @@ public class ArrayListPoint3DImpl extends Point3D {
    * @param zPrecision Precision of z values
    * @param index Index of the point in arraylists
    */
-  public ArrayListPoint3DImpl(final ArrayLongList values,
+  public ArrayListPoint3DImpl(final ArrayList<Long> values,
       final float xPrecision, final float yPrecision, final float zPrecision,
       final int index) {
     this.values = values;

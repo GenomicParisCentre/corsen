@@ -1,9 +1,18 @@
-package fr.ens.transcriptome.corsen.model;
+package fr.ens.transcriptome.corsen.calc;
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
 
 public class Particles3D {
 
@@ -16,6 +25,7 @@ public class Particles3D {
   public static final String UNIT_OF_LENGHT_KEY = "UnitOfLength";
   public static final String MIN_THRESHOLD_KEY = "MinThreshold";
   public static final String MAX_THRESHOLD_KEY = "MaxThreshold";
+  public static final String IMAGEFILE_KEY = "Image file name";
 
   private int width;
   private int height;
@@ -28,8 +38,10 @@ public class Particles3D {
   private String unitOfLength = "";
   private double minThreshold;
   private double maxThreshold;
+  private ParticleType type;
+  private String imageFilename;
 
-  Particle3D[] particles;
+  private List<Particle3D> particles;
 
   //
   // Getters
@@ -108,36 +120,38 @@ public class Particles3D {
   }
 
   /**
-   * Get the number of particles.
-   * @return The number of particles
-   */
-  public int getParticlesNumber() {
-
-    if (this.particles == null)
-      return 0;
-    return this.particles.length;
-  }
-
-  /**
-   * Get a Particle3D Object.
-   * @param index Index of the particle3D
-   * @return a Particle3D Object
-   */
-  public Particle3D getParticle(final int index) {
-
-    if (this.particles == null)
-      return null;
-
-    return this.particles[index];
-  }
-
-  /**
    * Get the partiles.
    * @return an array of Particle3D Object
    */
-  public Particle3D[] getParticles() {
+  public List<Particle3D> getParticles() {
 
     return this.particles;
+  }
+
+  /**
+   * Get the type of the particles.
+   * @return Returns the type
+   */
+  public ParticleType getType() {
+
+    return type;
+  }
+
+  /**
+   * Set the type of the particles.
+   * @param type The type to set
+   */
+  public void setType(final ParticleType type) {
+
+    this.type = type;
+  }
+
+  /**
+   * Get the image filename.
+   * @return Returns the imageFilename
+   */
+  public String getImageFilename() {
+    return imageFilename;
   }
 
   //
@@ -150,7 +164,23 @@ public class Particles3D {
    */
   public void setParticles(final Particle3D[] particles) {
 
-    this.particles = particles;
+    if (particles == null)
+      throw new NullPointerException("Particles to set is null");
+
+    setParticles(Arrays.asList(particles));
+  }
+
+  /**
+   * Set the particles.
+   * @param particles Particles to set
+   */
+  public void setParticles(final List<Particle3D> particles) {
+
+    if (particles == null)
+      if (particles == null)
+        throw new NullPointerException("Particles to set is null");
+
+    this.particles = Collections.unmodifiableList(particles);
   }
 
   //
@@ -179,18 +209,20 @@ public class Particles3D {
    * @param file File to read
    * @throws IOException IOException if an error occurs while readinf data
    */
-  public void readParticles(final File file) throws IOException {
+  private void readParticles(final InputStream is) throws IOException {
 
-    if (file == null)
-      throw new NullPointerException("The file is null");
+    if (is == null)
+      throw new NullPointerException("The stream is null");
 
-    final ArrayList al = new ArrayList();
-    final BufferedReader in = new BufferedReader(new FileReader(file));
+    final List<Particle3D> particles = new ArrayList<Particle3D>();
+    final BufferedReader in = new BufferedReader(new InputStreamReader(is));
 
     String line;
     boolean header = true;
     while ((line = in.readLine()) != null)
-      if (!line.startsWith("#")) {
+      if (line.startsWith("# " + IMAGEFILE_KEY))
+        this.imageFilename = line;
+      else if (!line.startsWith("#")) {
 
         if (header) {
 
@@ -233,20 +265,20 @@ public class Particles3D {
                 this.minThreshold = Double.parseDouble(value.trim());
               else if (MAX_THRESHOLD_KEY.endsWith(key))
                 this.maxThreshold = Double.parseDouble(value.trim());
+              else if (IMAGEFILE_KEY.endsWith(key))
+                this.imageFilename = value.trim();
             }
           }
 
         } else
-          al.add(new Particle3D(pixelWidth, pixelHeight, pixelDepth, line));
+          particles.add(new Particle3DBuilder(pixelWidth, pixelHeight,
+              pixelDepth, line).getParticle());
 
       }
 
     in.close();
 
-    final Particle3D[] array = new Particle3D[al.size()];
-    al.toArray(array);
-
-    this.particles = array;
+    setParticles(particles);
   }
 
   /**
@@ -255,10 +287,11 @@ public class Particles3D {
    */
   public void changeZCoord(final float zCoef) {
 
-    final int n = getParticlesNumber();
+    if (zCoef == 1.0f)
+      return;
 
-    for (int i = 0; i < n; i++)
-      changeZCoord(getParticle(i), zCoef);
+    for (Particle3D par : this.particles)
+      changeZCoord(par, zCoef);
 
     this.pixelDepth = this.pixelDepth * zCoef;
   }
@@ -270,7 +303,7 @@ public class Particles3D {
    */
   private void changeZCoord(final Particle3D particle, float zCoef) {
 
-    if (particle == null)
+    if (particle == null || zCoef == 1.0f)
       return;
 
     particle.applyZFactor(zCoef);
@@ -285,10 +318,8 @@ public class Particles3D {
     if (coef == 1.0f)
       return;
 
-    final int n = getParticlesNumber();
-
-    for (int i = 0; i < n; i++)
-      changeCoord(getParticle(i), coef);
+    for (Particle3D par : this.particles)
+      changeCoord(par, coef);
 
     this.pixelWidth = this.pixelWidth * coef;
     this.pixelHeight = this.pixelHeight * coef;
@@ -303,6 +334,40 @@ public class Particles3D {
     particle.applyXFactor(coef);
     particle.applyYFactor(coef);
     particle.applyZFactor(coef);
+  }
+
+  /**
+   * Get the number of the innerpoints in all the particles
+   * @return the number of the innerpoints in all the particles
+   */
+  public int countParticlesInnerPoints() {
+
+    if (this.particles == null)
+      return 0;
+
+    int result = 0;
+
+    for (Particle3D par : getParticles())
+      result += par.getInnerPoints().size();
+
+    return result;
+  }
+
+  /**
+   * Get the number of the surfacepoints in all the particles
+   * @return the number of the innerpoints in all the particles
+   */
+  public int countParticlesSurfacePoints() {
+
+    if (this.particles == null)
+      return 0;
+
+    int result = 0;
+
+    for (Particle3D par : getParticles())
+      result += par.getSurfacePoints().size();
+
+    return result;
   }
 
   public String toString() {
@@ -333,16 +398,37 @@ public class Particles3D {
     this.minThreshold = pars.minThreshold;
     this.maxThreshold = pars.maxThreshold;
   }
-  
+
   /**
    * Public constructor. Create a new particle with the dimension of another
    * object.
    * @param Particle File to read to create object
    */
-  public Particles3D(final Particles3D pars, final Particle3D [] particles) {
+  public Particles3D(final Particles3D pars, final Particle3D[] particles) {
 
     this(pars);
     setParticles(particles);
+  }
+
+  /**
+   * Public constructor. Create a new particle with the dimension of another
+   * object.
+   * @param Particle File to read to create object
+   */
+  public Particles3D(final Particles3D pars, final List<Particle3D> particles) {
+
+    this(pars);
+    setParticles(particles);
+  }
+
+  /**
+   * Public constructor.
+   * @param file InputStream to read to create object
+   * @throws IOException
+   */
+  public Particles3D(final InputStream is) throws IOException {
+
+    readParticles(is);
   }
 
   /**
@@ -352,7 +438,7 @@ public class Particles3D {
    */
   public Particles3D(final File file) throws IOException {
 
-    readParticles(file);
+    readParticles(new FileInputStream(file));
   }
 
 }

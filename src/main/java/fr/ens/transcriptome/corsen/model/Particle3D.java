@@ -1,11 +1,16 @@
 package fr.ens.transcriptome.corsen.model;
+
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+
+import fr.ens.transcriptome.corsen.calc.Distance;
+import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 /**
  * This class defin a Particle 3D.
@@ -21,12 +26,17 @@ public final class Particle3D {
   private final ListPoint3D surfacePoints;
   private final ListPoint3D innerPoints;
 
+  private final ListPoint3D unmodifiableSurfacePoints;
+  private final ListPoint3D unmodifiableInnerPoints;
+
   private float pixelWidth = 1.0f;
   private float pixelHeight = 1.0f;
   private float pixelDepth = 1.0f;
 
   private double volume;
   private long intensity;
+
+  private ParticleType type = ParticleType.UNDEFINED;
 
   //
   // Getters
@@ -88,6 +98,14 @@ public final class Particle3D {
     return pixelWidth;
   }
 
+  /**
+   * Get the type of the particle
+   * @return Returns the type
+   */
+  public ParticleType getType() {
+    return type;
+  }
+
   //
   // Setters
   //
@@ -99,16 +117,34 @@ public final class Particle3D {
   public void setName(final String name) {
     this.name = name;
   }
-  
+
   /**
    * Set the volume of the particle
    * @param volume
    */
-   public void setVolume(final float volume) {
-    
-    this.volume=volume;
+  void setVolume(final float volume) {
+
+    this.volume = volume;
   }
 
+  /**
+   * Set the type of the particle.
+   * @param type The particle type to set
+   */
+  public void setType(ParticleType type) {
+    this.type = type;
+  }
+
+  /**
+   * Set the intensity of the particle
+   * @param intensity
+   */
+  void setIntensity(final long intensity) {
+
+    this.intensity = intensity;
+  }
+  
+  
   //
   // Other methods
   //
@@ -152,103 +188,6 @@ public final class Particle3D {
   }
 
   /**
-   * Add a surface point to the particle.
-   * @param p Point to add
-   */
-  public void addSurfacePoint(final Point3D p) {
-
-    addSurfacePoint(p, false);
-  }
-
-  /**
-   * Add a surface point to the particle.
-   * @param p Point to add
-   */
-  public void addSurfacePoint(final Point3D p, final boolean testIfExists) {
-
-    if (p == null)
-      return;
-
-    if (testIfExists && containsSurfacePoint(p))
-      return;
-
-    this.surfacePoints.add(p);
-  }
-
-  public void addSurfacePoint(final float x, final float y, final float z) {
-
-    this.surfacePoints.add(x, y, z);
-  }
-
-  /**
-   * Add an inner point to the particle.
-   * @param p Point to add
-   */
-  public void addInnerPoint(final Point3D p) {
-
-    addInnerPoint(p, false);
-  }
-
-  /**
-   * Add an inner point to the particle.
-   * @param p Point to add
-   */
-  public void addInnerPoint(final Point3D p, final boolean testIfExists) {
-
-    if (p == null)
-      return;
-
-    if (testIfExists && containsInnerPoint(p))
-      return;
-
-    this.innerPoints.add(p);
-  }
-
-  public void addInnerPoint(final float x, final float y, final float z,
-      final int i) {
-
-    this.innerPoints.add(x, y, z, i);
-  }
-
-  /**
-   * Add the points of a particle to this particle.
-   * @param particle Particle to add
-   */
-  public void add(final Particle3D particle) {
-
-    if (particle == null)
-      return;
-
-    if (this.id == particle.id) {
-      System.out.println("add the same particle to particle !!!");
-      return;
-    }
-
-    final int ns = particle.surfacePointsCount();
-    this.surfacePoints.ensureCapacity(ns);
-
-    this.surfacePoints.merge(particle.surfacePoints);
-
-    /*
-     * for (int i = 0; i < ns; i++) { final Point3D p =
-     * particle.getSurfacePoint(i); addSurfacePoint(p); }
-     */
-
-    final int ni = particle.innerPointsCount();
-    this.innerPoints.ensureCapacity(ni);
-
-    this.innerPoints.merge(particle.innerPoints);
-
-    /*
-     * for (int i = 0; i < ni; i++) { final Point3D p =
-     * particle.getInnerPoint(i); addInnerPoint(p); }
-     */
-
-    this.volume += particle.volume;
-    this.intensity += particle.intensity;
-  }
-
-  /**
    * Get the number of surface points in the particle.
    * @return The number of point in the particle
    */
@@ -284,108 +223,6 @@ public final class Particle3D {
   public Point3D getInnerPoint(final int index) {
 
     return this.innerPoints.get(index);
-  }
-
-  /**
-   * Add a particle 2D to the particle 3D.
-   * @param particle particle 2D to add
-   * @param slice Number of the slice in the stack
-   */
-  public void add(final Particle2D particle, final int slice) {
-
-    if (particle == null)
-      return;
-
-    int n = particle.surfacePointsCount();
-    this.surfacePoints.ensureCapacity(n);
-
-    for (int i = 0; i < n; i++) {
-      final Point2D pt = particle.getSurfacePoint(i);
-      addSurfacePoint(pt.getX(), pt.getY(), slice * this.pixelDepth);
-    }
-
-    n = particle.innerPointsCount();
-    this.innerPoints.ensureCapacity(n);
-
-    for (int i = 0; i < n; i++) {
-      final Point2D pt = particle.getInnerPoint(i);
-      addInnerPoint(pt.getX(), pt.getY(), slice * this.pixelDepth, pt.getI());
-    }
-
-    this.volume += particle.getArea() * this.pixelDepth;
-    this.intensity += particle.getIntensity();
-  }
-
-  /**
-   * Add a particle 2D to the particle 3D.
-   * @param roi particle 2D to add
-   * @param slice Number of the slice in the stack
-   */
-  /*
-   * public void add(final PolygonRoi roi, final int slice) { Rectangle r =
-   * roi.getBounds(); final int nPoints = roi.getNCoordinates(); int[] xp =
-   * roi.getXCoordinates(); int[] yp = roi.getYCoordinates(); int x0 = r.x; int
-   * y0 = r.y; double[][] polygon = new double[nPoints][]; for (int i = 0; i <
-   * nPoints; i++) { // Add the point to the particle 3D final double x = (x0 +
-   * xp[i]) * this.pixelWidth; final double y = (y0 + yp[i]) * this.pixelHeight;
-   * final double z = slice * this.pixelDepth; final Point3D p = new Point3D(x,
-   * y, z); add(p); // Add the point to the polygon to calc the aera final
-   * double[] coord = new double[2]; coord[0] = x; coord[1] = y; polygon[i] =
-   * coord; } final double area = polygonArea(polygon); this.volume += area *
-   * this.pixelDepth; // System.out.println("Add Roi (" + nPoints + "
-   * surfacePoints) to particle " // + getId() + " Area=" + area + " Volume=" +
-   * volume); }
-   */
-
-  /**
-   * Get the center of the partcle.
-   * @return A point with the coordinates of the center
-   */
-  public Point3D getCenter() {
-
-    double x = 0;
-    double y = 0;
-    double z = 0;
-
-    final int n = this.surfacePointsCount();
-
-    for (int i = 0; i < n; i++) {
-      final Point3D p = this.getSurfacePoint(i);
-      x += p.getX();
-      y += p.getY();
-      z += p.getZ();
-    }
-
-    return new SimplePoint3DImpl((float) x / n, (float) y / n, (float) z / n);
-  }
-
-  /**
-   * Get the barycenter of the partcle.
-   * @return A point with the coordinates of the center
-   */
-  public Point3D getBarycenter() {
-
-    double x = 0;
-    double y = 0;
-    double z = 0;
-
-    final int n = this.innerPointsCount();
-    int sum = 0;
-
-    for (int i = 0; i < n; i++) {
-      final Point3D p = this.getInnerPoint(i);
-      final int val = p.getI();
-      sum += val;
-      x += p.getX() * val;
-      y += p.getY() * val;
-      z += p.getZ() * val;
-    }
-
-    if (n == 0)
-      return getCenter();
-
-    return new SimplePoint3DImpl((float) x / sum, (float) y / sum, (float) z
-        / sum, sum / n);
   }
 
   /**
@@ -435,7 +272,7 @@ public final class Particle3D {
 
     final int pn = p.surfacePointsCount();
 
-    final Point3D p1 = getBarycenter();
+    final Point3D p1 = getInnerPoints().getBarycenter();
 
     for (int i = 0; i < pn; i++) {
 
@@ -516,7 +353,7 @@ public final class Particle3D {
     if (p == null)
       throw new NullPointerException("Particle is null");
 
-    return p.getMinDistanceToInnerPoint(getBarycenter());
+    return p.getMinDistanceToInnerPoint(getInnerPoints().getBarycenter());
   }
 
   /**
@@ -531,8 +368,8 @@ public final class Particle3D {
     if (p == null)
       return min;
 
-    final Point3D p1 = getCenter();
-    final Point3D p2 = p.getCenter();
+    final Point3D p1 = getInnerPoints().getCenter();
+    final Point3D p2 = p.getInnerPoints().getCenter();
 
     return p1.distance(p2);
   }
@@ -771,9 +608,9 @@ public final class Particle3D {
     final StringBuffer sb = new StringBuffer();
     sb.append(getName());
     sb.append('\t');
-    sb.append(getCenter());
+    sb.append(getInnerPoints().getCenter());
     sb.append('\t');
-    sb.append(getBarycenter());
+    sb.append(getInnerPoints().getBarycenter());
     sb.append('\t');
     sb.append(getVolume());
     sb.append('\t');
@@ -804,109 +641,21 @@ public final class Particle3D {
     return sb.toString();
   }
 
-  private void parse(final String s) {
-
-    if (s == null)
-      return;
-
-    final StringTokenizer st = new StringTokenizer(s, "\t");
-
-    if (st.hasMoreElements())
-      setName(st.nextToken());
-
-    if (st.hasMoreElements())
-      st.nextToken(); // center
-
-    if (st.hasMoreElements())
-      st.nextToken(); // barycenter
-
-    if (st.hasMoreElements())
-      this.volume = Double.parseDouble(st.nextToken());
-    if (st.hasMoreElements())
-      this.intensity = Long.parseLong(st.nextToken());
-
-    final Set existingPoints = new HashSet();
-
-    if (st.hasMoreElements()) {
-
-      final String points = st.nextToken();
-
-      final StringTokenizer st2 = new StringTokenizer(points, ")");
-
-      boolean first = true;
-      while (st2.hasMoreTokens()) {
-
-        String s2 = st2.nextToken();
-
-        if (first) {
-          s2 = s2.substring(1, s2.length());
-          first = false;
-        } else
-          s2 = s2.substring(2, s2.length());
-
-        final Point3D p = Point3D.parse(s2);
-        final String key = p.toStringWithoutIntensity();
-
-        if (!existingPoints.contains(key)) {
-          addSurfacePoint(p, false);
-          existingPoints.add(key);
-        }
-      }
-    }
-
-    existingPoints.clear();
-
-    if (st.hasMoreElements()) {
-
-      final String points = st.nextToken();
-
-      final StringTokenizer st2 = new StringTokenizer(points, ")");
-
-      boolean first = true;
-      while (st2.hasMoreTokens()) {
-
-        String s2 = st2.nextToken();
-
-        if (first) {
-          s2 = s2.substring(1, s2.length());
-          first = false;
-        } else
-          s2 = s2.substring(2, s2.length());
-
-        final Point3D p = Point3D.parse(s2);
-        final String key = p.toStringWithoutIntensity();
-
-        if (!existingPoints.contains(key)) {
-          addInnerPoint(p, false);
-          existingPoints.add(key);
-        }
-
-      }
-
-    }
-
-  }
-
-  /**
-   * Recalc the intensity of the particle from the inners points.
-   */
-  public void setIntensityFromInnerPoints() {
-
-    int intensity = 0;
-
-    final int n = innerPointsCount();
-
-    for (int i = 0; i < n; i++)
-      intensity += getInnerPoint(i).getI();
-
-    this.intensity = intensity;
-  }
+  
 
   public ListPoint3D getInnerPoints() {
+    return this.unmodifiableInnerPoints;
+  }
+
+  public ListPoint3D getSurfacePoints() {
+    return this.unmodifiableSurfacePoints;
+  }
+
+  ListPoint3D getModifiableInnerPoints() {
     return this.innerPoints;
   }
-  
-  public ListPoint3D getSurfacePoints() {
+
+  ListPoint3D getModifiableSurfacePoints() {
     return this.surfacePoints;
   }
 
@@ -947,6 +696,21 @@ public final class Particle3D {
    */
   public Point3D getNearestInnerPoint(final Point3D p) {
 
+    if (p == null)
+      return null;
+
+    Distance d = getNearestInnerPointDistance(p);
+
+    return d.getPointA();
+  }
+
+  /**
+   * Find the nearst inner point of the particle from another point.
+   * @param p Point to test.
+   * @return the nearst point or null if there is no nearest point
+   */
+  public Distance getNearestInnerPointDistance(final Point3D p) {
+
     Point3D nearest = null;
     float minDistance = Float.MAX_VALUE;
 
@@ -970,7 +734,7 @@ public final class Particle3D {
 
     }
 
-    return nearest;
+    return new Distance(nearest, p, minDistance);
   }
 
   /**
@@ -979,6 +743,21 @@ public final class Particle3D {
    * @return the furthest point or null if there is no nearest point
    */
   public Point3D getFurthestInnerPoint(final Point3D p) {
+
+    if (p == null)
+      return null;
+
+    Distance d = getFurthestInnerPointDistance(p);
+
+    return d.getPointA();
+  }
+
+  /**
+   * Find the furthest inner point of the particle from another point.
+   * @param p Point to test.
+   * @return the furthest point or null if there is no nearest point
+   */
+  public Distance getFurthestInnerPointDistance(final Point3D p) {
 
     Point3D furthest = null;
     float maxDistance = Float.MIN_VALUE;
@@ -1003,7 +782,7 @@ public final class Particle3D {
 
     }
 
-    return furthest;
+    return new Distance(furthest, p, maxDistance);
   }
 
   /**
@@ -1053,22 +832,14 @@ public final class Particle3D {
     this.pixelHeight = pixelHeight;
     this.pixelDepth = pixelDepth;
 
-    this.surfacePoints = new ListPoint3D(this.pixelWidth, this.pixelHeight,
+    this.surfacePoints = new ArrayListPoint3D(this.pixelWidth,
+        this.pixelHeight, this.pixelDepth);
+    this.innerPoints = new ArrayListPoint3D(this.pixelWidth, this.pixelHeight,
         this.pixelDepth);
-    this.innerPoints = new ListPoint3D(this.pixelWidth, this.pixelHeight,
-        this.pixelDepth);
-  }
 
-  /**
-   * Public constructor
-   * @param pixelDepth The voxel Depth
-   * @param s String to parse
-   */
-  public Particle3D(final float pixelWidth, final float pixelHeight,
-      final float pixelDepth, final String s) {
-
-    this(pixelWidth, pixelHeight, pixelDepth);
-    parse(s);
+    this.unmodifiableSurfacePoints = new UnmodifiableListPoint3D(
+        this.surfacePoints);
+    this.unmodifiableInnerPoints = new UnmodifiableListPoint3D(this.innerPoints);
   }
 
 }

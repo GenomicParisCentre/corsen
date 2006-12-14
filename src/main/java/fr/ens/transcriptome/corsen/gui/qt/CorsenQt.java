@@ -23,11 +23,12 @@ import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 import com.trolltech.qt.gui.QFileDialog.FileMode;
 
 import fr.ens.transcriptome.corsen.CorsenCore;
-import fr.ens.transcriptome.corsen.CorsenResult;
 import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.UpdateStatus;
+import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
+import fr.ens.transcriptome.corsen.calc.CorsenResult;
 
 /*
  *                      Nividic development code
@@ -91,6 +92,7 @@ public class CorsenQt extends QMainWindow {
 
     int currentCellToProcess;
     int cellToProcessCount;
+    ProgressEventType type;
     int currentPhase;
     int nbPhaseDone;
     int maxPhase;
@@ -149,10 +151,10 @@ public class CorsenQt extends QMainWindow {
                 + "</b> is a software to calc the distances between "
                 + "mitochondria and mRNA.</p><br/>"
                 + "<b>Authors</b>:"
-                + "<ul><li><a href=\"mailto:jourdren@biologie.ens.fr?subject=Corsen\">Laurent Jourdren</a><br/>"
+                + "<ul><li><a href=\"mailto:jourdren@biologie.ens.fr?subject=CorsenSwing\">Laurent Jourdren</a><br/>"
                 + "<a href=\"http://transcriptome.ens.fr\">Microarray platform, École Normale Supérieure</a>"
                 + "<br/>Main developer, maintener.</li><br/>"
-                + "<li><a href=\"mailto:garcia@biologie.ens.fr?subject=Corsen\">Mathilde Garcia</a><br/>"
+                + "<li><a href=\"mailto:garcia@biologie.ens.fr?subject=CorsenSwing\">Mathilde Garcia</a><br/>"
                 + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de Génétique Moléculaire, École Normale Supérieure</a>"
                 + "<br/>Project leader, R programming, ImageJ scripting, testing.</li></ul>"
                 + "<p>Copyright 2006 École Normale Supérieure.<br/>"
@@ -367,7 +369,7 @@ public class CorsenQt extends QMainWindow {
       QFileDialog dialog = new QFileDialog(this);
       dialog.setWindowTitle("Set output files prefix");
       // if (dirFile.length() > 0)
-      // jfc.setCurrentDirectory(Corsen.this.gui.getCurrentDirectory());
+      // jfc.setCurrentDirectory(CorsenSwing.this.gui.getCurrentDirectory());
       dialog.setDirectory(this.lastDir);
 
       if (dialog.exec() == QDialog.DialogCode.Accepted.value()) {
@@ -506,9 +508,11 @@ public class CorsenQt extends QMainWindow {
 
     boolean endEvent = false;
 
-    switch (e.getId()) {
+    this.status.type = e.getType();
 
-    case ProgressEvent.START_CELLS_EVENT:
+    switch (e.getType()) {
+
+    case START_CELLS_EVENT:
 
       setStartEnable(false);
       this.status.timeStartCells = System.currentTimeMillis();
@@ -521,7 +525,7 @@ public class CorsenQt extends QMainWindow {
 
       break;
 
-    case ProgressEvent.START_CELL_EVENT:
+    case START_CELL_EVENT:
 
       this.status.timeStartCell = System.currentTimeMillis();
       this.status.currentCellToProcess = e.getIntValue1();
@@ -546,43 +550,41 @@ public class CorsenQt extends QMainWindow {
 
       break;
 
-    case ProgressEvent.START_READ_MESSENGERS_EVENT:
-    case ProgressEvent.START_READ_MITOS_EVENT:
-    case ProgressEvent.START_CHANGE_Z_COORDINATES_EVENT:
-    case ProgressEvent.START_CHANGE_ALL_COORDINATES_EVENT:
-    case ProgressEvent.START_CALC_MESSENGERS_CUBOIDS_EVENT:
-    case ProgressEvent.START_CALC_MITOS_CUBOIDS_EVENT:
-    case ProgressEvent.START_CALC_MIN_DISTANCES_EVENT:
-    case ProgressEvent.START_CALC_MAX_DISTANCES_EVENT:
-    case ProgressEvent.START_WRITE_DATA_EVENT:
-    case ProgressEvent.START_WRITE_IV_MESSENGERS_EVENT:
-    case ProgressEvent.START_WRITE_IV_MITOS_EVENT:
-    case ProgressEvent.START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT:
-    case ProgressEvent.START_WRITE_FULLRESULT_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_MITOS_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT:
-    case ProgressEvent.START_WRITE_RPLOT_DISTANCES_EVENT:
+    case START_READ_MESSENGERS_EVENT:
+    case START_READ_MITOS_EVENT:
+    case START_CHANGE_MESSENGERS_COORDINATES_EVENT:
+    case START_CHANGE_MITOS_COORDINATES_EVENT:
+    case START_CALC_MESSENGERS_CUBOIDS_EVENT:
+    case START_CALC_MITOS_CUBOIDS_EVENT:
+    case START_CALC_MIN_DISTANCES_EVENT:
+    case START_WRITE_DATA_EVENT:
+    case START_WRITE_IV_MESSENGERS_EVENT:
+    case START_WRITE_IV_MITOS_EVENT:
+    case START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT:
+    case START_WRITE_FULLRESULT_EVENT:
+    case START_WRITE_RPLOT_MESSENGERS_EVENT:
+    case START_WRITE_RPLOT_MITOS_EVENT:
+    case START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT:
+    case START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT:
+    case START_WRITE_RPLOT_DISTANCES_EVENT:
 
       this.status.timeStartPhase = System.currentTimeMillis();
-      this.status.currentPhase = e.getId();
+      this.status.currentPhase = e.getType().ordinal();
       this.status.indexInPhase = 0;
       this.status.nbPhaseDone++;
       showCurrentPhase();
 
       break;
 
-    case ProgressEvent.PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT:
-    case ProgressEvent.PROGRESS_CALC_MITOS_CUBOIDS_EVENT:
-    case ProgressEvent.PROGRESS_CALC_MIN_DISTANCES_EVENT:
-    case ProgressEvent.PROGRESS_CALC_MAX_DISTANCES_EVENT:
+    case PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT:
+    case PROGRESS_CALC_MITOS_CUBOIDS_EVENT:
+    case PROGRESS_CALC_DISTANCES_EVENT:
 
       this.status.indexInPhase = e.getIntValue1();
 
       break;
 
-    case ProgressEvent.END_CELL_EVENT:
+    case END_CELL_EVENT:
       final long timeEndCell = System.currentTimeMillis();
       showStatusMessage("Process current cell in "
           + toTimeHumanReadable(timeEndCell - this.status.timeStartCell)
@@ -592,7 +594,7 @@ public class CorsenQt extends QMainWindow {
 
       break;
 
-    case ProgressEvent.END_CELLS_SUCCESSFULL_EVENT:
+    case END_CELLS_SUCCESSFULL_EVENT:
       final long timeEndCells = System.currentTimeMillis();
       showStatusMessage("Process all cells in "
           + toTimeHumanReadable(timeEndCells - this.status.timeStartCells)
@@ -603,7 +605,7 @@ public class CorsenQt extends QMainWindow {
 
       break;
 
-    case ProgressEvent.END_ERROR_EVENT:
+    case END_ERROR_EVENT:
       setStartEnable(true);
       showStatusMessage("Error !!!");
       return;
@@ -629,7 +631,7 @@ public class CorsenQt extends QMainWindow {
     sb.append("/");
     sb.append(this.status.maxPhase);
     sb.append(" (");
-    sb.append(ProgressEvent.getPhaseName(this.status.currentPhase));
+    sb.append(this.status.type.toString());
     sb.append(")");
 
     showStatusMessage(sb.toString());

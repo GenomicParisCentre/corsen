@@ -10,7 +10,7 @@ import ij.process.ImageProcessor;
 import java.awt.Color;
 
 /**
- * This contains some utils methods for Corsen.
+ * This contains some utils methods for CorsenSwing.
  * @author Laurent Jourdren
  */
 public final class CorsenImageJUtil {

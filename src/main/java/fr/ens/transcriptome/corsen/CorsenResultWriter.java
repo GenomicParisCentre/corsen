@@ -9,8 +9,10 @@ import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map;
 
+import fr.ens.transcriptome.corsen.calc.CorsenResult;
+import fr.ens.transcriptome.corsen.calc.Distance;
+import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
-import fr.ens.transcriptome.corsen.model.Particles3D;
 
 /*
  *                      Nividic development code
@@ -240,21 +242,25 @@ public class CorsenResultWriter {
     if (particles == null || os == null)
       return;
 
-    Particle3D[] pars = particles.getParticles();
+    //Particle3D[] pars = particles.getParticles();
 
-    if (pars == null)
+    if (particles == null)
       return;
 
     final Writer out = new OutputStreamWriter(os);
 
     out.write("# Intensity\tVolume\n");
 
-    for (int i = 0; i < pars.length; i++) {
-      if (i != 0)
+    boolean first = true;
+    for (Particle3D par : particles.getParticles()) {
+    //for (int i = 0; i < pars.length; i++) {
+      if (first) {
         out.write("\n");
-      out.write(Long.toString(pars[i].getIntensity()));
+        first = false;
+      }
+      out.write(Long.toString(par.getIntensity()));
       out.write("\t");
-      out.write(Double.toString(pars[i].getVolume()));
+      out.write(Double.toString(par.getVolume()));
     }
 
     out.close();
@@ -312,43 +318,44 @@ public class CorsenResultWriter {
     out.write("intensity");
     out.write("\t");
 
-    final Particle3D[] mitos = mitosParticles.getParticles();
-    final Particle3D[] messengers = messengersParticles.getParticles();
+    //final Particle3D[] mitos = mitosParticles.getParticles();
+    //final Particle3D[] messengers = messengersParticles.getParticles();
 
-    for (int j = 0; j < mitos.length; j++) {
+    for (Particle3D mito: mitosParticles.getParticles()) {
+    //for (int j = 0; j < mitos.length; j++) {
 
       out.write("d(s,s)[");
-      out.write(mitos[j].getName());
+      out.write(mito.getName());
       out.write("]");
       out.write("\t");
       out.write("d(c,s)[");
-      out.write(mitos[j].getName());
+      out.write(mito.getName());
       out.write("]");
       out.write("\t");
       out.write("include[");
-      out.write(mitos[j].getName());
+      out.write(mito.getName());
       out.write("]");
       out.write("\t");
     }
     out.write("min(s,s)\tmin(c,s)\n");
 
-    for (int i = 0; i < messengers.length; i++) {
+    for (Particle3D messenger : messengersParticles.getParticles()) {
 
-      out.write(messengers[i].getName());
+      out.write(messenger.getName());
       out.write("\t");
-      out.write("" + messengers[i].getVolume());
+      out.write("" + messenger.getVolume());
       out.write("\t");
-      out.write("" + messengers[i].getIntensity());
+      out.write("" + messenger.getIntensity());
       out.write("\t");
 
       double minss = java.lang.Double.MAX_VALUE;
       double mincs = java.lang.Double.MAX_VALUE;
 
-      for (int j = 0; j < mitos.length; j++) {
+      for (Particle3D mito: mitosParticles.getParticles()) {
 
-        final double dss = messengers[i].getSurfaceToSurfaceDistance(mitos[j]);
-        final double dcs = messengers[i]
-            .getBarycenterToSurfaceDistance(mitos[j]);
+        final double dss = messenger.getSurfaceToSurfaceDistance(mito);
+        final double dcs = messenger
+            .getBarycenterToSurfaceDistance(mito);
 
         if (dss < minss)
           minss = dss;
@@ -360,7 +367,7 @@ public class CorsenResultWriter {
         out.write("" + dcs);
         out.write("\t");
 
-        final boolean include = messengers[i].intersect(mitos[j]);
+        final boolean include = messenger.intersect(mito);
         if (include)
           out.write("1");
         else

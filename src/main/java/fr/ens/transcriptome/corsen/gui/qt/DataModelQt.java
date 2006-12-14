@@ -23,11 +23,11 @@ import com.trolltech.qt.gui.QStandardItemModel;
 import com.trolltech.qt.gui.QStringListModel;
 
 import fr.ens.transcriptome.corsen.CorsenCore;
-import fr.ens.transcriptome.corsen.CorsenResult;
 import fr.ens.transcriptome.corsen.CorsenResultWriter;
-import fr.ens.transcriptome.corsen.Distance;
+import fr.ens.transcriptome.corsen.calc.CorsenResult;
+import fr.ens.transcriptome.corsen.calc.Distance;
+import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
-import fr.ens.transcriptome.corsen.model.Particles3D;
 
 /*
  *                      Nividic development code
@@ -159,7 +159,7 @@ public class DataModelQt {
 
   private class IVModel extends QAbstractTableModel {
 
-    private Particle3D[] pars;
+    private List<Particle3D> pars;
 
     @Override
     public int columnCount(QModelIndex arg0) {
@@ -173,7 +173,7 @@ public class DataModelQt {
       if (mIndex == null || role != Qt.ItemDataRole.DisplayRole)
         return null;
 
-      Particle3D p = this.pars[mIndex.row()];
+      Particle3D p = this.pars.get(mIndex.row());
       final int col = mIndex.column();
 
       switch (col) {
@@ -196,7 +196,7 @@ public class DataModelQt {
     @Override
     public int rowCount(QModelIndex arg0) {
 
-      return this.pars == null ? 0 : pars.length;
+      return this.pars == null ? 0 : pars.size();
     }
 
     @Override
@@ -251,7 +251,7 @@ public class DataModelQt {
   //
 
   /**
-   * Set the Corsen result.
+   * Set the CorsenSwing result.
    * @param result The result to set
    */
   public void setResult(final CorsenResult result) {
