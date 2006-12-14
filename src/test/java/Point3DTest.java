@@ -1,4 +1,6 @@
 
+import fr.ens.transcriptome.corsen.model.Point3D;
+import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
 import junit.framework.TestCase;
 
 

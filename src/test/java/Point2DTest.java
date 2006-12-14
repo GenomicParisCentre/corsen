@@ -1,4 +1,6 @@
 
+import fr.ens.transcriptome.corsen.model.Point2D;
+import fr.ens.transcriptome.corsen.model.SimplePoint2DImpl;
 import junit.framework.TestCase;
 
 public class Point2DTest extends TestCase {

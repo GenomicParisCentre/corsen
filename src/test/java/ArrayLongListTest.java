@@ -1,5 +1,7 @@
 import java.util.Arrays;
 
+import fr.ens.transcriptome.corsen.util.ArrayLongList;
+
 import junit.framework.TestCase;
 
 /*

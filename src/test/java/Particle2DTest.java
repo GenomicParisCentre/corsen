@@ -1,4 +1,7 @@
 
+import fr.ens.transcriptome.corsen.model.Particle2D;
+import fr.ens.transcriptome.corsen.model.Point2D;
+import fr.ens.transcriptome.corsen.model.SimplePoint2DImpl;
 import junit.framework.TestCase;
 /*
  *                      Nividic development code
@@ -35,7 +38,7 @@ public class Particle2DTest extends TestCase {
     
     
     
-    Particle2D par = new Particle2D();
+    Particle2D par = new Particle2D(1.0f,1.0f);
     par.addSurfacePoint(p1);
     par.addSurfacePoint(p2);
     par.addSurfacePoint(p3);
@@ -58,7 +61,7 @@ public class Particle2DTest extends TestCase {
 
     String s = "testName";
     
-    Particle2D p = new Particle2D();
+    Particle2D p = new Particle2D(1.0f,1.0f);
     p.setName(s);
     
     assertTrue(s.equals(s));
