@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -47,9 +47,9 @@ public class Particle3DBuilder {
 
     init();
 
-    final ListPoint3D surfacePoints = this.particle
+    final AbstractListPoint3D surfacePoints = this.particle
         .getModifiableSurfacePoints();
-    final ListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
+    final AbstractListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
     final float pixelDepth = this.particle.getPixelDepth();
 
     int n = particle.surfacePointsCount();
@@ -83,9 +83,9 @@ public class Particle3DBuilder {
     if (this.particle.getId() == particle.getId())
       throw new RuntimeException("add the same particle to particle !!!");
 
-    final ListPoint3D surfacePoints = this.particle
+    final AbstractListPoint3D surfacePoints = this.particle
         .getModifiableSurfacePoints();
-    final ListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
+    final AbstractListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
 
     // Update the capacities of the lists of points
     surfacePoints.ensureCapacity(particle.surfacePointsCount());
@@ -105,7 +105,7 @@ public class Particle3DBuilder {
 
     init();
 
-    final ListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
+    final AbstractListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
     innerPoints.add(x, y, z, i);
     this.intensity += i;
   }
@@ -132,7 +132,7 @@ public class Particle3DBuilder {
 
     init();
 
-    final ListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
+    final AbstractListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
 
     if (testIfExists && innerPoints.contains(p))
       return;
@@ -145,7 +145,7 @@ public class Particle3DBuilder {
 
     init();
 
-    final ListPoint3D surfacePoints = this.particle
+    final AbstractListPoint3D surfacePoints = this.particle
         .getModifiableSurfacePoints();
     surfacePoints.add(x, y, z, 0);
   }
@@ -172,7 +172,7 @@ public class Particle3DBuilder {
 
     init();
 
-    final ListPoint3D surfacePoints = this.particle
+    final AbstractListPoint3D surfacePoints = this.particle
         .getModifiableSurfacePoints();
 
     if (testIfExists && surfacePoints.contains(p))
@@ -181,7 +181,7 @@ public class Particle3DBuilder {
     surfacePoints.add(p);
   }
 
-  public void parse(final String s) {
+  private void parse(final String s) {
 
     if (s == null)
       return;

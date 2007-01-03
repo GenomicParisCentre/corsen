@@ -1,16 +1,19 @@
 package fr.ens.transcriptome.corsen.gui.qt;
 
 import java.awt.Color;
+import java.nio.FloatBuffer;
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.media.opengl.GL;
+import javax.media.opengl.glu.GLU;
 
+import com.sun.opengl.util.GLUT;
 import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.opengl.QGLWidget;
 
 import fr.ens.transcriptome.corsen.calc.Distance;
-import fr.ens.transcriptome.corsen.model.ListPoint3D;
+import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 
@@ -25,7 +28,7 @@ import fr.ens.transcriptome.corsen.model.Point3D;
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -39,15 +42,28 @@ import fr.ens.transcriptome.corsen.model.Point3D;
 public class CorsenJOGL extends CorsenGL {
 
   private GL gl;
+  private GLUT glut;
   private QGLWidget widgetGL;
 
+  public static Color inverseColor(final Color c) {
+
+    if (c == null)
+      return null;
+
+    return new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c.getBlue(), c
+        .getAlpha());
+
+  }
+
   @Override
-  public void drawPoint3D(final Point3D point, final Color color) {
+  public void drawPoint3D(final Point3D point, final Color color,
+      final float size) {
 
     if (point == null)
       return;
 
-    drawDiamondPoint(point.getX(), point.getY(), point.getZ(), 0.1f, color);
+    // drawDiamondPoint(point.getX(), point.getY(), point.getZ(), 0.5f, color);
+    solidCube(size, point, color);
 
     /*
      * this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_POINT);
@@ -58,7 +74,8 @@ public class CorsenJOGL extends CorsenGL {
   }
 
   @Override
-  public void drawPoints3D(ListPoint3D points, Color color) {
+  public void drawPoints3D(AbstractListPoint3D points, Color color,
+      final float size) {
 
     if (points == null)
       return;
@@ -74,14 +91,15 @@ public class CorsenJOGL extends CorsenGL {
 
       final Point3D p = points.get(i);
       // this.gl.glVertex3f(p.getX(), p.getY(), p.getZ());
-      drawDiamondPoint(p,1);
+      // drawDiamondPoint(p.getX(), p.getY(), p.getZ(), .5f, color);
+      solidCube(size, p, color);
     }
 
     this.gl.glEnd();
   }
 
   @Override
-  public void drawPolygon3D(ListPoint3D points, Color color) {
+  public void drawPolygon3D(AbstractListPoint3D points, Color color) {
 
     if (points == null)
       return;
@@ -108,6 +126,16 @@ public class CorsenJOGL extends CorsenGL {
     if (a == null || b == null)
       return;
 
+    final FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {
+        color.getRed() / 255.0f, color.getGreen() / 255.0f,
+        color.getBlue() / 255.0f, 1});
+
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, mat_diffuse);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, no_shininess);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, mat_emission);
+
     this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_LINE);
     setGLColor(color);
 
@@ -125,7 +153,8 @@ public class CorsenJOGL extends CorsenGL {
 
   }
 
-  public void drawDistances(Map<Particle3D, Distance> distances, Color color) {
+  public void drawDistances(Map<Particle3D, Distance> distances, Color color,
+      final boolean showNegativesDistances) {
 
     if (distances == null)
       return;
@@ -137,7 +166,15 @@ public class CorsenJOGL extends CorsenGL {
       Particle3D p = it.next();
       Distance d = distances.get(p);
 
-      drawLine3D(d.getPointA(), d.getPointB(), color);
+      if (showNegativesDistances) {
+
+        if (d.getDistance() < 0)
+          drawLine3D(d.getPointA(), d.getPointB(), CorsenJOGL
+              .inverseColor(color));
+        else
+          drawLine3D(d.getPointA(), d.getPointB(), color);
+      } else
+        drawLine3D(d.getPointA(), d.getPointB(), color);
     }
   }
 
@@ -158,16 +195,26 @@ public class CorsenJOGL extends CorsenGL {
 
   private void drawDiamondPoint(float x, float y, float z, float d, Color color) {
 
-    setGLColor(color);
-    drawDiamondPoint(x, y, z, d);
-  }
+    // setGLColor(color);
+    // drawDiamondPoint(x, y, z, d);
 
-  private void drawDiamondPoint(final Point3D p, float d) {
+    FloatBuffer no_mat = FloatBuffer.wrap(new float[] {0, 0, 0, 1});
+    FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {color.getRed(),
+        color.getGreen(), color.getBlue(), 1});
+    // FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {1f, 0f, 0f, 1});
 
-    drawDiamondPoint(p.getX(), p.getY(), p.getZ(),d);
-  }
+    FloatBuffer no_shininess = FloatBuffer.wrap(new float[] {0});
 
-  private void drawDiamondPoint(float x, float y, float z, float d) {
+    // gl.glPushMatrix();
+
+    // gl.glTranslatef(x, y, z);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, mat_diffuse);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, no_shininess);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, no_mat);
+    // this.glut.glutSolidCube(d*100);
+    // gl.glPopMatrix();
 
     this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_FILL);
     this.gl.glBegin(GL.GL_TRIANGLES);
@@ -209,6 +256,175 @@ public class CorsenJOGL extends CorsenGL {
 
   }
 
+  /*
+   * private void drawDiamondPoint(final Point3D p, float d) {
+   * drawDiamondPoint(p.getX(), p.getY(), p.getZ(), d); }
+   */
+
+  private void drawDiamondPoint(float x, float y, float z, float d) {
+
+    if (true)
+      return;
+
+    // this.glut.glutSolidCube(d);
+
+    // this.gl.glLoadIdentity();
+    // this.gl.glTranslatef(x,y,z);
+    // this.glut.glutSolidCube(d);
+    // this.gl.glTranslatef(-x,-y,-z);
+
+    FloatBuffer no_mat = FloatBuffer.wrap(new float[] {0, 0, 0, 1});
+    FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {1f, 0, 0, 1});
+    // FloatBuffer mat_specular = FloatBuffer.wrap(new float[] {1f, 1f, 1, 1});
+    FloatBuffer no_shininess = FloatBuffer.wrap(new float[] {0});
+    // FloatBuffer low_shininess = FloatBuffer.wrap(new float[] {0.5f});
+    // FloatBuffer high_shininess = FloatBuffer.wrap(new float[] {100});
+    // FloatBuffer mat_emission = FloatBuffer.wrap(new float[] {.3f, .2f, .2f,
+    // 0});
+
+    gl.glPushMatrix();
+    // gl.glTranslatef(-3.75f, 3.0f, 0);
+    gl.glTranslatef(x, y, z);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, mat_diffuse);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, no_shininess);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, no_mat);
+    // this.glut.glutSolidSphere(d, 16, 16);
+    this.glut.glutSolidCube(d);
+    gl.glPopMatrix();
+
+    // if (true) return;
+
+    this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_FILL);
+    this.gl.glBegin(GL.GL_TRIANGLES);
+    // this.gl.glBegin(GL.GL_QUADS);
+
+    this.gl.glVertex3d(x - d, y, z);
+    this.gl.glVertex3d(x, y + d, z);
+    this.gl.glVertex3d(x, y, z + d);
+
+    this.gl.glVertex3d(x, y + d, z);
+    this.gl.glVertex3d(x + d, y, z);
+    this.gl.glVertex3d(x, y, z + d);
+
+    this.gl.glVertex3d(x + d, y, z);
+    this.gl.glVertex3d(x, y - d, z);
+    this.gl.glVertex3d(x, y, z + d);
+
+    this.gl.glVertex3d(x, y - d, z);
+    this.gl.glVertex3d(x - d, y, z);
+    this.gl.glVertex3d(x, y, z + d);
+
+    this.gl.glVertex3d(x - d, y, z);
+    this.gl.glVertex3d(x, y + d, z);
+    this.gl.glVertex3d(x, y, z - d);
+
+    this.gl.glVertex3d(x, y + d, z);
+    this.gl.glVertex3d(x + d, y, z);
+    this.gl.glVertex3d(x, y, z - d);
+
+    this.gl.glVertex3d(x + d, y, z);
+    this.gl.glVertex3d(x, y - d, z);
+    this.gl.glVertex3d(x, y, z - d);
+
+    this.gl.glVertex3d(x, y - d, z);
+    this.gl.glVertex3d(x - d, y, z);
+    this.gl.glVertex3d(x, y, z - d);
+
+    this.gl.glEnd();
+
+  }
+
+  private static final FloatBuffer no_mat = FloatBuffer.wrap(new float[] {0, 0,
+      0, 1});
+
+  private static final FloatBuffer no_shininess = FloatBuffer
+      .wrap(new float[] {0});
+
+  private static final FloatBuffer mat_emission = FloatBuffer.wrap(new float[] {
+      1f, 1f, 1f, 0});
+
+  public void solidCube(float size, Point3D p, Color c) {
+
+    final FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {
+        c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f, 1});
+    this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_FILL);
+    gl.glPushMatrix();
+    gl.glTranslatef(p.getX(), p.getY(), p.getZ());
+    // gl.glScalef(.25f, .25f, .25f);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, mat_diffuse);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, no_shininess);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, no_mat);
+    // this.glut.glutSolidSphere(1, 16, 16);
+    // this.glut.glutSolidCube(size);
+    // this.glut.glutSolidOctahedron();
+     this.glut.glutSolidDodecahedron();
+    //this.glut.glutSolidSphere(size, 8, 8);
+
+    gl.glPopMatrix();
+
+    // solidCube(size, p.getX(), p.getY(), p.getZ(), c);
+  }
+
+  public void solidCube(float size, float x, float y, float z, Color c) {
+
+    this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_FILL);
+    drawBox(GLU.getCurrentGL(), size, GL.GL_QUADS, x, y, z, c);
+  }
+
+  private static float[][] boxVertices;
+  private static final float[][] boxNormals = { {-1.0f, 0.0f, 0.0f},
+      {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, -1.0f, 0.0f},
+      {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, -1.0f}};
+  private static final int[][] boxFaces = { {0, 1, 2, 3}, {3, 2, 6, 7},
+      {7, 6, 5, 4}, {4, 5, 1, 0}, {5, 6, 2, 1}, {7, 4, 0, 3}};
+
+  private void drawBox(GL gl, float size, int type, float x, float y, float z,
+      Color c) {
+
+    if (boxVertices == null) {
+      float[][] v = new float[8][];
+      for (int i = 0; i < 8; i++) {
+        v[i] = new float[3];
+      }
+      v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.5f;
+      v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.5f;
+      v[0][1] = v[1][1] = v[4][1] = v[5][1] = -0.5f;
+      v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.5f;
+      v[0][2] = v[3][2] = v[4][2] = v[7][2] = -0.5f;
+      v[1][2] = v[2][2] = v[5][2] = v[6][2] = 0.5f;
+      boxVertices = v;
+    }
+    float[][] v = boxVertices;
+    float[][] n = boxNormals;
+    int[][] faces = boxFaces;
+
+    FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {c.getRed(),
+        c.getGreen(), c.getBlue(), 1});
+
+    for (int i = 5; i >= 0; i--) {
+      gl.glBegin(type);
+      gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, no_mat);
+      gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, mat_diffuse);
+      gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, no_mat);
+      gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, no_shininess);
+      gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, no_mat);
+      gl.glNormal3fv(n[i], 0);
+      float[] vt = v[faces[i][0]];
+      gl.glVertex3f(vt[0] * size + x, vt[1] * size + y, vt[2] * size + z);
+      vt = v[faces[i][1]];
+      gl.glVertex3f(vt[0] * size + x, vt[1] * size + y, vt[2] * size + z);
+      vt = v[faces[i][2]];
+      gl.glVertex3f(vt[0] * size + x, vt[1] * size + y, vt[2] * size + z);
+      vt = v[faces[i][3]];
+      gl.glVertex3f(vt[0] * size + x, vt[1] * size + y, vt[2] * size + z);
+      gl.glEnd();
+    }
+  }
+
   //
   // Constructor
   //
@@ -216,6 +432,7 @@ public class CorsenJOGL extends CorsenGL {
   public CorsenJOGL(final GL gl, final QGLWidget widgetGL) {
     this.gl = gl;
     this.widgetGL = widgetGL;
+    this.glut = new GLUT();
   }
 
 }

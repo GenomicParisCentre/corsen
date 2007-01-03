@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -25,11 +25,12 @@ package fr.ens.transcriptome.corsen.calc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.UpdateStatus;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
-import fr.ens.transcriptome.corsen.model.ListPoint3D;
+import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 
@@ -74,7 +75,8 @@ public abstract class DistanceProcessor {
    * Set the dest particles.
    * @param destParticles
    */
-  private void setDestParticles(final Map<Particle3D, List<Particle3D>> destParticles) {
+  private void setDestParticles(
+      final Map<Particle3D, List<Particle3D>> destParticles) {
 
     this.mapDestParticles = destParticles;
     this.destParticles = new ArrayList<Particle3D>();
@@ -105,7 +107,7 @@ public abstract class DistanceProcessor {
   }
 
   List<Distance> calcDistance(final Particle3D particle,
-      final ListPoint3D points) {
+      final AbstractListPoint3D points) {
 
     if ((particle == null || points == null))
       return null;
@@ -137,10 +139,9 @@ public abstract class DistanceProcessor {
   abstract List<Distance> calcDistance(final Particle3D particle,
       final Point3D point, List<Distance> result);
 
-  abstract ListPoint3D getPresentationPoints(final ListPoint3D points);
+  abstract AbstractListPoint3D getPresentationPoints(final AbstractListPoint3D points);
 
-  // abstract Distance minimalDistance(final Point3D point);
-  // abstract Distance maximalDistance(final Point3D point);
+  abstract void setProperties(Properties properties);
 
   //
   // Constructor

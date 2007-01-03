@@ -23,11 +23,11 @@ public final class Particle3D {
   private final int id = count;
   private String name = "" + this.id;
 
-  private final ListPoint3D surfacePoints;
-  private final ListPoint3D innerPoints;
+  private final AbstractListPoint3D surfacePoints;
+  private final AbstractListPoint3D innerPoints;
 
-  private final ListPoint3D unmodifiableSurfacePoints;
-  private final ListPoint3D unmodifiableInnerPoints;
+  private final AbstractListPoint3D unmodifiableSurfacePoints;
+  private final AbstractListPoint3D unmodifiableInnerPoints;
 
   private float pixelWidth = 1.0f;
   private float pixelHeight = 1.0f;
@@ -643,19 +643,19 @@ public final class Particle3D {
 
   
 
-  public ListPoint3D getInnerPoints() {
+  public AbstractListPoint3D getInnerPoints() {
     return this.unmodifiableInnerPoints;
   }
 
-  public ListPoint3D getSurfacePoints() {
+  public AbstractListPoint3D getSurfacePoints() {
     return this.unmodifiableSurfacePoints;
   }
 
-  ListPoint3D getModifiableInnerPoints() {
+  AbstractListPoint3D getModifiableInnerPoints() {
     return this.innerPoints;
   }
 
-  ListPoint3D getModifiableSurfacePoints() {
+  AbstractListPoint3D getModifiableSurfacePoints() {
     return this.surfacePoints;
   }
 

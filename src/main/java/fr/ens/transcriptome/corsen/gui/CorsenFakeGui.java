@@ -30,6 +30,7 @@ import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.UpdateStatus;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
+import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
 import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
 import fr.ens.transcriptome.corsen.calc.ParticleType;
 
@@ -75,11 +76,11 @@ public class CorsenFakeGui {
   public static void main(String[] args) throws IOException {
 
     System.out.println("Java version: " + System.getProperty("java.version"));
-    
+
     InputStream isA;
     InputStream isB;
 
-    if (false) {
+    if (true) {
       isA = Corsen.class.getResourceAsStream("/files/atp16cy3c1.par");
       isB = Corsen.class.getResourceAsStream("/files/mitocy35c1.par");
     } else {
@@ -99,22 +100,49 @@ public class CorsenFakeGui {
 
     result.getMessengersParticles().setType(ParticleType.TINY);
     result.getMitosParticles().setType(ParticleType.HUGE);
-    
-    System.out.println("Messengers inner: "+result.getMessengersParticles().countParticlesInnerPoints()+" points.");
-    System.out.println("Messengers surface: "+result.getMessengersParticles().countParticlesSurfacePoints()+" points.");
-    System.out.println("Messengers image filename: "+result.getMessengersParticles().getImageFilename());
-    System.out.println("Mitos inner: "+result.getMitosParticles().countParticlesInnerPoints()+" points.");
-    System.out.println("Mitos surface: "+result.getMitosParticles().countParticlesSurfacePoints()+" points.");
-    System.out.println("Mitos image filename: "+result.getMitosParticles().getImageFilename());
-    
 
-    
+    System.out.println("Messengers inner: "
+        + result.getMessengersParticles().countParticlesInnerPoints()
+        + " points.");
+    System.out.println("Messengers surface: "
+        + result.getMessengersParticles().countParticlesSurfacePoints()
+        + " points.");
+    System.out.println("Messengers image filename: "
+        + result.getMessengersParticles().getImageFilename());
+    System.out.println("Mitos inner: "
+        + result.getMitosParticles().countParticlesInnerPoints() + " points.");
+    System.out
+        .println("Mitos surface: "
+            + result.getMitosParticles().countParticlesSurfacePoints()
+            + " points.");
+    System.out.println("Mitos image filename: "
+        + result.getMitosParticles().getImageFilename());
+
     long startTime = System.currentTimeMillis();
     dc.calc();
     long endTime = System.currentTimeMillis();
 
     System.out.println("exec time: " + (endTime - startTime) + " ms.");
 
+    DistanceAnalyser da = new DistanceAnalyser(result.getMinDistances());
+
+    System.out.println("Median: " + da.getMedian());
+
+    
+    settings.setThreadNumber(2);
+    
+    
+    startTime = System.currentTimeMillis();
+    dc.calc();
+    endTime = System.currentTimeMillis();
+    
+    
+    System.out.println("exec time: " + (endTime - startTime) + " ms.");
+
+    da = new DistanceAnalyser(result.getMinDistances());
+
+    System.out.println("Median: " + da.getMedian());
+    
   }
 
 }

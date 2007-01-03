@@ -3,9 +3,8 @@ package fr.ens.transcriptome.corsen;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
@@ -14,35 +13,22 @@ import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 public class CorsenCore implements Runnable {
 
+  private static Logger logger = Logger.getLogger(CorsenCore.class.getName());
   private UpdateStatus updateStatus;
 
   private Settings settings = new Settings();
 
   private File dirFiles;
-  private File mitoFile;
-  private File rnaFile;
+  private File particlesBFile;
+  private File particlesAFile;
   private File resultFile;
   private boolean multipleFiles;
 
-  public static final String EXTENSION_MESSENGERS_IV_FILE = "_messengers.iv";
-  public static final String EXTENSION_MESSENGERS_RGL_FILE = "_messengers.R";
-  public static final String EXTENSION_CUBOIDS_IV_FILE = "_cuboids.iv";
-  public static final String EXTENSION_MITOS_CUBOIDS_RGL_FILE = "_mitos_cuboids.R";
-  public static final String EXTENSION_MITOS_RGL_FILE = "_mitos.R";
-  public static final String EXTENSION_MITOS_IV_FILE = "_mitos.iv";
-  public static final String EXTENSION_CUBOIDS_RGL_FILE = "_cuboids.R";
-  public static final String EXTENSION_DISTANCES_FILE = "_distances.R";
-  public static final String EXTENSION_DATA_FILE = ".data";
-  public static final String EXTENSION_FULL_RESULT_FILE = ".result";
+  private static class InputFiles {
 
-  //
-  // inner class
-  //
-
-  private class InputFiles {
-
-    File inputrnaFile;
-    File inputmitoFile;
+    File inputParticlesAFile;
+    File inputParticlesBFile;
+    String prefix;
   }
 
   //
@@ -77,10 +63,10 @@ public class CorsenCore implements Runnable {
 
   /**
    * Get the mito file.
-   * @return Returns the mitoFile
+   * @return Returns the particlesBFile
    */
-  public File getMitoFile() {
-    return this.mitoFile;
+  public File getParticlesBFile() {
+    return this.particlesBFile;
   }
 
   /**
@@ -101,10 +87,10 @@ public class CorsenCore implements Runnable {
 
   /**
    * Get the rna file.
-   * @return Returns the rnaFile
+   * @return Returns the particlesAFile
    */
-  public File getRnaFile() {
-    return this.rnaFile;
+  public File getParticlesAFile() {
+    return this.particlesAFile;
   }
 
   /**
@@ -172,10 +158,10 @@ public class CorsenCore implements Runnable {
 
   /**
    * Set the mito file to read.
-   * @param mitoFile The mitoFile to set
+   * @param particlesBFile The particlesBFile to set
    */
-  public void setMitoFile(final File mitoFile) {
-    this.mitoFile = mitoFile;
+  public void setParticlesBFile(final File particlesBFile) {
+    this.particlesBFile = particlesBFile;
   }
 
   /**
@@ -197,10 +183,10 @@ public class CorsenCore implements Runnable {
 
   /**
    * Set the rna file.
-   * @param rnaFile The rnaFile to set
+   * @param particlesAFile The particlesAFile to set
    */
-  public void setRnaFile(final File rnaFile) {
-    this.rnaFile = rnaFile;
+  public void setParticlesAFile(final File particlesAFile) {
+    this.particlesAFile = particlesAFile;
   }
 
   /**
@@ -215,36 +201,36 @@ public class CorsenCore implements Runnable {
   // Other methods
   //
 
-  private void processACell(final File mitoFile, final File rnaFile,
+  private void processACell(final File rnaFile, final File mitoFile,
       final File resultFile) throws IOException {
 
     sendEvent(ProgressEventType.START_CELLS_EVENT, ProgressEvent
         .countPhase(this.settings));
-    doACell(mitoFile, rnaFile, resultFile, 1, 1);
+    doACell(rnaFile, mitoFile, resultFile, 1, 1);
     sendEvent(ProgressEventType.END_CELLS_SUCCESSFULL_EVENT, 1, 1);
 
   }
 
   /**
    * Process data for a cell
-   * @param mitoFile ImageJ Plugin result file for mitochondria
-   * @param rnaFile ImageJ Plugin result file for RNAm
+   * @param particlesBFile ImageJ Plugin result file for mitochondria
+   * @param particlesAFile ImageJ Plugin result file for RNAm
    * @param resultDir Result file directory
    * @param resultFile Result filename
    * @throws IOException if an error occurs while reading or writing data
    */
-  private void doACell(final File mitoFile, final File rnaFile,
+  private void doACell(final File particlesAFile, final File particlesBFile,
       final File resultFile, int currentCell, int cellCount) throws IOException {
 
     final Settings s = this.getSettings();
 
     // Send Start cell event
     sendEvent(ProgressEventType.START_CELL_EVENT, currentCell, cellCount,
-        mitoFile.getAbsolutePath(), rnaFile.getAbsolutePath(), resultFile
-            .getAbsolutePath());
+        particlesAFile.getAbsolutePath(), particlesBFile.getAbsolutePath(),
+        resultFile.getAbsolutePath());
 
-    final CorsenResult result = new CorsenResult(rnaFile, mitoFile,s,
-        getUpdateStatus());
+    final CorsenResult result = new CorsenResult(particlesAFile,
+        particlesBFile, s, getUpdateStatus());
 
     // Create writer object
     final CorsenResultWriter writer = new CorsenResultWriter(result);
@@ -275,23 +261,29 @@ public class CorsenCore implements Runnable {
 
     if (s.isSaveDataFile()) {
       sendEvent(ProgressEventType.START_WRITE_DATA_EVENT);
-      writer.writeDataFile(resultFile, EXTENSION_DATA_FILE);
+      writer.writeDataFile(resultFile, Globals.EXTENSION_DATA_FILE);
     }
 
     if (s.isSaveIVFile()) {
       sendEvent(ProgressEventType.START_WRITE_IV_MESSENGERS_EVENT);
       writer.writeMessengersIntensityVolume(resultFile,
-          EXTENSION_MESSENGERS_IV_FILE);
+          Globals.EXTENSION_PARTICLES_A_IV_FILE);
       sendEvent(ProgressEventType.START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT);
       writer.writeCuboidsMessengersIntensityVolume(resultFile,
-          EXTENSION_CUBOIDS_IV_FILE);
+          Globals.EXTENSION_PARTICLES_A_CUBOIDS_IV_FILE);
       sendEvent(ProgressEventType.START_WRITE_IV_MITOS_EVENT);
-      writer.writeMitosIntensityVolume(resultFile, EXTENSION_MITOS_IV_FILE);
+      writer.writeMitosIntensityVolume(resultFile,
+          Globals.EXTENSION_PARTICLES_B_IV_FILE);
+    }
+
+    if (s.isSaveResultsFile()) {
+      sendEvent(ProgressEventType.START_WRITE_RESULT_EVENT);
+      writer.writeResult(resultFile, Globals.EXTENSION_RESULT_FILE);
     }
 
     if (s.isSaveFullResultsFile()) {
       sendEvent(ProgressEventType.START_WRITE_FULLRESULT_EVENT);
-      writer.writeFullResult(resultFile, EXTENSION_FULL_RESULT_FILE);
+      writer.writeFullResult(resultFile, Globals.EXTENSION_FULL_RESULT_FILE);
     }
 
     //
@@ -300,43 +292,68 @@ public class CorsenCore implements Runnable {
 
     if (s.isSaveVisualizationFiles()) {
 
-      if (s.isSaveMessengers3dFile()) {
+      if (s.isSaveParticleA3dFile()) {
         sendEvent(ProgressEventType.START_WRITE_RPLOT_MESSENGERS_EVENT);
-        new RGL(resultFile, EXTENSION_MESSENGERS_RGL_FILE).writeRPlots(result
-            .getMessengersParticles(), "green", true);
+        new RGL(resultFile, Globals.EXTENSION_PARTICLES_A_RGL_FILE)
+            .writeRPlots(result.getMessengersParticles(), "green", true);
       }
 
-      if (s.isSaveMito3dFile()) {
+      if (s.isSaveParticleB3dFile()) {
         sendEvent(ProgressEventType.START_WRITE_RPLOT_MITOS_EVENT);
-        new RGL(resultFile, EXTENSION_MITOS_RGL_FILE).writeRPlots(result
-            .getMitosParticles(), "red", false);
+        new RGL(resultFile, Globals.EXTENSION_PARTICLES_B_RGL_FILE)
+            .writeRPlots(result.getMitosParticles(), "red", false);
       }
 
-      if (s.isSaveMessengersCuboids3dFile()) {
+      if (s.isSaveParticlesACuboids3dFile()) {
         sendEvent(ProgressEventType.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT);
-        new RGL(null, resultFile, EXTENSION_CUBOIDS_RGL_FILE).writeRPlots(
-            result.getCuboidsMessengersParticles(), "green", true);
+        new RGL(null, resultFile,
+            Globals.EXTENSION_PARTICLES_A_CUBOIDS_RGL_FILE).writeRPlots(result
+            .getCuboidsMessengersParticles(), "green", true);
       }
 
-      if (s.isSaveMitoCuboids3dFile()) {
+      if (s.isSaveParticlesBCuboids3dFile()) {
         sendEvent(ProgressEventType.START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT);
-        new RGL(null, resultFile, EXTENSION_MITOS_CUBOIDS_RGL_FILE)
-            .writeRPlots(result.getCuboidsMitosParticles(), "red", false);
+        new RGL(null, resultFile,
+            Globals.EXTENSION_PARTICLES_B_CUBOIDS_RGL_FILE).writeRPlots(result
+            .getCuboidsMitosParticles(), "red", false);
       }
 
       if (s.isSaveDistances3dFile()) {
         sendEvent(ProgressEventType.START_WRITE_RPLOT_DISTANCES_EVENT);
-        new RGL(null, resultFile, EXTENSION_DISTANCES_FILE).writeDistances(
-            result.getMinDistances(), "cyan");
+        new RGL(null, resultFile, Globals.EXTENSION_DISTANCES_FILE)
+            .writeDistances(result.getMinDistances(), "cyan");
       }
 
     }
 
     // Send result to visualisation
-    getUpdateStatus().endProcess(result);
+    endProcess(result);
 
     // Send End cell event
     sendEvent(ProgressEventType.END_CELL_EVENT);
+  }
+
+  private static final InputFiles getInputFile(Map<String, InputFiles> map,
+      String filename, String prefix, String suffix) {
+
+    if (filename.startsWith(prefix) && filename.endsWith(suffix)) {
+
+      String between = filename.substring(prefix.length(), filename.length()
+          - prefix.length() + 1);
+
+      InputFiles iFile;
+
+      if (map.containsKey(between))
+        iFile = map.get(between);
+      else {
+        iFile = new InputFiles();
+        iFile.prefix = between;
+        map.put(between, iFile);
+      }
+
+      return iFile;
+    }
+    return null;
   }
 
   private boolean processMultipleCells(final File directory) throws IOException {
@@ -344,51 +361,31 @@ public class CorsenCore implements Runnable {
     if (directory == null || !directory.exists())
       return false;
 
-    // Get the list of directoty files
-    final File[] files = directory.listFiles();
+    String prefixA = this.settings.getParticlesABatchPrefix();
+    String prefixB = this.settings.getParticlesBBatchPrefix();
 
     // Store in an HashMap the input files
-    final HashMap map = new HashMap();
+    final Map<String, InputFiles> map = new HashMap<String, InputFiles>();
 
-    // Create regex
-    final Pattern p = Pattern.compile(".*\\_ch(\\d+)\\_ce(\\d+)\\.par$");
-    // final Pattern p = Pattern.compile("txt");
+    // Get the list of directoty files
+    final File[] files = directory.listFiles();
 
     for (int i = 0; i < files.length; i++) {
 
       final String filename = files[i].getName();
 
-      final Matcher m = p.matcher(filename);
+      InputFiles iFile = getInputFile(map, filename, prefixA,
+          Globals.EXTENSION_PARTICLES_FILE);
+      if (iFile != null)
+        iFile.inputParticlesAFile = files[i];
 
-      if (m.matches()) {
-
-        final int field = Integer.parseInt(m.group(1));
-        final int cell = Integer.parseInt(m.group(2));
-
-        InputFiles iFiles;
-        final String key = "ch" + field + "_ce" + cell;
-
-        if (map.containsKey(key))
-          iFiles = (InputFiles) map.get(key);
-        else {
-          iFiles = new InputFiles();
-          map.put(key, iFiles);
-        }
-
-        if (filename.indexOf("mito") != -1)
-          iFiles.inputmitoFile = files[i];
-        else
-          iFiles.inputrnaFile = files[i];
-
-        // System.out.println(filename+
-        // "\t"+field+"\t"+cell+"\t"+key+"\t"+map.size());
-
-      }
+      iFile = getInputFile(map, filename, prefixB,
+          Globals.EXTENSION_PARTICLES_FILE);
+      if (iFile != null)
+        iFile.inputParticlesBFile = files[i];
     }
 
     // Start the process
-
-    final Iterator it = map.keySet().iterator();
 
     int n = 0;
     final int count = map.size();
@@ -399,23 +396,18 @@ public class CorsenCore implements Runnable {
     sendEvent(ProgressEventType.START_CELLS_EVENT, ProgressEvent
         .countPhase(this.settings));
 
-    while (it.hasNext()) {
+    for (String key : map.keySet()) {
 
       n++;
-      final String key = (String) it.next();
+      final InputFiles iFiles = map.get(key);
 
-      final InputFiles iFiles = (InputFiles) map.get(key);
+      if (iFiles.inputParticlesBFile != null
+          && iFiles.inputParticlesAFile != null) {
 
-      if (iFiles.inputmitoFile != null && iFiles.inputrnaFile != null) {
+        final File parent = iFiles.inputParticlesBFile.getParentFile();
 
-        final File parent = iFiles.inputmitoFile.getParentFile();
-
-        doACell(iFiles.inputmitoFile, iFiles.inputrnaFile, new File(parent
-            .getAbsoluteFile()
-            + "cell_" + key), n, count);
-
-        // System.out.println("mito: " + iFiles.inputmitoFile + " arn: "
-        // + iFiles.inputrnaFile);
+        doACell(iFiles.inputParticlesBFile, iFiles.inputParticlesAFile,
+            new File(parent, iFiles.prefix), n, count);
 
       }
 
@@ -426,26 +418,77 @@ public class CorsenCore implements Runnable {
   }
 
   private void sendEvent(final ProgressEventType type) {
-    getUpdateStatus().updateStatus(new ProgressEvent(type));
+
+    final UpdateStatus us = getUpdateStatus();
+
+    if (us == null)
+      return;
+
+    us.updateStatus(new ProgressEvent(type));
   }
 
   private void sendEvent(final ProgressEventType type, final int value1) {
 
-    getUpdateStatus().updateStatus(new ProgressEvent(type, value1));
+    final UpdateStatus us = getUpdateStatus();
+
+    if (us == null)
+      return;
+
+    us.updateStatus(new ProgressEvent(type, value1));
   }
 
   private void sendEvent(final ProgressEventType type, final int value1,
       final int value2) {
 
-    getUpdateStatus().updateStatus(new ProgressEvent(type, value1, value2));
+    final UpdateStatus us = getUpdateStatus();
+
+    if (us == null)
+      return;
+
+    us.updateStatus(new ProgressEvent(type, value1, value2));
   }
 
   private void sendEvent(final ProgressEventType type, final int value1,
       final int value2, final String value3, final String value4,
       final String value5) {
 
-    getUpdateStatus().updateStatus(
-        new ProgressEvent(type, value1, value2, value3, value4, value5));
+    final UpdateStatus us = getUpdateStatus();
+
+    if (us == null)
+      return;
+
+    us.updateStatus(new ProgressEvent(type, value1, value2, value3, value4,
+        value5));
+  }
+
+  private void endProcess(final CorsenResult result) {
+
+    final UpdateStatus us = getUpdateStatus();
+
+    if (us == null)
+      return;
+
+    us.endProcess(result);
+  }
+
+  private void showMessage(final String message) {
+
+    final UpdateStatus us = getUpdateStatus();
+
+    if (us == null)
+      return;
+
+    us.showMessage(message);
+  }
+
+  private void showError(final String message) {
+
+    final UpdateStatus us = getUpdateStatus();
+
+    if (us == null)
+      return;
+
+    us.showError(message);
   }
 
   //
@@ -462,20 +505,20 @@ public class CorsenCore implements Runnable {
       if (isMultipleFiles()) {
         if (processMultipleCells(getDirFiles())) {
           sendEvent(ProgressEventType.END_CELLS_SUCCESSFULL_EVENT, 1, 1);
-          getUpdateStatus().showMessage("Outputs files creations successful.");
+          showMessage("Particles distances computations successful.");
         } else
-          getUpdateStatus().showError(
-              "Directory not exists or no files to process");
+          showError("Directory not exists or no files to process");
       } else {
 
-        processACell(getMitoFile(), getRnaFile(), getResultFile());
+        processACell(getParticlesAFile(), getParticlesBFile(), getResultFile());
 
-        getUpdateStatus().showMessage("Output file creation successful.");
+        showMessage("Particles distances computations successful.");
       }
 
     } catch (final IOException e) {
-      getUpdateStatus().showError(e.getMessage());
+      showError(e.getMessage());
     }
 
+    logger.info("End of the thread");
   }
 }

@@ -11,6 +11,7 @@ import java.util.Map;
 
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.Distance;
+import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
 import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 
@@ -25,7 +26,7 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -122,7 +123,7 @@ public class CorsenResultWriter {
       out.write("\t");
       out.write(Float.toString(mins.get(p).getDistance()));
       out.write("\t");
-      out.write(Float.toString( maxs.get(p).getDistance()));
+      out.write(Float.toString(maxs.get(p).getDistance()));
       out.write("\n");
     }
 
@@ -242,7 +243,7 @@ public class CorsenResultWriter {
     if (particles == null || os == null)
       return;
 
-    //Particle3D[] pars = particles.getParticles();
+    // Particle3D[] pars = particles.getParticles();
 
     if (particles == null)
       return;
@@ -253,7 +254,7 @@ public class CorsenResultWriter {
 
     boolean first = true;
     for (Particle3D par : particles.getParticles()) {
-    //for (int i = 0; i < pars.length; i++) {
+      // for (int i = 0; i < pars.length; i++) {
       if (first) {
         out.write("\n");
         first = false;
@@ -318,11 +319,11 @@ public class CorsenResultWriter {
     out.write("intensity");
     out.write("\t");
 
-    //final Particle3D[] mitos = mitosParticles.getParticles();
-    //final Particle3D[] messengers = messengersParticles.getParticles();
+    // final Particle3D[] mitos = mitosParticles.getParticles();
+    // final Particle3D[] messengers = messengersParticles.getParticles();
 
-    for (Particle3D mito: mitosParticles.getParticles()) {
-    //for (int j = 0; j < mitos.length; j++) {
+    for (Particle3D mito : mitosParticles.getParticles()) {
+      // for (int j = 0; j < mitos.length; j++) {
 
       out.write("d(s,s)[");
       out.write(mito.getName());
@@ -351,11 +352,10 @@ public class CorsenResultWriter {
       double minss = java.lang.Double.MAX_VALUE;
       double mincs = java.lang.Double.MAX_VALUE;
 
-      for (Particle3D mito: mitosParticles.getParticles()) {
+      for (Particle3D mito : mitosParticles.getParticles()) {
 
         final double dss = messenger.getSurfaceToSurfaceDistance(mito);
-        final double dcs = messenger
-            .getBarycenterToSurfaceDistance(mito);
+        final double dcs = messenger.getBarycenterToSurfaceDistance(mito);
 
         if (dss < minss)
           minss = dss;
@@ -381,6 +381,79 @@ public class CorsenResultWriter {
       out.write("\n");
     }
     out.close();
+  }
+
+  /**
+   * Write the result file
+   * @param os OutputStream
+   * @throws IOException if an error occurs while writing the stream
+   */
+  public void writeResult(final File file, final String suffix)
+      throws IOException {
+
+    writeResult(createFileWithSuffix(file, suffix));
+  }
+
+  /**
+   * Write the result file
+   * @param os OutputStream
+   * @throws IOException if an error occurs while writing the stream
+   */
+  public void writeResult(final File file) throws IOException {
+
+    writeResult(new FileOutputStream(file));
+  }
+
+  public void writeResult(final FileOutputStream os) throws IOException {
+
+    final Writer out = new OutputStreamWriter(os);
+
+    final CorsenResult cr = getResult();
+    if (cr == null)
+      return;
+
+    StringBuffer sb = new StringBuffer();
+    sb.append("#Particle A\tParticle B\t");
+    sb
+        .append("Mins min\tMins first quartile\tMins median\tMins mean\tMins median\tMins third quartile\tMins max\t");
+    sb
+        .append("Mins min\tMaxs first quartile\tMaxs median\tMaxs mean\tMaxs median\tMaxs third quartile\tMaxs max\n");
+
+    out.write(cr.getMessengersFilename());
+    sb.append("\t");
+    out.write(cr.getMitosFilename());
+    sb.append("\t");
+
+    DistanceAnalyser min = cr.getMinAnalyser();
+
+    sb.append(min.getMin());
+    sb.append("\t");
+    sb.append(min.getFirstQuartile());
+    sb.append("\t");
+    sb.append(min.getMedian());
+    sb.append("\t");
+    sb.append(min.getMean());
+    sb.append("\t");
+    sb.append(min.getThirdQuartile());
+    sb.append("\t");
+    sb.append(min.getMax());
+    sb.append("\t");
+
+    DistanceAnalyser max = cr.getMinAnalyser();
+
+    sb.append(max.getMin());
+    sb.append("\t");
+    sb.append(max.getFirstQuartile());
+    sb.append("\t");
+    sb.append(max.getMedian());
+    sb.append("\t");
+    sb.append(max.getMean());
+    sb.append("\t");
+    sb.append(max.getThirdQuartile());
+    sb.append("\t");
+    sb.append(max.getMax());
+    sb.append("\n");
+
   }
 
   //

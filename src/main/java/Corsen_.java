@@ -2,6 +2,7 @@ import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.RGL;
 import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle2D;
+import fr.ens.transcriptome.corsen.model.Particle2DBuilder;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
 import fr.ens.transcriptome.corsen.util.CorsenImageJUtil;
@@ -212,7 +213,7 @@ public class Corsen_ implements PlugInFilter, Measurements {
         this.previousZ++;
     }
 
-    Particle2D p2D = new Particle2D((float) pixelWidth, (float) pixelHeight,
+    Particle2D p2D = Particle2DBuilder.createParticle2D((float) pixelWidth, (float) pixelHeight,
         imp, (PolygonRoi) roi);
 
     Iterator it = this.previousParticules2D.iterator();

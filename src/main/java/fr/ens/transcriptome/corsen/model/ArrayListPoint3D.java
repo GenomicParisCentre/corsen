@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -26,13 +26,153 @@ import java.util.ArrayList;
 
 import fr.ens.transcriptome.corsen.util.Util;
 
-public final class ArrayListPoint3D extends ListPoint3D {
+public final class ArrayListPoint3D extends AbstractListPoint3D {
 
   private ArrayList<Long> values = new ArrayList<Long>();
 
-  private float xPrecision = 100.0f;
-  private float yPrecision = 100.0f;
-  private float zPrecision = 100.0f;
+  private static final float X_PRECISION_DEFAULT = 100f;
+  private static final float Y_PRECISION_DEFAULT = 100f;
+  private static final float Z_PRECISION_DEFAULT = 100f;
+
+  private float xPrecision;
+  private float yPrecision;
+  private float zPrecision;
+
+  /**
+   * This class implements a Point3D which data for Point3D are stored in
+   * ArrayLists. No data about the point are stored inside this object.
+   * @author Laurent Jourdren
+   */
+  private final class InnerPoint3DImpl extends Point3D {
+
+    private ArrayListPoint3D listPoints;
+    private int index;
+
+    //
+    // Getters
+    //
+
+    /**
+     * Get the X coordinate of the point.
+     * @return the X coordinate of the point
+     */
+    public final float getX() {
+
+      final long val = this.listPoints.values.get(this.index);
+
+      return Util.getX(val, listPoints.xPrecision);
+    }
+
+    /**
+     * Get the Y coordinate of the point.
+     * @return the Y coordinate of the point
+     */
+    public final float getY() {
+
+      final long val = this.listPoints.values.get(this.index);
+
+      return Util.getY(val, listPoints.yPrecision);
+    }
+
+    /**
+     * Get the Z coordinate of the point.
+     * @return the Z coordinate of the point
+     */
+    public final float getZ() {
+
+      final long val = this.listPoints.values.get(this.index);
+
+      return Util.getZ(val, listPoints.zPrecision);
+    }
+
+    /**
+     * Get the intensity of the point.
+     * @return the intensity of the point
+     */
+    public final int getI() {
+
+      final long val = this.listPoints.values.get(this.index);
+
+      return Util.getI(val);
+    }
+
+    //
+    // Setters
+    //
+
+    /**
+     * Set the value for the X coordinate.
+     * @param x The value for the X coordinate
+     */
+    public final void setX(final float x) {
+
+      long val = this.listPoints.values.get(this.index);
+
+      val = Util.setX(val, x, listPoints.xPrecision);
+
+      this.listPoints.values.set(this.index, val);
+    }
+
+    /**
+     * Set the value for the Y coordinate.
+     * @param y The value for the Y coordinate
+     */
+    public final void setY(final float y) {
+
+      long val = this.listPoints.values.get(this.index);
+
+      val = Util.setY(val, y, listPoints.yPrecision);
+
+      this.listPoints.values.set(this.index, val);
+    }
+
+    /**
+     * Set the value for the Z coordinate.
+     * @param z The value for the Y coordinate
+     */
+    public final void setZ(final float z) {
+
+      long val = this.listPoints.values.get(this.index);
+
+      val = Util.setZ(val, z, listPoints.zPrecision);
+
+      this.listPoints.values.set(this.index, val);
+    }
+
+    /**
+     * Set the value for the intensity of the point.
+     * @param i The value of the intensity of the point
+     */
+    public final void setI(final int i) {
+
+      long val = this.listPoints.values.get(this.index);
+
+      val = Util.setI(val, i);
+
+      this.listPoints.values.set(this.index, val);
+    }
+
+    //
+    // Constructor
+    //
+    /**
+     * Private constructor.
+     */
+    private InnerPoint3DImpl() {
+    }
+
+    /**
+     * Public constructor.
+     * @param listPoints List of ponts which contains the data
+     * @param index Index of the point in arraylists
+     */
+    public InnerPoint3DImpl(final ArrayListPoint3D listPoints, final int index) {
+
+      this.listPoints = listPoints;
+      this.index = index;
+    }
+
+  }
 
   /**
    * Get the number of points in the list.
@@ -49,8 +189,7 @@ public final class ArrayListPoint3D extends ListPoint3D {
    */
   public final Point3D get(final int index) {
 
-    return new ArrayListPoint3DImpl(this.values, xPrecision, yPrecision,
-        zPrecision, index);
+    return new InnerPoint3DImpl(this, index);
   }
 
   /**
@@ -84,17 +223,10 @@ public final class ArrayListPoint3D extends ListPoint3D {
    * @param z Z coordinate of the point to add
    * @param i The intensity of the point to add
    */
-  public final void add(final int index, final float x, final float y, final float z,
-      final int i) {
+  public final void add(final int index, final float x, final float y,
+      final float z, final int i) {
 
-    long val = 0;
-
-    val = Util.setX(val, x, xPrecision);
-    val = Util.setY(val, y, yPrecision);
-    val = Util.setZ(val, z, zPrecision);
-    val = Util.setI(val, i);
-
-    this.values.add(index, val);
+    this.values.add(index, convert(x, y, z, i));
   }
 
   /**
@@ -123,17 +255,10 @@ public final class ArrayListPoint3D extends ListPoint3D {
    * @param z Z coordinate of the point to add
    * @param i The intensity of the point to add
    */
-  public final void set(final int index, final float x, final float y, final float z,
-      final int i) {
+  public final void set(final int index, final float x, final float y,
+      final float z, final int i) {
 
-    long val = 0;
-
-    val = Util.setX(val, x, xPrecision);
-    val = Util.setY(val, y, yPrecision);
-    val = Util.setZ(val, z, zPrecision);
-    val = Util.setI(val, i);
-
-    this.values.set(index, val);
+    this.values.set(index, convert(x, y, z, i));
   }
 
   /**
@@ -151,15 +276,13 @@ public final class ArrayListPoint3D extends ListPoint3D {
    * Add a list of points to this list of points.
    * @param listPoints List of points to add
    */
-  public final void add(final ListPoint3D listPoints) {
+  public final void add(final AbstractListPoint3D listPoints) {
 
     if (listPoints == null)
       return;
 
-    final int n = listPoints.size();
-
-    for (int i = 0; i < n; i++)
-      add(listPoints.get(i));
+    for (Point3D p : listPoints)
+      add(p);
   }
 
   /**
@@ -258,26 +381,39 @@ public final class ArrayListPoint3D extends ListPoint3D {
     this.values.trimToSize();
   }
 
-  public final boolean contains(final Object o) {
+  public final boolean contains(final Point3D p) {
 
-    if (o == null || !(o instanceof Point3D))
+    if (p == null)
       return false;
 
-    Point3D p = (Point3D) o;
+    return this.values
+        .contains(convert(p.getX(), p.getY(), p.getZ(), p.getI()));
+  }
+
+  private final long convert(final float x, final float y, final float z,
+      final int i) {
 
     long val = 0;
 
-    val = Util.setX(val, p.getX(), xPrecision);
-    val = Util.setY(val, p.getY(), yPrecision);
-    val = Util.setZ(val, p.getI(), zPrecision);
-    val = Util.setI(val, p.getI());
+    val = Util.setX(val, x, xPrecision);
+    val = Util.setY(val, y, yPrecision);
+    val = Util.setZ(val, z, zPrecision);
+    val = Util.setI(val, i);
 
-    return this.values.contains(val);
+    return val;
   }
 
   //
   // Constructor
   //
+
+  /**
+   * Public constructor.
+   */
+  public ArrayListPoint3D() {
+
+    this(X_PRECISION_DEFAULT, Y_PRECISION_DEFAULT, Z_PRECISION_DEFAULT);
+  }
 
   /**
    * Public constructor.

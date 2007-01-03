@@ -156,8 +156,8 @@ public class CorsenSwing implements UpdateStatus {
           final int result = jfc.showSaveDialog(CorsenSwing.this.gui);
           if (result == JFileChooser.APPROVE_OPTION) {
 
-            cc.setMitoFile(CorsenSwing.this.gui.getMitoFile());
-            cc.setRnaFile(CorsenSwing.this.gui.getARNFile());
+            cc.setParticlesBFile(CorsenSwing.this.gui.getMitoFile());
+            cc.setParticlesAFile(CorsenSwing.this.gui.getARNFile());
             cc.setResultFile(jfc.getSelectedFile());
             cc.setMultipleFiles(false);
 

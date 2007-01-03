@@ -107,4 +107,9 @@ public class SimplePoint2DImpl extends Point2D {
   protected SimplePoint2DImpl() {
   }
 
+  public SimplePoint2DImpl(final Point2D point) {
+
+    this(point.getX(), point.getY(), point.getI());
+  }
+
 }

@@ -61,7 +61,7 @@ public final class Particle3DUtil {
   private static MapCuboid initCuboids(final Particle3D particle,
       final float xlenght, final float ylenght, final float zlenght) {
 
-    final ListPoint3D lp = particle.getInnerPoints();
+    final AbstractListPoint3D lp = particle.getInnerPoints();
 
     final MapCuboid mapCuboid = new Particle3DUtil.MapCuboid();
 
@@ -117,7 +117,7 @@ public final class Particle3DUtil {
       final MapCuboid mapCuboids, final float xlenght, final float ylenght,
       final float zlenght) {
 
-    final ListPoint3D points = particle.getInnerPoints();
+    final AbstractListPoint3D points = particle.getInnerPoints();
     final int n = points.size();
 
     for (int i = 0; i < n; i++) {

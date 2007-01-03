@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -129,12 +129,14 @@ public class MinMaxList<E extends Comparable> extends AbstractList<E> {
 
       E result = this.min;
       this.min = null;
+      this.count--;
 
       return result;
     }
 
     E result = this.max;
     this.max = null;
+    this.count--;
 
     return result;
   }
@@ -163,8 +165,8 @@ public class MinMaxList<E extends Comparable> extends AbstractList<E> {
 
     if (element.compareTo(max) > 0) {
 
-      E result = this.min;
-      this.min = element;
+      E result = this.max;
+      this.max = element;
 
       return result;
     }

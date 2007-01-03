@@ -49,7 +49,7 @@ public class Point2DTest extends TestCase {
     double d = p1.distance(p2);
 
     assertEquals(Math.sqrt((20 - 10) * (20 - 10) + (40 - 20) * (40 - 20)), d,
-        0.0);
+        0.01);
   }
 
   /*

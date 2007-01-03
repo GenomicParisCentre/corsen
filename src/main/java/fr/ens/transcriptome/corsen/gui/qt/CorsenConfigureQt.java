@@ -1,6 +1,7 @@
 package fr.ens.transcriptome.corsen.gui.qt;
 
 import java.awt.Color;
+import java.util.Properties;
 
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.gui.QColor;
@@ -11,6 +12,7 @@ import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QPixmap;
 
 import fr.ens.transcriptome.corsen.Settings;
+import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 /*
  *                      Nividic development code
@@ -23,7 +25,7 @@ import fr.ens.transcriptome.corsen.Settings;
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -45,25 +47,18 @@ public class CorsenConfigureQt {
   private QColor distancesColor;
   private QColor backgroundColor;
   private QColor legendColor;
+  private Properties particlesAProporties;
+  private Properties particlesBProporties;
 
   @SuppressWarnings("unused")
   public void configureDialog() {
     // Make the dialog.
 
     final Ui_ConfigureDialog dialogUi = new Ui_ConfigureDialog();
-    QDialog dialog = new QDialog(this.mainWindow);
+    final QDialog dialog = new QDialog(this.mainWindow);
     dialogUi.setupUi(dialog);
 
     final QObject o = new QObject() {
-      public void enableCustomCuboidSize() {
-        dialogUi.cuboidSizeValueLabel.setEnabled(true);
-        dialogUi.cuboidSizeLineEdit.setEnabled(true);
-      }
-
-      public void disableCustomCuboidSize() {
-        dialogUi.cuboidSizeValueLabel.setEnabled(false);
-        dialogUi.cuboidSizeLineEdit.setEnabled(false);
-      }
 
       public void enable3DVisalisation() {
 
@@ -151,11 +146,10 @@ public class CorsenConfigureQt {
           dialogUi.backgroundColorPushButton.setIcon(createIcon(c));
         }
       }
-      
+
       public void changeLegendColor() {
 
-        QColor c = QColorDialog
-            .getColor(CorsenConfigureQt.this.legendColor);
+        QColor c = QColorDialog.getColor(CorsenConfigureQt.this.legendColor);
 
         if (c.isValid()) {
           CorsenConfigureQt.this.legendColor = c;
@@ -163,19 +157,62 @@ public class CorsenConfigureQt {
         }
       }
 
+      public void enableCustomThread() {
+
+        dialogUi.customThreadSpinBox.setEnabled(true);
+      }
+
+      public void disableCustomThread() {
+
+        dialogUi.customThreadSpinBox.setEnabled(false);
+      }
+
+      public void dialogParticleAProperties() {
+
+        ParticleType type = ParticleType
+            .getParticleType(dialogUi.particleATypeComboBox.currentText());
+
+        ParticleTypeProperties ptp = new ParticleTypeProperties(dialog, type,
+            particlesAProporties);
+        ptp.configureDialog();
+        particlesAProporties = ptp.getProperties();
+      }
+
+      public void dialogParticleBProperties() {
+
+        ParticleType type = ParticleType
+            .getParticleType(dialogUi.particleBTypeComboBox.currentText());
+
+        ParticleTypeProperties ptp = new ParticleTypeProperties(dialog, type,
+            particlesBProporties);
+        ptp.configureDialog();
+        particlesBProporties = ptp.getProperties();
+      }
+
     };
 
-    dialogUi.customRadioButton.toggled.connect(o, "enableCustomCuboidSize()");
-    dialogUi.automaticRadioButton.toggled.connect(o,
-        "disableCustomCuboidSize()");
-
-    dialogUi.visualizationCheckBox.stateChanged.connect(o,
-        "stateChanged3DVisualisation(int)");
-
-    dialogUi.visualizationCheckBox.setChecked(true);
-    dialogUi.visualizationCheckBox.setChecked(false);
-
     final Settings s = this.settings;
+
+    ParticleType[] particleTypes = ParticleType.values();
+
+    for (int i = 0; i < particleTypes.length; i++) {
+      dialogUi.particleATypeComboBox.addItem(particleTypes[i].toString());
+      dialogUi.particleBTypeComboBox.addItem(particleTypes[i].toString());
+    }
+
+    dialogUi.particleANameLineEdit.setText(s.getParticlesAName());
+    dialogUi.particleATypeComboBox.setCurrentIndex(s.getParticlesAType()
+        .ordinal());
+    dialogUi.particleABatchPrefixLineEdit.setText(s.getParticlesABatchPrefix());
+    dialogUi.particleAPropertiesPushButton.clicked.connect(o,
+        "dialogParticleAProperties()");
+
+    dialogUi.particleBNameLineEdit.setText(s.getParticlesBName());
+    dialogUi.particleBTypeComboBox.setCurrentIndex(s.getParticlesBType()
+        .ordinal());
+    dialogUi.particleBBatchPrefixLineEdit.setText(s.getParticlesBBatchPrefix());
+    dialogUi.particleBPropertiesPushButton.clicked.connect(o,
+        "dialogParticleBProperties()");
 
     dialogUi.zFactorLineEdit.setText("" + s.getZFactor());
     dialogUi.factorLineEdit.setText("" + s.getFactor());
@@ -183,25 +220,55 @@ public class CorsenConfigureQt {
     if (s.getUnit() != null)
       dialogUi.unitLineEdit.setText(s.getUnit().trim());
 
-    if (s.isAutoCuboidSize())
-      dialogUi.automaticRadioButton.setChecked(true);
-    else
-      dialogUi.customRadioButton.setChecked(true);
+    // Second tab
 
-    dialogUi.cuboidSizeLineEdit.setText("" + s.getCuboidSize());
+    dialogUi.customThreadRadioButton.toggled.connect(o, "enableCustomThread()");
+    dialogUi.automaticThreadRadioButton.toggled.connect(o,
+        "disableCustomThread()");
+    dialogUi.noThreadRadioButton.toggled.connect(o, "disableCustomThread()");
+
+    dialogUi.customThreadSpinBox.setEnabled(false);
+
+    switch (s.getThreadNumber()) {
+    case -1:
+      dialogUi.noThreadRadioButton.setChecked(true);
+      break;
+
+    case 0:
+      dialogUi.automaticThreadRadioButton.setChecked(true);
+      break;
+
+    default:
+      int i = s.getThreadNumber();
+
+      if (i > 0) {
+        dialogUi.customThreadRadioButton.setChecked(true);
+        dialogUi.customThreadSpinBox.setValue(i);
+      } else
+        dialogUi.automaticThreadRadioButton.setChecked(true);
+
+      break;
+    }
+
+    dialogUi.visualizationCheckBox.stateChanged.connect(o,
+        "stateChanged3DVisualisation(int)");
+
+    dialogUi.visualizationCheckBox.setChecked(true);
+    dialogUi.visualizationCheckBox.setChecked(false);
 
     dialogUi.dataFileCheckBox.setChecked(s.isSaveDataFile());
     dialogUi.ivFileCheckBox.setChecked(s.isSaveIVFile());
+    dialogUi.resultCheckBox.setChecked(s.isSaveResultsFile());
     dialogUi.fullResultCheckBox.setChecked(s.isSaveFullResultsFile());
     dialogUi.visualizationCheckBox.setChecked(s.isSaveVisualizationFiles());
-    dialogUi.messengersCheckBox.setChecked(s.isSaveMessengers3dFile());
+    dialogUi.messengersCheckBox.setChecked(s.isSaveParticleA3dFile());
     dialogUi.messengersCuboidsCheckBox.setChecked(s
-        .isSaveMessengersCuboids3dFile());
-    dialogUi.mitosCheckBox.setChecked(s.isSaveMito3dFile());
-    dialogUi.mitosCuboidsCheckBox.setChecked(s.isSaveMitoCuboids3dFile());
+        .isSaveParticlesACuboids3dFile());
+    dialogUi.mitosCheckBox.setChecked(s.isSaveParticleB3dFile());
+    dialogUi.mitosCuboidsCheckBox.setChecked(s.isSaveParticlesBCuboids3dFile());
     dialogUi.distancesCheckBox.setChecked(s.isSaveDistances3dFile());
 
-    // Second tab
+    // Third tab
 
     dialogUi.messengersColorPushButton.clicked.connect(o,
         "changeMessengersColor()");
@@ -212,8 +279,7 @@ public class CorsenConfigureQt {
         "changeDistancesColor()");
     dialogUi.backgroundColorPushButton.clicked.connect(o,
         "changeBackgroundColor()");
-    dialogUi.legendColorPushButton.clicked.connect(o,
-    "changeLegendColor()");
+    dialogUi.legendColorPushButton.clicked.connect(o, "changeLegendColor()");
     dialogUi.showSurfaceLinesCheckBox.stateChanged.connect(o,
         "stateChangedVisualisationShowSurfaceLines(int)");
 
@@ -229,9 +295,13 @@ public class CorsenConfigureQt {
         + s.getVisualizationDistancesLinesSize());
     dialogUi.showDistancesNegativeCheckBox.setChecked(s
         .isVisualizationShowNegativeDistances());
+    dialogUi.showParticlesADifferentColorCcheckBox.setChecked(s
+        .isVisualisationParticlesAInDifferentsColor());
+    dialogUi.showParticlesBDifferentColorCcheckBox.setChecked(s
+        .isVisualisationParticlesBInDifferentsColor());
 
-    this.messengersColor = colorToQColor(s.getColorMessengers());
-    this.mitosColor = colorToQColor(s.getColorMitos());
+    this.messengersColor = colorToQColor(s.getColorParticlesA());
+    this.mitosColor = colorToQColor(s.getColorParticlesB());
     this.distancesColor = colorToQColor(s.getColorDistances());
     this.baryCentersColor = colorToQColor(s.getColorBaryCenters());
     this.backgroundColor = colorToQColor(s.getColorBackground());
@@ -245,8 +315,7 @@ public class CorsenConfigureQt {
         .setIcon(createIcon(this.baryCentersColor));
     dialogUi.backgroundColorPushButton
         .setIcon(createIcon(this.backgroundColor));
-    dialogUi.legendColorPushButton
-    .setIcon(createIcon(this.legendColor));
+    dialogUi.legendColorPushButton.setIcon(createIcon(this.legendColor));
 
     if (dialog.exec() == QDialog.DialogCode.Accepted.value()) {
 
@@ -265,23 +334,39 @@ public class CorsenConfigureQt {
           && !((unitValue = dialogUi.unitLineEdit.text().trim()).equals("")))
         s.setUnit(unitValue);
 
-      s.setAutoCuboidSize(dialogUi.automaticRadioButton.isChecked());
+      s.setParticlesAName(dialogUi.particleANameLineEdit.text());
+      s.setParticlesAType(ParticleType
+          .getParticleType(dialogUi.particleATypeComboBox.currentText()));
+      s.setParticlesABatchPrefix(dialogUi.particleABatchPrefixLineEdit.text());
+      s.setParticlesAProperties(this.particlesAProporties);
 
-      try {
-        s.setCuboidSize(Float.parseFloat(dialogUi.cuboidSizeLineEdit.text()
-            .trim()));
-      } catch (NumberFormatException e) {
+      s.setParticlesBName(dialogUi.particleBNameLineEdit.text());
+      s.setParticlesBType(ParticleType
+          .getParticleType(dialogUi.particleBTypeComboBox.currentText()));
+      s.setParticlesBBatchPrefix(dialogUi.particleBBatchPrefixLineEdit.text());
+      s.setParticlesBProperties(this.particlesBProporties);
+
+      if (dialogUi.noThreadRadioButton.isChecked()) {
+        System.out.println("-1");
+        s.setThreadNumber(-1);
+      } else if (dialogUi.automaticThreadRadioButton.isChecked()) {
+        System.out.println("0");
+        s.setThreadNumber(0);
+      } else {
+        System.out.println("toto");
+        s.setThreadNumber(dialogUi.customThreadSpinBox.value());
       }
 
       s.setSaveDataFile(dialogUi.dataFileCheckBox.isChecked());
       s.setSaveIVFile(dialogUi.ivFileCheckBox.isChecked());
       s.setSaveFullResultFile(dialogUi.fullResultCheckBox.isChecked());
+      s.setSaveResultFile(dialogUi.resultCheckBox.isChecked());
       s.setSaveVisualizationFiles(dialogUi.visualizationCheckBox.isChecked());
-      s.setSaveMessengers3dFile(dialogUi.messengersCheckBox.isChecked());
-      s.setSaveMessengersCuboids3dFile(dialogUi.messengersCuboidsCheckBox
+      s.setSaveParticlesA3dFile(dialogUi.messengersCheckBox.isChecked());
+      s.setSaveParticlesACuboids3dFile(dialogUi.messengersCuboidsCheckBox
           .isChecked());
-      s.setSaveMito3dFile(dialogUi.mitosCheckBox.isChecked());
-      s.setSaveMitoCuboids3dFile(dialogUi.mitosCuboidsCheckBox.isChecked());
+      s.setSaveParticlesB3dFile(dialogUi.mitosCheckBox.isChecked());
+      s.setSaveParticlesBCuboids3dFile(dialogUi.mitosCuboidsCheckBox.isChecked());
       s.setSaveDistances3dFile(dialogUi.distancesCheckBox.isChecked());
 
       try {
@@ -308,15 +393,19 @@ public class CorsenConfigureQt {
       s
           .setVisualizationShowNegativeDistances(dialogUi.showDistancesNegativeCheckBox
               .isChecked());
+      s
+          .setVisualisationParticlesAInDifferentsColors(dialogUi.showParticlesADifferentColorCcheckBox
+              .isChecked());
+      s
+          .setVisualisationParticlesBInDifferentsColors(dialogUi.showParticlesBDifferentColorCcheckBox
+              .isChecked());
 
-      s.setColorMessengers(qColorToColor(this.messengersColor));
-      s.setColorMitos(qColorToColor(this.mitosColor));
+      s.setColorParticlesA(qColorToColor(this.messengersColor));
+      s.setColorParticlesB(qColorToColor(this.mitosColor));
       s.setColorBaryCenters(qColorToColor(this.baryCentersColor));
       s.setColorDistances(qColorToColor(this.distancesColor));
       s.setColorBackground(qColorToColor(this.backgroundColor));
       s.setColorLegend(qColorToColor(this.legendColor));
-      
-     
 
     }
 
@@ -343,6 +432,7 @@ public class CorsenConfigureQt {
     return new Color(color.red(), color.green(), color.blue(), color.alpha());
   }
 
+  @SuppressWarnings("unused")
   private QIcon createIcon(final Color color) {
 
     if (color == null)
@@ -373,6 +463,8 @@ public class CorsenConfigureQt {
 
     this.mainWindow = mainWindow;
     this.settings = settings;
+    this.particlesAProporties = settings.getParticlesAProperties();
+    this.particlesBProporties = settings.getParticlesBProperties();
   }
 
 }

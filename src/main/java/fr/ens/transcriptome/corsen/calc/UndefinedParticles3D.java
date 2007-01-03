@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -27,10 +27,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
-import fr.ens.transcriptome.corsen.model.ListPoint3D;
+import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 
@@ -92,9 +93,14 @@ class UndefinedParticles3D extends DistanceProcessor {
   }
 
   @Override
-  ListPoint3D getPresentationPoints(ListPoint3D points) {
+  AbstractListPoint3D getPresentationPoints(AbstractListPoint3D points) {
 
     return points;
+  }
+
+  @Override
+  protected void setProperties(final Properties properties) {
+
   }
 
 }

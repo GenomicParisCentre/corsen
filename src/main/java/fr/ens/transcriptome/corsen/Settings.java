@@ -3,10 +3,13 @@ package fr.ens.transcriptome.corsen;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Properties;
+
+import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 /*
  *                      Nividic development code
@@ -19,7 +22,7 @@ import java.util.Properties;
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -35,16 +38,31 @@ public final class Settings {
   private static final String ZFACTOR_KEY = "main.zFactor";
   private static final String FACTOR_KEY = "main.factor";
   private static final String UNIT_KEY = "main.unit";
+
   private static final String AUTO_CUBOID_SIZE_KEY = "main.autoCuboidSize";
   private static final String CUBOID_SIZE_KEY = "main.cuboidSize";
+
+  private static final String PARTICLES_A_NAME = "particles.a.name";
+  private static final String PARTICLES_A_TYPE = "particles.a.type";
+  private static final String PARTICLES_A_BATCH_PREFIX = "particles.a.batch.prefix";
+  private static final String PARTICLES_A_PROPERTIES = "particles.a.properties.";
+
+  private static final String PARTICLES_B_NAME = "particles.b.name";
+  private static final String PARTICLES_B_TYPE = "particles.b.type";
+  private static final String PARTICLES_B_BATCH_PREFIX = "particles.b.batch.prefix";
+  private static final String PARTICLES_B_PROPERTIES = "particles.b.properties";
+
+  private static final String THREAD_NUMBER = "threads.number";
+
   private static final String SAVE_DATA_FILE_KEY = "save.dataFile";
   private static final String SAVE_IV_FILE_SAVED = "save.IVFile";
   private static final String SAVE_3DFILES_KEY = "save.3dFiles";
-  private static final String SAVE_MESSENGERS_3DFILES_KEY = "save.3dFiles.messengers";
-  private static final String SAVE_MESSENGERS_CUBOIDS_3DFILES_KEY = "save.3dFiles.messengersCuboids";
-  private static final String SAVE_MITOS_3DFILES_KEY = "save.3dFiles.mitos";
-  private static final String SAVE_MITOS_CUBOIDS_3DFILES_KEY = "save.3dFiles.mitosCuboids";
+  private static final String SAVE_PARTICLES_A_3DFILES_KEY = "save.3dFiles.particles.a";
+  private static final String SAVE_PARTICLES_A_CUBOIDS_3DFILES_KEY = "save.3dFiles.particles.a";
+  private static final String SAVE_PARTICLES_B_3DFILES_KEY = "save.3dFiles.particles.b";
+  private static final String SAVE_PARTICLES_B_CUBOIDS_3DFILES_KEY = "save.3dFiles.particles.b";
   private static final String SAVE_DISTANCES_3DFILES_KEY = "save.3dFiles.distances";
+  private static final String SAVE_RESULTS_KEY = "save.results";
   private static final String SAVE_FULL_RESULTS_KEY = "save.fullResults";
 
   private static final String VISUALIZATION_POINTS_SIZE_KEY = "visualization.pointSize";
@@ -52,9 +70,11 @@ public final class Settings {
   private static final String VISUALIZATION_SURFACE_LINE_SIZE_KEY = "visualization.surfaceLinesSize";
   private static final String VISUALIZATION_DISTANCES_LINES_SIZE_KEY = "visualization.distanceLinesSize";
   private static final String VISUALIZATION_SHOW_NEGATIVE_DISTANCES_KEY = "visualization.showNegativeDistances";
+  private static final String VISUALIZATION_SHOW_PARTICLES_A_DIFFERENT_COLORS_KEY = "visualization.showParticleADifferentColors";
+  private static final String VISUALIZATION_SHOW_PARTICLES_B_DIFFERENT_COLORS_KEY = "visualization.showParticleBDifferentColors";
 
-  private static final String VISUALIZATION_COLOR_MESSENGERS_KEY = "visualization.color.messengers";
-  private static final String VISUALIZATION_COLOR_MITOS_KEY = "visualization.color.mitos";
+  private static final String VISUALIZATION_COLOR_PARTICLE_A_KEY = "visualization.color.particle.a";
+  private static final String VISUALIZATION_COLOR_PARTICLE_B_KEY = "visualization.color.particle.b";
   private static final String VISUALIZATION_COLOR_BARYCENTERS_KEY = "visualization.color.barycenters";
   private static final String VISUALIZATION_COLOR_DISTANCES_KEY = "visualization.color.distances";
   private static final String VISUALIZATION_COLOR_BACKGROUND_KEY = "visualization.color.background";
@@ -73,6 +93,17 @@ public final class Settings {
   public boolean isSaveIVFile() {
 
     String value = this.properties.getProperty(SAVE_IV_FILE_SAVED, "true");
+
+    return Boolean.valueOf(value.trim());
+  }
+
+  /**
+   * Test if full results must be saved.
+   * @return Returns the autoCuboidSize
+   */
+  public boolean isSaveResultsFile() {
+
+    String value = this.properties.getProperty(SAVE_RESULTS_KEY, "false");
 
     return Boolean.valueOf(value.trim());
   }
@@ -137,9 +168,9 @@ public final class Settings {
    * Test if 3d messengers file must be saved.
    * @return Returns the messengers3dFile
    */
-  public boolean isSaveMessengers3dFile() {
+  public boolean isSaveParticleA3dFile() {
 
-    String value = this.properties.getProperty(SAVE_MESSENGERS_3DFILES_KEY,
+    String value = this.properties.getProperty(SAVE_PARTICLES_A_3DFILES_KEY,
         "true");
 
     return Boolean.valueOf(value);
@@ -149,10 +180,10 @@ public final class Settings {
    * Test if 3d messengers ciboids file must be saved.
    * @return Returns the messengersCuboids3dFile
    */
-  public boolean isSaveMessengersCuboids3dFile() {
+  public boolean isSaveParticlesACuboids3dFile() {
 
     String value = this.properties.getProperty(
-        SAVE_MESSENGERS_CUBOIDS_3DFILES_KEY, "false");
+        SAVE_PARTICLES_A_CUBOIDS_3DFILES_KEY, "false");
 
     return Boolean.valueOf(value.trim());
   }
@@ -161,9 +192,10 @@ public final class Settings {
    * Test if 3d mito file must be saved.
    * @return Returns the mito3dFile
    */
-  public boolean isSaveMito3dFile() {
+  public boolean isSaveParticleB3dFile() {
 
-    String value = this.properties.getProperty(SAVE_MITOS_3DFILES_KEY, "true");
+    String value = this.properties.getProperty(SAVE_PARTICLES_B_3DFILES_KEY,
+        "true");
 
     return Boolean.valueOf(value.trim());
   }
@@ -172,10 +204,10 @@ public final class Settings {
    * Test if 3d mito cuboids file must be saved.
    * @return Returns the mitoCuboids3dFile
    */
-  public boolean isSaveMitoCuboids3dFile() {
+  public boolean isSaveParticlesBCuboids3dFile() {
 
-    String value = this.properties.getProperty(SAVE_MITOS_CUBOIDS_3DFILES_KEY,
-        "false");
+    String value = this.properties.getProperty(
+        SAVE_PARTICLES_B_CUBOIDS_3DFILES_KEY, "false");
 
     return Boolean.valueOf(value.trim());
   }
@@ -195,7 +227,7 @@ public final class Settings {
    */
   public boolean isSaveVisualizationFiles() {
 
-    String value = this.properties.getProperty(SAVE_3DFILES_KEY, "true");
+    String value = this.properties.getProperty(SAVE_3DFILES_KEY, "false");
 
     return Boolean.valueOf(value.trim());
   }
@@ -287,10 +319,10 @@ public final class Settings {
    * Get the color of messengers
    * @return The color of the messengers
    */
-  public Color getColorMessengers() {
+  public Color getColorParticlesA() {
 
     String value = this.properties.getProperty(
-        VISUALIZATION_COLOR_MESSENGERS_KEY, colorToString(Color.GREEN));
+        VISUALIZATION_COLOR_PARTICLE_A_KEY, colorToString(Color.GREEN));
 
     return colorFromString(value);
   }
@@ -299,10 +331,10 @@ public final class Settings {
    * Get the color of mitos
    * @return The color of the mitos
    */
-  public Color getColorMitos() {
+  public Color getColorParticlesB() {
 
-    String value = this.properties.getProperty(VISUALIZATION_COLOR_MITOS_KEY,
-        colorToString(Color.RED));
+    String value = this.properties.getProperty(
+        VISUALIZATION_COLOR_PARTICLE_B_KEY, colorToString(Color.RED));
 
     return colorFromString(value);
   }
@@ -342,17 +374,159 @@ public final class Settings {
 
     return colorFromString(value);
   }
-  
+
   /**
    * Get the color of the legend
    * @return The color of the legend
    */
   public Color getColorLegend() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_COLOR_LEGEND_KEY, colorToString(Color.WHITE));
+    String value = this.properties.getProperty(VISUALIZATION_COLOR_LEGEND_KEY,
+        colorToString(Color.WHITE));
 
     return colorFromString(value);
+  }
+
+  /**
+   * Get the name of the particle A.
+   * @return The name of the particle A
+   */
+  public String getParticlesAName() {
+
+    return this.properties.getProperty(PARTICLES_A_NAME, "Messengers");
+  }
+
+  /**
+   * Get the type of the particle A.
+   * @return The type of the particle A
+   */
+  public ParticleType getParticlesAType() {
+
+    String val = this.properties.getProperty(PARTICLES_A_TYPE,
+        ParticleType.TINY.toString());
+
+    System.out.println("val=" + val);
+
+    return ParticleType.getParticleType(val);
+
+  }
+
+  /**
+   * Get the batch prefix of the particle A.
+   * @return The batch prefix of the particle A
+   */
+  public String getParticlesABatchPrefix() {
+
+    return this.properties.getProperty(PARTICLES_A_BATCH_PREFIX, "messengers_");
+  }
+
+  /**
+   * Get the properties of the particle A.
+   * @return The properties of the particle A
+   */
+  public Properties getParticlesAProperties() {
+
+    Properties result = new Properties();
+
+    Iterator it = this.properties.keySet().iterator();
+
+    while (it.hasNext()) {
+
+      String key = (String) it.next();
+
+      if (key.startsWith(PARTICLES_A_PROPERTIES))
+        result.setProperty(key.substring(PARTICLES_A_PROPERTIES.length(), key
+            .length()), this.properties.getProperty(key));
+    }
+
+    return result;
+  }
+
+  /**
+   * Get the name of the particle B.
+   * @return The name of the particle B
+   */
+  public String getParticlesBName() {
+
+    return this.properties.getProperty(PARTICLES_B_NAME, "Mitochondria");
+  }
+
+  /**
+   * Get the type of the particle B.
+   * @return The type of the particle B
+   */
+  public ParticleType getParticlesBType() {
+
+    return ParticleType.getParticleType(this.properties.getProperty(
+        PARTICLES_B_TYPE, ParticleType.HUGE.toString()));
+  }
+
+  /**
+   * Get the batch prefix of the particle B.
+   * @return The batch prefix of the particle B
+   */
+  public String getParticlesBBatchPrefix() {
+
+    return this.properties.getProperty(PARTICLES_B_BATCH_PREFIX, "mitos_");
+  }
+
+  /**
+   * Get the properties of the particle B.
+   * @return The properties of the particle B
+   */
+  public Properties getParticlesBProperties() {
+
+    Properties result = new Properties();
+
+    // PARTICLE_A_PROPERTIES;
+
+    Iterator it = this.properties.keySet().iterator();
+
+    while (it.hasNext()) {
+
+      String key = (String) it.next();
+
+      if (key.startsWith(PARTICLES_B_PROPERTIES))
+        result.setProperty(key.substring(PARTICLES_B_PROPERTIES.length(), key
+            .length()), this.properties.getProperty(key));
+    }
+
+    return result;
+  }
+
+  /**
+   * Get the number of thread to use
+   * @return The number of thread to use
+   */
+  public int getThreadNumber() {
+
+    String value = this.properties.getProperty(THREAD_NUMBER, "0");
+
+    return Integer.parseInt(value.trim());
+  }
+
+  /**
+   * Get if Particles A must be shown in differents colors.
+   * @return true if Particles A must be shown in differents colors
+   */
+  public boolean isVisualisationParticlesAInDifferentsColor() {
+
+    String value = this.properties.getProperty(
+        VISUALIZATION_SHOW_PARTICLES_A_DIFFERENT_COLORS_KEY, "false");
+
+    return Boolean.valueOf(value.trim());
+  }
+
+  /**
+   * Get if Particles A must be shown in differents colors.
+   * @return true if Particles A must be shown in differents colors
+   */
+  public boolean isVisualisationParticlesBInDifferentsColor() {
+
+    String value = this.properties.getProperty(
+        VISUALIZATION_SHOW_PARTICLES_B_DIFFERENT_COLORS_KEY, "false");
+
+    return Boolean.valueOf(value.trim());
   }
 
   //
@@ -401,6 +575,21 @@ public final class Settings {
    * Set the factor.
    * @param factor The factor to set
    */
+  public void setFactor(final String factor) {
+
+    if (factor == null)
+      return;
+
+    try {
+      setFactor(Float.parseFloat(factor.trim()));
+    } catch (NumberFormatException e) {
+    }
+  }
+
+  /**
+   * Set the factor.
+   * @param factor The factor to set
+   */
   public void setFactor(final float factor) {
 
     this.properties.setProperty(FACTOR_KEY, Float.toString(factor));
@@ -408,43 +597,44 @@ public final class Settings {
 
   /**
    * Set if 3d messengers file must be saved.
-   * @param messengers3dFile The messengers3dFile to set
+   * @param particlesA3dFile The messengers3dFile to set
    */
-  public void setSaveMessengers3dFile(final boolean messengers3dFile) {
+  public void setSaveParticlesA3dFile(final boolean particlesA3dFile) {
 
-    this.properties.setProperty(SAVE_MESSENGERS_3DFILES_KEY, Boolean
-        .toString(messengers3dFile));
+    this.properties.setProperty(SAVE_PARTICLES_A_3DFILES_KEY, Boolean
+        .toString(particlesA3dFile));
   }
 
   /**
    * Set if 3d messengers cuboids file must be saved.
-   * @param messengersCuboids3dFile The messengersCuboids3dFile to set
+   * @param particlesACuboids3dFile The messengersCuboids3dFile to set
    */
-  public void setSaveMessengersCuboids3dFile(
-      final boolean messengersCuboids3dFile) {
+  public void setSaveParticlesACuboids3dFile(
+      final boolean particlesACuboids3dFile) {
 
-    this.properties.setProperty(SAVE_MESSENGERS_CUBOIDS_3DFILES_KEY, Boolean
-        .toString(messengersCuboids3dFile));
+    this.properties.setProperty(SAVE_PARTICLES_A_CUBOIDS_3DFILES_KEY, Boolean
+        .toString(particlesACuboids3dFile));
   }
 
   /**
    * Set if 3d mito file must be saved.
-   * @param mito3dFile The mito3dFile to set
+   * @param partcilesB3dFile The mito3dFile to set
    */
-  public void setSaveMito3dFile(final boolean mito3dFile) {
+  public void setSaveParticlesB3dFile(final boolean partcilesB3dFile) {
 
-    this.properties.setProperty(SAVE_MITOS_3DFILES_KEY, Boolean
-        .toString(mito3dFile));
+    this.properties.setProperty(SAVE_PARTICLES_B_3DFILES_KEY, Boolean
+        .toString(partcilesB3dFile));
   }
 
   /**
    * Set if 3d mito cuboids file must be saved.
-   * @param mitoCuboids3dFile The mitoCuboids3dFile to set
+   * @param partcilesBCuboids3dFile The mitoCuboids3dFile to set
    */
-  public void setSaveMitoCuboids3dFile(final boolean mitoCuboids3dFile) {
+  public void setSaveParticlesBCuboids3dFile(
+      final boolean partcilesBCuboids3dFile) {
 
-    this.properties.setProperty(SAVE_MITOS_CUBOIDS_3DFILES_KEY, Boolean
-        .toString(mitoCuboids3dFile));
+    this.properties.setProperty(SAVE_PARTICLES_B_CUBOIDS_3DFILES_KEY, Boolean
+        .toString(partcilesBCuboids3dFile));
   }
 
   /**
@@ -467,6 +657,21 @@ public final class Settings {
   }
 
   /**
+   * Set the Z factor.
+   * @param factor The factor to set
+   */
+  public void setZFactor(final String zFactor) {
+
+    if (zFactor == null)
+      return;
+
+    try {
+      setZFactor(Float.parseFloat(zFactor.trim()));
+    } catch (NumberFormatException e) {
+    }
+  }
+
+  /**
    * Set the z factor.
    * @param factor The zFactor to set
    */
@@ -482,6 +687,16 @@ public final class Settings {
   public void setCuboidSize(final float cuboidSize) {
 
     this.properties.setProperty(CUBOID_SIZE_KEY, Float.toString(cuboidSize));
+  }
+
+  /**
+   * Set if results file must be saved.
+   * @param visualizationFiles The visualizationFiles to set
+   */
+  public void setSaveResultFile(final boolean saveResultFile) {
+
+    this.properties.setProperty(SAVE_RESULTS_KEY, Boolean
+        .toString(saveResultFile));
   }
 
   /**
@@ -520,8 +735,8 @@ public final class Settings {
    */
   public void setVisualizationDistancesLinesSize(final float size) {
 
-    this.properties.setProperty(
-        VISUALIZATION_DISTANCES_LINES_SIZE_KEY, Float.toString(size));
+    this.properties.setProperty(VISUALIZATION_DISTANCES_LINES_SIZE_KEY, Float
+        .toString(size));
   }
 
   /**
@@ -550,9 +765,9 @@ public final class Settings {
    * Set the color of messengers
    * @param color The color of messengers
    */
-  public void setColorMessengers(final Color color) {
+  public void setColorParticlesA(final Color color) {
 
-    this.properties.setProperty(VISUALIZATION_COLOR_MESSENGERS_KEY,
+    this.properties.setProperty(VISUALIZATION_COLOR_PARTICLE_A_KEY,
         colorToString(color));
 
   }
@@ -561,9 +776,9 @@ public final class Settings {
    * Set the color of mitos
    * @param color The color of mitos
    */
-  public void setColorMitos(final Color color) {
+  public void setColorParticlesB(final Color color) {
 
-    this.properties.setProperty(VISUALIZATION_COLOR_MITOS_KEY,
+    this.properties.setProperty(VISUALIZATION_COLOR_PARTICLE_B_KEY,
         colorToString(color));
   }
 
@@ -598,7 +813,7 @@ public final class Settings {
     this.properties.setProperty(VISUALIZATION_COLOR_BACKGROUND_KEY,
         colorToString(color));
   }
-  
+
   /**
    * Set the color of the legend.
    * @param color The color of the legend
@@ -607,6 +822,139 @@ public final class Settings {
 
     this.properties.setProperty(VISUALIZATION_COLOR_LEGEND_KEY,
         colorToString(color));
+  }
+
+  /**
+   * Set the name of the particle A.
+   * @param name The name of the particle A
+   */
+  public void setParticlesAName(final String name) {
+
+    this.properties.setProperty(PARTICLES_A_NAME, name);
+  }
+
+  /**
+   * Set the type of the particle A.
+   * @param type Type to set
+   */
+  public void setParticlesAType(final ParticleType type) {
+
+    this.properties.setProperty(PARTICLES_A_TYPE, type.toString());
+  }
+
+  /**
+   * Set the batch prefix of the particle A.
+   * @param prefix Prefix to set
+   */
+  public void setParticlesABatchPrefix(final String prefix) {
+
+    this.properties.setProperty(PARTICLES_A_BATCH_PREFIX, prefix);
+  }
+
+  /**
+   * Set the properties of the particle A
+   * @param properties Properties to set
+   */
+  public void setParticlesAProperties(final Properties properties) {
+
+    if (properties == null)
+      return;
+
+    Iterator it = properties.keySet().iterator();
+
+    while (it.hasNext()) {
+
+      final String key = (String) it.next();
+
+      this.properties.setProperty(PARTICLES_A_PROPERTIES + key, properties
+          .getProperty(key));
+
+    }
+
+  }
+
+  /**
+   * Set the name of the particle B.
+   * @param name The name of the particle B
+   */
+  public void setParticlesBName(final String name) {
+
+    this.properties.setProperty(PARTICLES_B_NAME, name);
+  }
+
+  /**
+   * Set the type of the particle B.
+   * @param type Type to set
+   */
+  public void setParticlesBType(final ParticleType type) {
+
+    this.properties.setProperty(PARTICLES_B_TYPE, type.toString());
+  }
+
+  /**
+   * Set the batch prefix of the particle B.
+   * @param prefix Prefix to set
+   */
+  public void setParticlesBBatchPrefix(final String prefix) {
+
+    this.properties.setProperty(PARTICLES_B_BATCH_PREFIX, prefix);
+  }
+
+  /**
+   * Set the properties of the particle B
+   * @param properties Properties to set
+   */
+  public void setParticlesBProperties(final Properties properties) {
+
+    if (properties == null)
+      return;
+
+    Iterator it = properties.keySet().iterator();
+
+    while (it.hasNext()) {
+
+      final String key = (String) it.next();
+
+      this.properties.setProperty(PARTICLES_B_PROPERTIES + key, properties
+          .getProperty(key));
+
+    }
+
+  }
+
+  /**
+   * Set the number of thread to use
+   * @param threadNumber The number of thread to use
+   */
+  public void setThreadNumber(final int threadNumber) {
+
+    this.properties.setProperty(THREAD_NUMBER, "" + threadNumber);
+  }
+
+  /**
+   * Set if Particles A must be shown in different colors.
+   * @param differentColors true if Particles A must be shown in different
+   *          colors
+   */
+  public void setVisualisationParticlesAInDifferentsColors(
+      final boolean differentColors) {
+
+    this.properties.setProperty(
+        VISUALIZATION_SHOW_PARTICLES_A_DIFFERENT_COLORS_KEY, Boolean
+            .toString(differentColors));
+  }
+
+  /**
+   * Set if Particles B must be shown in different colors.
+   * @param differentColors true if Particles A must be shown in different
+   *          colors
+   */
+  public void setVisualisationParticlesBInDifferentsColors(
+      final boolean differentColors) {
+
+    this.properties.setProperty(
+        VISUALIZATION_SHOW_PARTICLES_B_DIFFERENT_COLORS_KEY, Boolean
+            .toString(differentColors));
   }
 
   //
@@ -652,7 +1000,7 @@ public final class Settings {
     final String home = System.getProperty("user.home");
 
     if (os.toLowerCase().startsWith("windows"))
-      return home + File.separator + "Application Data" + "corsen.conf";
+      return home + File.separator + "Application DataDouble" + "corsen.conf";
 
     return home + File.separator + ".corsen";
   }
@@ -692,11 +1040,46 @@ public final class Settings {
    * @param file
    * @throws IOException if an error occurs while reading the file
    */
+  public void loadSettings(final String filename) throws IOException {
+
+    if (filename == null)
+      loadSettings();
+    else
+      loadSettings(new File(filename));
+  }
+
+  /**
+   * Load CorsenSwing options
+   * @param file
+   * @throws IOException if an error occurs while reading the file
+   */
   public void loadSettings(final File file) throws IOException {
 
     FileInputStream fis = new FileInputStream(file);
 
     this.properties.load(fis);
+  }
+
+  /**
+   * Add settings to current settings.
+   * @param s Settings to add
+   */
+  public void addSettings(final Settings s) {
+
+    if (s == null)
+      return;
+
+    Properties p = s.properties;
+
+    Enumeration keys = p.keys();
+
+    while (keys.hasMoreElements()) {
+
+      String key = (String) keys.nextElement();
+
+      this.properties.setProperty(key, p.getProperty(key));
+    }
+
   }
 
 }

@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -25,19 +25,23 @@ package fr.ens.transcriptome.corsen.calc;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Logger;
 
 import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.UpdateStatus;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
-import fr.ens.transcriptome.corsen.model.ListPoint3D;
+import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.util.MinMaxList;
 
 public class DistancesCalculator {
 
+  private static final int THREAD_QUEUE_LENGTH = 100;
   private Logger logger = Logger.getLogger(DistancesCalculator.class.getName());
   private DistanceProcessor processorA;
   private DistanceProcessor processorB;
@@ -45,9 +49,187 @@ public class DistancesCalculator {
   private float zFactor = 1.0f;
   private float factor = 1.0f;
 
+  private AbstractListPoint3D listPointsAForThreads;
+  private int freeThreads;
+  private int allThreadsCount;
+
   private UpdateStatus updateStatus;
 
   private CorsenResult result;
+
+  private final class CalcArgs {
+
+    public Particle3D parB;
+    public AbstractListPoint3D pointsA;
+
+    public final void setArgs(final Particle3D parB,
+        final AbstractListPoint3D pointsA) {
+
+      this.parB = parB;
+      this.pointsA = pointsA;
+    }
+
+    CalcArgs(Particle3D parB, AbstractListPoint3D pointsA) {
+
+      setArgs(parB, pointsA);
+    }
+  }
+
+  private final class CalcThread extends Thread {
+
+    private Queue<CalcArgs> queueTodo;
+    private Queue<CalcArgs> queueDone;
+
+    private List<Distance> distances;
+
+    private int count = 0;
+
+    volatile boolean keepRunning = true;
+
+    public void pleaseStop() {
+
+      this.keepRunning = false;
+    }
+
+    @Override
+    public void run() {
+
+      final long id = Thread.currentThread().getId();
+
+      while (this.keepRunning) {
+
+        final CalcArgs args;
+
+        synchronized (queueTodo) {
+          if (queueTodo.size() > 0)
+            args = queueTodo.poll();
+          else
+            args = null;
+        }
+
+        if (args != null) {
+
+          final List<Distance> result = processorB.calcDistance(args.parB,
+              args.pointsA);
+          count++;
+
+          synchronized (this.distances) {
+            distances.addAll(result);
+          }
+
+          synchronized (this.queueDone) {
+            this.queueDone.add(args);
+          }
+
+        }
+
+        Thread.yield();
+      }
+
+      logger.info("fin thread " + id + " " + count + " process");
+    }
+
+    CalcThread(List<Distance> distances, Queue<CalcArgs> queueTodo,
+        Queue<CalcArgs> queueDone) {
+
+      super();
+      this.distances = distances;
+      this.queueTodo = queueTodo;
+      this.queueDone = queueDone;
+    }
+
+  }
+
+  private final class CalcThread2 extends Thread {
+
+    private int count = 0;
+
+    private List<Particle3D> listA;
+    private List<Particle3D> listB;
+
+    private DistanceProcessor processorB;
+
+    private List<Distance> distancesAllThreads;
+
+    private int threadNumber;
+    private int threadsCount;
+    private int calcsBeforeUpdateInfo;
+    private int calcsToDoNumber;
+
+    volatile boolean keepRunning = true;
+    boolean waitBeforeNextParticle;
+
+    public void pleaseStop() {
+
+      this.keepRunning = false;
+    }
+
+    public int getCount() {
+
+      return this.count;
+    }
+
+    @Override
+    public void run() {
+
+      final List<Particle3D> listB = this.listB;
+
+      final DistanceProcessor processorB = this.processorB;
+      final int threadNumber = this.threadNumber;
+      final int threadsCount = this.threadsCount;
+
+      final long id = Thread.currentThread().getId();
+
+      AbstractListPoint3D listPointsA = null;
+
+      while (this.keepRunning) {
+
+        if (listPointsA == listPointsAForThreads)
+          Thread.yield();
+
+        listPointsA = listPointsAForThreads;
+        // final int globalCount = allThreadsCount;
+        this.count = 0;
+
+        // final List<Distance> distances = new LinkedList<Distance>();
+        final List<Distance> distances = new MinMaxList<Distance>();
+
+        int i = 0;
+
+        for (Particle3D parB : listB) {
+
+          if (i % threadsCount != threadNumber)
+            continue;
+
+          distances.addAll(processorB.calcDistance(parB, listPointsA));
+          this.count++;
+
+        }
+
+        synchronized (this.distancesAllThreads) {
+          this.distancesAllThreads.addAll(distances);
+          freeThreads++;
+        }
+
+      }
+
+      logger.info("fin thread " + id + " " + count + " process");
+    }
+
+    public CalcThread2(final DistanceProcessor processorB,
+        final List<Particle3D> listB, final List<Distance> distancesAllThreads,
+        final int threadNumber, final int threadsCount) {
+
+      this.processorB = processorB;
+
+      this.listB = listB;
+      this.distancesAllThreads = distancesAllThreads;
+      this.threadNumber = threadNumber;
+      this.threadsCount = threadsCount;
+
+    }
+
+  }
 
   /**
    * Determine the processor to use for a particles object and set the source
@@ -110,7 +292,7 @@ public class DistancesCalculator {
     // Transform coordinates of messengers
     sendEvent(ProgressEventType.START_CHANGE_MESSENGERS_COORDINATES_EVENT);
     changeFactors(particlesA);
-    result.setMessengers(particlesA);
+    result.setParticlesA(particlesA);
 
     // Read mitos
     sendEvent(ProgressEventType.START_READ_MITOS_EVENT);
@@ -119,7 +301,7 @@ public class DistancesCalculator {
     // Transform coordinates of messengers
     sendEvent(ProgressEventType.START_CHANGE_MITOS_COORDINATES_EVENT);
     changeFactors(particlesB);
-    result.setMitos(particlesB);
+    result.setParticlesB(particlesB);
   }
 
   /**
@@ -183,18 +365,46 @@ public class DistancesCalculator {
     Map<Particle3D, Distance> mins = new HashMap<Particle3D, Distance>();
     Map<Particle3D, Distance> maxs = new HashMap<Particle3D, Distance>();
 
+    int threadNumber = this.result.getSettings().getThreadNumber();
+
+    if (threadNumber == 0)
+      threadNumber = Runtime.getRuntime().availableProcessors();
+
+    if (threadNumber > 1)
+      calcMultiThreads2(listA, listB, mins, maxs, threadNumber);
+    else
+      calcOneThread(listA, listB, mins, maxs);
+
+    this.result.setMinDistances(mins);
+    this.result.setMaxDistances(maxs);
+
+    // Analysis of the results
+
+    sendEvent(ProgressEventType.START_DISTANCES_ANALYSIS);
+    final DistanceAnalyser daMins = new DistanceAnalyser(mins);
+    daMins.calcAll();
+
+    final DistanceAnalyser daMaxs = new DistanceAnalyser(maxs);
+    daMaxs.calcAll();
+
+    this.result.setMinAnalyser(daMins);
+    this.result.setMaxAnalyser(daMaxs);
+  }
+
+  private void calcOneThread(final List<Particle3D> listA,
+      final List<Particle3D> listB, Map<Particle3D, Distance> mins,
+      Map<Particle3D, Distance> maxs) {
+
+    int count = 0;
     final int calcsToDoNumber = listA.size() * listB.size();
     final int calcsBeforeUpdateInfo = calcsToDoNumber / 100;
 
-    logger.info("calcsToDoNumber: " + calcsToDoNumber);
-    logger.info("calcsBeforeUpdateInfo: " + calcsBeforeUpdateInfo);
-
-    int count = 0;
+    logger.info("Calc Thread number: 1");
 
     for (Particle3D parA : listA) {
 
-      ListPoint3D pointsA = this.processorA.getPresentationPoints(parA
-          .getInnerPoints());
+      final AbstractListPoint3D pointsA = this.processorA
+          .getPresentationPoints(parA.getInnerPoints());
       // final List<Distance> distances = new LinkedList<Distance>();
       final List<Distance> distances = new MinMaxList<Distance>();
 
@@ -209,20 +419,142 @@ public class DistancesCalculator {
           sendEvent(
               ProgressEventType.PROGRESS_CALC_DISTANCES_EVENT,
               (int) (((double) count / (double) calcsToDoNumber) * ProgressEvent.INDEX_IN_PHASE_MAX));
-
         }
-
-        // if (distances.size() > 200)
-        // filterExtremeDistances(distances);
       }
 
       mins.put(parA, Collections.min(distances));
       maxs.put(parA, Collections.max(distances));
+    }
+  }
+
+  private void calcMultiThreads(final List<Particle3D> listA,
+      final List<Particle3D> listB, Map<Particle3D, Distance> mins,
+      Map<Particle3D, Distance> maxs, final int threadNumber) {
+
+    int count = 0;
+    final int calcsToDoNumber = listA.size() * listB.size();
+    final int calcsBeforeUpdateInfo = calcsToDoNumber / 100;
+
+    logger.info("Calc Thread number: " + threadNumber);
+
+    final Queue<CalcArgs> queueTodo = new ArrayBlockingQueue<CalcArgs>(
+        THREAD_QUEUE_LENGTH);
+    final Queue<CalcArgs> queueDone = new LinkedList<CalcArgs>();
+    final List<Distance> distances = new MinMaxList<Distance>();
+
+    final CalcThread[] threads = new CalcThread[threadNumber];
+
+    for (int i = 0; i < threadNumber; i++) {
+      threads[i] = new CalcThread(distances, queueTodo, queueDone);
+      threads[i].start();
+    }
+
+    for (final Particle3D parA : listA) {
+
+      final AbstractListPoint3D pointsA = this.processorA
+          .getPresentationPoints(parA.getInnerPoints());
+
+      for (final Particle3D parB : listB) {
+
+        boolean offerOk = false;
+
+        while (!offerOk) {
+
+          CalcArgs args = null;
+
+          synchronized (queueDone) {
+            args = queueDone.poll();
+          }
+
+          if (args == null)
+            args = new CalcArgs(parB, pointsA);
+          else
+            args.setArgs(parB, pointsA);
+
+          synchronized (queueTodo) {
+            offerOk = queueTodo.offer(args);
+          }
+
+          Thread.yield();
+        }
+
+        count++;
+
+        if ((count - queueTodo.size()) % calcsBeforeUpdateInfo == 0) {
+
+          sendEvent(
+              ProgressEventType.PROGRESS_CALC_DISTANCES_EVENT,
+              (int) (((double) count / (double) calcsToDoNumber) * ProgressEvent.INDEX_IN_PHASE_MAX));
+        }
+      }
+
+      while (queueTodo.size() != 0)
+        Thread.yield();
+
+      mins.put(parA, Collections.min(distances));
+      maxs.put(parA, Collections.max(distances));
+      distances.clear();
+    }
+
+    for (int i = 0; i < threadNumber; i++)
+      threads[i].pleaseStop();
+
+  }
+
+  private void calcMultiThreads2(final List<Particle3D> listA,
+      final List<Particle3D> listB, Map<Particle3D, Distance> mins,
+      Map<Particle3D, Distance> maxs, final int threadNumber) {
+
+    int count = 0;
+
+    final int calcsToDoNumber = listA.size() * listB.size();
+    final int calcsBeforeUpdateInfo = calcsToDoNumber / 100;
+
+    logger.info("Calc Thread number: " + threadNumber);
+
+    final List<Distance> distancesAllThreads = new MinMaxList<Distance>();
+
+    final CalcThread2[] threads = new CalcThread2[threadNumber];
+
+    for (int i = 0; i < threadNumber; i++) {
+      threads[i] = new CalcThread2(this.processorB, listB, distancesAllThreads,
+          i, threadNumber);
+      threads[i].start();
+    }
+
+    for (final Particle3D parA : listA) {
+
+      this.freeThreads = 0;
+
+      this.listPointsAForThreads = this.processorA.getPresentationPoints(parA
+          .getInnerPoints());
+
+      while (this.freeThreads != threadNumber)
+        Thread.yield();
+
+      final int countBefore = count;
+
+      for (int i = 0; i < threadNumber; i++)
+        count += threads[i].getCount();
+
+      synchronized (distancesAllThreads) {
+
+        mins.put(parA, Collections.min(distancesAllThreads));
+        maxs.put(parA, Collections.max(distancesAllThreads));
+        distancesAllThreads.clear();
+      }
+
+      if ((count - countBefore) > calcsBeforeUpdateInfo) {
+        sendEvent(
+            ProgressEventType.PROGRESS_CALC_DISTANCES_EVENT,
+            (int) (((double) count / (double) calcsToDoNumber) * ProgressEvent.INDEX_IN_PHASE_MAX));
+      }
 
     }
 
-    this.result.setMinDistances(mins);
-    this.result.setMaxDistances(maxs);
+    for (int i = 0; i < threadNumber; i++)
+      threads[i].pleaseStop();
+
   }
 
   /**

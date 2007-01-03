@@ -22,11 +22,16 @@
 
 package fr.ens.transcriptome.corsen.calc;
 
+import java.util.Properties;
+
 public enum ParticleType {
 
-  HUGE("Huge particle"), TINY("Tiny particle"), UNDEFINED("Undefined particle");
+  HUGE("Huge particle", "full description for HUGE particle"), TINY(
+      "Tiny particle", "full description for TINY particle"), UNDEFINED(
+      "Undefined particle", "full description for UNDEFINED particle");
 
   private String description;
+  private String fullDescription;
 
   /**
    * Get the description of the type of the particle.
@@ -35,6 +40,15 @@ public enum ParticleType {
   public String toString() {
 
     return this.description;
+  }
+
+  /**
+   * Get the full description of the particle type
+   * @return the full description of the particle type
+   */
+  public String getFullDescription() {
+
+    return this.fullDescription;
   }
 
   /**
@@ -60,6 +74,39 @@ public enum ParticleType {
 
   }
 
+  public static ParticleType getParticleType(String type) {
+
+    if (type == null)
+      return null;
+
+    ParticleType[] types = ParticleType.values();
+
+    for (int i = 0; i < types.length; i++) {
+
+      if (type.equals(types[i].toString()))
+        return types[i];
+    }
+
+    return null;
+  }
+
+  public Properties getDefaultProperties() {
+
+    switch (this) {
+
+    case TINY:
+      Properties properties = new Properties();
+      properties.setProperty("cuboid.automatic.size", "true");
+      properties.setProperty("cuboid.custom.size", ""
+          + 1.0);
+      return properties;
+
+    default:
+      return null;
+    }
+
+  }
+
   //
   // Constructor
   //
@@ -68,9 +115,10 @@ public enum ParticleType {
    * Private constructor.
    * @param description The description of the particle
    */
-  private ParticleType(String description) {
+  private ParticleType(final String description, final String fullDescription) {
 
     this.description = description;
+    this.fullDescription = fullDescription;
   }
 
 }

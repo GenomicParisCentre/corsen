@@ -108,6 +108,18 @@ public abstract class Point2D {
     return p;
   }
 
+  /**
+   * Test if two point have the same position.
+   * @param point Other point to test
+   * @return true if the two have the same position
+   */
+  public boolean isSamePosition(final Point2D point) {
+    
+    if (point==null) return false;
+    
+    return this.getX()==point.getX() && this.getY()==point.getY();
+  }
+  
   //
   // Constructor
   //

@@ -2,12 +2,10 @@ package fr.ens.transcriptome.corsen.gui.qt;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import com.trolltech.qt.core.QObject;
+import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QApplication;
@@ -18,10 +16,9 @@ import com.trolltech.qt.gui.QFileDialog;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
-import com.trolltech.qt.gui.QAbstractItemView.SelectionBehavior;
-import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 import com.trolltech.qt.gui.QFileDialog.FileMode;
 
+import fr.ens.transcriptome.corsen.Corsen;
 import fr.ens.transcriptome.corsen.CorsenCore;
 import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.ProgressEvent;
@@ -29,6 +26,8 @@ import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.UpdateStatus;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
+import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
+import fr.ens.transcriptome.corsen.util.Util;
 
 /*
  *                      Nividic development code
@@ -41,7 +40,7 @@ import fr.ens.transcriptome.corsen.calc.CorsenResult;
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -140,25 +139,7 @@ public class CorsenQt extends QMainWindow {
    */
   @SuppressWarnings("unused")
   private void about() {
-    QMessageBox
-        .about(
-            this,
-            tr("About " + Globals.APP_NAME),
-            tr("<p><b>"
-                + Globals.APP_NAME
-                + " version "
-                + Globals.APP_VERSION
-                + "</b> is a software to calc the distances between "
-                + "mitochondria and mRNA.</p><br/>"
-                + "<b>Authors</b>:"
-                + "<ul><li><a href=\"mailto:jourdren@biologie.ens.fr?subject=CorsenSwing\">Laurent Jourdren</a><br/>"
-                + "<a href=\"http://transcriptome.ens.fr\">Microarray platform, École Normale Supérieure</a>"
-                + "<br/>Main developer, maintener.</li><br/>"
-                + "<li><a href=\"mailto:garcia@biologie.ens.fr?subject=CorsenSwing\">Mathilde Garcia</a><br/>"
-                + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de Génétique Moléculaire, École Normale Supérieure</a>"
-                + "<br/>Project leader, R programming, ImageJ scripting, testing.</li></ul>"
-                + "<p>Copyright 2006 École Normale Supérieure.<br/>"
-                + "This program is developed under the GNU General Public Licence.</p>"));
+    QMessageBox.about(this, "About " + Globals.APP_NAME, Globals.ABOUT_HTML);
   }
 
   /**
@@ -198,7 +179,8 @@ public class CorsenQt extends QMainWindow {
   private void openMessengers() {
 
     String fileName = QFileDialog.getOpenFileName(this, "Set messengers file",
-        this.lastDir, "Particles file (*.par)");
+        this.lastDir, "Particles file (*" + Globals.EXTENSION_PARTICLES_FILE
+            + ")");
     if (fileName.length() != 0) {
       setMessengerPathLabelText(fileName);
       setDirectoryPathLabelText("");
@@ -290,10 +272,36 @@ public class CorsenQt extends QMainWindow {
   private void endProcess(final CorsenResult result) {
 
     mainWindowUi.viewOGL.setResult(result);
+    mainWindowUi.viewOGL.setSettings(this.settings);
+
     this.models.setResult(result);
     this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
         .currentIndex()));
 
+    if (result == null || result.getCuboidsMessengersParticles() == null) {
+      mainWindowUi.particlesACuboidsRadioButton.setEnabled(false);
+    } else
+      mainWindowUi.particlesACuboidsRadioButton.setEnabled(true);
+
+    if (result == null || result.getMessengersParticles() == null) {
+      mainWindowUi.particlesARadioButton.setEnabled(false);
+    } else
+      mainWindowUi.particlesARadioButton.setEnabled(true);
+
+    if (result == null || result.getCuboidsMitosParticles() == null) {
+      mainWindowUi.particlesBCuboidsRadioButton.setEnabled(false);
+    } else
+      mainWindowUi.particlesBCuboidsRadioButton.setEnabled(true);
+
+    if (result == null || result.getMitosParticles() == null) {
+      mainWindowUi.particlesARadioButton.setEnabled(false);
+    } else
+      mainWindowUi.particlesARadioButton.setEnabled(true);
+
+    if (result == null || result.getMinDistances() == null)
+      mainWindowUi.showDistancesCheckBox.setEnabled(false);
+    else
+      mainWindowUi.showDistancesCheckBox.setEnabled(true);
   }
 
   /**
@@ -306,16 +314,17 @@ public class CorsenQt extends QMainWindow {
 
     final ViewOGL v = mainWindowUi.viewOGL;
 
-    // v.setMitosColor(null);
-    // v.setMessengersColor(null);
-    // v.setBarycenterColor(null);
-    // v.setDistanceColor(null);
-
+    v
+        .setDrawNoMessengers(mainWindowUi.particlesANothingRadioButton
+            .isChecked());
+    v.setDrawNoMitos(mainWindowUi.particlesBNothingRadioButton.isChecked());
     v.setDrawBaryCenter(mainWindowUi.showBarycentersCheckBox.isChecked());
     v.setDrawDistances(mainWindowUi.showDistancesCheckBox.isChecked());
-    v.setDrawMessengersCuboids(mainWindowUi.messengersCuboidsRadioButton
+    v.setDrawMessengersCuboids(mainWindowUi.particlesACuboidsRadioButton
         .isChecked());
-    v.setDrawMitosCuboids(mainWindowUi.mitosCuboidsRadioButton.isChecked());
+    v
+        .setDrawMitosCuboids(mainWindowUi.particlesBCuboidsRadioButton
+            .isChecked());
     v.setDrawDistances(mainWindowUi.showDistancesCheckBox.isChecked());
 
     v.setRemakeObject(true);
@@ -323,10 +332,69 @@ public class CorsenQt extends QMainWindow {
   }
 
   /**
-   * Launch.
+   * Launch 3D view.
+   * @throws IOException
    */
   @SuppressWarnings("unused")
-  private void launch() {
+  private void launch3DView() {
+
+    setStartEnable(false);
+
+    mainWindowUi.viewOGL.clear();
+    this.models.setResult(null);
+    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+        .currentIndex()));
+
+    String arnFile = mainWindowUi.messengerPathLabel.text();
+    String mitoFile = mainWindowUi.mitoPathLabel.text();
+
+    if (arnFile.length() == 0) {
+      showError("No particles particles A ("
+          + this.settings.getParticlesAName() + ") to load.");
+      setStartEnable(true);
+      return;
+    }
+
+    if (mitoFile.length() == 0) {
+      showError("No particles particles B ("
+          + this.settings.getParticlesBName() + ") to load.");
+      setStartEnable(true);
+      return;
+    }
+
+    try {
+
+      mainWindowUi.logTextEdit.setText("");
+      CorsenResult cr = new CorsenResult(new File(arnFile), new File(mitoFile),
+          this.settings, null);
+      DistancesCalculator dc = new DistancesCalculator(cr);
+
+      mainWindowUi.progressLabel.setText("Process 0 of 1 cell");
+      mainWindowUi.progressBar.setValue(0);
+
+      mainWindowUi.logTextEdit.append("Lannch 3D visualisation only.");
+      mainWindowUi.logTextEdit.append("Particles A ("
+          + this.settings.getParticlesAName() + ") file: " + arnFile);
+      mainWindowUi.logTextEdit.append("Particles B ("
+          + this.settings.getParticlesBName() + ") file: " + mitoFile);
+
+      dc.loadParticles();
+      mainWindowUi.logTextEdit.append("Show 3D visualisation successfully.");
+      mainWindowUi.progressLabel.setText("Process 1 of 1 cell");
+      mainWindowUi.progressBar.setValue(100);
+      endProcess(cr);
+    } catch (IOException e) {
+      showError("Error while loading particles files.");
+    }
+
+    setStartEnable(true);
+  }
+
+  /**
+   * Launch analysis.
+   */
+  @SuppressWarnings("unused")
+  private void launchAnalysis() {
 
     mainWindowUi.viewOGL.clear();
     this.models.setResult(null);
@@ -359,9 +427,11 @@ public class CorsenQt extends QMainWindow {
     } else if (arnFile.length() == 0 || mitoFile.length() == 0) {
 
       if (arnFile.length() == 0)
-        showError("No messager file specified.");
+        showError("No particles A (" + this.settings.getParticlesAName()
+            + ")  file specified.");
       else
-        showError("No mito file specified.");
+        showError("No particles B (" + this.settings.getParticlesBName()
+            + ")  file specified.");
 
     } else {
 
@@ -381,8 +451,8 @@ public class CorsenQt extends QMainWindow {
         // String prefixFilename = f.getName();
         mainWindowUi.outputFilesPathLabel.setText(prefixFilename);
 
-        cc.setMitoFile(new File(mitoFile));
-        cc.setRnaFile(new File(arnFile));
+        cc.setParticlesBFile(new File(mitoFile));
+        cc.setParticlesAFile(new File(arnFile));
         cc.setResultFile(new File(prefixFilename));
         cc.setMultipleFiles(false);
 
@@ -401,7 +471,8 @@ public class CorsenQt extends QMainWindow {
    */
   private void setStartEnable(final boolean value) {
 
-    this.mainWindowUi.launchButton.setEnabled(value);
+    this.mainWindowUi.launchAnalysisPushButton.setEnabled(value);
+    this.mainWindowUi.launch3DViewPushButton.setEnabled(value);
     this.mainWindowUi.updateViewPushButton.setEnabled(value);
     this.mainWindowUi.viewOGL.setRemakeObject(value);
     if (value == true && this.models.getResult() != null)
@@ -470,7 +541,8 @@ public class CorsenQt extends QMainWindow {
 
     CorsenConfigureQt cc = new CorsenConfigureQt(this, this.settings);
     cc.configureDialog();
-
+    setWidgetTexts();
+    updateVisualisation();
   }
 
   @SuppressWarnings("unused")
@@ -557,6 +629,7 @@ public class CorsenQt extends QMainWindow {
     case START_CALC_MESSENGERS_CUBOIDS_EVENT:
     case START_CALC_MITOS_CUBOIDS_EVENT:
     case START_CALC_MIN_DISTANCES_EVENT:
+    case START_DISTANCES_ANALYSIS:
     case START_WRITE_DATA_EVENT:
     case START_WRITE_IV_MESSENGERS_EVENT:
     case START_WRITE_IV_MITOS_EVENT:
@@ -587,7 +660,7 @@ public class CorsenQt extends QMainWindow {
     case END_CELL_EVENT:
       final long timeEndCell = System.currentTimeMillis();
       showStatusMessage("Process current cell in "
-          + toTimeHumanReadable(timeEndCell - this.status.timeStartCell)
+          + Util.toTimeHumanReadable(timeEndCell - this.status.timeStartCell)
           + ".\n");
 
       endEvent = true;
@@ -597,7 +670,7 @@ public class CorsenQt extends QMainWindow {
     case END_CELLS_SUCCESSFULL_EVENT:
       final long timeEndCells = System.currentTimeMillis();
       showStatusMessage("Process all cells in "
-          + toTimeHumanReadable(timeEndCells - this.status.timeStartCells)
+          + Util.toTimeHumanReadable(timeEndCells - this.status.timeStartCells)
           + ".");
       CorsenQt.this.setStartEnable(true);
 
@@ -676,19 +749,46 @@ public class CorsenQt extends QMainWindow {
 
   }
 
-  //
-  // Utility methods
-  //
+  private void setWidgetTexts() {
 
-  private String toTimeHumanReadable(final long time) {
+    final String particlesAName = this.settings.getParticlesAName();
+    final String particlesBName = this.settings.getParticlesBName();
 
-    DateFormat df = DateFormat.getTimeInstance(DateFormat.MEDIUM, Locale.UK);
+    final Ui_CorsenMainWindow mui = this.mainWindowUi;
 
-    return df.format(new Date(time));
+    mui.particleAFileLabel.setText("<b>Particles A (" + particlesAName
+        + ") file:</b>");
+    mui.particleBFileLabel.setText("<b>Particles B (" + particlesBName
+        + ") file:</b>");
+
+    mui.actionOpen_particlesA.setText("Open particles A (" + particlesAName
+        + ")...");
+    mui.actionOpen_particlesB.setText("Open particles B (" + particlesBName
+        + ")...");
+
+    mui.particlesAGroupBox.setTitle(particlesAName);
+    mui.particlesBGroupBox.setTitle(particlesBName);
+
+    mui.particlesARadioButton.setText(particlesAName);
+    mui.particlesBRadioButton.setText(particlesBName);
+
+    mui.particlesACuboidsRadioButton.setText(particlesAName + " preprocessed");
+    mui.particlesBCuboidsRadioButton.setText(particlesBName + " preprocessed");
+
+    int max = mui.particlesBCuboidsRadioButton.geometry().width();
+
+    QRect gA = mui.particlesAGroupBox.geometry();
+    mui.particlesAGroupBox.setGeometry(gA.x(), gA.y(), max, gA.height());
+
+    QRect gB = mui.particlesBGroupBox.geometry();
+    mui.particlesBGroupBox.setGeometry(gB.x(), gB.y(), max, gB.height());
+
+    QRect gBt = mui.updateViewPushButton.geometry();
+    mui.updateViewPushButton.setGeometry(gBt.x(), gBt.y(), max, gBt.height());
   }
 
   //
-  // Main method
+  // Utility methods
   //
 
   /**
@@ -708,11 +808,7 @@ public class CorsenQt extends QMainWindow {
 
   public CorsenQt() {
 
-    // load settings
-    try {
-      this.settings.loadSettings();
-    } catch (IOException e) {
-    }
+    this.settings = Corsen.getSettings();
 
     // Place what you made in Designer onto the main window.
     mainWindowUi.setupUi(this);
@@ -727,23 +823,45 @@ public class CorsenQt extends QMainWindow {
     mainWindowUi.action_Configure_Corsen.triggered.connect(this,
         "configureDialog()");
     mainWindowUi.actionSave_settings.triggered.connect(this, "saveSettings()");
-    mainWindowUi.actionOpen_messenger_particle.triggered.connect(this,
+    mainWindowUi.actionOpen_particlesA.triggered.connect(this,
         "openMessengers()");
-    mainWindowUi.actionOpen_mi_tochondrial_particle.triggered.connect(this,
-        "openMitos()");
+    mainWindowUi.actionOpen_particlesB.triggered.connect(this, "openMitos()");
     mainWindowUi.actionOpen_a_directory.triggered.connect(this,
         "openDirectory()");
-    mainWindowUi.action_Start_analysis.triggered.connect(this, "launch()");
+    mainWindowUi.action_Start_analysis.triggered.connect(this,
+        "launchAnalysis()");
 
-    mainWindowUi.launchButton.clicked.connect(this, "launch()");
+    mainWindowUi.launchAnalysisPushButton.clicked.connect(this,
+        "launchAnalysis()");
+    mainWindowUi.launch3DViewPushButton.clicked.connect(this, "launch3DView()");
     mainWindowUi.action_Quit.triggered.connect(this, "quit()");
+
     mainWindowUi.updateViewPushButton.clicked.connect(this,
         "updateVisualisation()");
+    mainWindowUi.particlesANothingRadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.particlesARadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.particlesACuboidsRadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.particlesBNothingRadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.particlesBRadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.particlesBCuboidsRadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.showBarycentersCheckBox.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.showDistancesCheckBox.clicked.connect(this,
+        "updateVisualisation()");
+
+    setWidgetTexts();
 
     initResultTab();
 
     setWindowIcon(new QIcon("classpath:files/corsen-logo.png"));
 
+    endProcess(null);
     setStartEnable(true);
 
   }

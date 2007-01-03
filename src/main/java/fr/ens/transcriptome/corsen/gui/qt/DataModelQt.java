@@ -3,7 +3,6 @@ package fr.ens.transcriptome.corsen.gui.qt;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,21 +10,15 @@ import com.trolltech.qt.QVariant;
 import com.trolltech.qt.core.QAbstractItemModel;
 import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.core.Qt.DropActions;
-import com.trolltech.qt.core.Qt.ItemFlags;
 import com.trolltech.qt.core.Qt.Orientation;
-import com.trolltech.qt.core.Qt.SortOrder;
-import com.trolltech.qt.gui.QAbstractProxyModel;
 import com.trolltech.qt.gui.QAbstractTableModel;
 import com.trolltech.qt.gui.QSortFilterProxyModel;
-import com.trolltech.qt.gui.QStandardItem;
-import com.trolltech.qt.gui.QStandardItemModel;
-import com.trolltech.qt.gui.QStringListModel;
 
-import fr.ens.transcriptome.corsen.CorsenCore;
 import fr.ens.transcriptome.corsen.CorsenResultWriter;
+import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.Distance;
+import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
 import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 
@@ -40,7 +33,7 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -53,15 +46,16 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
 
 public class DataModelQt {
 
-  private static final int VIEWS_COUNT = 4;
-  private static final String DATA_VIEW_DESCRIPTION = "Data results";
+  private static final int VIEWS_COUNT = 5;
+  private static final String DATA_SUMMARY_DESCRIPTION = "DataDouble result summary";
+  private static final String DATA_VIEW_DESCRIPTION = "Full data results";
   private static final String IV_MESSENGERS_DESCRIPTION = "Intensities and volumes of messengers";
   private static final String IV_MESSENGERS_CUBOIDS_DESCRIPTION = "Intensities and volumes of messengers cuboids";
   private static final String IV_CUBOIDS_DESCRIPTION = "Intensities and volumes of mitochondria ";
 
   private CorsenResult result;
 
-  private class DataModel extends QAbstractTableModel {
+  private class FullDataModel extends QAbstractTableModel {
 
     private Map<Particle3D, Distance> mins = null;
     private Map<Particle3D, Distance> maxs = null;
@@ -144,7 +138,7 @@ public class DataModelQt {
     // Constructor
     //
 
-    public DataModel(final CorsenResult r) {
+    public FullDataModel(final CorsenResult r) {
 
       if (r == null)
         return;
@@ -234,6 +228,130 @@ public class DataModelQt {
 
   }
 
+  private class SummaryDataModel extends QAbstractTableModel {
+
+    private DistanceAnalyser daMins = null;
+    private DistanceAnalyser daMaxs = null;
+
+    @Override
+    public int columnCount(QModelIndex arg0) {
+
+      return 7;
+    }
+
+    @Override
+    public Object data(QModelIndex mIndex, int role) {
+
+      if (mIndex == null || role != Qt.ItemDataRole.DisplayRole)
+        return null;
+
+      if (daMins == null || daMaxs == null)
+        return null;
+
+      final int row = mIndex.row();
+      final int col = mIndex.column();
+
+      if (col == 0) {
+
+        if (row == 0)
+          return "Min distances";
+
+        return "Max distances";
+      }
+
+      DistanceAnalyser da = row == 0 ? this.daMins : this.daMaxs;
+
+      switch (col) {
+
+      case 1:
+        return da.getMin();
+
+      case 2:
+        return da.getFirstQuartile();
+
+      case 3:
+        return da.getMedian();
+
+      case 4:
+        return da.getMean();
+
+      case 5:
+        return da.getThirdQuartile();
+
+      case 6:
+        return da.getMax();
+
+      default:
+        return null;
+
+      }
+
+    }
+
+    @Override
+    public int rowCount(QModelIndex arg0) {
+
+      int count = 0;
+
+      if (daMins != null)
+        count++;
+      if (daMaxs != null)
+        count++;
+
+      return count;
+    }
+
+    @Override
+    public Object headerData(int section, Orientation orientation, int role) {
+
+      if (orientation != Orientation.Horizontal
+          || role != Qt.ItemDataRole.DisplayRole)
+        return null;
+
+      switch (section) {
+
+      case 0:
+        return "";
+
+      case 1:
+        return "Mininum";
+
+      case 2:
+        return "1st Quartile";
+
+      case 3:
+        return "Median";
+
+      case 4:
+        return "Mean";
+
+      case 5:
+        return "3rd Quartile";
+
+      case 6:
+        return "Maximum";
+
+      default:
+        return null;
+      }
+
+    }
+
+    //
+    // Constructor
+    //
+
+    public SummaryDataModel(final CorsenResult r) {
+
+      if (r == null)
+        return;
+
+      this.daMins = r.getMinAnalyser();
+      this.daMaxs = r.getMaxAnalyser();
+    }
+
+  }
+
   //
   // Getters
   //
@@ -279,13 +397,16 @@ public class DataModelQt {
   public String getViewDescription(final int index) {
 
     switch (index) {
+
     case 0:
-      return DATA_VIEW_DESCRIPTION;
+      return DATA_SUMMARY_DESCRIPTION;
     case 1:
-      return IV_MESSENGERS_DESCRIPTION;
+      return DATA_VIEW_DESCRIPTION;
     case 2:
-      return IV_MESSENGERS_CUBOIDS_DESCRIPTION;
+      return IV_MESSENGERS_DESCRIPTION;
     case 3:
+      return IV_MESSENGERS_CUBOIDS_DESCRIPTION;
+    case 4:
       return IV_CUBOIDS_DESCRIPTION;
 
     default:
@@ -302,23 +423,30 @@ public class DataModelQt {
   public QAbstractItemModel getModel(final int index) {
 
     final CorsenResult r = getResult();
+    if (r == null || r.getMinDistances() == null || r.getMaxDistances() == null)
+      return null;
 
     final QAbstractItemModel model;
 
     switch (index) {
+
     case 0:
-      model = new DataModel(r);
+      model = new SummaryDataModel(r);
       break;
 
     case 1:
-      model = new IVModel(r.getMessengersParticles());
+      model = new FullDataModel(r);
       break;
 
     case 2:
-      model = new IVModel(r.getCuboidsMessengersParticles());
+      model = new IVModel(r.getMessengersParticles());
       break;
 
     case 3:
+      model = new IVModel(r.getCuboidsMessengersParticles());
+      break;
+
+    case 4:
       model = new IVModel(r.getMitosParticles());
       break;
 
@@ -333,7 +461,7 @@ public class DataModelQt {
   }
 
   /**
-   * Save Data of a view.
+   * Save DataDouble of a view.
    * @param index The index of the view
    * @param filename File to save
    * @throws IOException
@@ -345,7 +473,7 @@ public class DataModelQt {
   }
 
   /**
-   * Save Data of a view.
+   * Save DataDouble of a view.
    * @param index The index of the view
    * @param File File to save
    * @throws IOException
@@ -360,21 +488,19 @@ public class DataModelQt {
     final CorsenResultWriter crw = new CorsenResultWriter(r);
 
     switch (index) {
-    case 0:
-
+    case 1:
       crw.writeDataFile(file);
       break;
 
-    case 1:
-
+    case 2:
       crw.writeMessengersIntensityVolume(file);
       break;
 
-    case 2:
+    case 3:
       crw.writeCuboidsMessengersIntensityVolume(file);
       break;
 
-    case 3:
+    case 4:
       crw.writeMitosIntensityVolume(file);
       break;
 
@@ -387,18 +513,17 @@ public class DataModelQt {
   public String getSaveFileExtension(final int index) {
 
     switch (index) {
-    case 0:
-      return CorsenCore.EXTENSION_DATA_FILE;
-
     case 1:
-
-      return CorsenCore.EXTENSION_MESSENGERS_IV_FILE;
+      return Globals.EXTENSION_DATA_FILE;
 
     case 2:
-      return CorsenCore.EXTENSION_CUBOIDS_IV_FILE;
+      return Globals.EXTENSION_PARTICLES_A_IV_FILE;
 
     case 3:
-      return CorsenCore.EXTENSION_MITOS_IV_FILE;
+      return Globals.EXTENSION_PARTICLES_A_CUBOIDS_IV_FILE;
+
+    case 4:
+      return Globals.EXTENSION_PARTICLES_B_IV_FILE;
 
     default:
       return "";

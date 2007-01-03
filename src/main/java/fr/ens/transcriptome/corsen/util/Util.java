@@ -1,4 +1,5 @@
 package fr.ens.transcriptome.corsen.util;
+
 import fr.ens.transcriptome.corsen.model.Point3D;
 
 public final class Util {
@@ -85,6 +86,11 @@ public final class Util {
   public static final long setX(final long point, final float value,
       final float precision) {
 
+    if (!isValueCorrect(value, precision))
+      throw new RuntimeException(
+          "Invalid point value: This x value is too great or negative to be stored ("
+              + value + ")");
+
     final long v = (long) (value * precision);
 
     return point & MASK_X | (v & MASK_16BITS) << SHIFT_X;
@@ -99,6 +105,11 @@ public final class Util {
    */
   public static final long setY(final long point, final float value,
       final float precision) {
+
+    if (!isValueCorrect(value, precision))
+      throw new RuntimeException(
+          "Invalid point value: This y value is too great or negative to be stored ("
+              + value + ")");
 
     final long v = (long) (value * precision);
 
@@ -115,6 +126,11 @@ public final class Util {
   public static final long setZ(final long point, final float value,
       final float precision) {
 
+    if (!isValueCorrect(value, precision))
+      throw new RuntimeException(
+          "Invalid point value: This z value is too great or negative to be stored ("
+              + value + ")");
+
     final long v = (long) (value * precision);
 
     return point & MASK_Z | (v & MASK_16BITS) << SHIFT_Z;
@@ -126,20 +142,66 @@ public final class Util {
    * @param value The value of intensity to set
    * @return The new coded point
    */
-  public static final long setI(final long point, final long value) {
+  public static final long setI(final long point, final int value) {
 
-    return point & MASK_I | (value & MASK_16BITS) << SHIFT_I;
+    if (!isValueCorrect(value))
+      throw new RuntimeException(
+          "Invalid point value: This i value is too great to be stored ("
+              + value + ")");
+
+    return point & MASK_I | (((long) value) & MASK_16BITS) << SHIFT_I;
   }
 
   /**
    * Get the encode value of a point without the intensity data (which set to
    * 0). This method is useful to compare two points.
    * @param point The coded location
-   * @return a encoded point with intensity set to 0 
+   * @return a encoded point with intensity set to 0
    */
   public static final long valueWithoutI(final long point) {
 
     return point & MASK_I;
+  }
+
+  /**
+   * Test if a value is correct to be stored in a long.
+   * @param value Value to test
+   * @param precision precision of the stored data
+   * @return true if the value can be stored in a long
+   */
+  private static final boolean isValueCorrect(final float value,
+      final float precision) {
+
+    return value >= 0 && value < (Math.pow(2, MASK_16BITS) / precision);
+  }
+
+  /**
+   * Test if a value is correct to be stored in a long.
+   * @param value Value to test
+   * @return true if the value can be stored in a long
+   */
+  private static final boolean isValueCorrect(final int value) {
+
+    return value >= 0 && value < (Math.pow(2, MASK_16BITS));
+  }
+
+  /**
+   * Get the max float value which can be stored.
+   * @param precision precision of the value
+   * @return the max value which can be stored
+   */
+  public static final float getStoredMaxValue(final float precision) {
+
+    return MASK_16BITS / precision;
+  }
+
+  /**
+   * Get the max int value which can be stored.
+   * @return the max value which can be stored
+   */
+  public static final int getStoredMaxValue() {
+
+    return MASK_16BITS;
   }
 
   /**
@@ -149,7 +211,8 @@ public final class Util {
    * @param p3
    * @return the equation of a plan
    */
-  public static final double eq(final Point3D p1, final Point3D p2, final Point3D p3) {
+  public static final double eq(final Point3D p1, final Point3D p2,
+      final Point3D p3) {
 
     if (p1 == null || p2 == null || p3 == null)
       return -1;
@@ -179,8 +242,8 @@ public final class Util {
     return -1;
   }
 
-  public static final double eqTest(final double a, final double b, final double c,
-      final double d, final Point3D p) {
+  public static final double eqTest(final double a, final double b,
+      final double c, final double d, final Point3D p) {
 
     if (p == null)
       return -1;
@@ -188,7 +251,7 @@ public final class Util {
     return a * p.getX() + b * p.getY() + c * p.getZ() + d;
 
   }
-  
+
   /**
    * Get the number of the occurence of a char in a string.
    * @param s String to parse
@@ -208,6 +271,17 @@ public final class Util {
         count++;
 
     return count;
+  }
+
+  public static final String toTimeHumanReadable(final long time) {
+
+    long min = time / (60 * 1000);
+    long minRest = time % (60 * 1000);
+    long sec = minRest / 1000;
+
+    long mili = minRest % 1000;
+
+    return String.format("%02d:%02d.%03d", min, sec, mili);
   }
 
 }

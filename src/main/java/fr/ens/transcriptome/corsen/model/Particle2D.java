@@ -1,11 +1,6 @@
 package fr.ens.transcriptome.corsen.model;
-import ij.ImagePlus;
-import ij.gui.PolygonRoi;
-import ij.process.ImageProcessor;
-import ij.process.ImageStatistics;
 
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -17,16 +12,13 @@ public final class Particle2D {
   private final int id = count;
   private String name = "" + this.id;
 
-  private ListPoint2D surfacePoints;
-  private ListPoint2D innerPoints;
+  private AbstractListPoint2D surfacePoints;
+  private AbstractListPoint2D innerPoints;
 
   private float pixelWidth = 1.0f;
   private float pixelHeight = 1.0f;
 
   private long intensity;
-  private double mean;
-
-  private double area;
 
   //
   // Getters
@@ -60,16 +52,32 @@ public final class Particle2D {
    * Get the mean intensity of the particle.
    * @return Returns the mean intensity of the particle
    */
-  public double getMean() {
-    return this.mean;
-  }
+  /*
+   * public double getMean() { return this.mean; }
+   */
 
   /**
    * Get the area of the particle.
    * @return Returns the area of the particle
    */
   public double getArea() {
-    return this.area;
+    return this.innerPointsCount() * this.pixelHeight * this.pixelWidth;
+  }
+
+  /**
+   * Get the pixel height
+   * @return Returns the pixelHeight
+   */
+  public float getPixelHeight() {
+    return pixelHeight;
+  }
+
+  /**
+   * Get the pixel width
+   * @return Returns the pixelWidth
+   */
+  public float getPixelWidth() {
+    return pixelWidth;
   }
 
   //
@@ -157,74 +165,6 @@ public final class Particle2D {
   }
 
   /**
-   * Add a particle 2D to the particle 3D.
-   * @param imp Image of the particle to add
-   * @param roi particle 2D to add
-   */
-  public void add(final ImagePlus imp, final PolygonRoi roi) {
-
-    imp.setRoi(roi);
-    final ImageStatistics stats = imp.getStatistics(); // mesurement
-
-    // Get the x0 and y0 of the Roi
-    final Rectangle r = roi.getBounds();
-    final int nPoints = roi.getNCoordinates();
-    final int[] xp = roi.getXCoordinates();
-    final int[] yp = roi.getYCoordinates();
-
-    final int x0 = r.x;
-    final int y0 = r.y;
-
-    // Get the inner points
-    final ImageProcessor ip = imp.getMask();
-
-    final int height = ip.getHeight();
-    final int width = ip.getWidth();
-
-    for (int i = 0; i < height; i++)
-      for (int j = 0; j < width; j++)
-        if (ip.getPixel(j, i) > 0) {
-
-          final int val = imp.getProcessor().getPixel(j, i);
-          addInnerPoint((j + x0 + 0.5f) * this.pixelWidth, (i + y0 + 0.5f)
-              * this.pixelWidth, val);
-        }
-
-    // double[][] polygon = new double[nPoints][];
-
-    this.surfacePoints.ensureCapacity(nPoints + this.surfacePoints.size());
-
-    for (int i = 0; i < nPoints; i++) {
-
-      // Add the point to the particle 2D
-
-      final float x = (x0 + xp[i]) * this.pixelWidth;
-      final float y = (y0 + yp[i]) * this.pixelHeight;
-
-      addSurfacePoint(x, y);
-
-      // System.out.println(x + "," + y);
-
-      // Add the point to the polygon to calc the aera
-      // final double[] coord = new double[2];
-      // coord[0] = x;
-      // coord[1] = y;
-      // polygon[i] = coord;
-    }
-
-    this.area = stats.area;
-    this.mean = stats.mean;
-
-    if (false)
-      isGoodSegmentation(5);
-
-    // final double area = polygonArea(polygon);
-
-    // System.out.println("Add Roi (" + nPoints + " surfacePoints) to particle "
-    // + getId() + " Area=" + area + " Volume=" + volume);
-  }
-
-  /**
    * Get the center of the partcle.
    * @return A point with the coordinates of the center
    */
@@ -288,8 +228,8 @@ public final class Particle2D {
     if (particle == null)
       return false;
 
-    ListPoint2D l1 = this.innerPoints;
-    ListPoint2D l2 = particle.innerPoints;
+    AbstractListPoint2D l1 = this.innerPoints;
+    AbstractListPoint2D l2 = particle.innerPoints;
 
     return l1.intersect(l2);
   }
@@ -364,7 +304,7 @@ public final class Particle2D {
     if (p == null || n == 0)
       return null;
 
-    ArrayList al = new ArrayList();
+    ArrayList<Point2D> al = new ArrayList<Point2D>();
 
     for (int i = 0; i < n; i++) {
 
@@ -392,7 +332,7 @@ public final class Particle2D {
     final int n = innerPointsCount();
 
     for (int i = 0; i < n; i++)
-      if (this.innerPoints.isPoint(x, y))
+      if (this.innerPoints.contains(x, y))
         return true;
 
     return false;
@@ -409,7 +349,7 @@ public final class Particle2D {
     final int n = surfacePointsCount();
 
     for (int i = 0; i < n; i++)
-      if (this.surfacePoints.isPoint(x, y))
+      if (this.surfacePoints.contains(x, y))
         return true;
 
     return false;
@@ -522,70 +462,6 @@ public final class Particle2D {
   }
 
   /**
-   * Calc the surface of the particle.
-   * @return The area of the particle
-   */
-  public double calcArea() {
-
-    int i, j;
-    double area = 0;
-
-    final int n = surfacePointsCount();
-
-    for (i = 0; i < n; i++) {
-      j = (i + 1) % n;
-
-      final Point2D pi = getSurfacePoint(i);
-      final Point2D pj = getSurfacePoint(j);
-
-      area += pi.getX() * pj.getY();
-      area -= pi.getY() * pj.getX();
-    }
-    area /= 2.0;
-
-    return area < 0 ? -area : area;
-  }
-
-  /**
-   * Test if the segmentation is correcy.
-   * @param distanceMax Distance maximal
-   * @return true if the segmentation is correct
-   */
-  public boolean isGoodSegmentation(final float distanceMax) {
-
-    final ListPoint2D listA = this.surfacePoints.copy();
-    final ListPoint2D listB = new ListPoint2D(this.pixelWidth, this.pixelHeight);
-
-    final Point2D p0 = listA.get(0);
-    listA.remove(p0);
-    listB.add(p0);
-
-    for (int i = 0; i < listB.size(); i++) {
-
-      final Point2D p1 = listB.get(i);
-
-      for (int j = 0; j < listA.size(); j++) {
-
-        final Point2D p2 = listA.get(j);
-
-        if (p1.distance(p2) <= distanceMax) {
-          listB.add(p2);
-          listA.remove(p2);
-        }
-
-      }
-    }
-
-    if (listA.size() != 0) {
-      System.out.println("WARNING : BAD Segmentation (" + listA.size() + "/"
-          + listB.size() + ")");
-      return false;
-    }
-
-    return true;
-  }
-
-  /**
    * Apply a factor to all values of the x coordinates.
    * @param xFactor factor to apply
    */
@@ -627,7 +503,9 @@ public final class Particle2D {
 
     this.pixelHeight = pixelHeight;
     this.pixelWidth = pixelWidth;
-    this.surfacePoints = new ListPoint2D(this.pixelWidth, this.pixelHeight);
+    // this.surfacePoints = new AbstractListPoint2D(this.pixelWidth,
+    // this.pixelHeight);
+    this.surfacePoints = new ArrayListPoint2D();
   }
 
   /**
@@ -650,11 +528,10 @@ public final class Particle2D {
    * @param imp Image of the polygon to add
    * @param roi particle 2D to add
    */
-  public Particle2D(final float pixelWidth, final float pixelHeight,
-      final ImagePlus imp, final PolygonRoi roi) {
-
-    this(pixelWidth, pixelHeight);
-    add(imp, roi);
-  }
+  /*
+   * public Particle2D(final float pixelWidth, final float pixelHeight, final
+   * ImagePlus imp, final PolygonRoi roi) { this(pixelWidth, pixelHeight);
+   * add(imp, roi); }
+   */
 
 }

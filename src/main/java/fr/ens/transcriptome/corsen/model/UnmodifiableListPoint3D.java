@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -22,9 +22,9 @@
 
 package fr.ens.transcriptome.corsen.model;
 
-public final class UnmodifiableListPoint3D extends ListPoint3D{
+public final class UnmodifiableListPoint3D extends AbstractListPoint3D{
 
-  private ListPoint3D list;
+  private AbstractListPoint3D list;
   
   @Override
   public void add(float x, float y, float z, int i) {
@@ -98,7 +98,7 @@ public final class UnmodifiableListPoint3D extends ListPoint3D{
   // Constructor
   //
   
-  public UnmodifiableListPoint3D(final ListPoint3D listPoints) {
+  public UnmodifiableListPoint3D(final AbstractListPoint3D listPoints) {
     
     this.list = listPoints;
   }

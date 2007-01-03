@@ -6,7 +6,7 @@ import java.util.AbstractList;
  * This class store a list of Point2D as arraylists.
  * @author Laurent Jourdren
  */
-public abstract class ListPoint3D extends AbstractList<Point3D> {
+public abstract class AbstractListPoint3D extends AbstractList<Point3D> {
 
   //
   // Abstract methods

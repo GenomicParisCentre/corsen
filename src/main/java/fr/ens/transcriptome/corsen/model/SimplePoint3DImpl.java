@@ -127,5 +127,14 @@ public class SimplePoint3DImpl extends Point3D {
    */
   public SimplePoint3DImpl() {
   }
+  
+  /**
+   * Public constructor.
+   * @param point Point
+   */
+  public SimplePoint3DImpl(final Point3D point) {
+    
+    this(point.getX(), point.getY(), point.getZ(), point.getI());
+  }
 
 }

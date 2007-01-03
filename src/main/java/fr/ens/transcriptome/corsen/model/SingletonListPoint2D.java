@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the �cole Normale Sup�rieure and the individual authors.
+ * of the École Normale Supérieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -22,9 +22,9 @@
 
 package fr.ens.transcriptome.corsen.model;
 
-public final class SingletonListPoint3D extends AbstractListPoint3D {
+public class SingletonListPoint2D extends AbstractListPoint2D {
 
-  private Point3D point;
+  private Point2D point;
 
   /**
    * Get the number of points in the list.
@@ -39,7 +39,7 @@ public final class SingletonListPoint3D extends AbstractListPoint3D {
    * @param index The index of the point
    * @return The point at the index
    */
-  public Point3D get(final int index) {
+  public Point2D get(final int index) {
 
     return point;
   }
@@ -60,15 +60,6 @@ public final class SingletonListPoint3D extends AbstractListPoint3D {
   public void applyYFactor(final float yFactor) {
 
     point.setY(point.getY() * yFactor);
-  }
-
-  /**
-   * Apply a factor to all values of the z coordinates.
-   * @param zFactor factor to apply
-   */
-  public void applyZFactor(final float zFactor) {
-
-    point.setZ(point.getZ() * zFactor);
   }
 
   /**
@@ -101,16 +92,6 @@ public final class SingletonListPoint3D extends AbstractListPoint3D {
     return get(index).getY();
   }
 
-  /**
-   * Get an Z value
-   * @param index Of the value.
-   * @return The Z value at the index position
-   */
-  public float getZAt(final int index) {
-
-    return get(index).getZ();
-  }
-
   public void ensureCapacity(int minCapacity) {
   }
 
@@ -118,9 +99,34 @@ public final class SingletonListPoint3D extends AbstractListPoint3D {
   }
 
   @Override
-  public void add(float x, float y, float z, int i) {
+  public void add(float x, float y, int i) {
 
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void add(float x, float y) {
+    throw new UnsupportedOperationException();
+
+  }
+
+  @Override
+  public boolean contains(float x, float y) {
+
+    return this.point.getX() == x && this.point.getY() == y;
+  }
+
+  @Override
+  public boolean contains(float x, float y, int i) {
+
+    return this.point.getX() == x && this.point.getY() == y
+        && this.point.getI() == i;
+  }
+
+  @Override
+  public AbstractListPoint2D copy() {
+
+    return new SingletonListPoint2D(this.point);
   }
 
   //
@@ -130,7 +136,7 @@ public final class SingletonListPoint3D extends AbstractListPoint3D {
   /**
    * Public constructor.
    */
-  public SingletonListPoint3D(final Point3D point) {
+  public SingletonListPoint2D(final Point2D point) {
 
     this.point = point;
   }

@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -26,11 +26,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
-import fr.ens.transcriptome.corsen.model.ListPoint3D;
+import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particle3DUtil;
 import fr.ens.transcriptome.corsen.model.Point3D;
@@ -105,7 +106,7 @@ public class TinyParticles3D extends DistanceProcessor {
     if (point == null)
       throw new NullPointerException("Point to test is null");
 
-    final ListPoint3D list = particle.getInnerPoints();
+    final AbstractListPoint3D list = particle.getInnerPoints();
 
     if (result == null)
       result = new ArrayList<Distance>(list.size());
@@ -119,7 +120,7 @@ public class TinyParticles3D extends DistanceProcessor {
   }
 
   @Override
-  ListPoint3D getPresentationPoints(ListPoint3D points) {
+  AbstractListPoint3D getPresentationPoints(AbstractListPoint3D points) {
 
     if (points == null)
       return null;
@@ -127,4 +128,9 @@ public class TinyParticles3D extends DistanceProcessor {
     return new SingletonListPoint3D(points.getBarycenter());
   }
 
+  @Override
+  protected void setProperties(final Properties properties) {
+
+  }
+  
 }

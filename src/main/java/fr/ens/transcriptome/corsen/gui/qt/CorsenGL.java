@@ -7,7 +7,7 @@ import java.util.Map;
 
 import fr.ens.transcriptome.corsen.calc.Distance;
 import fr.ens.transcriptome.corsen.calc.Particles3D;
-import fr.ens.transcriptome.corsen.model.ListPoint3D;
+import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
@@ -23,7 +23,7 @@ import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -42,7 +42,8 @@ public abstract class CorsenGL {
   public static final Color COLOR_WHITE = Color.white;
   public static final Color COLOR_BLACK = Color.black;
 
-  public abstract void drawPoint3D(Point3D point, final Color color);
+  public abstract void drawPoint3D(Point3D point, final Color color,
+      final float size);
 
   public abstract void drawLine3D(final Point3D a, final Point3D b,
       final Color color);
@@ -50,9 +51,11 @@ public abstract class CorsenGL {
   public abstract void text3D(final Point3D p, final String text,
       final Color color);
 
-  public abstract void drawPoints3D(ListPoint3D points, final Color color);
+  public abstract void drawPoints3D(AbstractListPoint3D points,
+      final Color color, final float size);
 
-  public abstract void drawPolygon3D(ListPoint3D points, final Color color);
+  public abstract void drawPolygon3D(AbstractListPoint3D points,
+      final Color color);
 
   /**
    * Draw the legend
@@ -119,7 +122,7 @@ public abstract class CorsenGL {
     if (particle == null)
       return;
 
-    drawPoints3D(particle.getInnerPoints(), color);
+    drawPoints3D(particle.getInnerPoints(), color, particle.getPixelDepth()/2);
     // drawPolygon3D(particle.getSurfacePoints(), getLowColor(color));
 
     /*
@@ -128,13 +131,38 @@ public abstract class CorsenGL {
   }
 
   public void drawParticles(final Particles3D particles, final Color color,
-      final boolean barycentre, final Color colorBaryCentre) {
+      final boolean barycentre, final Color colorBaryCentre,
+      final boolean randomColor) {
 
     if (particles == null)
       return;
 
-    for (Particle3D par : particles.getParticles())
-      drawParticle(par, color, barycentre, colorBaryCentre);
+    Color c = color;
+
+    int r = 0;
+    int g = 125;
+    int b = 255;
+
+    for (Particle3D par : particles.getParticles()) {
+
+      if (randomColor) {
+        c = new Color(r, g, b);
+        drawParticle(par, c, barycentre, colorBaryCentre);
+
+        r += 5;
+        g += 10;
+        b += 15;
+
+        if (r > 255)
+          r -= 255;
+        if (g > 255)
+          g -= 255;
+        if (b > 255)
+          b -= 255;
+
+      } else
+        drawParticle(par, c, barycentre, colorBaryCentre);
+    }
 
   }
 

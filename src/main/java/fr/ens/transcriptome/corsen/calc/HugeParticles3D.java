@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -26,9 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
-import fr.ens.transcriptome.corsen.model.ListPoint3D;
+import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 
@@ -224,18 +225,19 @@ public class HugeParticles3D extends DistanceProcessor {
   private List<Distance> calcAllDistances(final Particle3D mito,
       final Point3D point, boolean isNeg, List<Distance> result) {
 
-    final ListPoint3D listPoints = mito.getInnerPoints();
+    final AbstractListPoint3D listPoints = mito.getInnerPoints();
 
     if (result == null)
       result = new ArrayList<Distance>(listPoints.size());
-    else result.clear();
+    else
+      result.clear();
 
     final float radius = this.radius;
-    
+
     for (final Point3D p : listPoints) {
 
       final float d = p.distance(point);
-      result.add(new Distance(p, point, (isNeg && d <radius) ? -d : d));
+      result.add(new Distance(p, point, (isNeg && d < radius) ? -d : d));
     }
 
     return result;
@@ -261,9 +263,14 @@ public class HugeParticles3D extends DistanceProcessor {
   }
 
   @Override
-  ListPoint3D getPresentationPoints(ListPoint3D points) {
+  AbstractListPoint3D getPresentationPoints(AbstractListPoint3D points) {
 
     return points;
+  }
+
+  @Override
+  protected void setProperties(final Properties properties) {
+
   }
 
 }
