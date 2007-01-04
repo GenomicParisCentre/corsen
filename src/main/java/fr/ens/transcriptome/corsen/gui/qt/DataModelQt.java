@@ -47,7 +47,7 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
 public class DataModelQt {
 
   private static final int VIEWS_COUNT = 5;
-  private static final String DATA_SUMMARY_DESCRIPTION = "DataDouble result summary";
+  private static final String DATA_SUMMARY_DESCRIPTION = "Data result summary";
   private static final String DATA_VIEW_DESCRIPTION = "Full data results";
   private static final String IV_MESSENGERS_DESCRIPTION = "Intensities and volumes of messengers";
   private static final String IV_MESSENGERS_CUBOIDS_DESCRIPTION = "Intensities and volumes of messengers cuboids";
