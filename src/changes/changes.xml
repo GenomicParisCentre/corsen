@@ -38,7 +38,29 @@
 	</properties>
 	<body>
 
-	<release version="0.21" date="2006-10-22">
+		<release version="0.22" date="2007-01-04">
+			<action dev="jourdren" type="update">
+				La vue 3D est maintenant centrée. Des sphere sont
+				utilisées pour representer les points. Les effets de
+				lumières sont activés.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de nouveau tests unitaires pour s'assurer du bon
+				comportement des classes essentielles au fonctionnement
+				du programme.
+			</action>
+			<action dev="jourdren" type="update">
+				Renonnages, reorganisations massives du code.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout d'une interface en ligne de commande.
+			</action>
+			<action dev="jourdren" type="update">
+				Nombreuses amélioration de l'interface graphique.
+			</action>
+		</release>
+
+		<release version="0.21" date="2006-11-22">
 			<action dev="jourdren" type="add">
 				Nouvelle interface Graphique réalisée avec QtJambi.
 				Réorganisation interne pour pouvoir supporter plusieurs
@@ -61,7 +83,8 @@
 				Visualisation 3D des particules.
 			</action>
 			<action dev="jourdren" type="fix">
-				Calcule maintenant le volume et l'intensité des cuboids. Les cuboids ont maintenant un nom compréhensible.
+				Calcule maintenant le volume et l'intensité des cuboids.
+				Les cuboids ont maintenant un nom compréhensible.
 			</action>
 			<action dev="jourdren" type="fix">
 				Corrige les erreurs dans le fichier de sortie ".data".
