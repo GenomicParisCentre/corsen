@@ -28,7 +28,7 @@ public final class Globals {
   public static final String APP_NAME = "Corsen";
 
   /** The version of the application. */
-  public static final String APP_VERSION = "0.21-dev";
+  public static final String APP_VERSION = "0.22";
 
   public static final boolean DEBUG = true;
   public static final boolean DEBUG_HOME_DIR = true;
@@ -83,9 +83,9 @@ public final class Globals {
     + "Authors:\n"
     + "  Laurent Jourdren(*) <jourdren@biologie.ens.fr> Main developer, maintener.\n"
     + "  Mathilde Garcia(**) <garcia@biologie.ens.fr> Project leader, R programming, ImageJ scripting, testing.\n\n"
-    + "(*)  Plate-forme transcriptome, Ã‰cole Normale SupÃ©rieure\n"
-    + "(**) Laboratoire de GÃ©nÃ©tique MolÃ©culaire, Ã‰cole Normale SupÃ©rieure\n\n"
-    + "Copyright 2006 Ã‰cole Normale SupÃ©rieure.\n"
+    + "(*)  Plate-forme transcriptome, École Normale Supérieure\n"
+    + "(**) Laboratoire de Génétique Moléculaire, École Normale Supérieure\n\n"
+    + "Copyright 2006 École Normale Supérieure.\n"
     + LICENCE_TXT + "\n";
 
   
@@ -97,12 +97,12 @@ public final class Globals {
                 + "mitochondria and mRNA.</p><br/>"
                 + "<b>Authors</b>:"
                 + "<ul><li><a href=\"mailto:jourdren@biologie.ens.fr?subject=CorsenSwing\">Laurent Jourdren</a><br/>"
-                + "<a href=\"http://transcriptome.ens.fr\">Microarray platform, Ã‰cole Normale SupÃ©rieure</a>"
+                + "<a href=\"http://transcriptome.ens.fr\">Microarray platform, École Normale Supérieure</a>"
                 + "<br/>Main developer, maintener.</li><br/>"
                 + "<li><a href=\"mailto:garcia@biologie.ens.fr?subject=CorsenSwing\">Mathilde Garcia</a><br/>"
-                + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de GÃ©nÃ©tique MolÃ©culaire, Ã‰cole Normale Supï¿½rieure</a>"
+                + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de Génétique Moléculaire, École Normale Supérieure</a>"
                 + "<br/>Project leader, R programming, ImageJ scripting, testing.</li></ul>"
-                + "<p>Copyright 2006 Ã‰cole Normale SupÃ©rieure.<br/>"
+                + "<p>Copyright 2006 École Normale Supérieure.<br/>"
                 + LICENCE_TXT + "</p>";
 
   
