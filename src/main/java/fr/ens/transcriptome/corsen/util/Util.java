@@ -1,5 +1,7 @@
 package fr.ens.transcriptome.corsen.util;
 
+import java.io.File;
+
 import fr.ens.transcriptome.corsen.model.Point3D;
 
 public final class Util {
@@ -282,6 +284,22 @@ public final class Util {
     long mili = minRest % 1000;
 
     return String.format("%02d:%02d.%03d", min, sec, mili);
+  }
+
+  /**
+   * Get the extension of a file.
+   * @param f File
+   */
+  public static String getExtension(final File f) {
+    
+    String ext = null;
+    String s = f.getName();
+    int i = s.lastIndexOf('.');
+
+    if (i > 0 && i < s.length() - 1) {
+      ext = s.substring(i + 1).toLowerCase();
+    }
+    return ext;
   }
 
 }
