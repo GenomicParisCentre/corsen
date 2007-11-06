@@ -1,11 +1,11 @@
 import fr.ens.transcriptome.corsen.Globals;
-import fr.ens.transcriptome.corsen.RGL;
 import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle2D;
 import fr.ens.transcriptome.corsen.model.Particle2DBuilder;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
 import fr.ens.transcriptome.corsen.util.CorsenImageJUtil;
+import fr.ens.transcriptome.corsen.util.Util;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -42,7 +42,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.awt.geom.Area;
 import java.awt.image.IndexColorModel;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,20 +58,21 @@ import java.util.Set;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 /**
  * Implements ImageJ's Analyze Particles command.
  * <p>
  * 
  * <pre>
- *                                                          for each line do
- *                                                          for each pixel in this line do
- *                                                          if the pixel value is &quot;inside&quot; the threshold range then
- *                                                          trace the edge to mark the object
- *                                                          do the measurement
- *                                                          fill the object with a color outside the threshold range
- *                                                          else
- *                                                          continue the scan
+ *                                                                 for each line do
+ *                                                                 for each pixel in this line do
+ *                                                                 if the pixel value is &quot;inside&quot; the threshold range then
+ *                                                                 trace the edge to mark the object
+ *                                                                 do the measurement
+ *                                                                 fill the object with a color outside the threshold range
+ *                                                                 else
+ *                                                                 continue the scan
  * </pre>
  */
 public class Corsen_ implements PlugInFilter, Measurements {
@@ -213,8 +213,8 @@ public class Corsen_ implements PlugInFilter, Measurements {
         this.previousZ++;
     }
 
-    Particle2D p2D = Particle2DBuilder.createParticle2D((float) pixelWidth, (float) pixelHeight,
-        imp, (PolygonRoi) roi);
+    Particle2D p2D = Particle2DBuilder.createParticle2D((float) pixelWidth,
+        (float) pixelHeight, imp, (PolygonRoi) roi);
 
     Iterator it = this.previousParticules2D.iterator();
 
@@ -226,8 +226,7 @@ public class Corsen_ implements PlugInFilter, Measurements {
 
       if (p2DToTest.innerPointIntersect(p2D)) {
 
-        Particle3DBuilder existingP3D = this.previousParticles3D
-            .get(p2DToTest);
+        Particle3DBuilder existingP3D = this.previousParticles3D.get(p2DToTest);
 
         existingP3D.add(p2D, slice);
 
@@ -303,6 +302,11 @@ public class Corsen_ implements PlugInFilter, Measurements {
     writer.write(Globals.APP_NAME);
     writer.write(" version ");
     writer.write(Globals.APP_VERSION);
+    writer.write(" (");
+    writer.write(Globals.APP_BUILD_NUMBER);
+    writer.write(", ");
+    writer.write(Globals.APP_BUILD_DATE);
+    writer.write(")");
     writer.write("\n# Generated on ");
     writer.write(new Date(System.currentTimeMillis()).toString());
 
@@ -396,11 +400,40 @@ public class Corsen_ implements PlugInFilter, Measurements {
 
     if ((options & CHANGE_OUTPUT_FILENAME) != 0) {
       JFileChooser chooser = new JFileChooser();
+
+      final FileFilter ff = new FileFilter() {
+
+        public boolean accept(File f) {
+          if (f.isDirectory()) {
+            return true;
+          }
+
+          String extension = Util.getExtension(f);
+
+          if (extension != null) {
+            if (extension.equals(Globals.EXTENSION_PARTICLES_FILE))
+              return true;
+
+          }
+
+          return false;
+        }
+
+        // The description of this filter
+        public String getDescription() {
+          return "Particle file (*.par)";
+        }
+      };
+
+      chooser.setFileFilter(ff);
+
       int result = chooser.showSaveDialog(imp.getWindow());
 
       if (result == JFileChooser.APPROVE_OPTION) {
         file = chooser.getSelectedFile();
-      }
+      } else
+        return;
+
     } else {
 
       boolean writeFile = false;
@@ -414,7 +447,9 @@ public class Corsen_ implements PlugInFilter, Measurements {
         if (response == JOptionPane.YES_OPTION) {
 
           writeFile = true;
-        }
+        } else
+          return;
+
       } else
         writeFile = true;
 
@@ -442,10 +477,11 @@ public class Corsen_ implements PlugInFilter, Measurements {
       writer.close();
     }
 
-    final Particles3D mitosParticles = new Particles3D(file);
-    RGL rgl = new RGL(file.getParentFile(), file.getName() + ".R");
-    rgl.writeRPlots(mitosParticles, "red", false);
-    rgl.close();
+    /*
+     * final Particles3D mitosParticles = new Particles3D(file); RGL rgl = new
+     * RGL(file.getParentFile(), file.getName() + ".R");
+     * rgl.writeRPlots(mitosParticles, "red", false); rgl.close();
+     */
 
   }
 
@@ -533,7 +569,7 @@ public class Corsen_ implements PlugInFilter, Measurements {
       if (oldMacro)
         unitSquared = 1.0;
     }
-    GenericDialog gd = new GenericDialog("Analyze Particles");
+    GenericDialog gd = new GenericDialog(Globals.getWindowsTitle());
     minSize = staticMinSize;
     maxSize = staticMaxSize;
     if (maxSize == 999999)
