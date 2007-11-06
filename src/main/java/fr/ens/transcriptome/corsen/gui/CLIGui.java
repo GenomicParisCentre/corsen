@@ -85,6 +85,22 @@ public class CLIGui {
       }
 
     }
+    
+    /**
+     * Move to a thread. Needed by Qt.
+     * @param thread Thread to move
+     */
+    public void moveToThread(Thread thread) {
+    }
+    
+    /**
+     * Chain the update status for the differents threads. Needed by Qt.
+     * @return an UpdateStatus instance
+     */
+    public UpdateStatus chain() {
+      
+      return this;
+    }
 
   }
 

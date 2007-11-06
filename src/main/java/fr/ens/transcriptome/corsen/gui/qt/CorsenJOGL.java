@@ -137,7 +137,7 @@ public class CorsenJOGL extends CorsenGL {
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, mat_emission);
 
     this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_LINE);
-    setGLColor(color);
+    //setGLColor(color);
 
     this.gl.glBegin(GL.GL_LINES);
 
@@ -361,8 +361,8 @@ public class CorsenJOGL extends CorsenGL {
     // this.glut.glutSolidSphere(1, 16, 16);
     // this.glut.glutSolidCube(size);
     // this.glut.glutSolidOctahedron();
-     this.glut.glutSolidDodecahedron();
-    //this.glut.glutSolidSphere(size, 8, 8);
+     //this.glut.glutSolidDodecahedron();
+    this.glut.glutSolidSphere(size, 4, 4);
 
     gl.glPopMatrix();
 

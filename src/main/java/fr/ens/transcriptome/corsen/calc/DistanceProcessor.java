@@ -94,6 +94,15 @@ public abstract class DistanceProcessor {
     this.updateStatus = updateStatus;
   }
 
+  /**
+   * Get the UpdateStatus.
+   * @return the UpdateStatus
+   */
+  public UpdateStatus getUpdateStatus() {
+    
+    return this.updateStatus;
+  }
+  
   //
   // Other methods
   //
@@ -139,7 +148,8 @@ public abstract class DistanceProcessor {
   abstract List<Distance> calcDistance(final Particle3D particle,
       final Point3D point, List<Distance> result);
 
-  abstract AbstractListPoint3D getPresentationPoints(final AbstractListPoint3D points);
+  abstract AbstractListPoint3D getPresentationPoints(
+      final AbstractListPoint3D points);
 
   abstract void setProperties(Properties properties);
 

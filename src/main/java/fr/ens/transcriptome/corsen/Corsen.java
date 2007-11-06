@@ -62,7 +62,21 @@ public class Corsen {
     return batchMode;
   }
 
+  private static void bootstrap() {
+
+    if (!System.getProperty("os.name").toLowerCase().startsWith("mac os x"))
+      return;
+
+    try {
+      Corsen.class.getClassLoader().loadClass("com.sun.jnlp.JNLPClassLoader");
+      BootStrap.bootstrap();
+    } catch (ClassNotFoundException e) {
+    }
+  }
+
   public static void main(final String[] args) throws IOException {
+
+    bootstrap();
 
     logger.setLevel(Level.OFF);
 
@@ -148,39 +162,49 @@ public class Corsen {
 
     Option help = new Option("help", "show this message");
     Option about = new Option("about", "show information this software");
-    Option licence = new Option("licence",
-        "show information about the licence of this software");
+    Option licence =
+        new Option("licence",
+            "show information about the licence of this software");
     Option batch = new Option("batch", "batch mode");
 
-    Option conf = OptionBuilder.withArgName("file").hasArg().withDescription(
-        "configuration file").create("conf");
-    Option typea = OptionBuilder.withArgName("type").hasArg().withDescription(
-        "particle A type").create("typea");
-    Option typeb = OptionBuilder.withArgName("type").hasArg().withDescription(
-        "particle B type").create("typeb");
-    Option unit = OptionBuilder.withArgName("unit").hasArg().withDescription(
-        "unit").create("unit");
-    Option zfactor = OptionBuilder.withArgName("zfactor").hasArg()
-        .withDescription("z factor").create("zfactor");
-    Option factor = OptionBuilder.withArgName("factor").hasArg()
-        .withDescription("coordinates factor").create("factor");
-    Option threads = OptionBuilder.withArgName("number").hasArg()
-        .withDescription("number of threads").create("threads");
+    Option conf =
+        OptionBuilder.withArgName("file").hasArg().withDescription(
+            "configuration file").create("conf");
+    Option typea =
+        OptionBuilder.withArgName("type").hasArg().withDescription(
+            "particle A type").create("typea");
+    Option typeb =
+        OptionBuilder.withArgName("type").hasArg().withDescription(
+            "particle B type").create("typeb");
+    Option unit =
+        OptionBuilder.withArgName("unit").hasArg().withDescription("unit")
+            .create("unit");
+    Option zfactor =
+        OptionBuilder.withArgName("zfactor").hasArg().withDescription(
+            "z factor").create("zfactor");
+    Option factor =
+        OptionBuilder.withArgName("factor").hasArg().withDescription(
+            "coordinates factor").create("factor");
+    Option threads =
+        OptionBuilder.withArgName("number").hasArg().withDescription(
+            "number of threads").create("threads");
 
     Option od = new Option("od", "create output data files");
     Option oiv = new Option("oiv", "create output iv files");
     Option or = new Option("or", "create output results files");
 
-    Option ova = new Option("ova",
-        "create output particle A R visualisation files");
-    Option ovac = new Option("ovac",
-        "create output particle A cuboids R visualisation files");
-    Option ovb = new Option("ovb",
-        "create output particle B R visualisation files");
-    Option ovbc = new Option("ovbc",
-        "create output particle B cuboids R visualisation files");
-    Option ovd = new Option("ovd",
-        "create output distances R visualisation files");
+    Option ova =
+        new Option("ova", "create output particle A R visualisation files");
+    Option ovac =
+        new Option("ovac",
+            "create output particle A cuboids R visualisation files");
+    Option ovb =
+        new Option("ovb", "create output particle B R visualisation files");
+    Option ovbc =
+        new Option("ovbc",
+            "create output particle B cuboids R visualisation files");
+    Option ovd =
+        new Option("ovd", "create output distances R visualisation files");
 
     Options options = new Options();
 

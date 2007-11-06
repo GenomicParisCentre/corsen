@@ -71,6 +71,22 @@ public class CorsenFakeGui {
 
     }
 
+    /**
+     * Move to a thread. Needed by Qt.
+     * @param thread Thread to move
+     */
+    public void moveToThread(Thread thread) {
+    }
+
+    /**
+     * Chain the update status for the differents threads. Needed by Qt.
+     * @return an UpdateStatus instance
+     */
+    public UpdateStatus chain() {
+
+      return this;
+    }
+
   }
 
   public static void main(String[] args) throws IOException {
@@ -128,21 +144,18 @@ public class CorsenFakeGui {
 
     System.out.println("Median: " + da.getMedian());
 
-    
     settings.setThreadNumber(2);
-    
-    
+
     startTime = System.currentTimeMillis();
     dc.calc();
     endTime = System.currentTimeMillis();
-    
-    
+
     System.out.println("exec time: " + (endTime - startTime) + " ms.");
 
     da = new DistanceAnalyser(result.getMinDistances());
 
     System.out.println("Median: " + da.getMedian());
-    
+
   }
 
 }

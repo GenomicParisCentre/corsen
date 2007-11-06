@@ -49,4 +49,16 @@ public interface UpdateStatus {
    */
   void endProcess(CorsenResult result) ;
   
+  /**
+   * Move to a thread. Needed by Qt.
+   * @param thread Thread to move
+   */
+  void moveToThread(Thread thread);
+  
+  /**
+   * Chain the update status for the differents threads. Needed by Qt.
+   * @return an UpdateStatus instance
+   */
+  UpdateStatus chain();
+  
 }

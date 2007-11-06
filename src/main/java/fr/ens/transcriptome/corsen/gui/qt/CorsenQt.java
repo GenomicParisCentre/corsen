@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.trolltech.qt.QThread;
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.core.Qt.ConnectionType;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QDesktopServices;
@@ -85,6 +87,26 @@ public class CorsenQt extends QMainWindow {
     public void endProcess(CorsenResult result) {
       this.resultSignal.emit(result);
     }
+
+    /**
+     * Chain the update status for the differents threads. Needed by Qt.
+     * @return an UpdateStatus instance
+     */
+    public UpdateStatus chain() {
+
+      UpdateStatusQt result = new UpdateStatusQt();
+      result.errorSignal.connect(this, "showError(String)",
+          ConnectionType.QueuedConnection);
+      result.messageSignal.connect(this, "showMessage(String)",
+          ConnectionType.QueuedConnection);
+      result.statusSignal.connect(this, "updateStatus(ProgressEvent)",
+          ConnectionType.QueuedConnection);
+      result.resultSignal.connect(this, "endProcess(CorsenResult)",
+          ConnectionType.QueuedConnection);
+
+      return result;
+    }
+
   }
 
   private class StatusInfo {
@@ -179,8 +201,8 @@ public class CorsenQt extends QMainWindow {
   private void openMessengers() {
 
     String fileName = QFileDialog.getOpenFileName(this, "Set messengers file",
-        this.lastDir, "Particles file (*" + Globals.EXTENSION_PARTICLES_FILE
-            + ")");
+        this.lastDir, new QFileDialog.Filter("Particles file (*"
+            + Globals.EXTENSION_PARTICLES_FILE + ")"));
     if (fileName.length() != 0) {
       setMessengerPathLabelText(fileName);
       setDirectoryPathLabelText("");
@@ -196,7 +218,8 @@ public class CorsenQt extends QMainWindow {
   private void openMitos() {
 
     String fileName = QFileDialog.getOpenFileName(this,
-        "Set mitochondria file", this.lastDir, "Particles file (*.par)");
+        "Set mitochondria file", this.lastDir, new QFileDialog.Filter(
+            "Particles file (*.par)"));
     if (fileName.length() != 0) {
       setMitoPathLabelText(fileName);
       setDirectoryPathLabelText("");
@@ -253,7 +276,7 @@ public class CorsenQt extends QMainWindow {
     String ext = this.models.getSaveFileExtension(modelView);
 
     String fileName = QFileDialog.getSaveFileName(this, "Save result",
-        this.lastDir, "Result file (*" + ext + ")");
+        this.lastDir, new QFileDialog.Filter("Result file (*" + ext + ")"));
     if (fileName.length() != 0) {
 
       try {
@@ -274,9 +297,10 @@ public class CorsenQt extends QMainWindow {
     mainWindowUi.viewOGL.setResult(result);
     mainWindowUi.viewOGL.setSettings(this.settings);
 
-    this.models.setResult(result);
-    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
-        .currentIndex()));
+    // No update of the result tab
+    //this.models.setResult(result);
+    //this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+    //    .currentIndex()));
 
     if (result == null || result.getCuboidsMessengersParticles() == null) {
       mainWindowUi.particlesACuboidsRadioButton.setEnabled(false);
@@ -407,10 +431,14 @@ public class CorsenQt extends QMainWindow {
     UpdateStatusQt updateStatus = new UpdateStatusQt();
 
     cc.setUpdateStatus(updateStatus);
-    updateStatus.errorSignal.connect(this, "showError(String)");
-    updateStatus.messageSignal.connect(this, "showMessage(String)");
-    updateStatus.statusSignal.connect(this, "updateStatus(ProgressEvent)");
-    updateStatus.resultSignal.connect(this, "endProcess(CorsenResult)");
+    updateStatus.errorSignal.connect(this, "showError(String)",
+        ConnectionType.QueuedConnection);
+    updateStatus.messageSignal.connect(this, "showMessage(String)",
+        ConnectionType.QueuedConnection);
+    updateStatus.statusSignal.connect(this, "updateStatus(ProgressEvent)",
+        ConnectionType.QueuedConnection);
+    updateStatus.resultSignal.connect(this, "endProcess(CorsenResult)",
+        ConnectionType.QueuedConnection);
 
     String dirFile = mainWindowUi.directoryPathLabel.text();
     String arnFile = mainWindowUi.messengerPathLabel.text();
@@ -421,7 +449,11 @@ public class CorsenQt extends QMainWindow {
       cc.setDirFiles(new File(dirFile));
       cc.setMultipleFiles(true);
 
+      // Thread t = new Thread(cc);
+      // t.start();
+
       Thread t = new Thread(cc);
+      updateStatus.moveToThread(t);
       t.start();
 
     } else if (arnFile.length() == 0 || mitoFile.length() == 0) {
@@ -437,6 +469,7 @@ public class CorsenQt extends QMainWindow {
 
       // final JFileChooser jfc = new JFileChooser();
       QFileDialog dialog = new QFileDialog(this);
+      dialog.setFileMode(QFileDialog.FileMode.AnyFile);
       dialog.setWindowTitle("Set output files prefix");
       // if (dirFile.length() > 0)
       // jfc.setCurrentDirectory(CorsenSwing.this.gui.getCurrentDirectory());
@@ -456,7 +489,11 @@ public class CorsenQt extends QMainWindow {
         cc.setResultFile(new File(prefixFilename));
         cc.setMultipleFiles(false);
 
-        new Thread(cc).start();
+        Thread t = new Thread(cc);
+        updateStatus.moveToThread(t);
+        t.start();
+
+        // new Thread(cc).start();
         // SwingUtilities.invokeLater(cc);
 
       }
@@ -533,7 +570,6 @@ public class CorsenQt extends QMainWindow {
   private void quit() {
 
     QApplication.exit();
-
   }
 
   @SuppressWarnings("unused")
@@ -552,15 +588,18 @@ public class CorsenQt extends QMainWindow {
     mainWindowUi.resultTableView.setModel(this.models.getModel(i));
 
     mainWindowUi.resultTableView.setAlternatingRowColors(true);
-    mainWindowUi.resultTableView.setSortingEnabled(true);
-    mainWindowUi.resultTableView.sortByColumn(1, Qt.SortOrder.AscendingOrder);
+    //mainWindowUi.resultTableView.setSortingEnabled(true);
+    //mainWindowUi.resultTableView.sortByColumn(1, Qt.SortOrder.AscendingOrder);
 
   }
 
   public void closeEvent(QCloseEvent event) {
 
+    QApplication.exit();
+    
+    /*super.closeEvent(event);
     quit();
-    System.exit(0);
+    System.exit(0);*/
   }
 
   //
@@ -797,7 +836,11 @@ public class CorsenQt extends QMainWindow {
    */
   public static void main(final String[] args) {
     QApplication.initialize(args);
+
     CorsenQt mainw = new CorsenQt();
+
+    // QApplication.invokeLater(mainw);
+
     mainw.show();
     QApplication.exec();
   }
@@ -812,7 +855,8 @@ public class CorsenQt extends QMainWindow {
 
     // Place what you made in Designer onto the main window.
     mainWindowUi.setupUi(this);
-    setWindowTitle(Globals.APP_NAME + " " + Globals.APP_VERSION);
+
+    setWindowTitle(Globals.getWindowsTitle());
 
     mainWindowUi.actionAbout_Corsen.triggered.connect(this, "about()");
     mainWindowUi.actionCorsen_Website.triggered.connect(this, "openWebsite()");
@@ -859,11 +903,10 @@ public class CorsenQt extends QMainWindow {
 
     initResultTab();
 
-    setWindowIcon(new QIcon("classpath:files/corsen-logo.png"));
+    setWindowIcon(new QIcon("classpath:corsen-logo.png"));
 
     endProcess(null);
     setStartEnable(true);
 
   }
-
 }

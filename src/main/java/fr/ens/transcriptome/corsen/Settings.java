@@ -500,7 +500,8 @@ public final class Settings {
    */
   public int getThreadNumber() {
 
-    String value = this.properties.getProperty(THREAD_NUMBER, "0");
+    String value = this.properties.getProperty(THREAD_NUMBER, ""
+        +Globals.THREAD_NUMBER_DEFAULT);
 
     return Integer.parseInt(value.trim());
   }
