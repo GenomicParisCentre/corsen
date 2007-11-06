@@ -1,4 +1,4 @@
-<ui version="4.0" >
+<ui version="4.0" language="jambi" >
  <class>ParticleTypePropertiesDialog</class>
  <widget class="QDialog" name="ParticleTypePropertiesDialog" >
   <property name="geometry" >
@@ -66,7 +66,7 @@
    <item>
     <spacer>
      <property name="orientation" >
-      <enum>Qt::Vertical</enum>
+      <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
      </property>
      <property name="sizeHint" >
       <size>
@@ -87,7 +87,7 @@
      <item>
       <spacer>
        <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
+        <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
        </property>
        <property name="sizeHint" >
         <size>
@@ -119,7 +119,7 @@
  <connections>
   <connection>
    <sender>okButton</sender>
-   <signal>clicked()</signal>
+   <signal>clicked</signal>
    <receiver>ParticleTypePropertiesDialog</receiver>
    <slot>accept()</slot>
    <hints>
@@ -135,7 +135,7 @@
   </connection>
   <connection>
    <sender>cancelButton</sender>
-   <signal>clicked()</signal>
+   <signal>clicked</signal>
    <receiver>ParticleTypePropertiesDialog</receiver>
    <slot>reject()</slot>
    <hints>
