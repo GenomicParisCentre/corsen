@@ -764,6 +764,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_Report_Bug" />
     <addaction name="separator" />
     <addaction name="actionAbout_Corsen" />
+    <addaction name="actionAbout_QtJambi" />
    </widget>
    <widget class="QMenu" name="menu_File" >
     <property name="title" >
@@ -830,6 +831,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionAbout_Corsen" >
    <property name="text" >
     <string>&amp;About Corsen</string>
+   </property>
+  </action>
+  <action name="actionAbout_QtJambi" >
+   <property name="text" >
+    <string>About &amp;QtJambi</string>
    </property>
   </action>
   <action name="actionSave_settings" >
