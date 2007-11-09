@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-15" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -5,13 +6,15 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.15</version>
+	<version>0.25</version>
 	<name>Corsen</name>
-	<description>A tool to calc distance between mitochondria and RNA</description>
-	<url>http://transcriptome.ens.fr/corsen</url>
+	<description>
+		A tool to calc distance between mitochondria and RNA
+	</description>
+	<url>http://hestia.ens.fr/corsen</url>
 
 	<organization>
-		<name>Ãcole Normale SupÃ©rieure Microarray platform</name>
+		<name>École Normale Supérieure Microarray platform</name>
 		<url>http://transcriptome.ens.fr/sgdb</url>
 	</organization>
 
@@ -22,7 +25,7 @@
 			<email>jourdren 0 biologie ens fr</email>
 			<url />
 			<organization>
-				Ãcole Normale SupÃ©rieure Microarray platform
+				École Normale Supérieure Microarray platform
 			</organization>
 			<organizationUrl>
 				http://transcriptome.ens.fr/sgdb
@@ -39,8 +42,8 @@
 			<email>mgarcia 0 biologie ens fr</email>
 			<url />
 			<organization>
-				Ãcole Normale SupÃ©rieure Laboratoire de GÃ©nÃ©tique
-				MolÃ©culaire
+				École Normale Supérieure Laboratoire de Génétique
+				Moléculaire
 			</organization>
 			<organizationUrl>
 				http://www.biologie.ens.fr/lgmgml
@@ -62,11 +65,46 @@
 		</license>
 	</licenses>
 
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>leburon</id>
+			<name>Leburon Maven 2.x Repository</name>
+			<url>http://hestia.ens.fr/maven2</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>sateh.com</id>
+			<name>seteh repository</name>
+			<url>http://maven.sateh.com/repository</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>java.net</id>
+			<name>java.net repository</name>
+			<url>
+				https://maven-repository.dev.java.net/nonav/repository
+			</url>
+			<layout>legacy</layout>
+		</repository>
+	</repositories>
+
 
 	<scm>
 		<connection>
-			scm:svn:https://anosgdb@subversion.biologie.ens.fr/svn/leburon/trunk/corsen
+			scm:svn:https://anosgdb:anosgdb@subversion.biologie.ens.fr/svn/leburon
 		</connection>
+		<developerConnection>
+			scm:svn:https://anosgdb@subversion.biologie.ens.fr/svn/leburon
+		</developerConnection>
 		<url>
 			http://skadi.ens.fr/websvn/listing.php?repname=leburon
 		</url>
@@ -80,12 +118,385 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>imagej</groupId>
-			<artifactId>ij</artifactId>
-			<version>1.36b</version>
+			<groupId>commons-math</groupId>
+			<artifactId>commons-math</artifactId>
+			<version>1.1</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.0</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>NIH</groupId>
+			<artifactId>ij</artifactId>
+			<version>138p</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>trolltech</groupId>
+			<artifactId>qtjambi</artifactId>
+			<version>4.3.2_01</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>trolltech</groupId>
+			<artifactId>qtjambi-mac</artifactId>
+			<version>4.3.2_01</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>trolltech</groupId>
+			<artifactId>qtjambi-linux</artifactId>
+			<version>4.3.2_01</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>trolltech</groupId>
+			<artifactId>qtjambi-win32</artifactId>
+			<version>4.3.2_01</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jogl</groupId>
+			<artifactId>jogl-native-${os.name}-${os.arch}</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>sun</groupId>
+			<artifactId>javaws</artifactId>
+			<version>1.5</version>
+			<scope>compile</scope>
+		</dependency>
+<groupId>org.apache.maven.skins</groupId>
+     <artifactId>maven-stylus-skin</artifactId>
+     <version>1.0</version>
 	</dependencies>
+
+	<build>
+		<directory>target</directory>
+		<outputDirectory>target/classes</outputDirectory>
+		<finalName>${artifactId}-${version}</finalName>
+		<testOutputDirectory>target/test-classes</testOutputDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/java/files</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/java</directory>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-ressources</id>
+           					<phase>generate-resources</phase>
+           					<configuration>
+             						<tasks>
+								<mkdir dir="${basedir}/target/generated-resources"/>
+								<buildnumber file="${basedir}/build.num"/>
+								<tstamp>
+									<format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
+								</tstamp>
+
+								<manifest file="${basedir}/target/generated-resources/MANIFEST.MF">
+									<attribute name="Built-By" value="${user.name}"/>
+									<attribute name="Built-Date" value="${TODAY}"/>  
+
+									<attribute name="Specification-Title" value="${pom.name}"/>   
+									<attribute name="Specification-Version" value="${pom.version}"/>   
+									<attribute name="Specification-Vendor" value="${project.organization.name}"/>
+
+									<attribute name="Implementation-Title" value="${pom.name}"/>   
+									<attribute name="Implementation-Version" value="build${build.number}"/>   
+									<attribute name="Implementation-Vendor" value="${project.organization.name}"/>
+								</manifest>
+								<copy file="${basedir}/target/generated-resources/MANIFEST.MF" tofile="${basedir}/target/classes/manifest.txt"/>
+             						</tasks>
+           					</configuration>
+           					<goals>
+             						<goal>run</goal>
+           					</goals>
+         				</execution>
+					<execution>
+						<id>juic</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<tasks>
+								<echo>Qt Jambi</echo>
+								<mkdir
+									dir="${basedir}/target/generated-sources" />
+								<exec
+									executable="/usr/local/java/qtjambi/bin/juic">
+									<env key="PATH" value="/usr/local/java/qtjambi/bin"/>
+									<env key="LD_LIBRARY_PATH" value="/usr/local/java/qtjambi/lib"/>
+									<env key="DYLD_LIBRARY_PATH" value="/usr/local/java/qtjambi/lib"/>
+									<arg value="-cp" />
+									<arg
+										value="${basedir}/src/main/java" />
+									<arg value="-d" />
+									<arg
+										value="${basedir}/target/generated-sources" />
+								</exec>
+
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>integrate-jnlp-site</id>
+						<phase>install</phase>
+						<configuration>
+							<tasks>
+								<mkdir
+									dir="${basedir}/target/site/webstart" />
+								<unzip
+									src="${basedir}/target/${artifactId}-${version}.zip"
+									dest="${basedir}/target/site/webstart" />
+								<delete
+									file="${basedir}/target/site/webstart/keystore" />
+
+								<concat
+									destfile="${basedir}/target/site/webstart/corsen.jnlp">
+									<fileset
+										file="${basedir}/target/site/webstart/corsen-head.txt" />
+									<fileset
+										file="${basedir}/target/site/webstart/resources.jnlp" />
+									<fileset
+										file="${basedir}/target/site/webstart/corsen-tail.txt" />
+								</concat>
+								<delete>
+									<fileset
+										dir="${basedir}/target/site/webstart" includes="corsen-*.txt" />
+								</delete>
+
+								<concat
+									destfile="${basedir}/target/site/webstart/imagej.jnlp">
+									<fileset
+										file="${basedir}/target/site/webstart/imagej-head.txt" />
+									<fileset
+										file="${basedir}/target/site/webstart/resources.jnlp" />
+									<fileset
+										file="${basedir}/target/site/webstart/imagej-tail.txt" />
+								</concat>
+								<delete>
+									<fileset
+										dir="${basedir}/target/site/webstart" includes="corsen-*.txt" />
+									<fileset
+										dir="${basedir}/target/site/webstart" includes="imagej-*.txt" />
+									<fileset
+										dir="${basedir}/target/site/webstart"
+										includes="resources.jnlp" />
+								</delete>
+
+								<replace
+									file="${basedir}/target/site/webstart/imagej.jnlp">
+									<replacetoken>
+										main="true"
+									</replacetoken>
+									<replacevalue />
+								</replace>
+								<replace file="${basedir}/target/site/webstart/imagej.jnlp">
+									<replacetoken>jar href="ij</replacetoken>
+									<replacevalue>jar main="true" href="ij</replacevalue>
+								</replace>
+								<replace dir="${basedir}/target/site" value="${pom.url}">
+									<include name="**/*.jnlp"/>
+									<include name="**/*.html"/>
+									<replacetoken>@@@WEBSITE@@@</replacetoken>
+								</replace>
+								<replace dir="${basedir}/target/site" value="${pom.version}">
+									<include name="**/*.jnlp"/>
+									<include name="**/*.html"/>
+									<replacetoken>@@@VERSION@@@</replacetoken>
+								</replace>
+								<copy file="${basedir}/target/corsen-${pom.version}.jar" 
+									tofile="${basedir}/target/site/corsen_plugin-${pom.version}.jar"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<mode>development</mode>
+							<url>${pom.url}</url>
+						</manifestEntries>
+						<manifestFile>${basedir}/target/generated-resources/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>
+									${basedir}/target/generated-sources
+								</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>webstart-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jnlp</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!--outputDirectory></outputDirectory-->
+					<!-- not required?? -->
+
+					<!-- transitive dependencies filter -->
+					<dependencies>
+						<!-- Note that only groupId and artifactId must be specified here. because of a limitation of the Include/ExcludesArtifactFilter -->
+						<includes>
+							<include>commons-cli:commons-cli</include>
+							<include>commons-math:commons-math</include>
+							<include>NIH:ij</include>
+							<!--include>trolltech:qtjambi-launcher</include-->
+							<!--include>trolltech:qtjambi</include>
+								<include>trolltech:qtjambi-linux</include>
+								<include>trolltech:qtjambi-mac</include>
+								<include>trolltech:qtjambi-win32</include-->
+							<!-- excludes>
+								<exclude></exclude>
+								<excludes-->
+						</includes>
+					</dependencies>
+
+					<!-- JNLP generation -->
+					<jnlp>
+						<!-- default values -->
+						<resources>
+							${project.basedir}/src/jnlp/resources
+						</resources>
+						<inputTemplateResourcePath>
+							${project.basedir}
+						</inputTemplateResourcePath>
+						<inputTemplate>
+							src/jnlp/template.vm
+						</inputTemplate>
+						<!-- relative to inputTemplateResourcePath -->
+						<outputFile>resources.jnlp</outputFile><!-- defaults to launch.jnlp -->
+
+						<!-- used to automatically identify the jar containing the main class. -->
+						<!-- this is perhaps going to change -->
+						<!--mainClass>
+							fr.ens.transcriptome.corsen.Corsen
+							</mainClass-->
+						<!--mainClass>fr.ens.transcriptome.nividic.js.swing.AnalogClock</mainClass-->
+					</jnlp>
+					<!-- SIGNING -->
+					<!-- defining this will automatically sign the jar and its dependencies, if necessary -->
+					<sign>
+						<keystore>keystore</keystore>
+						<keypass>m2m2m2</keypass><!-- we need to override passwords easily from the command line. ${keypass} -->
+						<storepass>m2m2m2m</storepass><!-- ${storepass} -->
+						<storetype />
+						<alias>leburonkey</alias>
+						<validity>36000</validity>
+
+						<dnameCn>
+							ENS Microarray Platform Bioinformatic Team
+						</dnameCn>
+						<dnameOu>Microarray Platform</dnameOu>
+						<dnameO>École Normale Supérieure</dnameO>
+						<dnameL>Paris</dnameL>
+						<dnameSt>Ile de France</dnameSt>
+						<dnameC>fr</dnameC>
+
+						<verify>true</verify>
+					</sign>
+
+					<!-- KEYSTORE MANGEMENT -->
+					<keystore>
+						<delete>true</delete><!-- delete the keystore -->
+						<gen>true</gen><!-- optional shortcut to generate the store. -->
+					</keystore>
+
+					<!-- BUILDING PROCESS -->
+					<!--usejnlpservlet>true</usejnlpservlet-->
+					<!-- not yet supported -->
+
+					<!-- should we have some more configurations here? E.g. compression level (aka packing effort) -->
+					<!-- not yet implemented -->
+					<!--pack200>true</pack200>
+						<gzip>true</gzip--><!-- default force when pack200 false, true when pack200 selected ?? -->
+
+					<!-- misc -->
+					<!-- if there are multiple apps, do we need to mark one as default? (app/ redirects to app/default.jnlp in jnlp servlet ??)-->
+					<!-- -->
+
+					<!--install>false</install--><!-- not yet supported -->
+					<verbose>false</verbose>
+
+				</configuration>
+			</plugin>
+
+		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
+	</build>
+
+
 
 	<reporting>
 		<plugins>
@@ -105,12 +516,121 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>changes-maven-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>changes-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+				<!--executions>
+					<execution>
+						<goals>
+							<goal>announcement-generate</goal>
+						</goals>
+						<id>announcement-generate</id>
+					</execution>
+					<execution>
+					<goals>
+						<goal>announcement-mail</goal>
+					</goals>
+					<id>announcement-mail</id>
+					</execution>
+				</executions>
+				<configuration>
+					<smtpHost>smtp.biologie.ens.fr</smtpHost>
+					<smtpPort implementation="java.lang.Integer">25</smtpPort>
+					<toAddresses>
+						<toAddress implementation="java.lang.String">jourdren@biologie.ens.fr</toAddress>
+					</toAddresses>
+				</configuration-->
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jxr-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clover-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-docck-plugin</artifactId>
+			</plugin>
+			<!--<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+				<targetjdk>1.5</targetjdk>
+				<rulesets>
+				<ruleset>/rulesets/basic.xml</ruleset>
+				<ruleset>/rulesets/controversial.xml</ruleset>
+				</rulesets>
+				<format>xml</format>
+				<linkXref>true</linkXref>
+				<sourceEncoding>utf-8</sourceEncoding>
+				<minimumTokens>100</minimumTokens>
+				</configuration>
+				</plugin>-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>changelog-maven-plugin</artifactId>
+			</plugin>
+			<!--plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>taglist-maven-plugin</artifactId>
+			</plugin-->
+			<!--<plugin>
+				<groupId>maven</groupId>
+				<artifactId>maven-simian-plugin</artifactId>
+				</plugin>-->
+			<!--<plugin>
+				<groupId>maven</groupId>
+				<artifactId>maven-junit-report-plugin</artifactId>
+				</plugin>-->
+			<!--<plugin>
+				<groupId>maven</groupId>
+				<artifactId>maven-tasklist-plugin</artifactId>
+				</plugin>-->
+			<!--<plugin>
+				<groupId>maven</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				</plugin>
+				<plugin>
+				<groupId>maven</groupId>
+				<artifactId>maven-faq-plugin</artifactId>
+				</plugin>-->
 		</plugins>
 	</reporting>
+
+	<!-- Enabling the use of FTP -->
+	<distributionManagement>
+		<repository>
+			<id>leburon-repository</id>
+			<url>
+				ftp://hestia.ens.fr/export/home1/httpd/html/leburon/maven2
+			</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>leburon-repository</id>
+			<name>Nividic Snapshots</name>
+			<url>
+				ftp://hestia.ens.fr/export/home1/httpd/html/leburon/maven2
+			</url>
+		</snapshotRepository>
+		<site>
+			<id>leburon-repository</id>
+			<name>Nividic Website</name>
+			<url>
+				ftp://hestia.ens.fr/export/home1/httpd/html/leburon/corsen
+			</url>
+		</site>
+	</distributionManagement>
+
 
 </project>
