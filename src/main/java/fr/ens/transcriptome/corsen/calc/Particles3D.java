@@ -6,15 +6,23 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
 
 public class Particles3D {
+
+  private static final String PAR_FILE_VERSION = "1.1";
 
   public static final String WIDTH_KEY = "Width";
   public static final String HEIGHT_KEY = "Height";
@@ -40,6 +48,7 @@ public class Particles3D {
   private double maxThreshold;
   private ParticleType type;
   private String imageFilename;
+  private Date imageFilenameDate;
 
   private List<Particle3D> particles;
 
@@ -138,20 +147,11 @@ public class Particles3D {
   }
 
   /**
-   * Set the type of the particles.
-   * @param type The type to set
+   * Get the create date of the image
+   * @return Returns the imageFilenameDate
    */
-  public void setType(final ParticleType type) {
-
-    this.type = type;
-  }
-
-  /**
-   * Get the image filename.
-   * @return Returns the imageFilename
-   */
-  public String getImageFilename() {
-    return imageFilename;
+  public Date getImageFilenameDate() {
+    return imageFilenameDate;
   }
 
   //
@@ -183,6 +183,128 @@ public class Particles3D {
     this.particles = Collections.unmodifiableList(particles);
   }
 
+  /**
+   * Set the particles.
+   * @param particles Particles to set
+   */
+  public void setParticles(Set<Particle3DBuilder> particles) {
+
+    if (particles == null)
+      return;
+
+    List<Particle3D> list = new ArrayList<Particle3D>(particles.size());
+
+    for (Particle3DBuilder p : particles)
+      list.add(p.getParticle());
+
+    this.particles = Collections.unmodifiableList(list);
+  }
+
+  /**
+   * Set the type of the particles.
+   * @param type The type to set
+   */
+  public void setType(final ParticleType type) {
+
+    this.type = type;
+  }
+
+  /**
+   * Get the image filename.
+   * @return Returns the imageFilename
+   */
+  public String getImageFilename() {
+    return imageFilename;
+  }
+
+  /**
+   * Set the width of the image.
+   * @param width The width to set
+   */
+  public void setWidth(final int width) {
+    this.width = width;
+  }
+
+  /**
+   * Set the height of the image.
+   * @param height The height to set
+   */
+  public void setHeight(final int height) {
+    this.height = height;
+  }
+
+  /**
+   * Set the zSlices of the image.
+   * @param slices The zSlices to set
+   */
+  public void setZSlices(final int slices) {
+    zSlices = slices;
+  }
+
+  /**
+   * Set the pixelwidth of the image.
+   * @param pixelWidth The pixelWidth to set
+   */
+  public void setPixelWidth(final float pixelWidth) {
+    this.pixelWidth = pixelWidth;
+  }
+
+  /**
+   * Set the pixelHeight of the image.
+   * @param pixelHeight The pixelHeight to set
+   */
+  public void setPixelHeight(final float pixelHeight) {
+    this.pixelHeight = pixelHeight;
+  }
+
+  /**
+   * Set the pixelDepth of the image.
+   * @param pixelDepth The pixelDepth to set
+   */
+  public void setPixelDepth(final float pixelDepth) {
+    this.pixelDepth = pixelDepth;
+  }
+
+  /**
+   * Set the unit of length used in the image.
+   * @param unitOfLength The unitOfLength to set
+   */
+  public void setUnitOfLength(final String unitOfLength) {
+    this.unitOfLength = unitOfLength;
+  }
+
+  /**
+   * Set the minimal threshold used in the image.
+   * @param minThreshold The minThreshold to set
+   */
+  public void setMinThreshold(final double minThreshold) {
+    this.minThreshold = minThreshold;
+  }
+
+  /**
+   * Set the maximal threshold used in the image.
+   * @param maxThreshold The maxThreshold to set
+   */
+  public void setMaxThreshold(final double maxThreshold) {
+    this.maxThreshold = maxThreshold;
+  }
+
+  /**
+   * Set the image filename.
+   * @param imageFilename The imageFilename to set
+   */
+  public void setImageFilename(final String imageFilename) {
+    this.imageFilename = imageFilename;
+  }
+
+  /**
+   * Set the creation date of the image
+   * @param imageFilenameDate The imageFilenameDate to set
+   */
+  public void setImageFilenameDate(final Date imageFilenameDate) {
+    this.imageFilenameDate = imageFilenameDate;
+  }
+
   //
   // Other methods
   //
@@ -197,8 +319,9 @@ public class Particles3D {
     if (pars == null)
       return false;
 
-    return pars.width == this.width && pars.height == this.height
-        && pars.zSlices == this.zSlices && pars.pixelWidth == this.pixelWidth
+    return pars.width == this.width
+        && pars.height == this.height && pars.zSlices == this.zSlices
+        && pars.pixelWidth == this.pixelWidth
         && pars.pixelHeight == this.pixelHeight
         && pars.pixelDepth == this.pixelDepth;
   }
@@ -370,6 +493,69 @@ public class Particles3D {
     return result;
   }
 
+  /**
+   * Save Particles to a Par file.
+   * @param outputStream Output stream to use
+   * @throws IOException if an error occurs while writing the file
+   */
+  public void saveParticles(OutputStream outputStream) throws IOException {
+
+    Writer writer = new OutputStreamWriter(outputStream);
+
+    writer.write("# Generated by ");
+    writer.write(Globals.APP_NAME);
+    writer.write(" version ");
+    writer.write(Globals.APP_VERSION);
+    writer.write(" (");
+    writer.write(Globals.APP_BUILD_NUMBER);
+    writer.write(", ");
+    writer.write(Globals.APP_BUILD_DATE);
+    writer.write(")");
+    writer.write("\n# Generated on ");
+    writer.write(new Date(System.currentTimeMillis()).toString());
+
+    writer.write("\n# Image file name: ");
+
+    writer.write(this.imageFilename != null
+        ? this.imageFilename : "Unknown image file");
+    writer.write("\n# Image created on ");
+
+    writer.write(this.imageFilenameDate != null ? this.imageFilenameDate
+        .toString() : "Unknown creation date");
+
+    writer.write("\nParFileVersion=" + PAR_FILE_VERSION);
+
+    writer.write("\n" + Particles3D.WIDTH_KEY + "=" + this.width);
+    writer.write("\n" + Particles3D.HEIGHT_KEY + "=" + this.height);
+    writer.write("\n" + Particles3D.ZSLICES_KEY + "=" + this.zSlices);
+
+    writer.write("\n" + Particles3D.PIXEL_WIDTH_KEY + "=" + this.pixelWidth);
+    writer.write("\n" + Particles3D.PIXEL_HEIGHT_KEY + "=" + this.pixelHeight);
+    writer.write("\n" + Particles3D.PIXEL_DEPTH_KEY + "=" + this.pixelDepth);
+    writer.write("\n"
+        + Particles3D.UNIT_OF_LENGHT_KEY + "=" + this.unitOfLength);
+
+    writer
+        .write("\n" + Particles3D.MIN_THRESHOLD_KEY + "=" + this.minThreshold);
+    writer
+        .write("\n" + Particles3D.MAX_THRESHOLD_KEY + "=" + this.maxThreshold);
+
+    writer
+        .write("\nName\tCenter\tBarycenter\tVolume\tIntensity\tSurface points\tInner points\n");
+
+    if (this.particles != null)
+      for (Particle3D p : this.particles) {
+
+        if (p.getIntensity() == 0)
+          continue;
+
+        writer.write(p.toString());
+        writer.write('\n');
+      }
+
+    writer.close();
+  }
+
   public String toString() {
 
     return "Particles=" + this.particles;
@@ -439,6 +625,12 @@ public class Particles3D {
   public Particles3D(final File file) throws IOException {
 
     readParticles(new FileInputStream(file));
+  }
+
+  /**
+   * Public constructor used by ImageJ Plugin.
+   */
+  public Particles3D() {
   }
 
 }
