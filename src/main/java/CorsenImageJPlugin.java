@@ -128,8 +128,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
   private static double staticMinSize = 0.0;
   private static double staticMaxSize = DEFAULT_MAX_SIZE;
   private static int staticOptions = Prefs.getInt(OPTIONS, CLEAR_WORKSHEET);
-  private static String[] showStrings = {"Nothing", "Outlines", "Masks",
-      "Ellipses"};
+  private static String[] showStrings =
+      {"Nothing", "Outlines", "Masks", "Ellipses"};
   private static double minCircularity = 0.0, maxCircularity = 1.0;
 
   protected static final int NOTHING = 0, OUTLINES = 1, MASKS = 2,
@@ -180,8 +180,10 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
   private Set<Particle3DBuilder> particles3D = new HashSet<Particle3DBuilder>();
   private Set<Particle2D> previousParticules2D = new HashSet<Particle2D>();
   private Set<Particle2D> currentParticles2D = new HashSet<Particle2D>();
-  private Map<Particle2D, Particle3DBuilder> previousParticles3D = new HashMap<Particle2D, Particle3DBuilder>();
-  private Map<Particle2D, Particle3DBuilder> currentParticles3D = new HashMap<Particle2D, Particle3DBuilder>();
+  private Map<Particle2D, Particle3DBuilder> previousParticles3D =
+      new HashMap<Particle2D, Particle3DBuilder>();
+  private Map<Particle2D, Particle3DBuilder> currentParticles3D =
+      new HashMap<Particle2D, Particle3DBuilder>();
   private int previousZ = -1;
   private static final boolean DEBUG = false;
 
@@ -213,8 +215,9 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
         this.previousZ++;
     }
 
-    Particle2D p2D = Particle2DBuilder.createParticle2D((float) pixelWidth,
-        (float) pixelHeight, imp, (PolygonRoi) roi);
+    Particle2D p2D =
+        Particle2DBuilder.createParticle2D((float) pixelWidth,
+            (float) pixelHeight, imp, (PolygonRoi) roi);
 
     Iterator it = this.previousParticules2D.iterator();
 
@@ -231,8 +234,9 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
         existingP3D.add(p2D, slice);
 
         if (DEBUG)
-          System.out.println("Add p2D to " + existingP3D.getId() + " z="
-              + slice + " (" + p2D.innerPointsCount() + " points)");
+          System.out.println("Add p2D to "
+              + existingP3D.getId() + " z=" + slice + " ("
+              + p2D.innerPointsCount() + " points)");
 
         if (this.currentParticles3D.containsKey(p2D)) {
           Particle3DBuilder particle2 = this.currentParticles3D.get(p2D);
@@ -244,8 +248,9 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
           }
 
           if (DEBUG)
-            System.out.println("Merge " + existingP3D.getId() + " in "
-                + particle2.getId() + " z=" + slice);
+            System.out.println("Merge "
+                + existingP3D.getId() + " in " + particle2.getId() + " z="
+                + slice);
 
         } else
           this.currentParticles3D.put(p2D, existingP3D);
@@ -257,8 +262,9 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
     if (!find) {
 
-      Particle3DBuilder newP3D = new Particle3DBuilder((float) pixelWidth,
-          (float) pixelHeight, (float) pixelDepth);
+      Particle3DBuilder newP3D =
+          new Particle3DBuilder((float) pixelWidth, (float) pixelHeight,
+              (float) pixelDepth);
       newP3D.setName(imp.getTitle() + "-" + newP3D.getId());
       newP3D.add(p2D, slice);
 
@@ -266,9 +272,9 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       this.currentParticles3D.put(p2D, newP3D);
 
       if (DEBUG)
-        System.out.println("New 3D Object (" + newP3D.getId() + "), z=" + slice
-            + " add particle2D #" + p2D.getId() + " (" + p2D.innerPointsCount()
-            + " points)");
+        System.out.println("New 3D Object ("
+            + newP3D.getId() + "), z=" + slice + " add particle2D #"
+            + p2D.getId() + " (" + p2D.innerPointsCount() + " points)");
 
     }
 
@@ -310,13 +316,15 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     writer.write("\n# Generated on ");
     writer.write(new Date(System.currentTimeMillis()).toString());
 
-    File f = new File(fi.directory, fi.fileName);
+    File f = fi == null ? null : new File(fi.directory, fi.fileName);
 
     writer.write("\n# Image file name:");
-    writer.write(f.getAbsolutePath());
+
+    writer.write(f != null ? f.getAbsolutePath() : "Unknown image file");
     writer.write("\n# Image created on ");
 
-    writer.write(new Date(f.lastModified()).toString());
+    writer.write(f != null
+        ? new Date(f.lastModified()).toString() : "Unknown creation date");
 
     ImageProcessor ip = this.imp.getProcessor();
     Calibration cal = imp.getCalibration();
@@ -332,10 +340,10 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     writer.write("\n" + Particles3D.PIXEL_DEPTH_KEY + "=" + cal.pixelDepth);
     writer.write("\n" + Particles3D.UNIT_OF_LENGHT_KEY + "=" + cal.getUnit());
 
-    writer.write("\n" + Particles3D.MIN_THRESHOLD_KEY + "="
-        + ip.getMinThreshold());
-    writer.write("\n" + Particles3D.MAX_THRESHOLD_KEY + "="
-        + ip.getMaxThreshold());
+    writer.write("\n"
+        + Particles3D.MIN_THRESHOLD_KEY + "=" + ip.getMinThreshold());
+    writer.write("\n"
+        + Particles3D.MAX_THRESHOLD_KEY + "=" + ip.getMaxThreshold());
 
     /*
      * writer.write("\n# Min threshold: " + ip.getMinThreshold());
@@ -375,14 +383,15 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
         Particle3D p = (Particle3D) it.next();
 
-        ImagePlus img = CorsenImageJUtil.createImageParticles3D(imp.getWidth(),
-            imp.getHeight(), p);
+        ImagePlus img =
+            CorsenImageJUtil.createImageParticles3D(imp.getWidth(), imp
+                .getHeight(), p);
 
         if (DEBUG) {
           final int nbStack = img.getStack().getSize();
-          System.out.println("Particle " + i + "/" + n + " nbStacks: "
-              + nbStack + " Surface: " + p.surfacePointsCount() + " Inner: "
-              + p.innerPointsCount());
+          System.out.println("Particle "
+              + i + "/" + n + " nbStacks: " + nbStack + " Surface: "
+              + p.surfacePointsCount() + " Inner: " + p.innerPointsCount());
         }
 
         if (p.innerPointsCount() > 100)
@@ -394,44 +403,53 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
   }
 
+  private File chooseResultFile(ImagePlus imp) {
+
+    JFileChooser chooser = new JFileChooser();
+
+    final FileFilter ff = new FileFilter() {
+
+      public boolean accept(File f) {
+        if (f.isDirectory()) {
+          return true;
+        }
+
+        String extension = Util.getExtension(f);
+
+        if (extension != null) {
+          if (extension.equals(Globals.EXTENSION_PARTICLES_FILE))
+            return true;
+
+        }
+
+        return false;
+      }
+
+      // The description of this filter
+      public String getDescription() {
+        return "Particle file (*.par)";
+      }
+    };
+
+    chooser.setFileFilter(ff);
+
+    int result = chooser.showSaveDialog(imp.getWindow());
+
+    if (result == JFileChooser.APPROVE_OPTION)
+      return chooser.getSelectedFile();
+
+    return null;
+  }
+
   private void saveParticle(ImagePlus imp) throws IOException {
 
     File file = null;
 
     if ((options & CHANGE_OUTPUT_FILENAME) != 0) {
-      JFileChooser chooser = new JFileChooser();
 
-      final FileFilter ff = new FileFilter() {
+      file = chooseResultFile(imp);
 
-        public boolean accept(File f) {
-          if (f.isDirectory()) {
-            return true;
-          }
-
-          String extension = Util.getExtension(f);
-
-          if (extension != null) {
-            if (extension.equals(Globals.EXTENSION_PARTICLES_FILE))
-              return true;
-
-          }
-
-          return false;
-        }
-
-        // The description of this filter
-        public String getDescription() {
-          return "Particle file (*.par)";
-        }
-      };
-
-      chooser.setFileFilter(ff);
-
-      int result = chooser.showSaveDialog(imp.getWindow());
-
-      if (result == JFileChooser.APPROVE_OPTION) {
-        file = chooser.getSelectedFile();
-      } else
+      if (file == null)
         return;
 
     } else {
@@ -440,9 +458,10 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
       if ((options & NO_CONFIRM_SAVE_DIALOG) == 0) {
 
-        final int response = JOptionPane.showConfirmDialog(imp.getWindow(),
-            new String[] {"Save results ?"}, "Save results ?",
-            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        final int response =
+            JOptionPane.showConfirmDialog(imp.getWindow(),
+                new String[] {"Save results ?"}, "Save results ?",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
         if (response == JOptionPane.YES_OPTION) {
 
@@ -456,15 +475,31 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       if (writeFile) {
         FileInfo fi = imp.getOriginalFileInfo();
 
-        String newName;
+        if (fi == null) {
 
-        int index = fi.fileName.indexOf(".");
-        if (index == -1)
-          newName = fi.fileName;
-        else
-          newName = fi.fileName.substring(0, index);
+          final int response =
+              JOptionPane.showConfirmDialog(imp.getWindow(), new String[] {
+                  "No location is associated to the current image.",
+                  "You select the result filename"}, "Warning",
+                  JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-        file = new File(fi.directory, newName + EXTENSION_FILE);
+          if (response == JOptionPane.NO_OPTION)
+            return;
+
+          file = chooseResultFile(imp);
+
+        } else {
+
+          String newName;
+
+          int index = fi.fileName.indexOf(".");
+          if (index == -1)
+            newName = fi.fileName;
+          else
+            newName = fi.fileName.substring(0, index);
+
+          file = new File(fi.directory, newName + EXTENSION_FILE);
+        }
       }
 
     }
@@ -488,9 +523,9 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
   /**
    * Construct a ParticleAnalyzer.
    * @param options a flag word created by Oring SHOW_RESULTS,
-   *          EXCLUDE_EDGE_PARTICLES, etc.
+   *            EXCLUDE_EDGE_PARTICLES, etc.
    * @param measurements a flag word created by ORing constants defined in the
-   *          Measurements interface
+   *            Measurements interface
    * @param rt a ResultsTable where the measurements will be stored
    * @param minSize the smallest particle size in pixels
    * @param maxSize the largest particle size in pixels
@@ -528,8 +563,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     processStack = (flags & DOES_STACKS) != 0;
     slice = 0;
     saveRoi = imp.getRoi();
-    if (saveRoi != null && saveRoi.getType() != Roi.RECTANGLE
-        && saveRoi.isArea())
+    if (saveRoi != null
+        && saveRoi.getType() != Roi.RECTANGLE && saveRoi.isArea())
       polygon = saveRoi.getPolygon();
     imp.startTiming();
     return flags;
@@ -600,8 +635,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       }
     }
     gd.addStringField("Size (" + units + "):", minStr + "-" + maxStr, 12);
-    gd.addStringField("Circularity:", IJ.d2s(minCircularity) + "-"
-        + IJ.d2s(maxCircularity), 12);
+    gd.addStringField("Circularity:", IJ.d2s(minCircularity)
+        + "-" + IJ.d2s(maxCircularity), 12);
     gd.addChoice("Show:", showStrings, showStrings[showChoice]);
 
     String[] labels = new String[9];
@@ -633,8 +668,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
     String[] minAndMax = Tools.split(gd.getNextString(), " -");
     double mins = Tools.parseDouble(minAndMax[0]);
-    double maxs = minAndMax.length == 2 ? Tools.parseDouble(minAndMax[1])
-        : Double.NaN;
+    double maxs =
+        minAndMax.length == 2 ? Tools.parseDouble(minAndMax[1]) : Double.NaN;
     minSize = Double.isNaN(mins) ? DEFAULT_MIN_SIZE : mins / unitSquared;
     maxSize = Double.isNaN(maxs) ? DEFAULT_MAX_SIZE : maxs / unitSquared;
     if (minSize < DEFAULT_MIN_SIZE)
@@ -644,8 +679,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
     minAndMax = Tools.split(gd.getNextString(), " -");
     double minc = Tools.parseDouble(minAndMax[0]);
-    double maxc = minAndMax.length == 2 ? Tools.parseDouble(minAndMax[1])
-        : Double.NaN;
+    double maxc =
+        minAndMax.length == 2 ? Tools.parseDouble(minAndMax[1]) : Double.NaN;
     minCircularity = Double.isNaN(minc) ? 0.0 : minc;
     maxCircularity = Double.isNaN(maxc) ? 1.0 : maxc;
     if (minCircularity < 0.0 || minCircularity > 1.0)
@@ -728,8 +763,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     if (index == len - 1)
       return false;
     int min = (int) Tools.parseDouble(Macro.getValue(options, "minimum", "1"));
-    int max = (int) Tools.parseDouble(Macro.getValue(options, "maximum",
-        "999999"));
+    int max =
+        (int) Tools.parseDouble(Macro.getValue(options, "maximum", "999999"));
     options = "size=" + min + "-" + max + options.substring(index, len);
     Macro.setOptions(options);
     return true;
@@ -794,8 +829,9 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       drawIP.fill();
       drawIP.setColor(Color.black);
     }
-    calibration = redirectImp != null ? redirectImp.getCalibration() : imp
-        .getCalibration();
+    calibration =
+        redirectImp != null ? redirectImp.getCalibration() : imp
+            .getCalibration();
 
     if (rt == null) {
       rt = Analyzer.getResultsTable();
@@ -818,8 +854,9 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
         if (mask != null)
           totalArea = ImageStatistics.getStatistics(ip, AREA, calibration).area;
         else
-          totalArea = r.width * calibration.pixelWidth * r.height
-              * calibration.pixelHeight;
+          totalArea =
+              r.width
+                  * calibration.pixelWidth * r.height * calibration.pixelHeight;
       }
     }
     minX = r.x;
@@ -846,8 +883,9 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     if (showChoice == ELLIPSES)
       measurements |= ELLIPSE;
     measurements &= ~LIMIT; // ignore "Limit to Threshold"
-    roiNeedsImage = (measurements & PERIMETER) != 0
-        || (measurements & CIRCULARITY) != 0 || (measurements & FERET) != 0;
+    roiNeedsImage =
+        (measurements & PERIMETER) != 0
+            || (measurements & CIRCULARITY) != 0 || (measurements & FERET) != 0;
     particleCount = 0;
     wand = new Wand(ip);
     pf = new PolygonFiller();
@@ -1038,8 +1076,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       IJ.log("wand error: " + x + " " + y);
       return;
     }
-    Roi roi = new PolygonRoi(wand.xpoints, wand.ypoints, wand.npoints,
-        Roi.TRACED_ROI);
+    Roi roi =
+        new PolygonRoi(wand.xpoints, wand.ypoints, wand.npoints, Roi.TRACED_ROI);
     Rectangle r = roi.getBounds();
     if (r.width > 1 && r.height > 1) {
       PolygonRoi proi = (PolygonRoi) roi;
@@ -1054,8 +1092,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     ImageStatistics stats = getStatistics(ip2, measurements, calibration);
     boolean include = true;
     if (excludeEdgeParticles) {
-      if (r.x == minX || r.y == minY || r.x + r.width == maxX
-          || r.y + r.height == maxY)
+      if (r.x == minX
+          || r.y == minY || r.x + r.width == maxX || r.y + r.height == maxY)
         include = false;
       if (polygon != null) {
         Rectangle bounds = roi.getBounds();
@@ -1082,8 +1120,9 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     ImageProcessor mask = ip2.getMask();
     if (minCircularity > 0.0 || maxCircularity < 1.0) {
       double perimeter = roi.getLength();
-      double circularity = perimeter == 0.0 ? 0.0 : 4.0 * Math.PI
-          * (stats.pixelCount / (perimeter * perimeter));
+      double circularity =
+          perimeter == 0.0 ? 0.0 : 4.0
+              * Math.PI * (stats.pixelCount / (perimeter * perimeter));
       if (circularity > 1.0)
         circularity = 0.0;
       // IJ.log(circularity+" "+perimeter+" "+stats.area);
@@ -1178,8 +1217,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       ip.lineTo(x + xp[i], y + yp[i]);
     ip.lineTo(x + xp[0], y + yp[0]);
     String s = IJ.d2s(count, 0);
-    ip.moveTo(r.x + r.width / 2 - ip.getStringWidth(s) / 2, r.y + r.height / 2
-        + 4);
+    ip.moveTo(r.x + r.width / 2 - ip.getStringWidth(s) / 2, r.y
+        + r.height / 2 + 4);
     ip.setValue(1.0);
     ip.drawString(s);
   }
@@ -1193,8 +1232,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     if (count == 0)
       return;
     boolean lastSlice = !processStack || slice == imp.getStackSize();
-    if (displaySummary && lastSlice && rt == Analyzer.getResultsTable()
-        && imp != null) {
+    if (displaySummary
+        && lastSlice && rt == Analyzer.getResultsTable() && imp != null) {
       showSummary();
     }
     if (outlines != null && lastSlice) {
@@ -1235,14 +1274,17 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       String total = IJ.d2s(sum, places);
       s += "Total Area: " + total + " " + unit + "^2\n";
       String average = IJ.d2s(sum / totalCount, places);
-      s += "Average Size: " + IJ.d2s(sum / totalCount, places) + " " + unit
-          + "^2\n";
+      s +=
+          "Average Size: "
+              + IJ.d2s(sum / totalCount, places) + " " + unit + "^2\n";
       if (processStack)
         totalArea *= imp.getStackSize();
       String fraction = IJ.d2s(sum * 100.0 / totalArea, 2);
       s += "Area Fraction: " + fraction + "%";
-      aLine = " " + "\t" + totalCount + "\t" + total + "\t" + average + "\t"
-          + fraction;
+      aLine =
+          " "
+              + "\t" + totalCount + "\t" + total + "\t" + average + "\t"
+              + fraction;
     } else
       aLine = " " + "\t" + totalCount;
     if (tw != null) {
@@ -1260,8 +1302,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
   }
 
   void makeCustomLut() {
-    IndexColorModel cm = (IndexColorModel) LookUpTable
-        .createGrayscaleColorModel(false);
+    IndexColorModel cm =
+        (IndexColorModel) LookUpTable.createGrayscaleColorModel(false);
     byte[] reds = new byte[256];
     byte[] greens = new byte[256];
     byte[] blues = new byte[256];
