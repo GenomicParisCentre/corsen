@@ -38,29 +38,92 @@
 	</properties>
 	<body>
 
-		<release version="0.22" date="2007-01-04">
+		<release version="0.25" date="2007-11-09">
 			<action dev="jourdren" type="update">
-				La vue 3D est maintenant centrée. Des sphere sont
-				utilisées pour representer les points. Les effets de
-				lumières sont activés.
+				L'interface graphique utilise maintenant QtJambi
+				4.3.2_01.
+			</action>
+			<action dev="jourdren" type="fix">
+				Correction de bogues dans la determination de la version
+				de Corsen par le plugin ImageJ.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de nouveau tests unitaires pour s'assurer du bon
-				comportement des classes essentielles au fonctionnement
-				du programme.
+				Le plugin ImageJ est maintenant empaqueté sous forme
+				d'une archive jar.
 			</action>
+
+		</release>
+
+
+		<release version="0.24" date="2007-04-15">
 			<action dev="jourdren" type="update">
-				Renonnages, reorganisations massives du code.
+				L'interface graphique utilise maintenant QtJambi 1.0.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout d'une interface en ligne de commande.
+				Passage a Maven 2. Le système de construction
+				automatique des executables et du site web est
+				fonctionnel.
+			</action>
+			<action dev="jourdren" type="add">
+				Le système de construction permet de créer
+				automatiquement des Java Web Application pour Corsen et
+				Image J. Dans la version Webstart d'ImageJ généré, le
+				plugin Corsen est automatiquement intégré.
+			</action>
+			<action dev="jourdren" type="add">
+				La version (et divers autres informations) de Corsen est
+				maintenant stockée dans l'archive jar de Corsen. Ces
+				informations sont automatiquement misent à jours lors de
+				la construction des executables.
+			</action>
+			<action dev="jourdren" type="fix">
+				Correction d'un bogue critique dans le plugin imagej
+				suite à la réorganisation de la version 0.23.
+			</action>
+
+		</release>
+
+
+		<release version="0.23" date="2007-01-04">
+			<action dev="jourdren" type="update">
+				L'interface graphique utilise maintenant QtJambi 1.0
+				beta.
+			</action>
+			<action dev="jourdren" type="fix">
+				Ajout d'un système de calcul des distances multithread.
 			</action>
 			<action dev="jourdren" type="update">
-				Nombreuses amélioration de l'interface graphique.
+				Nombreuses réorganisations internes et de l'interface
+				graphique.
+			</action>
+			<action dev="jourdren" type="update">
+				Mise à jour de la visualisation 3D.
+			</action>
+			<action dev="jourdren" type="add">
+				Corsen est maintenant utilisable en ligne de commande.
+			</action>
+
+		</release>
+
+		<release version="0.22" date="2006-12-14">
+			<action dev="jourdren" type="add">
+				Fonctionne sur Mac OS X.
+			</action>
+			<action dev="jourdren" type="add">
+				Il est désormais possible de choisir pour chaque
+				particule, le type de calculateur de distances.
+			</action>
+			<action dev="jourdren" type="update">
+				Utilise maintenant les fonctionnalités de la version 5
+				du langage Java.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de tests (et des fichiers de tests) pour le calcul
+				des distances entre particules.
 			</action>
 		</release>
 
-		<release version="0.21" date="2006-11-22">
+		<release version="0.21" date="2006-10-22">
 			<action dev="jourdren" type="add">
 				Nouvelle interface Graphique réalisée avec QtJambi.
 				Réorganisation interne pour pouvoir supporter plusieurs
