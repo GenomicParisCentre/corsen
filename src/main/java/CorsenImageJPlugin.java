@@ -46,8 +46,6 @@ import java.awt.image.IndexColorModel;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -531,6 +529,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
   public void run(ImageProcessor ip) {
     if (canceled)
       return;
+
     slice++;
     if (imp.getStackSize() > 1 && processStack)
       imp.setSlice(slice);
