@@ -47,9 +47,10 @@ public class Particle3DBuilder {
 
     init();
 
-    final AbstractListPoint3D surfacePoints = this.particle
-        .getModifiableSurfacePoints();
-    final AbstractListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
+    final AbstractListPoint3D surfacePoints =
+        this.particle.getModifiableSurfacePoints();
+    final AbstractListPoint3D innerPoints =
+        this.particle.getModifiableInnerPoints();
     final float pixelDepth = this.particle.getPixelDepth();
 
     int n = particle.surfacePointsCount();
@@ -70,6 +71,7 @@ public class Particle3DBuilder {
 
     this.volume += particle.getArea() * pixelDepth;
     this.intensity += particle.getIntensity();
+
   }
 
   /**
@@ -83,9 +85,10 @@ public class Particle3DBuilder {
     if (this.particle.getId() == particle.getId())
       throw new RuntimeException("add the same particle to particle !!!");
 
-    final AbstractListPoint3D surfacePoints = this.particle
-        .getModifiableSurfacePoints();
-    final AbstractListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
+    final AbstractListPoint3D surfacePoints =
+        this.particle.getModifiableSurfacePoints();
+    final AbstractListPoint3D innerPoints =
+        this.particle.getModifiableInnerPoints();
 
     // Update the capacities of the lists of points
     surfacePoints.ensureCapacity(particle.surfacePointsCount());
@@ -105,7 +108,8 @@ public class Particle3DBuilder {
 
     init();
 
-    final AbstractListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
+    final AbstractListPoint3D innerPoints =
+        this.particle.getModifiableInnerPoints();
     innerPoints.add(x, y, z, i);
     this.intensity += i;
   }
@@ -132,7 +136,8 @@ public class Particle3DBuilder {
 
     init();
 
-    final AbstractListPoint3D innerPoints = this.particle.getModifiableInnerPoints();
+    final AbstractListPoint3D innerPoints =
+        this.particle.getModifiableInnerPoints();
 
     if (testIfExists && innerPoints.contains(p))
       return;
@@ -145,8 +150,8 @@ public class Particle3DBuilder {
 
     init();
 
-    final AbstractListPoint3D surfacePoints = this.particle
-        .getModifiableSurfacePoints();
+    final AbstractListPoint3D surfacePoints =
+        this.particle.getModifiableSurfacePoints();
     surfacePoints.add(x, y, z, 0);
   }
 
@@ -172,8 +177,8 @@ public class Particle3DBuilder {
 
     init();
 
-    final AbstractListPoint3D surfacePoints = this.particle
-        .getModifiableSurfacePoints();
+    final AbstractListPoint3D surfacePoints =
+        this.particle.getModifiableSurfacePoints();
 
     if (testIfExists && surfacePoints.contains(p))
       return;
@@ -319,8 +324,8 @@ public class Particle3DBuilder {
     if (this.particle != null)
       return;
 
-    this.particle = new Particle3D(this.pixelWidth, this.pixelHeight,
-        this.pixelDepth);
+    this.particle =
+        new Particle3D(this.pixelWidth, this.pixelHeight, this.pixelDepth);
     this.volume = 0;
     this.intensity = 0;
 
@@ -339,8 +344,8 @@ public class Particle3DBuilder {
     Particle3D result = this.particle;
     result.getModifiableInnerPoints().trimToSize();
     result.getModifiableSurfacePoints().trimToSize();
-    result.setVolume(result.getModifiableInnerPoints().size() * this.pixelWidth
-        * this.pixelHeight * this.pixelDepth) ;
+    result.setVolume(result.getModifiableInnerPoints().size()
+        * this.pixelWidth * this.pixelHeight * this.pixelDepth);
     result.setIntensity(this.intensity);
 
     this.particle = null;
