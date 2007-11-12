@@ -41,7 +41,8 @@ public class Particle2DBuilder {
     final Particle2D result = new Particle2D(pixelWidth, pixelHeight);
 
     imp.setRoi(roi);
-    //final ImageStatistics stats = imp.getStatistics(); // mesurement
+
+    // final ImageStatistics stats = imp.getStatistics(); // mesurement
 
     // Get the x0 and y0 of the Roi
     final Rectangle r = roi.getBounds();
@@ -53,23 +54,26 @@ public class Particle2DBuilder {
     final int y0 = r.y;
 
     // Get the inner points
-    final ImageProcessor ip = imp.getMask();
+    final ImageProcessor ipMask = imp.getMask();
+    final ImageProcessor ip = imp.getProcessor();
 
-    final int height = ip.getHeight();
-    final int width = ip.getWidth();
+    final int height = ipMask.getHeight();
+    final int width = ipMask.getWidth();
 
     for (int i = 0; i < height; i++)
       for (int j = 0; j < width; j++)
-        if (ip.getPixel(j, i) > 0) {
+        if (ipMask.getPixel(j, i) > 0) {
 
-          final int val = imp.getProcessor().getPixel(j, i);
+          final int val = ip.getPixel(j + x0, i + y0);
+
           result.addInnerPoint((j + x0 + 0.5f) * pixelWidth, (i + y0 + 0.5f)
               * pixelWidth, val);
         }
 
     // double[][] polygon = new double[nPoints][];
 
-    //result.surfacePoints.ensureCapacity(nPoints + result.surfacePoints.size());
+    // result.surfacePoints.ensureCapacity(nPoints +
+    // result.surfacePoints.size());
 
     for (int i = 0; i < nPoints; i++) {
 
