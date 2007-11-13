@@ -8,7 +8,7 @@ import java.util.Map;
 
 public final class Particle3DUtil {
 
-  private static final int INITIAL_CAPACITY_CUBOID = 48;
+  // private static final int INITIAL_CAPACITY_CUBOID = 48;
 
   private static final class MapCuboid extends
       HashMap<Integer, Map<Integer, Map<Integer, Particle3DBuilder>>> {
@@ -49,8 +49,8 @@ public final class Particle3DUtil {
      */
     public Particle3DBuilder get(int xMapIndex, int yMapIndex, int zMapIndex) {
 
-      final Map<Integer, Map<Integer, Particle3DBuilder>> mapY = this
-          .get(xMapIndex);
+      final Map<Integer, Map<Integer, Particle3DBuilder>> mapY =
+          this.get(xMapIndex);
       final Map<Integer, Particle3DBuilder> mapZ = mapY.get(yMapIndex);
 
       return mapZ.get(zMapIndex);
@@ -87,9 +87,9 @@ public final class Particle3DUtil {
           y1 = j + ylenght;
           z1 = k + zlenght;
 
-          final Particle3DBuilder builder = new Particle3DBuilder(particle
-              .getPixelWidth(), particle.getPixelHeight(), particle
-              .getPixelDepth());
+          final Particle3DBuilder builder =
+              new Particle3DBuilder(particle.getPixelWidth(), particle
+                  .getPixelHeight(), particle.getPixelDepth());
 
           builder.setName(particle.getName() + "-" + builder.getId());
           addSurfacePoint(builder, i, j, k);
@@ -132,8 +132,8 @@ public final class Particle3DUtil {
 
       // final Particle3D p = (Particle3D) mapZ.get(zMapIndex);
 
-      Particle3DBuilder builder = mapCuboids.get(xMapIndex, yMapIndex,
-          zMapIndex);
+      Particle3DBuilder builder =
+          mapCuboids.get(xMapIndex, yMapIndex, zMapIndex);
 
       builder.addInnerPoint(x, y, z, points.getIAt(i));
       // p.addInnerPoint(x, y, z, points.getIAt(i));
@@ -155,8 +155,8 @@ public final class Particle3DUtil {
     if (particle == null)
       throw new NullPointerException("Particle is null");
 
-    final MapCuboid mapCuboids = initCuboids(particle, xlenght, ylenght,
-        zlenght);
+    final MapCuboid mapCuboids =
+        initCuboids(particle, xlenght, ylenght, zlenght);
 
     fillCuboids(particle, mapCuboids, xlenght, ylenght, zlenght);
 
@@ -167,7 +167,7 @@ public final class Particle3DUtil {
     while (mapXIt.hasNext()) {
 
       Object keyX = mapXIt.next();
-      Map mapY = (Map) mapCuboids.get(keyX);
+      Map mapY = mapCuboids.get(keyX);
       Iterator mapYIt = mapY.keySet().iterator();
 
       while (mapYIt.hasNext()) {
@@ -207,8 +207,8 @@ public final class Particle3DUtil {
     if (particle == null)
       throw new NullPointerException("Particle is null");
 
-    final MapCuboid mapCuboids = initCuboids(particle, xlenght, ylenght,
-        zlenght);
+    final MapCuboid mapCuboids =
+        initCuboids(particle, xlenght, ylenght, zlenght);
     fillCuboids(particle, mapCuboids, xlenght, ylenght, zlenght);
 
     Map<String, Particle3D> result = null;
@@ -218,7 +218,7 @@ public final class Particle3DUtil {
     while (mapXIt.hasNext()) {
 
       Object keyX = mapXIt.next();
-      Map mapY = (Map) mapCuboids.get(keyX);
+      Map mapY = mapCuboids.get(keyX);
       Iterator mapYIt = mapY.keySet().iterator();
 
       while (mapYIt.hasNext()) {
