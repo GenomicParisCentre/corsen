@@ -125,11 +125,6 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
     //
     // Constructors
     //
-    /**
-     * Private constructor.
-     */
-    private InnerPoint2DImpl() {
-    }
 
     /**
      * Public constructor.
@@ -406,8 +401,8 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
    */
   public AbstractListPoint2D copy() {
 
-    final ArrayListPoint2D result = new ArrayListPoint2D(this.xPrecision,
-        this.yPrecision);
+    final ArrayListPoint2D result =
+        new ArrayListPoint2D(this.xPrecision, this.yPrecision);
     final int n = size();
 
     for (int i = 0; i < n; i++) {

@@ -155,11 +155,6 @@ public final class ArrayListPoint3D extends AbstractListPoint3D {
     //
     // Constructor
     //
-    /**
-     * Private constructor.
-     */
-    private InnerPoint3DImpl() {
-    }
 
     /**
      * Public constructor.
