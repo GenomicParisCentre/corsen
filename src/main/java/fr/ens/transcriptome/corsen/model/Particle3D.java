@@ -1,19 +1,17 @@
 package fr.ens.transcriptome.corsen.model;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import fr.ens.transcriptome.corsen.calc.Distance;
 import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 /**
- * This class defin a Particle 3D.
+ * This class define a Particle 3D.
  * @author Laurent Jourdren
  */
 public final class Particle3D {
@@ -143,8 +141,7 @@ public final class Particle3D {
 
     this.intensity = intensity;
   }
-  
-  
+
   //
   // Other methods
   //
@@ -376,17 +373,17 @@ public final class Particle3D {
 
   public static final Map getSurfacePointSlices(final Particle3D particle) {
 
-    final Map slices = new HashMap();
+    final Map<Float, Particle2D> slices = new HashMap<Float, Particle2D>();
 
     final int nPoints = particle.surfacePointsCount();
 
     for (int i = 0; i < nPoints; i++) {
       final Point3D p = particle.getSurfacePoint(i);
       final Float key = new Float(p.getZ());
-      Particle2D par = (Particle2D) slices.get(key);
+      Particle2D par = slices.get(key);
       if (par == null) {
-        par = new Particle2D(particle.getPixelWidth(), particle
-            .getPixelHeight());
+        par =
+            new Particle2D(particle.getPixelWidth(), particle.getPixelHeight());
         slices.put(key, par);
       }
       par.addSurfacePoint(p.getX(), p.getY());
@@ -397,17 +394,17 @@ public final class Particle3D {
 
   private static Map getSurfaceAndInnerPointSlices(final Particle3D particle) {
 
-    final Map slices = new HashMap();
+    final Map<String, Particle2D> slices = new HashMap<String, Particle2D>();
 
     final int nSurfacePoints = particle.surfacePointsCount();
 
     for (int i = 0; i < nSurfacePoints; i++) {
       final Point3D p = particle.getSurfacePoint(i);
       final String key = "" + p.getZ();
-      Particle2D par = (Particle2D) slices.get(key);
+      Particle2D par = slices.get(key);
       if (par == null) {
-        par = new Particle2D(particle.getPixelWidth(), particle
-            .getPixelHeight());
+        par =
+            new Particle2D(particle.getPixelWidth(), particle.getPixelHeight());
         slices.put(key, par);
       }
       par.addSurfacePoint(p.getX(), p.getY());
@@ -418,10 +415,10 @@ public final class Particle3D {
     for (int i = 0; i < nInnerPoints; i++) {
       final Point3D p = particle.getInnerPoint(i);
       final String key = "" + p.getZ();
-      Particle2D par = (Particle2D) slices.get(key);
+      Particle2D par = slices.get(key);
       if (par == null) {
-        par = new Particle2D(particle.getPixelWidth(), particle
-            .getPixelHeight());
+        par =
+            new Particle2D(particle.getPixelWidth(), particle.getPixelHeight());
         slices.put(key, par);
       }
       par.addInnerPoint(p.getX(), p.getY(), p.getI());
@@ -467,7 +464,7 @@ public final class Particle3D {
     return new float[] {minX, minY, minZ};
   }
 
-  private float getMinDiffNotNull(final Set s) {
+  private float getMinDiffNotNull(final Set<Float> s) {
 
     if (s == null)
       throw new NullPointerException("The set is null ");
@@ -504,9 +501,9 @@ public final class Particle3D {
 
     final int nInnerPoints = innerPointsCount();
 
-    Set setX = new HashSet();
-    Set setY = new HashSet();
-    Set setZ = new HashSet();
+    Set<Float> setX = new HashSet<Float>();
+    Set<Float> setY = new HashSet<Float>();
+    Set<Float> setZ = new HashSet<Float>();
 
     for (int i = 0; i < nInnerPoints; i++) {
 
@@ -640,8 +637,6 @@ public final class Particle3D {
 
     return sb.toString();
   }
-
-  
 
   public AbstractListPoint3D getInnerPoints() {
     return this.unmodifiableInnerPoints;
@@ -832,14 +827,15 @@ public final class Particle3D {
     this.pixelHeight = pixelHeight;
     this.pixelDepth = pixelDepth;
 
-    this.surfacePoints = new ArrayListPoint3D(this.pixelWidth,
-        this.pixelHeight, this.pixelDepth);
-    this.innerPoints = new ArrayListPoint3D(this.pixelWidth, this.pixelHeight,
-        this.pixelDepth);
+    this.surfacePoints =
+        new ArrayListPoint3D(this.pixelWidth, this.pixelHeight, this.pixelDepth);
+    this.innerPoints =
+        new ArrayListPoint3D(this.pixelWidth, this.pixelHeight, this.pixelDepth);
 
-    this.unmodifiableSurfacePoints = new UnmodifiableListPoint3D(
-        this.surfacePoints);
-    this.unmodifiableInnerPoints = new UnmodifiableListPoint3D(this.innerPoints);
+    this.unmodifiableSurfacePoints =
+        new UnmodifiableListPoint3D(this.surfacePoints);
+    this.unmodifiableInnerPoints =
+        new UnmodifiableListPoint3D(this.innerPoints);
   }
 
 }
