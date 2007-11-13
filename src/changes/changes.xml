@@ -38,6 +38,19 @@
 	</properties>
 	<body>
 
+		<release version="0.26" date="2007-11-12">
+			<action dev="jourdren" type="fix">
+				Prend les bon pixels pour les intensités.
+			</action>
+			<action dev="jourdren" type="update">
+				Le code pour la sauvegarde de Particles3D n'est maintenant plus dans le plugin ImageJ.
+			</action>
+			<action dev="jourdren" type="fix">
+				Plus d'exception, si l'image à analyser dans le plugin ImageJ n'a pas de fichier associé.
+			</action>
+	   </release>
+	   
+
 		<release version="0.25" date="2007-11-09">
 			<action dev="jourdren" type="update">
 				L'interface graphique utilise maintenant QtJambi
