@@ -344,8 +344,7 @@ public class Particle3DBuilder {
     Particle3D result = this.particle;
     result.getModifiableInnerPoints().trimToSize();
     result.getModifiableSurfacePoints().trimToSize();
-    result.setVolume(result.getModifiableInnerPoints().size()
-        * this.pixelWidth * this.pixelHeight * this.pixelDepth);
+    result.calcVolume();
     result.setIntensity(this.intensity);
 
     this.particle = null;

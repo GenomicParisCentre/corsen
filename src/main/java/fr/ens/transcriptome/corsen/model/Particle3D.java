@@ -9,6 +9,7 @@ import java.util.Set;
 
 import fr.ens.transcriptome.corsen.calc.Distance;
 import fr.ens.transcriptome.corsen.calc.ParticleType;
+import fr.ens.transcriptome.corsen.util.MathUtil;
 
 /**
  * This class define a Particle 3D.
@@ -33,6 +34,8 @@ public final class Particle3D {
 
   private double volume;
   private long intensity;
+  private double area;
+  private double sphericity;
 
   private ParticleType type = ParticleType.UNDEFINED;
 
@@ -104,6 +107,24 @@ public final class Particle3D {
     return type;
   }
 
+  /**
+   * Get the area of the particle.
+   * @return The area of the particle
+   */
+  public double getArea() {
+
+    return this.area;
+  }
+
+  /**
+   * Get the sphericty of the particle.
+   * @return the sphericty of the particle
+   */
+  public double getSphericty() {
+
+    return this.sphericity;
+  }
+
   //
   // Setters
   //
@@ -114,15 +135,6 @@ public final class Particle3D {
    */
   public void setName(final String name) {
     this.name = name;
-  }
-
-  /**
-   * Set the volume of the particle
-   * @param volume
-   */
-  void setVolume(final float volume) {
-
-    this.volume = volume;
   }
 
   /**
@@ -808,6 +820,48 @@ public final class Particle3D {
 
     this.surfacePoints.applyZFactor(zFactor);
     this.innerPoints.applyZFactor(zFactor);
+  }
+
+  //
+  // Calculate methods
+  //
+
+  /**
+   * Calculate or recalculate the intensity of the particle.
+   */
+  public void calcIntensity() {
+
+    long intensity = 0;
+    for (Point3D p : this.innerPoints)
+      intensity += p.getI();
+
+    this.intensity = intensity;
+  }
+
+  /**
+   * Calculate or recalculate the volume of the particle.
+   */
+  public void calcVolume() {
+
+    this.volume =
+        innerPointsCount()
+            * getPixelWidth() * getPixelHeight() * getPixelDepth();
+  }
+
+  /**
+   * Calculate or recalculate the area of the particle.
+   */
+  public void calcArea() {
+
+    this.area = new PixelizedParticle3D(this).calcSurface();
+  }
+
+  /**
+   * Calculate or recalculate the sphericty of the particle.
+   */
+  public void calcSphericity() {
+
+    this.sphericity = MathUtil.sphericite1(getVolume(), getArea());
   }
 
   //
