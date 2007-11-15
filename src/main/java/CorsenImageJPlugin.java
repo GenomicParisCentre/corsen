@@ -335,14 +335,12 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
     if ((options & SHOW_PARTICLES_3D) != 0) {
 
-      Iterator it = this.particles3D.iterator();
-
       int i = 1;
       int n = this.particles3D.size();
 
-      while (it.hasNext()) {
+      for (Particle3DBuilder pb : this.particles3D) {
 
-        Particle3D p = (Particle3D) it.next();
+        final Particle3D p = pb.getParticle();
 
         ImagePlus img =
             CorsenImageJUtil.createImageParticles3D(imp.getWidth(), imp
