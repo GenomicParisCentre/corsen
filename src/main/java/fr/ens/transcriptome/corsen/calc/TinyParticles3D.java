@@ -34,6 +34,7 @@ import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particle3DUtil;
+import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SingletonListPoint3D;
 

@@ -6,9 +6,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 import fr.ens.transcriptome.corsen.calc.Distance;
-import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
 

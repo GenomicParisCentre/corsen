@@ -19,8 +19,8 @@ import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.Distance;
 import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
-import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particles3D;
 
 /*
  *                      Nividic development code

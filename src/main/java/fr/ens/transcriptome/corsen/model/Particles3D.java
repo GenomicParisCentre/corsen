@@ -1,4 +1,4 @@
-package fr.ens.transcriptome.corsen.calc;
+package fr.ens.transcriptome.corsen.model;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import fr.ens.transcriptome.corsen.Globals;
-import fr.ens.transcriptome.corsen.model.Particle3D;
-import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
+import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 public class Particles3D {
 

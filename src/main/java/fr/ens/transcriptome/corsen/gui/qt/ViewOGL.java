@@ -22,8 +22,8 @@ import com.trolltech.qt.opengl.QGLWidget;
 
 import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
-import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
 
 public class ViewOGL extends QGLWidget {

@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.Random;
 
 import fr.ens.transcriptome.corsen.calc.Distance;
-import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle2D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Point2D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;

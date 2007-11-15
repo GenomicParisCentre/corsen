@@ -1,9 +1,9 @@
 import fr.ens.transcriptome.corsen.Globals;
-import fr.ens.transcriptome.corsen.calc.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particle2D;
 import fr.ens.transcriptome.corsen.model.Particle2DBuilder;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
+import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.util.CorsenImageJUtil;
 import fr.ens.transcriptome.corsen.util.Util;
 import ij.IJ;

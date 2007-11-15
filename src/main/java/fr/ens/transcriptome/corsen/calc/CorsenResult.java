@@ -9,6 +9,7 @@ import java.util.Map;
 import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.UpdateStatus;
 import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particles3D;
 
 /*
  *                      Nividic development code
