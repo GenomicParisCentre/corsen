@@ -335,29 +335,41 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
     if ((options & SHOW_PARTICLES_3D) != 0) {
 
-      int i = 1;
-      int n = this.particles3D.size();
+      final ImageStack stack = new ImageStack(imp.getWidth(), imp.getHeight());
+
+      final int nSlices = imp.getNSlices();
+
+      for (int i = 0; i < nSlices; i++) {
+
+        final ImageProcessor drawIP = new ColorProcessor(width, height);
+        drawIP.setColor(Color.white);
+        drawIP.fill();
+        stack.addSlice(null, drawIP);
+      }
+
+      int r = 0;
+      int g = 125;
+      int b = 255;
 
       for (Particle3DBuilder pb : this.particles3D) {
 
         final Particle3D p = pb.getParticle();
 
-        ImagePlus img =
-            CorsenImageJUtil.createImageParticles3D(imp.getWidth(), imp
-                .getHeight(), p);
+        CorsenImageJUtil.addParticle3DtoStack(stack, p, new Color(r, g, b));
 
-        if (DEBUG) {
-          final int nbStack = img.getStack().getSize();
-          System.out.println("Particle "
-              + i + "/" + n + " nbStacks: " + nbStack + " Surface: "
-              + p.surfacePointsCount() + " Inner: " + p.innerPointsCount());
-        }
+        r += 5;
+        g += 10;
+        b += 15;
 
-        if (p.innerPointsCount() > 100)
-          img.show();
-
-        i++;
+        if (r > 255)
+          r -= 255;
+        if (g > 255)
+          g -= 255;
+        if (b > 255)
+          b -= 255;
       }
+
+      new ImagePlus("Particles 3D found by " + Globals.APP_NAME, stack).show();
     }
 
   }

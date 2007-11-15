@@ -1,4 +1,5 @@
 package fr.ens.transcriptome.corsen.util;
+
 import fr.ens.transcriptome.corsen.model.Particle2D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Point2D;
@@ -80,6 +81,12 @@ public final class CorsenImageJUtil {
   private static void drawParticle(final ImageProcessor ip,
       final Particle2D particle) {
 
+    drawParticle(ip, particle, Color.GRAY);
+  }
+
+  private static void drawParticle(final ImageProcessor ip,
+      final Particle2D particle, final Color color) {
+
     if (particle == null)
       return;
 
@@ -88,7 +95,7 @@ public final class CorsenImageJUtil {
 
     // Draw inner points
 
-    ip.setColor(Color.GRAY);
+    ip.setColor(color);
 
     for (int i = 0; i < nInner; i++) {
 
@@ -114,6 +121,38 @@ public final class CorsenImageJUtil {
         ip.lineTo(x, y);
         ip.moveTo(x, y);
       }
+    }
+
+  }
+
+  /**
+   * Draw a particle3D on an ImageStack
+   * @param stack Stack where to draw
+   * @param particle Particle to draw
+   * @param color Color to use
+   */
+  public static void addParticle3DtoStack(final ImageStack stack,
+      final Particle3D particle, final Color color) {
+
+    if (stack == null || particle == null)
+      return;
+
+    final Color colorToDraw;
+
+    if (color == null)
+      colorToDraw = Color.white;
+    else
+      colorToDraw = color;
+
+    final int minStack =
+        (int) (particle.getInnerPoints().getZMin() / particle.getPixelDepth());
+
+    Particle2D[] pars2d = particle.toParticles2D();
+
+    for (int i = 0; i < pars2d.length; i++) {
+
+      ImageProcessor drawIP = stack.getProcessor(minStack + i);
+      drawParticle(drawIP, pars2d[i], colorToDraw);
     }
 
   }
