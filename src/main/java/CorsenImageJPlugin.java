@@ -46,10 +46,12 @@ import java.awt.image.IndexColorModel;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -176,6 +178,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
   // Add by Laurent Jourdren
   private Set<Particle3DBuilder> particles3D = new HashSet<Particle3DBuilder>();
+  private List<Particle3D> particles3DToSave;
   private Set<Particle2D> previousParticules2D = new HashSet<Particle2D>();
   private Set<Particle2D> currentParticles2D = new HashSet<Particle2D>();
   private Map<Particle2D, Particle3DBuilder> previousParticles3D =
@@ -326,7 +329,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     particles.setMinThreshold(ip.getMinThreshold());
     particles.setMaxThreshold(ip.getMaxThreshold());
 
-    particles.setParticles(this.particles3D);
+    particles.setParticles(this.particles3DToSave);
 
     particles.saveParticles(fos);
   }
@@ -351,9 +354,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       int g = 125;
       int b = 255;
 
-      for (Particle3DBuilder pb : this.particles3D) {
-
-        final Particle3D p = pb.getParticle();
+      for (Particle3D p : this.particles3DToSave) {
 
         CorsenImageJUtil.addParticle3DtoStack(stack, p, new Color(r, g, b));
 
@@ -553,6 +554,12 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
     if (slice == imp.getNSlices()) {
       try {
+
+        this.particles3DToSave =
+            new ArrayList<Particle3D>(this.particles3D.size());
+        for (Particle3DBuilder pb : this.particles3D)
+          this.particles3DToSave.add(pb.getParticle());
+
         showParticles3D(imp);
         saveParticle(imp);
       } catch (IOException e) {

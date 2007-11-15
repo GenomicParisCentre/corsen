@@ -175,10 +175,9 @@ public class PixelizedParticle3D {
     this.pixelWidth = pixelWidth;
     this.pixelHeight = pixelHeight;
     this.pixelDepth = pixelDepth;
-    System.out.println("inner points: " + particle.getInnerPoints().size());
+
     initArray(particle.getInnerPoints());
     fillArray(particle.getInnerPoints());
-
   }
 
 }

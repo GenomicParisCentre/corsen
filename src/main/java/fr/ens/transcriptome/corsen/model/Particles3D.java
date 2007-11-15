@@ -14,15 +14,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 public class Particles3D {
 
-  private static final String PAR_FILE_VERSION = "1.1";
+  private static final String PAR_FILE_VERSION = "1.2";
 
+  public static final String PAR_FILE_VERSION_KEY = "ParFileVersion";
   public static final String WIDTH_KEY = "Width";
   public static final String HEIGHT_KEY = "Height";
   public static final String ZSLICES_KEY = "ZSlices";
@@ -183,23 +183,6 @@ public class Particles3D {
   }
 
   /**
-   * Set the particles.
-   * @param particles Particles to set
-   */
-  public void setParticles(Set<Particle3DBuilder> particles) {
-
-    if (particles == null)
-      return;
-
-    List<Particle3D> list = new ArrayList<Particle3D>(particles.size());
-
-    for (Particle3DBuilder p : particles)
-      list.add(p.getParticle());
-
-    this.particles = Collections.unmodifiableList(list);
-  }
-
-  /**
    * Set the type of the particles.
    * @param type The type to set
    */
@@ -339,6 +322,8 @@ public class Particles3D {
     final List<Particle3D> particles = new ArrayList<Particle3D>();
     final BufferedReader in = new BufferedReader(new InputStreamReader(is));
 
+    String parVersion = null;
+
     String line;
     boolean header = true;
     while ((line = in.readLine()) != null)
@@ -350,6 +335,10 @@ public class Particles3D {
 
           if (line.startsWith("Name\t")) {
             header = false;
+
+            if (!PAR_FILE_VERSION.equals(parVersion))
+              throw new IOException("Can't read an old Par file format.");
+
             continue;
           } else if (line.startsWith("Dimension")) {
 
@@ -389,6 +378,9 @@ public class Particles3D {
                 this.maxThreshold = Double.parseDouble(value.trim());
               else if (IMAGEFILE_KEY.endsWith(key))
                 this.imageFilename = value.trim();
+              else if (PAR_FILE_VERSION_KEY.endsWith(key))
+                parVersion = value;
+
             }
           }
 
@@ -540,7 +532,7 @@ public class Particles3D {
         .write("\n" + Particles3D.MAX_THRESHOLD_KEY + "=" + this.maxThreshold);
 
     writer
-        .write("\nName\tCenter\tBarycenter\tVolume\tIntensity\tSurface points\tInner points\n");
+        .write("\nName\tCenter\tBarycenter\tArea\tVolume\tSphericity\tIntensity\tSurface points\tInner points\n");
 
     if (this.particles != null)
       for (Particle3D p : this.particles) {

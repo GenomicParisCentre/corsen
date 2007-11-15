@@ -146,12 +146,48 @@ public final class Particle3D {
   }
 
   /**
+   * Set the volume of the particle
+   * @param volume of the particle
+   */
+  void setVolume(final double volume) {
+
+    if (volume == -1)
+      calcVolume();
+    else
+      this.volume = volume;
+  }
+
+  /**
    * Set the intensity of the particle
-   * @param intensity
+   * @param intensity of the particle
    */
   void setIntensity(final long intensity) {
 
-    this.intensity = intensity;
+    if (intensity == -1)
+      calcIntensity();
+    else
+      this.intensity = intensity;
+  }
+
+  /**
+   * Set the area of the particle
+   * @param area Area of the particle
+   */
+  void setArea(final double area) {
+
+    if (area == -1)
+      calcArea();
+    else
+      this.area = area;
+  }
+
+  /**
+   * Set the sphericity of the particle
+   * @param sphericity Sphericity of the particle
+   */
+  void setSphericity(final double sphericity) {
+
+    this.sphericity = sphericity;
   }
 
   //
@@ -614,14 +650,18 @@ public final class Particle3D {
    */
   public String toString() {
 
-    final StringBuffer sb = new StringBuffer();
+    final StringBuilder sb = new StringBuilder();
     sb.append(getName());
     sb.append('\t');
     sb.append(getInnerPoints().getCenter());
     sb.append('\t');
     sb.append(getInnerPoints().getBarycenter());
     sb.append('\t');
+    sb.append(getArea());
+    sb.append('\t');
     sb.append(getVolume());
+    sb.append('\t');
+    sb.append(getSphericty());
     sb.append('\t');
     sb.append(getIntensity());
     sb.append('\t');

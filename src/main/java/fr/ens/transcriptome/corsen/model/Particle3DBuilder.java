@@ -35,8 +35,10 @@ public class Particle3DBuilder {
   private float pixelDepth;
 
   private Particle3D particle;
-  private double volume;
-  private long intensity;
+  private double volume = -1;
+  private double area = -1;
+  private double sphericity = -1;
+  private long intensity = -1;
 
   /**
    * Add a particle 2D to the particle 3D.
@@ -205,7 +207,14 @@ public class Particle3DBuilder {
       st.nextToken(); // barycenter
 
     if (st.hasMoreElements())
+      this.area = Double.parseDouble(st.nextToken());
+
+    if (st.hasMoreElements())
       this.volume = Double.parseDouble(st.nextToken());
+
+    if (st.hasMoreElements())
+      this.sphericity = Double.parseDouble(st.nextToken());
+
     if (st.hasMoreElements())
       this.intensity = Long.parseLong(st.nextToken());
 
@@ -344,8 +353,10 @@ public class Particle3DBuilder {
     Particle3D result = this.particle;
     result.getModifiableInnerPoints().trimToSize();
     result.getModifiableSurfacePoints().trimToSize();
-    result.calcVolume();
+    result.setVolume(this.volume);
     result.setIntensity(this.intensity);
+    result.setArea(this.area);
+    result.setSphericity(this.sphericity);
 
     this.particle = null;
 
