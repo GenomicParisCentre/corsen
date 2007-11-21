@@ -124,7 +124,7 @@ public class Segmentation3DRunner {
           System.out.println("\tAdd p2D #"
               + p2D.getId() + " to 3D Object #" + existingP3D.getId() + " z="
               + slice + " (" + p2D.innerPointsCount() + " points, "
-              + existingP3D.getInnerPointCount() + " total points)");
+              + existingP3D.innerPointsCount() + " total points)");
 
         if (this.currentParticles3D.containsKey(p2D)) {
           Particle3DBuilder particle2 = this.currentParticles3D.get(p2D);

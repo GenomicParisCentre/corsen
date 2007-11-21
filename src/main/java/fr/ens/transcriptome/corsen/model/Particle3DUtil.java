@@ -181,7 +181,7 @@ public final class Particle3DUtil {
           Object keyZ = mapZIt.next();
           Particle3DBuilder builder = (Particle3DBuilder) mapZ.get(keyZ);
 
-          if (builder.getInnerPointCount() > 0) {
+          if (builder.innerPointsCount() > 0) {
             if (cuboidArrayList == null)
               cuboidArrayList = new ArrayList<Particle3D>();
             cuboidArrayList.add(builder.getParticle());

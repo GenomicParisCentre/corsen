@@ -288,7 +288,7 @@ public class Particle3DBuilder {
    * Get the number of inner points in the particle.
    * @return the number of inner points in the particle
    */
-  public int getInnerPointCount() {
+  public int innerPointsCount() {
 
     init();
 
@@ -299,7 +299,7 @@ public class Particle3DBuilder {
    * Get the number of surface points in the particle.
    * @return the number of inner points in the particle
    */
-  public int getSurfacePointCount() {
+  public int surfacePointsCount() {
 
     init();
 
