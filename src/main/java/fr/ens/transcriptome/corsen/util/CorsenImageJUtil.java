@@ -120,6 +120,7 @@ public final class CorsenImageJUtil {
         final int y = (int) pt.getY();
         ip.lineTo(x, y);
         ip.moveTo(x, y);
+        //ip.drawPixel(x, y);
       }
     }
 
