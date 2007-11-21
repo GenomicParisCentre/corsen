@@ -400,6 +400,8 @@ public class CorsenQt extends QMainWindow {
           new CorsenResult(new File(arnFile), new File(mitoFile),
               this.settings, null);
       DistancesCalculator dc = new DistancesCalculator(cr);
+      dc.setCoordinatesFactor(settings.getFactor());
+      dc.setZCoordinatesFactor(settings.getZFactor());
 
       mainWindowUi.progressLabel.setText("Process 0 of 1 cell");
       mainWindowUi.progressBar.setValue(0);

@@ -44,8 +44,8 @@ public class DistancesCalculator {
   private DistanceProcessor processorA;
   private DistanceProcessor processorB;
 
-  private float zFactor = 1.0f;
-  private float factor = 1.0f;
+  private float zCoordinatesFactor = 1.0f;
+  private float coordinatesFactor = 1.0f;
 
   private AbstractListPoint3D listPointsAForThreads;
   private int freeThreads;
@@ -222,6 +222,50 @@ public class DistancesCalculator {
 
   }
 
+  //
+  // Getters
+  //
+
+  /**
+   * Get the zFactor.
+   * @return Returns the zFactor
+   */
+  public float getZCoordinatesFactor() {
+    return zCoordinatesFactor;
+  }
+
+  /**
+   * Get the factor for the coordinates.
+   * @return Returns the factor
+   */
+  public float getCoordinatesFactor() {
+    return coordinatesFactor;
+  }
+
+  //
+  // Setters
+  //
+
+  /**
+   * Set the z factor for the coordinates.
+   * @param factor The zFactor to set
+   */
+  public void setZCoordinatesFactor(final float factor) {
+    zCoordinatesFactor = factor;
+  }
+
+  /**
+   * Set the factor for the coordinates.
+   * @param factor The factor to set
+   */
+  public void setCoordinatesFactor(final float factor) {
+    this.coordinatesFactor = factor;
+  }
+
+  //
+  // Other methods
+  //
+
   private UncaughtExceptionHandler getUncaughtExceptionHandler(
       final UpdateStatus updateStatus) {
 
@@ -290,8 +334,8 @@ public class DistancesCalculator {
     if (particles == null)
       return;
 
-    particles.changeZCoord(zFactor);
-    particles.changeAllCoord(factor);
+    particles.changeZCoord(zCoordinatesFactor);
+    particles.changeAllCoord(coordinatesFactor);
   }
 
   /**

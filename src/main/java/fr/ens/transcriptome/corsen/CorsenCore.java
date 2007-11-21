@@ -229,13 +229,15 @@ public class CorsenCore implements Runnable {
         particlesAFile.getAbsolutePath(), particlesBFile.getAbsolutePath(),
         resultFile.getAbsolutePath());
 
-    final CorsenResult result = new CorsenResult(particlesAFile,
-        particlesBFile, s, getUpdateStatus());
+    final CorsenResult result =
+        new CorsenResult(particlesAFile, particlesBFile, s, getUpdateStatus());
 
     // Create writer object
     final CorsenResultWriter writer = new CorsenResultWriter(result);
 
     DistancesCalculator dc = new DistancesCalculator(result);
+    dc.setCoordinatesFactor(settings.getFactor());
+    dc.setZCoordinatesFactor(settings.getZFactor());
     dc.loadParticles();
 
     result.getMessengersParticles().setType(ParticleType.TINY);
@@ -338,8 +340,9 @@ public class CorsenCore implements Runnable {
 
     if (filename.startsWith(prefix) && filename.endsWith(suffix)) {
 
-      String between = filename.substring(prefix.length(), filename.length()
-          - prefix.length() + 1);
+      String between =
+          filename.substring(prefix.length(), filename.length()
+              - prefix.length() + 1);
 
       InputFiles iFile;
 
@@ -374,13 +377,13 @@ public class CorsenCore implements Runnable {
 
       final String filename = files[i].getName();
 
-      InputFiles iFile = getInputFile(map, filename, prefixA,
-          Globals.EXTENSION_PARTICLES_FILE);
+      InputFiles iFile =
+          getInputFile(map, filename, prefixA, Globals.EXTENSION_PARTICLES_FILE);
       if (iFile != null)
         iFile.inputParticlesAFile = files[i];
 
-      iFile = getInputFile(map, filename, prefixB,
-          Globals.EXTENSION_PARTICLES_FILE);
+      iFile =
+          getInputFile(map, filename, prefixB, Globals.EXTENSION_PARTICLES_FILE);
       if (iFile != null)
         iFile.inputParticlesBFile = files[i];
     }
