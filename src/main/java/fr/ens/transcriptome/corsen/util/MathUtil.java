@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -76,38 +76,38 @@ public class MathUtil {
   }
 
   /**
-   * Calculate the sphericity of a particle
+   * Calculate the sphericity of a particle (Laurent formula)
    * @param volume Volume of the particle
    * @param area area of the particle
    * @return the sphericity of the particle
    */
   public static final double sphericite1(final double volume, final double area) {
 
-    final double pi4 = Math.PI * 4;
-
-    return (pi4 * Math.pow(3 * volume / pi4, 2 / 3)) / area;
+    return (Math.PI * 4.0 * Math.pow(3.0 * volume / Math.PI * 4.0, 2.0 / 3.0))
+        / area;
   }
 
   /**
-   * Calculate the sphericity of a particle
+   * Calculate the sphericity of a particle (Mathilde formula)
    * @param volume Volume of the particle
    * @param area area of the particle
    * @return the sphericity of the particle
    */
   public static final double sphericite2(final double volume, final double area) {
 
-    return Math.sqrt(Math.PI) * volume / (6 * Math.pow(area, 3 / 2));
+    return (6.0 * Math.sqrt(Math.PI) * volume) / Math.pow(area, 3.0 / 2.0);
   }
 
   /**
-   * Calculate the sphericity of a particle
+   * Calculate the sphericity of a particle (Wikipedia formula)
    * @param volume Volume of the particle
    * @param area area of the particle
    * @return the sphericity of the particle
    */
   public static final double sphericite3(double volume, double area) {
 
-    return (Math.pow(Math.PI, 1 / 3) * Math.pow(6 * volume, 2 / 3)) / area;
+    return (Math.pow(Math.PI, 1.0 / 3.0) * Math.pow(6.0 * volume, 2.0 / 3.0))
+        / area;
   }
 
 }
