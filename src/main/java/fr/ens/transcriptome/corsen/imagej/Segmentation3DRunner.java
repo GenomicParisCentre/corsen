@@ -118,33 +118,37 @@ public class Segmentation3DRunner {
 
         Particle3DBuilder existingP3D = this.previousParticles3D.get(p2DToTest);
 
-        existingP3D.add(p2D, slice);
+        if (!find) {
+          existingP3D.add(p2D, slice);
+          find = true;
 
-        if (DEBUG)
-          System.out.println("\tAdd p2D #"
-              + p2D.getId() + " to 3D Object #" + existingP3D.getId() + " z="
-              + slice + " (" + p2D.innerPointsCount() + " points, "
-              + existingP3D.innerPointsCount() + " total points)");
+          if (DEBUG)
+            System.out.println("\tAdd p2D #"
+                + p2D.getId() + " to 3D Object #" + existingP3D.getId() + " z="
+                + slice + " (" + p2D.innerPointsCount() + " points, "
+                + existingP3D.innerPointsCount() + " total points)");
+        }
 
         if (this.currentParticles3D.containsKey(p2D)) {
-          Particle3DBuilder particle2 = this.currentParticles3D.get(p2D);
+          Particle3DBuilder particle3D2 = this.currentParticles3D.get(p2D);
 
-          if (particle2.getId() != existingP3D.getId()) {
+          if (particle3D2.getId() != existingP3D.getId()) {
 
-            particle2.add(existingP3D.getParticle());
+            particle3D2.add(existingP3D.getParticle());
+
+            replaceOccurances(previousParticles3D, existingP3D, particle3D2);
+            replaceOccurances(currentParticles3D, existingP3D, particle3D2);
+
             this.particles3D.remove(existingP3D);
 
             if (DEBUG)
               System.out.println("Merge 3D Object #"
-                  + existingP3D.getId() + " in #" + particle2.getId() + " z="
+                  + existingP3D.getId() + " in #" + particle3D2.getId() + " z="
                   + slice);
           }
 
         } else
           this.currentParticles3D.put(p2D, existingP3D);
-
-        find = true;
-        break;
       }
 
     }
@@ -170,6 +174,20 @@ public class Segmentation3DRunner {
     this.currentParticles2D.add(p2D);
   }
 
+  private void replaceOccurances(Map<Particle2D, Particle3DBuilder> map,
+      Particle3DBuilder oldParticle3D, Particle3DBuilder newParticle3D) {
+
+    if (map == null || oldParticle3D == null || newParticle3D == null)
+      return;
+
+    for (Particle2D key : map.keySet()) {
+
+      Particle3DBuilder value = map.get(key);
+      if (value == oldParticle3D)
+        map.put(key, newParticle3D);
+    }
+  }
+
   /**
    * Create the list of Particles 3D segmented.
    * @return a list of Particle3D
@@ -186,6 +204,10 @@ public class Segmentation3DRunner {
       final Particle3D p = pb.getParticle();
       result.add(p);
       totalPixels3D += p.innerPointsCount();
+
+      if (DEBUG)
+        System.out.println("Particle 3D #"
+            + p.getId() + " " + p.innerPointsCount() + " points");
     }
 
     if (DEBUG)
