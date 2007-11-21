@@ -45,7 +45,7 @@ public final class Globals {
 
   public static final boolean IS_JAR = isJar();
 
-  public static final int THREAD_NUMBER_DEFAULT = 0;
+  public static final int THREAD_NUMBER_DEFAULT = -1;
 
   public static final boolean DEBUG = true;
   public static final boolean DEBUG_HOME_DIR = IS_JAR ? false : true;
@@ -113,9 +113,9 @@ public final class Globals {
           + "Authors:\n"
           + "  Laurent Jourdren(*) <jourdren@biologie.ens.fr> Main developer, maintener.\n"
           + "  Mathilde Garcia(**) <garcia@biologie.ens.fr> Project leader, R programming, ImageJ scripting, testing.\n\n"
-          + "(*)  Plate-forme transcriptome, École Normale Supérieure\n"
-          + "(**) Laboratoire de Génétique Moléculaire, École Normale Supérieure\n\n"
-          + "Copyright 2006 École Normale Supérieure.\n" + LICENCE_TXT + "\n";
+          + "(*)  Plate-forme transcriptome, ï¿½cole Normale Supï¿½rieure\n"
+          + "(**) Laboratoire de Gï¿½nï¿½tique Molï¿½culaire, ï¿½cole Normale Supï¿½rieure\n\n"
+          + "Copyright 2006 ï¿½cole Normale Supï¿½rieure.\n" + LICENCE_TXT + "\n";
 
   public static final String ABOUT_HTML =
       "<p><b>"
@@ -132,12 +132,12 @@ public final class Globals {
           + ".<br/><br/>"
           + "<b>Authors</b>:"
           + "<ul><li><a href=\"mailto:jourdren@biologie.ens.fr?subject=CorsenSwing\">Laurent Jourdren</a><br/>"
-          + "<a href=\"http://transcriptome.ens.fr\">Microarray platform, École Normale Supérieure</a>"
+          + "<a href=\"http://transcriptome.ens.fr\">Microarray platform, ï¿½cole Normale Supï¿½rieure</a>"
           + "<br/>Main developer, maintener.</li><br/>"
           + "<li><a href=\"mailto:garcia@biologie.ens.fr?subject=CorsenSwing\">Mathilde Garcia</a><br/>"
-          + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de Génétique Moléculaire, École Normale Supérieure</a>"
+          + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de Gï¿½nï¿½tique Molï¿½culaire, ï¿½cole Normale Supï¿½rieure</a>"
           + "<br/>Project leader, R programming, ImageJ scripting, testing.</li></ul>"
-          + "<p>Copyright 2006 École Normale Supérieure.<br/>" + LICENCE_TXT
+          + "<p>Copyright 2006 ï¿½cole Normale Supï¿½rieure.<br/>" + LICENCE_TXT
           + "</p>";
 
   private static String getVersion() {
