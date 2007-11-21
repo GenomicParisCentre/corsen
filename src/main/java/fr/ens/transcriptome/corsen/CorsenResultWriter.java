@@ -252,16 +252,12 @@ public class CorsenResultWriter {
 
     out.write("# Intensity\tVolume\n");
 
-    boolean first = true;
     for (Particle3D par : particles.getParticles()) {
-      // for (int i = 0; i < pars.length; i++) {
-      if (first) {
-        out.write("\n");
-        first = false;
-      }
+
       out.write(Long.toString(par.getIntensity()));
       out.write("\t");
       out.write(Double.toString(par.getVolume()));
+      out.write("\n");
     }
 
     out.close();
