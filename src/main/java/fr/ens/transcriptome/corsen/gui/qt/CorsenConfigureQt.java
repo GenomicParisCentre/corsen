@@ -96,8 +96,8 @@ public class CorsenConfigureQt {
 
       public void changeMessengersColor() {
 
-        QColor c = QColorDialog
-            .getColor(CorsenConfigureQt.this.messengersColor);
+        QColor c =
+            QColorDialog.getColor(CorsenConfigureQt.this.messengersColor);
 
         if (c.isValid()) {
           CorsenConfigureQt.this.messengersColor = c;
@@ -117,8 +117,8 @@ public class CorsenConfigureQt {
 
       public void changeBaryCentersColor() {
 
-        QColor c = QColorDialog
-            .getColor(CorsenConfigureQt.this.baryCentersColor);
+        QColor c =
+            QColorDialog.getColor(CorsenConfigureQt.this.baryCentersColor);
 
         if (c.isValid()) {
           CorsenConfigureQt.this.baryCentersColor = c;
@@ -138,8 +138,8 @@ public class CorsenConfigureQt {
 
       public void changeBackgroundColor() {
 
-        QColor c = QColorDialog
-            .getColor(CorsenConfigureQt.this.backgroundColor);
+        QColor c =
+            QColorDialog.getColor(CorsenConfigureQt.this.backgroundColor);
 
         if (c.isValid()) {
           CorsenConfigureQt.this.backgroundColor = c;
@@ -169,22 +169,24 @@ public class CorsenConfigureQt {
 
       public void dialogParticleAProperties() {
 
-        ParticleType type = ParticleType
-            .getParticleType(dialogUi.particleATypeComboBox.currentText());
+        ParticleType type =
+            ParticleType.getParticleType(dialogUi.particleATypeComboBox
+                .currentText());
 
-        ParticleTypeProperties ptp = new ParticleTypeProperties(dialog, type,
-            particlesAProporties);
+        ParticleTypeProperties ptp =
+            new ParticleTypeProperties(dialog, type, particlesAProporties);
         ptp.configureDialog();
         particlesAProporties = ptp.getProperties();
       }
 
       public void dialogParticleBProperties() {
 
-        ParticleType type = ParticleType
-            .getParticleType(dialogUi.particleBTypeComboBox.currentText());
+        ParticleType type =
+            ParticleType.getParticleType(dialogUi.particleBTypeComboBox
+                .currentText());
 
-        ParticleTypeProperties ptp = new ParticleTypeProperties(dialog, type,
-            particlesBProporties);
+        ParticleTypeProperties ptp =
+            new ParticleTypeProperties(dialog, type, particlesBProporties);
         ptp.configureDialog();
         particlesBProporties = ptp.getProperties();
       }
@@ -346,16 +348,12 @@ public class CorsenConfigureQt {
       s.setParticlesBBatchPrefix(dialogUi.particleBBatchPrefixLineEdit.text());
       s.setParticlesBProperties(this.particlesBProporties);
 
-      if (dialogUi.noThreadRadioButton.isChecked()) {
-        System.out.println("-1");
+      if (dialogUi.noThreadRadioButton.isChecked())
         s.setThreadNumber(-1);
-      } else if (dialogUi.automaticThreadRadioButton.isChecked()) {
-        System.out.println("0");
+      else if (dialogUi.automaticThreadRadioButton.isChecked())
         s.setThreadNumber(0);
-      } else {
-        System.out.println("toto");
+      else
         s.setThreadNumber(dialogUi.customThreadSpinBox.value());
-      }
 
       s.setSaveDataFile(dialogUi.dataFileCheckBox.isChecked());
       s.setSaveIVFile(dialogUi.ivFileCheckBox.isChecked());
@@ -366,7 +364,8 @@ public class CorsenConfigureQt {
       s.setSaveParticlesACuboids3dFile(dialogUi.messengersCuboidsCheckBox
           .isChecked());
       s.setSaveParticlesB3dFile(dialogUi.mitosCheckBox.isChecked());
-      s.setSaveParticlesBCuboids3dFile(dialogUi.mitosCuboidsCheckBox.isChecked());
+      s.setSaveParticlesBCuboids3dFile(dialogUi.mitosCuboidsCheckBox
+          .isChecked());
       s.setSaveDistances3dFile(dialogUi.distancesCheckBox.isChecked());
 
       try {
