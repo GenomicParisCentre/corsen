@@ -1,4 +1,5 @@
 import fr.ens.transcriptome.corsen.Globals;
+import fr.ens.transcriptome.corsen.imagej.Segmentation3DRunner;
 import fr.ens.transcriptome.corsen.model.Particle2D;
 import fr.ens.transcriptome.corsen.model.Particle2DBuilder;
 import fr.ens.transcriptome.corsen.model.Particle3D;
@@ -177,131 +178,16 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
   private Polygon polygon;
 
   // Add by Laurent Jourdren
-  private Set<Particle3DBuilder> particles3D = new HashSet<Particle3DBuilder>();
+  private Segmentation3DRunner seg3DRunner = new Segmentation3DRunner();
   private List<Particle3D> particles3DToSave;
-  private Set<Particle2D> previousParticules2D = new HashSet<Particle2D>();
-  private Set<Particle2D> currentParticles2D = new HashSet<Particle2D>();
-  private Map<Particle2D, Particle3DBuilder> previousParticles3D =
-      new HashMap<Particle2D, Particle3DBuilder>();
-  private Map<Particle2D, Particle3DBuilder> currentParticles3D =
-      new HashMap<Particle2D, Particle3DBuilder>();
-  private int previousZ = -1;
-  private static final boolean DEBUG = false;
 
-  private static final String EXTENSION_FILE = ".par";
-
-  /*
-   * Add by Laurent Jourdren
+  /**
+   * Save Particles 3D.
+   * @param outputFile output file
+   * @param fi File information about the image
+   * @throws IOException if an error occurs while saving the output file
    */
-  void savePolygonXY(ImagePlus imp, Roi roi) {
-
-    // double zHeight= 2.0;
-
-    Calibration cal = imp.getCalibration();
-    final double pixelWidth = cal.pixelWidth;
-    final double pixelHeight = cal.pixelHeight;
-    final double pixelDepth = cal.pixelDepth;
-
-    final int slice = imp.getCurrentSlice();
-
-    if (slice - 1 != this.previousZ) {
-      this.previousParticules2D = this.currentParticles2D;
-      this.currentParticles2D = new HashSet<Particle2D>();
-      this.previousParticles3D = this.currentParticles3D;
-      this.currentParticles3D = new HashMap<Particle2D, Particle3DBuilder>();
-
-      if (this.previousZ == -1)
-        this.previousZ = slice - 1;
-      else
-        this.previousZ++;
-    }
-
-    Particle2D p2D =
-        Particle2DBuilder.createParticle2D((float) pixelWidth,
-            (float) pixelHeight, imp, (PolygonRoi) roi);
-
-    Iterator it = this.previousParticules2D.iterator();
-
-    boolean find = false;
-
-    while (it.hasNext()) {
-
-      final Particle2D p2DToTest = (Particle2D) it.next();
-
-      if (p2DToTest.innerPointIntersect(p2D)) {
-
-        Particle3DBuilder existingP3D = this.previousParticles3D.get(p2DToTest);
-
-        existingP3D.add(p2D, slice);
-
-        if (DEBUG)
-          System.out.println("Add p2D to "
-              + existingP3D.getId() + " z=" + slice + " ("
-              + p2D.innerPointsCount() + " points)");
-
-        if (this.currentParticles3D.containsKey(p2D)) {
-          Particle3DBuilder particle2 = this.currentParticles3D.get(p2D);
-
-          if (particle2.getId() != existingP3D.getId()) {
-            particle2.add(existingP3D.getParticle());
-            this.particles3D.remove(existingP3D);
-
-          }
-
-          if (DEBUG)
-            System.out.println("Merge "
-                + existingP3D.getId() + " in " + particle2.getId() + " z="
-                + slice);
-
-        } else
-          this.currentParticles3D.put(p2D, existingP3D);
-
-        find = true;
-      }
-
-    }
-
-    if (!find) {
-
-      Particle3DBuilder newP3D =
-          new Particle3DBuilder((float) pixelWidth, (float) pixelHeight,
-              (float) pixelDepth);
-      newP3D.setName(imp.getTitle() + "-" + newP3D.getId());
-      newP3D.add(p2D, slice);
-
-      this.particles3D.add(newP3D);
-      this.currentParticles3D.put(p2D, newP3D);
-
-      if (DEBUG)
-        System.out.println("New 3D Object ("
-            + newP3D.getId() + "), z=" + slice + " add particle2D #"
-            + p2D.getId() + " (" + p2D.innerPointsCount() + " points)");
-
-    }
-
-    this.currentParticles2D.add(p2D);
-  }
-
-  private int countInnerParticlesPoints() {
-
-    if (this.particles3D != null) {
-
-      Iterator it = this.particles3D.iterator();
-      int count = 0;
-
-      while (it.hasNext()) {
-
-        Particle3D p = (Particle3D) it.next();
-        count += p.innerPointsCount();
-      }
-
-      return count;
-    }
-
-    return 0;
-  }
-
-  private void saveParticle3D(final File outputFile, FileInfo fi)
+  private void saveParticles3DFile(final File outputFile, final FileInfo fi)
       throws IOException {
 
     FileOutputStream fos = new FileOutputStream(outputFile);
@@ -334,6 +220,10 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     particles.saveParticles(fos);
   }
 
+  /**
+   * Show a stack with particles3D in colors
+   * @param imp Original Image
+   */
   private void showParticles3D(final ImagePlus imp) {
 
     if ((options & SHOW_PARTICLES_3D) != 0) {
@@ -375,7 +265,12 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
 
   }
 
-  private File chooseResultFile(ImagePlus imp) {
+  /**
+   * Choose the name of result file
+   * @param imp Original Image
+   * @return A file object
+   */
+  private File chooseResultFile(final ImagePlus imp) {
 
     JFileChooser chooser = new JFileChooser();
 
@@ -413,7 +308,13 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     return null;
   }
 
-  private void saveParticle(ImagePlus imp) throws IOException {
+  /**
+   * Process Particles 3D results.
+   * @param imp Original Image
+   * @throws IOException if an error occurs while saving data
+   */
+  private void particles3DResultsProcessor(final ImagePlus imp)
+      throws IOException {
 
     File file = null;
 
@@ -470,14 +371,15 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
           else
             newName = fi.fileName.substring(0, index);
 
-          file = new File(fi.directory, newName + EXTENSION_FILE);
+          file =
+              new File(fi.directory, newName + Globals.EXTENSION_PARTICLES_FILE);
         }
       }
 
     }
 
     if (file != null)
-      saveParticle3D(file, imp.getOriginalFileInfo());
+      saveParticles3DFile(file, imp.getOriginalFileInfo());
 
     /*
      * final Particles3D mitosParticles = new Particles3D(file); RGL rgl = new
@@ -529,6 +431,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     int flags = IJ.setupDialog(imp, baseFlags);
     processStack = (flags & DOES_STACKS) != 0;
     slice = 0;
+    this.seg3DRunner.clear();
     saveRoi = imp.getRoi();
     if (saveRoi != null
         && saveRoi.getType() != Roi.RECTANGLE && saveRoi.isArea())
@@ -555,16 +458,16 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     if (slice == imp.getNSlices()) {
       try {
 
-        this.particles3DToSave =
-            new ArrayList<Particle3D>(this.particles3D.size());
-        for (Particle3DBuilder pb : this.particles3D)
-          this.particles3DToSave.add(pb.getParticle());
+        this.particles3DToSave = this.seg3DRunner.getParticlesToSave();
 
         showParticles3D(imp);
-        saveParticle(imp);
+        particles3DResultsProcessor(imp);
       } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
+      } catch (RuntimeException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(imp.getWindow(), e.getMessage());
       }
     }
   }
@@ -1110,7 +1013,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       saveResults(stats, roi);
 
       // Add by Laurent Jourdren
-      savePolygonXY(imp, roi);
+      this.seg3DRunner.savePolygonXY(imp, roi);
 
       if (showChoice != NOTHING)
         drawParticle(drawIP, roi, stats, mask);
