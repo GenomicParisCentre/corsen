@@ -1,4 +1,4 @@
-package fr.ens.transcriptome.corsen.util;
+package fr.ens.transcriptome.corsen.imagej;
 
 import fr.ens.transcriptome.corsen.model.Particle2D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
@@ -113,14 +113,14 @@ public final class CorsenImageJUtil {
       final Point2D pt0 = particle.getSurfacePoint(0);
       ip.moveTo((int) pt0.getX(), (int) pt0.getY());
 
-      for (int i = 1; i < nSurface; i++) {
+      for (int i = 0; i < nSurface; i++) {
 
         final Point2D pt = particle.getSurfacePoint(i);
+
         final int x = (int) pt.getX();
         final int y = (int) pt.getY();
-        ip.lineTo(x, y);
-        ip.moveTo(x, y);
-        //ip.drawPixel(x, y);
+
+        ip.drawPixel(x, y);
       }
     }
 
@@ -150,7 +150,11 @@ public final class CorsenImageJUtil {
 
     Particle2D[] pars2d = particle.toParticles2D();
 
+    int surfaceCountPixel = 0;
+
     for (int i = 0; i < pars2d.length; i++) {
+
+      surfaceCountPixel += pars2d[i].surfacePointsCount();
 
       ImageProcessor drawIP = stack.getProcessor(minStack + i);
       drawParticle(drawIP, pars2d[i], colorToDraw);

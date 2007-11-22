@@ -1,11 +1,12 @@
 import fr.ens.transcriptome.corsen.Globals;
+import fr.ens.transcriptome.corsen.imagej.CorsenImageJUtil;
+import fr.ens.transcriptome.corsen.imagej.Segmentation2DRunner;
 import fr.ens.transcriptome.corsen.imagej.Segmentation3DRunner;
 import fr.ens.transcriptome.corsen.model.Particle2D;
 import fr.ens.transcriptome.corsen.model.Particle2DBuilder;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
 import fr.ens.transcriptome.corsen.model.Particles3D;
-import fr.ens.transcriptome.corsen.util.CorsenImageJUtil;
 import fr.ens.transcriptome.corsen.util.Util;
 import ij.IJ;
 import ij.ImagePlus;
@@ -178,6 +179,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
   private Polygon polygon;
 
   // Add by Laurent Jourdren
+  private Segmentation2DRunner seg2DRunner;
   private Segmentation3DRunner seg3DRunner = new Segmentation3DRunner();
   private List<Particle3D> particles3DToSave;
 
@@ -454,6 +456,20 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       if (saveRoi != null)
         imp.setRoi(saveRoi);
     }
+
+    // Add by Laurent Jourdren
+
+    if (slice == 1) {
+
+      Calibration cal = imp.getCalibration();
+
+      this.seg2DRunner =
+          new Segmentation2DRunner(cal.pixelWidth, cal.pixelHeight);
+    }
+
+    this.seg3DRunner.addParticles2DForSegmentation3D(this.seg2DRunner
+        .getParticles2D(ip), slice, imp.getCalibration().pixelDepth, imp
+        .getTitle());
 
     if (slice == imp.getNSlices()) {
       try {
@@ -1013,7 +1029,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       saveResults(stats, roi);
 
       // Add by Laurent Jourdren
-      this.seg3DRunner.savePolygonXY(imp, roi);
+      //this.seg3DRunner.savePolygonXY(imp, roi);
 
       if (showChoice != NOTHING)
         drawParticle(drawIP, roi, stats, mask);
