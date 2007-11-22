@@ -97,11 +97,14 @@ public final class CorsenImageJUtil {
 
     ip.setColor(color);
 
+    final float pixelWidth = particle.getPixelWidth();
+    final float pixelHeight = particle.getPixelHeight();
+
     for (int i = 0; i < nInner; i++) {
 
       final Point2D pt = particle.getInnerPoint(i);
-      final int x = (int) pt.getX();
-      final int y = (int) pt.getY();
+      final int x = (int) (pt.getX() / pixelWidth);
+      final int y = (int) (pt.getY() / pixelHeight);
       ip.drawPixel(x, y);
     }
 
@@ -117,8 +120,8 @@ public final class CorsenImageJUtil {
 
         final Point2D pt = particle.getSurfacePoint(i);
 
-        final int x = (int) pt.getX();
-        final int y = (int) pt.getY();
+        final int x = (int) (pt.getX() / pixelWidth);
+        final int y = (int) (pt.getY() / pixelHeight);
 
         ip.drawPixel(x, y);
       }

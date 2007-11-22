@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -50,11 +50,11 @@ public class PixelizedParticle3D {
     this.z0 = (float) Math.floor(MathUtil.roundValue(zMin / this.pixelDepth));
 
     final int xLen =
-        (int) Math.round(Math.ceil((xMax - xMin) / this.pixelWidth)) + 1;
+        (int) MathUtil.roundValue((xMax - xMin) / this.pixelWidth) + 1;
     final int yLen =
-        (int) Math.round(Math.ceil((yMax - yMin) / this.pixelHeight)) + 1;
+        (int) MathUtil.roundValue((yMax - yMin) / this.pixelHeight) + 1;
     final int zLen =
-        (int) Math.round(Math.ceil((zMax - zMin) / this.pixelDepth)) + 1;
+        (int) MathUtil.roundValue((zMax - zMin) / this.pixelDepth) + 1;
 
     this.xLen = xLen;
     this.yLen = yLen;
@@ -80,14 +80,14 @@ public class PixelizedParticle3D {
     for (Point3D p : lp) {
 
       final int dx =
-          (int) Math.floor(MathUtil.roundValue((p.getX() - x0)
-              / this.pixelWidth));
+          (int) Math.floor(MathUtil.roundValue((p.getX() / this.pixelWidth)
+              - x0));
       final int dy =
-          (int) Math.floor(MathUtil.roundValue((p.getY() - y0)
-              / this.pixelHeight));
+          (int) Math.floor(MathUtil.roundValue((p.getY() / this.pixelHeight)
+              - y0));
       final int dz =
-          (int) Math.floor(MathUtil.roundValue((p.getZ() - z0)
-              / this.pixelDepth));
+          (int) Math.floor(MathUtil.roundValue((p.getZ() / this.pixelDepth)
+              - z0));
 
       this.array[dz][dy][dx] = 1;
     }
@@ -134,8 +134,6 @@ public class PixelizedParticle3D {
             continue;
 
           final int[] faces = countAxesSurfaces(i, j, k);
-
-          // System.out.println(Arrays.toString(faces));
 
           if (faces[0] == 0 && faces[1] == 0 && faces[2] == 0)
             continue;
