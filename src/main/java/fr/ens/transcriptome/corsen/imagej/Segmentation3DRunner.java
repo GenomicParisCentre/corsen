@@ -22,11 +22,6 @@
 
 package fr.ens.transcriptome.corsen.imagej;
 
-import ij.ImagePlus;
-import ij.gui.PolygonRoi;
-import ij.gui.Roi;
-import ij.measure.Calibration;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,7 +30,6 @@ import java.util.Map;
 import java.util.Set;
 
 import fr.ens.transcriptome.corsen.model.Particle2D;
-import fr.ens.transcriptome.corsen.model.Particle2DBuilder;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
 
@@ -77,20 +71,33 @@ public class Segmentation3DRunner {
   }
 
   /**
-   * Process segmentation3D for current slice
-   * @param imp Original Image
-   * @param roi Region of interest from Segmentation 2D
+   * Add particles 2D to the segmentation 3D process.
+   * @param particles2D Particles 2D to add
+   * @param slice slice in the stack of the particles
+   * @param pixelDepth the pixel Depth
+   * @param imageTitle the image title
    */
-  public void savePolygonXY(final ImagePlus imp, final Roi roi) {
+  public void addParticles2DForSegmentation3D(
+      final List<Particle2D> particles2D, final int slice,
+      final double pixelDepth, final String imageTitle) {
 
-    // double zHeight= 2.0;
+    if (particles2D == null)
+      return;
 
-    Calibration cal = imp.getCalibration();
-    final double pixelWidth = cal.pixelWidth;
-    final double pixelHeight = cal.pixelHeight;
-    final double pixelDepth = cal.pixelDepth;
+    for (Particle2D par : particles2D)
+      addParticle2DForSegmentation3D(par, slice, (float) pixelDepth, imageTitle);
 
-    final int slice = imp.getCurrentSlice();
+  }
+
+  /**
+   * Add a particle 2D to the segmentation 3D process.
+   * @param particle2D Particle 2D to add
+   * @param slice slice in the stack of the particles
+   * @param pixelDepth the pixel Depth
+   * @param imageTitle the image title
+   */
+  private void addParticle2DForSegmentation3D(final Particle2D particle2D,
+      final int slice, final float pixelDepth, final String imageTitle) {
 
     if (slice - 1 != this.previousZ) {
       this.previousParticules2D = this.currentParticles2D;
@@ -104,33 +111,31 @@ public class Segmentation3DRunner {
         this.previousZ++;
     }
 
-    Particle2D p2D =
-        Particle2DBuilder.createParticle2D((float) pixelWidth,
-            (float) pixelHeight, imp, (PolygonRoi) roi);
-
-    this.totalPixels2D += p2D.innerPointsCount();
+    this.totalPixels2D += particle2D.innerPointsCount();
 
     boolean find = false;
 
     for (Particle2D p2DToTest : this.previousParticules2D) {
 
-      if (p2DToTest.innerPointIntersect(p2D)) {
+      if (p2DToTest.innerPointIntersect(particle2D)) {
 
         Particle3DBuilder existingP3D = this.previousParticles3D.get(p2DToTest);
 
         if (!find) {
-          existingP3D.add(p2D, slice);
+          existingP3D.add(particle2D, slice);
           find = true;
 
           if (DEBUG)
             System.out.println("\tAdd p2D #"
-                + p2D.getId() + " to 3D Object #" + existingP3D.getId() + " z="
-                + slice + " (" + p2D.innerPointsCount() + " points, "
-                + existingP3D.innerPointsCount() + " total points)");
+                + particle2D.getId() + " to 3D Object #" + existingP3D.getId()
+                + " z=" + slice + " (" + particle2D.innerPointsCount()
+                + " points, " + existingP3D.innerPointsCount()
+                + " total points)");
         }
 
-        if (this.currentParticles3D.containsKey(p2D)) {
-          Particle3DBuilder particle3D2 = this.currentParticles3D.get(p2D);
+        if (this.currentParticles3D.containsKey(particle2D)) {
+          Particle3DBuilder particle3D2 =
+              this.currentParticles3D.get(particle2D);
 
           if (particle3D2.getId() != existingP3D.getId()) {
 
@@ -148,7 +153,7 @@ public class Segmentation3DRunner {
           }
 
         } else
-          this.currentParticles3D.put(p2D, existingP3D);
+          this.currentParticles3D.put(particle2D, existingP3D);
       }
 
     }
@@ -156,22 +161,23 @@ public class Segmentation3DRunner {
     if (!find) {
 
       Particle3DBuilder newP3D =
-          new Particle3DBuilder((float) pixelWidth, (float) pixelHeight,
-              (float) pixelDepth);
-      newP3D.setName(imp.getTitle() + "-" + newP3D.getId());
-      newP3D.add(p2D, slice);
+          new Particle3DBuilder(particle2D.getPixelWidth(), particle2D
+              .getPixelHeight(), pixelDepth);
+      newP3D.setName(imageTitle + "-" + newP3D.getId());
+      newP3D.add(particle2D, slice);
 
       this.particles3D.add(newP3D);
-      this.currentParticles3D.put(p2D, newP3D);
+      this.currentParticles3D.put(particle2D, newP3D);
 
       if (DEBUG)
         System.out.println("New 3D Object #"
-            + newP3D.getId() + " z=" + slice + " add p2D #" + p2D.getId()
-            + " (" + p2D.innerPointsCount() + " points)");
+            + newP3D.getId() + " z=" + slice + " add p2D #"
+            + particle2D.getId() + " (" + particle2D.innerPointsCount()
+            + " points)");
 
     }
 
-    this.currentParticles2D.add(p2D);
+    this.currentParticles2D.add(particle2D);
   }
 
   private void replaceOccurances(Map<Particle2D, Particle3DBuilder> map,
