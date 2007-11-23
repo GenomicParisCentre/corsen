@@ -1,6 +1,8 @@
+package fr.ens.transcriptome.corsen.model;
+
 import java.util.Random;
 
-import fr.ens.transcriptome.corsen.model.ArrayListPoint2D;
+import fr.ens.transcriptome.corsen.model.ArrayListPackedPoint2D;
 import fr.ens.transcriptome.corsen.model.Point2D;
 import fr.ens.transcriptome.corsen.model.SimplePoint2DImpl;
 import fr.ens.transcriptome.corsen.util.Util;
@@ -36,7 +38,7 @@ public class ArrayListPoint2DTest extends TestCase {
 
   public void testSize() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < 5; i++) {
 
@@ -51,7 +53,7 @@ public class ArrayListPoint2DTest extends TestCase {
 
   public void testAddFloatFloatFloatInt() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(xs[i], ys[i], is[i]);
@@ -73,7 +75,7 @@ public class ArrayListPoint2DTest extends TestCase {
 
   public void testAddIntPoint2D() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < xs.length; i++) {
       Point2D p = new SimplePoint2DImpl(xs[i], ys[i], is[i]);
@@ -95,7 +97,7 @@ public class ArrayListPoint2DTest extends TestCase {
 
   public void testAddIntFloatFloatFloatInt() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], is[i]);
@@ -115,7 +117,7 @@ public class ArrayListPoint2DTest extends TestCase {
 
   public void testSetIntPoint2D() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], is[i]);
@@ -141,7 +143,7 @@ public class ArrayListPoint2DTest extends TestCase {
 
   public void testSetIntFloatFloatFloatInt() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], is[i]);
@@ -165,7 +167,7 @@ public class ArrayListPoint2DTest extends TestCase {
 
   public void testContainsPoint2D() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], is[i]);
@@ -177,11 +179,9 @@ public class ArrayListPoint2DTest extends TestCase {
     }
   }
 
-  
-
   public void testContainsObject() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < xs.length - 1; i++)
       list.add(0, xs[i], ys[i], is[i]);
@@ -191,15 +191,16 @@ public class ArrayListPoint2DTest extends TestCase {
       assertTrue(list.contains(p));
     }
 
-    Point2D p = new SimplePoint2DImpl(xs[xs.length - 1], ys[xs.length - 1],
-        is[xs.length - 1]);
+    Point2D p =
+        new SimplePoint2DImpl(xs[xs.length - 1], ys[xs.length - 1],
+            is[xs.length - 1]);
     assertFalse(list.contains(p));
 
   }
 
   public void testRemoveInt() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], is[i]);
@@ -221,7 +222,7 @@ public class ArrayListPoint2DTest extends TestCase {
 
   public void testApplyXFactor() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], is[i]);
@@ -238,7 +239,7 @@ public class ArrayListPoint2DTest extends TestCase {
 
   public void testApplyYFactor() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], is[i]);
@@ -253,7 +254,7 @@ public class ArrayListPoint2DTest extends TestCase {
   }
 
   private final static void test(final float x, final float y, final int i,
-      final ArrayListPoint2D list, final float precision) {
+      final ArrayListPackedPoint2D list, final float precision) {
 
     list.set(0, x, y, i);
     Point2D p = list.get(0);
@@ -266,7 +267,7 @@ public class ArrayListPoint2DTest extends TestCase {
 
   public void testStoredData() {
 
-    ArrayListPoint2D list = new ArrayListPoint2D();
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D();
 
     Random random = new Random(System.currentTimeMillis());
 
@@ -275,12 +276,15 @@ public class ArrayListPoint2DTest extends TestCase {
 
     for (int j = 0; j < 1000000; j++) {
 
-      float x = (float) (Math.ceil(random.nextFloat()
-          * Util.getStoredMaxValue(precision) * precision) / precision);
-      float y = (float) (Math.ceil(random.nextFloat()
-          * Util.getStoredMaxValue(precision) * precision) / precision);
-      float z = (float) (Math.ceil(random.nextFloat()
-          * Util.getStoredMaxValue(precision) * precision) / precision);
+      float x =
+          (float) (Math.ceil(random.nextFloat()
+              * Util.getStoredMaxValue(precision) * precision) / precision);
+      float y =
+          (float) (Math.ceil(random.nextFloat()
+              * Util.getStoredMaxValue(precision) * precision) / precision);
+      float z =
+          (float) (Math.ceil(random.nextFloat()
+              * Util.getStoredMaxValue(precision) * precision) / precision);
       int i = random.nextInt(Util.getStoredMaxValue());
 
       test(x, y, i, list, precision);
@@ -312,6 +316,26 @@ public class ArrayListPoint2DTest extends TestCase {
     } catch (RuntimeException e) {
       assertTrue(true);
     }
+  }
+
+  public void testStoredData2() {
+
+    ArrayListPackedPoint2D list = new ArrayListPackedPoint2D(2.0f, 0.3f);
+
+    Random random = new Random(System.currentTimeMillis());
+    
+    list.add(1.0f,1.0f);
+    Point2D p = list.get(0);
+    
+    assertEquals(1.0f, p.getX());
+    assertEquals(1.0f, p.getY());
+    
+    list.add(5.0f,33.0f);
+    p = list.get(1);
+    
+    assertEquals(5.0f, p.getX());
+    assertEquals(33.0f, p.getY());
+
   }
 
 }

@@ -1,3 +1,4 @@
+package fr.ens.transcriptome.corsen.model;
 
 import fr.ens.transcriptome.corsen.model.Particle2D;
 import fr.ens.transcriptome.corsen.model.Point2D;

@@ -1,6 +1,8 @@
+package fr.ens.transcriptome.corsen.model;
+
 import java.util.Random;
 
-import fr.ens.transcriptome.corsen.model.ArrayListPoint3D;
+import fr.ens.transcriptome.corsen.model.ArrayListPackedPoint3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
 import fr.ens.transcriptome.corsen.util.Util;
@@ -37,7 +39,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testSize() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < 5; i++) {
 
@@ -52,7 +54,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testAddFloatFloatFloatInt() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(xs[i], ys[i], zs[i], is[i]);
@@ -75,7 +77,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testAddIntPoint3D() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++) {
       Point3D p = new SimplePoint3DImpl(xs[i], ys[i], zs[i], is[i]);
@@ -99,7 +101,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testAddIntFloatFloatFloatInt() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -121,7 +123,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testSetIntPoint3D() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -149,7 +151,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testSetIntFloatFloatFloatInt() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -175,7 +177,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testContainsPoint3D() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -189,12 +191,12 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testAddAbstractListPoint3D() {
 
-    ArrayListPoint3D list1 = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list1 = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length / 2; i++)
       list1.add(0, xs[i], ys[i], zs[i], is[i]);
 
-    ArrayListPoint3D list2 = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list2 = new ArrayListPackedPoint3D();
 
     for (int i = xs.length / 2; i < xs.length; i++)
       list2.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -212,7 +214,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testContainsObject() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length - 1; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -230,7 +232,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testRemoveInt() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -252,7 +254,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testApplyXFactor() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -269,7 +271,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testApplyYFactor() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -285,7 +287,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testApplyZFactor() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -301,7 +303,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testGetBarycenter() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -316,7 +318,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testGetCenter() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -331,7 +333,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testGetXMax() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -342,7 +344,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testGetXMin() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -352,7 +354,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testGetYMax() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -362,7 +364,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testGetYMin() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -372,7 +374,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testGetZMax() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -382,7 +384,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testGetZMin() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     for (int i = 0; i < xs.length; i++)
       list.add(0, xs[i], ys[i], zs[i], is[i]);
@@ -391,7 +393,7 @@ public class ArrayListPoint3DTest extends TestCase {
   }
 
   private final static void test(final float x, final float y, final float z,
-      final int i, final ArrayListPoint3D list, final float precision) {
+      final int i, final ArrayListPackedPoint3D list, final float precision) {
 
     list.set(0, x, y, z, i);
     Point3D p = list.get(0);
@@ -405,7 +407,7 @@ public class ArrayListPoint3DTest extends TestCase {
 
   public void testStoredData() {
 
-    ArrayListPoint3D list = new ArrayListPoint3D();
+    ArrayListPackedPoint3D list = new ArrayListPackedPoint3D();
 
     Random random = new Random(System.currentTimeMillis());
 

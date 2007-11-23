@@ -1,3 +1,4 @@
+package fr.ens.transcriptome.corsen.util;
 import fr.ens.transcriptome.corsen.util.MinMaxList;
 import junit.framework.TestCase;
 

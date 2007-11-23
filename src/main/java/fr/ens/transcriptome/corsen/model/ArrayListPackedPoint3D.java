@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import fr.ens.transcriptome.corsen.util.Util;
 
-public final class ArrayListPoint3D extends AbstractListPoint3D {
+final class ArrayListPackedPoint3D extends AbstractListPoint3D {
 
   private ArrayList<Long> values = new ArrayList<Long>();
 
@@ -45,7 +45,7 @@ public final class ArrayListPoint3D extends AbstractListPoint3D {
    */
   private final class InnerPoint3DImpl extends Point3D {
 
-    private ArrayListPoint3D listPoints;
+    private ArrayListPackedPoint3D listPoints;
     private int index;
 
     //
@@ -161,7 +161,7 @@ public final class ArrayListPoint3D extends AbstractListPoint3D {
      * @param listPoints List of ponts which contains the data
      * @param index Index of the point in arraylists
      */
-    public InnerPoint3DImpl(final ArrayListPoint3D listPoints, final int index) {
+    public InnerPoint3DImpl(final ArrayListPackedPoint3D listPoints, final int index) {
 
       this.listPoints = listPoints;
       this.index = index;
@@ -405,7 +405,7 @@ public final class ArrayListPoint3D extends AbstractListPoint3D {
   /**
    * Public constructor.
    */
-  public ArrayListPoint3D() {
+  ArrayListPackedPoint3D() {
 
     this(X_PRECISION_DEFAULT, Y_PRECISION_DEFAULT, Z_PRECISION_DEFAULT);
   }
@@ -413,7 +413,7 @@ public final class ArrayListPoint3D extends AbstractListPoint3D {
   /**
    * Public constructor.
    */
-  public ArrayListPoint3D(final float xPrecision, final float yPrecision,
+  ArrayListPackedPoint3D(final float xPrecision, final float yPrecision,
       final float zPrecision) {
 
     this.xPrecision = xPrecision;

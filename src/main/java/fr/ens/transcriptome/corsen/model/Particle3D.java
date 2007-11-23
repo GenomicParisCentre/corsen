@@ -440,7 +440,8 @@ public final class Particle3D {
     return slices;
   }
 
-  private static Map getSurfaceAndInnerPointSlices(final Particle3D particle) {
+  private static Map<String, Particle2D> getSurfaceAndInnerPointSlices(
+      final Particle3D particle) {
 
     final Map<String, Particle2D> slices = new HashMap<String, Particle2D>();
 
@@ -571,7 +572,7 @@ public final class Particle3D {
    */
   public Particle2D[] toParticles2D() {
 
-    final Map slices = getSurfaceAndInnerPointSlices(this);
+    final Map<String, Particle2D> slices = getSurfaceAndInnerPointSlices(this);
 
     if (slices == null || slices.size() == 0)
       return null;
@@ -580,12 +581,10 @@ public final class Particle3D {
 
     final float[] keys = new float[n];
 
-    final Iterator it = slices.keySet().iterator();
-
     int i = 0;
-    while (it.hasNext()) {
+    for (String key : slices.keySet()) {
 
-      keys[i] = Float.parseFloat((String) it.next());
+      keys[i] = Float.parseFloat(key);
       i++;
     }
 
@@ -594,7 +593,7 @@ public final class Particle3D {
     final Particle2D[] result = new Particle2D[n];
 
     for (int j = 0; j < n; j++)
-      result[j] = (Particle2D) slices.get("" + keys[j]);
+      result[j] = slices.get("" + keys[j]);
 
     int innerCount = 0;
     int surfaceCount = 0;
@@ -901,7 +900,7 @@ public final class Particle3D {
    */
   public void calcSphericity() {
 
-    this.sphericity = MathUtil.sphericite1(getVolume(), getArea());
+    this.sphericity = MathUtil.sphericite2(getVolume(), getArea());
   }
 
   //
@@ -922,9 +921,9 @@ public final class Particle3D {
     this.pixelDepth = pixelDepth;
 
     this.surfacePoints =
-        new ArrayListPoint3D(this.pixelWidth, this.pixelHeight, this.pixelDepth);
+        new ArrayListPackedPoint3D(this.pixelWidth, this.pixelHeight, this.pixelDepth);
     this.innerPoints =
-        new ArrayListPoint3D(this.pixelWidth, this.pixelHeight, this.pixelDepth);
+        new ArrayListPackedPoint3D(this.pixelWidth, this.pixelHeight, this.pixelDepth);
 
     this.unmodifiableSurfacePoints =
         new UnmodifiableListPoint3D(this.surfacePoints);

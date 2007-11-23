@@ -1,3 +1,4 @@
+package fr.ens.transcriptome.corsen.util;
 import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
 import fr.ens.transcriptome.corsen.util.Util;
@@ -14,7 +15,7 @@ import junit.framework.TestCase;
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,

@@ -505,8 +505,10 @@ public final class Particle2D {
     this.pixelWidth = pixelWidth;
     // this.surfacePoints = new AbstractListPoint2D(this.pixelWidth,
     // this.pixelHeight);
-    this.surfacePoints = new ArrayListPoint2D();
-    this.innerPoints = new ArrayListPoint2D();
+    this.surfacePoints =
+        ListPoint2DFactory.createListPoint2D(this.pixelWidth, this.pixelHeight);
+    this.innerPoints =
+        ListPoint2DFactory.createListPoint2D(this.pixelWidth, this.pixelHeight);
   }
 
   /**

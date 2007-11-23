@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import fr.ens.transcriptome.corsen.util.Util;
 
-public class ArrayListPoint2D extends AbstractListPoint2D {
+class ArrayListPackedPoint2D extends AbstractListPoint2D {
 
   private final ArrayList<Long> values = new ArrayList<Long>();
   private float xPrecision = 100.0f;
@@ -39,7 +39,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
    */
   private class InnerPoint2DImpl extends Point2D {
 
-    private ArrayListPoint2D listPoints;
+    private ArrayListPackedPoint2D listPoints;
     private int index;
 
     //
@@ -132,7 +132,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
      * @param precision Precision of the data
      * @param index Index of the point in arraylists
      */
-    public InnerPoint2DImpl(final ArrayListPoint2D listPoints, final int index) {
+    public InnerPoint2DImpl(final ArrayListPackedPoint2D listPoints, final int index) {
 
       this.listPoints = listPoints;
       this.index = index;
@@ -401,8 +401,8 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
    */
   public AbstractListPoint2D copy() {
 
-    final ArrayListPoint2D result =
-        new ArrayListPoint2D(this.xPrecision, this.yPrecision);
+    final ArrayListPackedPoint2D result =
+        new ArrayListPackedPoint2D(this.xPrecision, this.yPrecision);
     final int n = size();
 
     for (int i = 0; i < n; i++) {
@@ -423,10 +423,10 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
     if (listPoints == null)
       return false;
 
-    if (!(listPoints instanceof ArrayListPoint2D))
+    if (!(listPoints instanceof ArrayListPackedPoint2D))
       return super.intersect(listPoints);
 
-    final ArrayListPoint2D list = (ArrayListPoint2D) listPoints;
+    final ArrayListPackedPoint2D list = (ArrayListPackedPoint2D) listPoints;
 
     final ArrayList<Long> l1 = this.values;
     final ArrayList<Long> l2 = list.values;
@@ -464,7 +464,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
   /**
    * Public constructor.
    */
-  public ArrayListPoint2D() {
+  ArrayListPackedPoint2D() {
   }
 
   /**
@@ -472,7 +472,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
    * @param xPrecision Precision for x values
    * @param yPrecision Precision for y values
    */
-  public ArrayListPoint2D(final float xPrecision, final float yPrecision) {
+  ArrayListPackedPoint2D(final float xPrecision, final float yPrecision) {
 
     this.xPrecision = xPrecision;
     this.yPrecision = yPrecision;
