@@ -115,10 +115,8 @@ public final class CorsenImageJUtil {
     for (int i = 0; i < nSurface; i++) {
 
       final Point2D pt = particle.getSurfacePoint(i);
-
       final int x = (int) (pt.getX() / pixelWidth);
       final int y = (int) (pt.getY() / pixelHeight);
-
       ip.drawPixel(x, y);
     }
 
@@ -153,7 +151,6 @@ public final class CorsenImageJUtil {
     for (int i = 0; i < pars2d.length; i++) {
 
       surfaceCountPixel += pars2d[i].surfacePointsCount();
-
       ImageProcessor drawIP = stack.getProcessor(minStack + i);
       drawParticle(drawIP, pars2d[i], colorToDraw);
     }
