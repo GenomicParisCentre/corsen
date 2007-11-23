@@ -921,9 +921,11 @@ public final class Particle3D {
     this.pixelDepth = pixelDepth;
 
     this.surfacePoints =
-        new ArrayListPackedPoint3D(this.pixelWidth, this.pixelHeight, this.pixelDepth);
+        ListPoint3DFactory.createListPoint3D(this.pixelWidth, this.pixelHeight,
+            this.pixelDepth);
     this.innerPoints =
-        new ArrayListPackedPoint3D(this.pixelWidth, this.pixelHeight, this.pixelDepth);
+        ListPoint3DFactory.createListPoint3D(this.pixelWidth, this.pixelHeight,
+            this.pixelDepth);
 
     this.unmodifiableSurfacePoints =
         new UnmodifiableListPoint3D(this.surfacePoints);

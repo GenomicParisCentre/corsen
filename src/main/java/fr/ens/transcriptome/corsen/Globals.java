@@ -55,6 +55,8 @@ public final class Globals {
   public static final float CUBOID_SIZE_FACTOR = 2.1f;
   public static final float PIXEL_SIZE_DEFAULT = 1.0f;
 
+  public static final boolean LIST_POINT_PACKED_MODE = false;
+
   private static final String WEBSITE_URL_DEFAULT =
       "http://transcriptome.ens.fr/corsen";
   public static final String WEBSITE_URL = getWebSiteURL();

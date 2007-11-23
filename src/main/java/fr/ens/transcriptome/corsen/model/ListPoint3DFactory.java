@@ -22,11 +22,33 @@
 
 package fr.ens.transcriptome.corsen.model;
 
+import fr.ens.transcriptome.corsen.Globals;
+
 /**
  * This class define a factory for AbstractListPoint3D.
  * @author Laurent Jourdren
  */
 public final class ListPoint3DFactory {
+
+  private static boolean packed = Globals.LIST_POINT_PACKED_MODE;
+
+  /**
+   * Set the backend to use to store list of Points
+   * @param packedMode true enable packed mode
+   */
+  public static void setPackedMode(final boolean packedMode) {
+
+    packed = packedMode;
+  }
+
+  /**
+   * Test if the packed mode is enable
+   * @return true if the packed mode is enabled
+   */
+  public static boolean isPackedMode() {
+
+    return packed;
+  }
 
   /**
    * Create a AbstractListPoint3D object.
@@ -34,7 +56,10 @@ public final class ListPoint3DFactory {
    */
   public static AbstractListPoint3D createListPoint3D() {
 
-    return new ArrayListPackedPoint3D();
+    if (packed)
+      return new ArrayListPackedPoint3D();
+
+    return new ArrayListPoint3D();
   }
 
   /**
@@ -47,7 +72,10 @@ public final class ListPoint3DFactory {
   public static AbstractListPoint3D createListPoint3D(final float xPrecision,
       final float yPrecision, final float zPrecision) {
 
-    return new ArrayListPackedPoint3D(xPrecision, yPrecision, zPrecision);
+    if (packed)
+      return new ArrayListPackedPoint3D(xPrecision, yPrecision, zPrecision);
+
+    return new ArrayListPoint3D();
   }
 
 }
