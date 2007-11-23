@@ -29,8 +29,12 @@ import fr.ens.transcriptome.corsen.util.Util;
 class ArrayListPackedPoint2D extends AbstractListPoint2D {
 
   private final ArrayList<Long> values = new ArrayList<Long>();
-  private float xPrecision = 100.0f;
-  private float yPrecision = 100.0f;
+
+  private static final float X_PRECISION_DEFAULT = 100f;
+  private static final float Y_PRECISION_DEFAULT = 100f;
+
+  private float xPrecision;
+  private float yPrecision;
 
   /**
    * This class implements a Point2D which data for Point2D are stored in
@@ -132,7 +136,8 @@ class ArrayListPackedPoint2D extends AbstractListPoint2D {
      * @param precision Precision of the data
      * @param index Index of the point in arraylists
      */
-    public InnerPoint2DImpl(final ArrayListPackedPoint2D listPoints, final int index) {
+    public InnerPoint2DImpl(final ArrayListPackedPoint2D listPoints,
+        final int index) {
 
       this.listPoints = listPoints;
       this.index = index;
@@ -465,6 +470,8 @@ class ArrayListPackedPoint2D extends AbstractListPoint2D {
    * Public constructor.
    */
   ArrayListPackedPoint2D() {
+
+    this(X_PRECISION_DEFAULT, Y_PRECISION_DEFAULT);
   }
 
   /**
