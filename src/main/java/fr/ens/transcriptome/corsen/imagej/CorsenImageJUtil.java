@@ -111,20 +111,15 @@ public final class CorsenImageJUtil {
     // Draw outline
 
     ip.setColor(Color.BLACK);
-    if (nSurface > 0) {
 
-      final Point2D pt0 = particle.getSurfacePoint(0);
-      ip.moveTo((int) pt0.getX(), (int) pt0.getY());
+    for (int i = 0; i < nSurface; i++) {
 
-      for (int i = 0; i < nSurface; i++) {
+      final Point2D pt = particle.getSurfacePoint(i);
 
-        final Point2D pt = particle.getSurfacePoint(i);
+      final int x = (int) (pt.getX() / pixelWidth);
+      final int y = (int) (pt.getY() / pixelHeight);
 
-        final int x = (int) (pt.getX() / pixelWidth);
-        final int y = (int) (pt.getY() / pixelHeight);
-
-        ip.drawPixel(x, y);
-      }
+      ip.drawPixel(x, y);
     }
 
   }
