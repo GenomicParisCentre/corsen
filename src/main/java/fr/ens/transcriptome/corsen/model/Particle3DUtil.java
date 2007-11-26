@@ -107,7 +107,7 @@ public final class Particle3DUtil {
     return mapCuboid;
   }
 
-  public static void addSurfacePoint(final Particle3DBuilder builder,
+  private static void addSurfacePoint(final Particle3DBuilder builder,
       final double x, final double y, final double z) {
 
     builder.addSurfacePoint((float) x, (float) y, (float) z);
