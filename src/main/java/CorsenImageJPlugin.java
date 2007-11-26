@@ -121,6 +121,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
   /** Show Particles 3D. */
   public static final int SHOW_PARTICLES_3D = 8192;
 
+  public static final int PACK_PARTICLES_DATA = 16384;
+
   static final String OPTIONS = "ap.options";
 
   static final int BYTE = 0, SHORT = 1, FLOAT = 2, RGB = 3;
@@ -532,8 +534,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
         + "-" + IJ.d2s(maxCircularity), 12);
     gd.addChoice("Show:", showStrings, showStrings[showChoice]);
 
-    String[] labels = new String[9];
-    boolean[] states = new boolean[9];
+    String[] labels = new String[10];
+    boolean[] states = new boolean[10];
     labels[0] = "Display Results";
     states[0] = (options & SHOW_RESULTS) != 0;
     labels[1] = "Exclude on Edges";
@@ -552,6 +554,8 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     states[7] = (options & NO_CONFIRM_SAVE_DIALOG) != 0;
     labels[8] = "Show Particles 3D";
     states[8] = (options & SHOW_PARTICLES_3D) != 0;
+    labels[9] = "Pack Particle data";
+    states[9] = (options & PACK_PARTICLES_DATA) != 0;
 
     gd.addCheckboxGroup(5, 2, labels, states);
 
@@ -1029,7 +1033,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
       saveResults(stats, roi);
 
       // Add by Laurent Jourdren
-      //this.seg3DRunner.savePolygonXY(imp, roi);
+      // this.seg3DRunner.savePolygonXY(imp, roi);
 
       if (showChoice != NOTHING)
         drawParticle(drawIP, roi, stats, mask);
