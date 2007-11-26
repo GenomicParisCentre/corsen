@@ -440,7 +440,6 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
    * Public constructor.
    */
   ArrayListPoint2D() {
-    System.out.println(this.getClass().getName());
   }
 
 }

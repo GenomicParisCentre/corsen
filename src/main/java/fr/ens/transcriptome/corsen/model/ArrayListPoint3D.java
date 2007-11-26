@@ -376,7 +376,6 @@ public class ArrayListPoint3D extends AbstractListPoint3D {
    * Public constructor.
    */
   ArrayListPoint3D() {
-    System.out.println(this.getClass().getName());
   }
 
 }
