@@ -38,18 +38,72 @@
 	</properties>
 	<body>
 
+		<release version="0.28" date="2007-11-26">
+			<action dev="jourdren" type="update">
+				Nouveau plugin ImageJ écrit "from scratch".
+			</action>
+			<action dev="jourdren" type="add">
+				L'utilisateur a le choix du type de backend pour le
+				stockage des données (compressé ou non).
+			</action>
+			<action dev="jourdren" type="add">
+				Les particules touchant les bords de l'image peuvent
+				être supprimées.
+			</action>
+			<action dev="jourdren" type="fix">
+				Bug d'affichage des coupes 3D dans le plugin si
+				pixelWidth et consors sont différents de 1.
+			</action>
+		</release>
+
+		<release version="0.27" date="2007-11-21">
+			<action dev="jourdren" type="fix">
+				Correction de bogue dans la reconstruction des objets
+				3D.
+			</action>
+			<action dev="jourdren" type="fix">
+				Les coeficients de correction des coordonnées sont
+				maintenant pris en compte.
+			</action>
+			<action dev="jourdren" type="add">
+				Nouveau format de fichier par (incompatible avec le
+				précedent) ajoutant l'aire et le volume de la particule.
+			</action>
+			<action dev="jourdren" type="update">
+				"Show Particles 3D" utilise maintenant un seul stack et
+				des objets de couleur différentes.
+			</action>
+			<action dev="jourdren" type="update">
+				Changement de Package pour Particles3D. La partie
+				segmentation 3D est maintenant dans une classe à part
+				pour plus de maintenabilité.
+			</action>
+			<action dev="jourdren" type="fix">
+				Correction du format de fichier iv.
+			</action>
+			<action dev="jourdren" type="update">
+				Le plugin ImageJ est maintenant appelé "Corsen Plugin"
+				dans ImageJ.
+			</action>
+			<action dev="jourdren" type="add">
+				Nouvelle class pour binairiser les Particles3D.
+			</action>
+		</release>
+
 		<release version="0.26" date="2007-11-12">
 			<action dev="jourdren" type="fix">
 				Prend les bon pixels pour les intensités.
 			</action>
 			<action dev="jourdren" type="update">
-				Le code pour la sauvegarde de Particles3D n'est maintenant plus dans le plugin ImageJ.
+				Le code pour la sauvegarde de Particles3D n'est
+				maintenant plus dans le plugin ImageJ.
 			</action>
 			<action dev="jourdren" type="fix">
-				Plus d'exception, si l'image à analyser dans le plugin ImageJ n'a pas de fichier associé.
+				Plus d'exception, si l'image à analyser dans le plugin
+				ImageJ n'a pas de fichier associé.
 			</action>
-	   </release>
-	   
+		</release>
+
 
 		<release version="0.25" date="2007-11-09">
 			<action dev="jourdren" type="update">
