@@ -77,7 +77,7 @@ import javax.swing.filechooser.FileFilter;
  *                                                                 continue the scan
  * </pre>
  */
-public class CorsenImageJPlugin implements PlugInFilter, Measurements {
+public class OldCorsenImageJPlugin implements PlugInFilter, Measurements {
 
   /** Display results in the ImageJ console. */
   public static final int SHOW_RESULTS = 1;
@@ -403,7 +403,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
    * @param minSize the smallest particle size in pixels
    * @param maxSize the largest particle size in pixels
    */
-  public CorsenImageJPlugin(int options, int measurements, ResultsTable rt,
+  public OldCorsenImageJPlugin(int options, int measurements, ResultsTable rt,
       double minSize, double maxSize) {
     this.options = options;
     this.measurements = measurements;
@@ -416,7 +416,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
   }
 
   /** Default constructor */
-  public CorsenImageJPlugin() {
+  public OldCorsenImageJPlugin() {
     slice = 1;
   }
 
@@ -424,7 +424,7 @@ public class CorsenImageJPlugin implements PlugInFilter, Measurements {
     this.arg = arg;
     this.imp = imp;
 
-    IJ.register(CorsenImageJPlugin.class);
+    IJ.register(OldCorsenImageJPlugin.class);
     if (imp == null) {
       IJ.noImage();
       return DONE;
