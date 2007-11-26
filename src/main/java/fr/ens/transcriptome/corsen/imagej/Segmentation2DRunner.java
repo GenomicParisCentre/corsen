@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Queue;
 
 import fr.ens.transcriptome.corsen.model.Particle2D;
+import fr.ens.transcriptome.corsen.model.Particle2DBuilder;
 
 /**
  * This class implements a 2D segmentation for ImageJ images.
@@ -38,6 +39,7 @@ import fr.ens.transcriptome.corsen.model.Particle2D;
 public class Segmentation2DRunner {
 
   private int xLen, yLen;
+  private int width, height;
   private int[][] arrayImage;
   private boolean[][] arrayDone;
   private List<Particle2D> particles = new ArrayList<Particle2D>();
@@ -59,6 +61,8 @@ public class Segmentation2DRunner {
     this.yLen = ip.getHeight();
     this.minThreshold = ip.getMinThreshold();
     this.maxThreshold = ip.getMaxThreshold();
+    this.width = ip.getWidth();
+    this.height = ip.getHeight();
 
     this.arrayImage = ip.getIntArray();
 
@@ -81,7 +85,8 @@ public class Segmentation2DRunner {
    */
   private final Particle2D buildParticle(final int x, final int y) {
 
-    final Particle2D result = new Particle2D(pixelWidth, pixelHeight);
+    final Particle2DBuilder result =
+        new Particle2DBuilder(pixelWidth, pixelHeight, this.width, this.height);
 
     final Queue<Integer> queueX = new LinkedList<Integer>();
     final Queue<Integer> queueY = new LinkedList<Integer>();
@@ -92,7 +97,7 @@ public class Segmentation2DRunner {
     while (queueX.size() != 0)
       addPoint(result, queueX.poll(), queueY.poll(), queueX, queueY);
 
-    return result;
+    return result.getParticle();
   }
 
   /**
@@ -104,7 +109,7 @@ public class Segmentation2DRunner {
    * @param queueX X coordinate Queue of found points of the particle to add
    * @param queueY Y coordinate Queue of found points of the particle to add
    */
-  private final void addPoint(final Particle2D particle, final int x,
+  private final void addPoint(final Particle2DBuilder particle, final int x,
       final int y, Queue<Integer> queueX, Queue<Integer> queueY) {
 
     if (isPixelDone(x, y))

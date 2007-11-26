@@ -22,70 +22,60 @@
 
 package fr.ens.transcriptome.corsen.model;
 
-import ij.ImagePlus;
-import ij.gui.PolygonRoi;
-import ij.process.ImageProcessor;
+public final class Particle2DBuilder {
 
-import java.awt.Rectangle;
-
-public class Particle2DBuilder {
+  private Particle2D particle;
+  private boolean edgeParticle;
+  private float maxX, maxY;
 
   /**
-   * Add a particle 2D to the particle 3D.
-   * @param imp Image of the particle to add
-   * @param roi particle 2D to add
+   * Add an inner point.
+   * @param x X coordinate of the point to add
+   * @param y Y coordinate of the point to add
+   * @param i Intensity of the point to add
    */
-  public static final Particle2D createParticle2D(final float pixelWidth,
-      final float pixelHeight, final ImagePlus imp, final PolygonRoi roi) {
+  public void addInnerPoint(final float x, final float y, final int i) {
 
-    final Particle2D result = new Particle2D(pixelWidth, pixelHeight);
+    this.particle.addInnerPoint(x, y, i);
+  }
 
-    imp.setRoi(roi);
+  /**
+   * Add an inner point.
+   * @param x X coordinate of the point to add
+   * @param y Y coordinate of the point to add
+   * @param i Intensity of the point to add
+   */
+  public void addSurfacePoint(final float x, final float y, final int i) {
 
-    // final ImageStatistics stats = imp.getStatistics(); // mesurement
+    if (!this.edgeParticle
+        && (x == 0.0 || y == 0.0 || x >= this.maxX || y >= this.maxY))
+      this.edgeParticle = true;
 
-    // Get the x0 and y0 of the Roi
-    final Rectangle r = roi.getBounds();
-    final int nPoints = roi.getNCoordinates();
-    final int[] xp = roi.getXCoordinates();
-    final int[] yp = roi.getYCoordinates();
+    this.particle.addSurfacePoint(x, y, i);
+  }
 
-    final int x0 = r.x;
-    final int y0 = r.y;
+  public Particle2D getParticle() {
 
-    // Get the inner points
-    final ImageProcessor ipMask = imp.getMask();
-    final ImageProcessor ip = imp.getProcessor();
+    this.particle.setEdgeParticle(this.edgeParticle);
 
-    final int height = ipMask.getHeight();
-    final int width = ipMask.getWidth();
+    return this.particle;
+  }
 
-    for (int i = 0; i < height; i++)
-      for (int j = 0; j < width; j++)
-        if (ipMask.getPixel(j, i) > 0) {
+  //
+  // Constructor
+  //
 
-          final int val = ip.getPixel(j + x0, i + y0);
+  /**
+   * Public constructor
+   * @param pixelWidth The width of a pixel
+   * @param pixelHeight The height of a pixel
+   */
+  public Particle2DBuilder(final float pixelWidth, final float pixelHeight,
+      final int width, final int heigth) {
 
-          result.addInnerPoint((j + x0 + 0.5f) * pixelWidth, (i + y0 + 0.5f)
-              * pixelWidth, val);
-        }
-
-    // double[][] polygon = new double[nPoints][];
-
-    // result.surfacePoints.ensureCapacity(nPoints +
-    // result.surfacePoints.size());
-
-    for (int i = 0; i < nPoints; i++) {
-
-      // Add the point to the particle 2D
-
-      final float x = (x0 + xp[i]) * pixelWidth;
-      final float y = (y0 + yp[i]) * pixelHeight;
-
-      result.addSurfacePoint(x, y);
-    }
-
-    return result;
+    this.particle = new Particle2D(pixelHeight, pixelHeight);
+    this.maxX = (width - 1) * pixelWidth + 0.5f;
+    this.maxY = (heigth - 1) * pixelHeight + 0.5f;
   }
 
 }

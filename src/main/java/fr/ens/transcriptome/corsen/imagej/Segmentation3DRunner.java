@@ -139,7 +139,7 @@ public class Segmentation3DRunner {
 
           if (particle3D2.getId() != existingP3D.getId()) {
 
-            particle3D2.add(existingP3D.getParticle());
+            particle3D2.add(existingP3D);
 
             replaceOccurances(previousParticles3D, existingP3D, particle3D2);
             replaceOccurances(currentParticles3D, existingP3D, particle3D2);
@@ -167,6 +167,7 @@ public class Segmentation3DRunner {
       newP3D.add(particle2D, slice);
 
       this.particles3D.add(newP3D);
+
       this.currentParticles3D.put(particle2D, newP3D);
 
       if (DEBUG)
@@ -196,9 +197,20 @@ public class Segmentation3DRunner {
 
   /**
    * Create the list of Particles 3D segmented.
+   * @param removeEdgeParticles true if edge particles must be removed
    * @return a list of Particle3D
    */
   public List<Particle3D> getParticlesToSave() {
+
+    return getParticlesToSave(false);
+  }
+
+  /**
+   * Create the list of Particles 3D segmented.
+   * @param removeEdgeParticles true if edge particles must be removed
+   * @return a list of Particle3D
+   */
+  public List<Particle3D> getParticlesToSave(final boolean removeEdgeParticles) {
 
     final List<Particle3D> result =
 
@@ -208,12 +220,17 @@ public class Segmentation3DRunner {
 
     for (Particle3DBuilder pb : this.particles3D) {
       final Particle3D p = pb.getParticle();
-      result.add(p);
+
+      if (!removeEdgeParticles || !p.isEdgeParticle())
+        result.add(p);
+
       totalPixels3D += p.innerPointsCount();
 
       if (DEBUG)
         System.out.println("Particle 3D #"
-            + p.getId() + " " + p.innerPointsCount() + " points");
+            + p.getId() + " " + p.innerPointsCount() + " points\tOn edge: "
+            + p.isEdgeParticle());
+
     }
 
     if (DEBUG)
