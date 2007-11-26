@@ -100,9 +100,6 @@ public class CorsenImageJPlugin implements PlugInFilter {
    */
   public int setup(String arg, ImagePlus imp) {
 
-    this.imp = imp;
-    this.nSlices = imp.getNSlices();
-
     if (arg.equals("about")) {
       showAbout();
       return DONE;
@@ -113,6 +110,9 @@ public class CorsenImageJPlugin implements PlugInFilter {
       IJ.noImage();
       return DONE;
     }
+
+    this.imp = imp;
+    this.nSlices = imp.getNSlices();
 
     if (!showDialog())
       return DONE;
@@ -269,7 +269,7 @@ public class CorsenImageJPlugin implements PlugInFilter {
       options |= SHOW_PARTICLES_3D;
     else
       options &= ~SHOW_PARTICLES_3D;
-    
+
     if (gd.getNextBoolean())
       options |= PACK_PARTICLES_DATA;
     else
