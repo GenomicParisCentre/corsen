@@ -36,6 +36,7 @@ public final class Particle3D {
   private long intensity;
   private double area;
   private double sphericity;
+  private boolean edgeParticle;
 
   private ParticleType type = ParticleType.UNDEFINED;
 
@@ -125,6 +126,15 @@ public final class Particle3D {
     return this.sphericity;
   }
 
+  /**
+   * Test if the particle is an edge particle.
+   * @return true if the particle is an edge particle
+   */
+  public boolean isEdgeParticle() {
+
+    return this.edgeParticle;
+  }
+
   //
   // Setters
   //
@@ -188,6 +198,15 @@ public final class Particle3D {
   void setSphericity(final double sphericity) {
 
     this.sphericity = sphericity;
+  }
+
+  /**
+   * Set if the particle is an edgeParticle.
+   * @param edgeParticle true if the particle is an edge particle
+   */
+  void setEdgeParticle(final boolean edgeParticle) {
+
+    this.edgeParticle = edgeParticle;
   }
 
   //

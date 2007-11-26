@@ -35,6 +35,7 @@ public class Particle3DBuilder {
   private float pixelDepth;
 
   private Particle3D particle;
+  private boolean edgeParticle;
   private double volume = -1;
   private double area = -1;
   private double sphericity = -1;
@@ -72,8 +73,25 @@ public class Particle3DBuilder {
     }
 
     this.volume += particle.getArea() * pixelDepth;
-    this.intensity += particle.getIntensity();
 
+    this.intensity += particle.getIntensity();
+    if (particle.isEdgeParticle())
+      this.edgeParticle = true;
+  }
+
+  /**
+   * Add the points of a particle to this particle.
+   * @param particle Particle to add
+   */
+  public void add(final Particle3DBuilder particle) {
+
+    if (particle == null)
+      return;
+
+    if (particle.edgeParticle)
+      this.edgeParticle = true;
+
+    add(particle.getParticle());
   }
 
   /**
@@ -103,6 +121,9 @@ public class Particle3DBuilder {
     // Update the volume and the intensity
     this.volume += particle.getVolume();
     this.intensity += particle.getIntensity();
+
+    if (particle.isEdgeParticle())
+      this.edgeParticle = true;
   }
 
   public void addInnerPoint(final float x, final float y, final float z,
@@ -357,6 +378,7 @@ public class Particle3DBuilder {
     result.setIntensity(this.intensity);
     result.setArea(this.area);
     result.setSphericity(this.sphericity);
+    result.setEdgeParticle(this.edgeParticle);
 
     this.particle = null;
 

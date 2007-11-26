@@ -14,6 +14,7 @@ public final class Particle2D {
 
   private AbstractListPoint2D surfacePoints;
   private AbstractListPoint2D innerPoints;
+  private boolean edgeParticle;
 
   private float pixelWidth = 1.0f;
   private float pixelHeight = 1.0f;
@@ -80,6 +81,15 @@ public final class Particle2D {
     return pixelWidth;
   }
 
+  /**
+   * Test if the particle is an edge particle.
+   * @return true if the particle is an edge particle
+   */
+  public boolean isEdgeParticle() {
+
+    return this.edgeParticle;
+  }
+
   //
   // Setters
   //
@@ -90,6 +100,15 @@ public final class Particle2D {
    */
   public void setName(final String name) {
     this.name = name;
+  }
+
+  /**
+   * Set if the particle is an edgeParticle.
+   * @param edgeParticle true if the particle is an edge particle
+   */
+  void setEdgeParticle(final boolean edgeParticle) {
+
+    this.edgeParticle = edgeParticle;
   }
 
   //
@@ -114,34 +133,58 @@ public final class Particle2D {
     return this.innerPoints.size();
   }
 
+  /**
+   * Add an inner point.
+   * @param p Point to add
+   */
   public void addInnerPoint(final Point2D p) {
 
     if (p != null)
       addInnerPoint(p.getY(), p.getY(), p.getI());
   }
 
+  /**
+   * Add an inner point.
+   * @param x X coordinate of the point to add
+   * @param y Y coordinate of the point to add
+   * @param i Intensity of the point to add
+   */
   public void addInnerPoint(final float x, final float y, final int i) {
 
     this.innerPoints.add(x, y, i);
     this.intensity += i;
   }
 
+  /**
+   * Add a surface point.
+   * @param x X coordinate of the point to add
+   */
   public void addSurfacePoint(final Point2D p) {
 
     if (p != null)
       addSurfacePoint(p.getY(), p.getY(), p.getI());
   }
 
+  /**
+   * Add an inner point.
+   * @param x X coordinate of the point to add
+   * @param y Y coordinate of the point to add
+   * @param i Intensity of the point to add
+   */
   public void addSurfacePoint(final float x, final float y, final int i) {
 
     this.surfacePoints.add(x, y, i);
 
   }
 
+  /**
+   * Add an inner point.
+   * @param x X coordinate of the point to add
+   * @param y Y coordinate of the point to add
+   */
   public void addSurfacePoint(final float x, final float y) {
 
     this.surfacePoints.add(x, y);
-
   }
 
   /**
