@@ -98,7 +98,7 @@ public final class Globals {
   public static final String EXTENSION_FULL_RESULT_FILE = ".fullresult";
 
   public static final String LICENCE_TXT =
-      "This program is developed under the GNU General Public Licence.";
+      "This program is developed under the GNU General Public Licence version 2 or later.";
 
   public static final String ABOUT_TXT =
       Globals.APP_NAME
@@ -115,9 +115,9 @@ public final class Globals {
           + "Authors:\n"
           + "  Laurent Jourdren(*) <jourdren@biologie.ens.fr> Main developer, maintener.\n"
           + "  Mathilde Garcia(**) <garcia@biologie.ens.fr> Project leader, R programming, ImageJ scripting, testing.\n\n"
-          + "(*)  Plate-forme transcriptome, �cole Normale Sup�rieure\n"
-          + "(**) Laboratoire de G�n�tique Mol�culaire, �cole Normale Sup�rieure\n\n"
-          + "Copyright 2006 �cole Normale Sup�rieure.\n" + LICENCE_TXT + "\n";
+          + "(*)  Plate-forme transcriptome, École Normale Supérieure\n"
+          + "(**) Laboratoire de Génétique Moléculaire, École Normale Supérieure\n\n"
+          + "Copyright 2006-2007 École Normale Supérieure.\n" + LICENCE_TXT + "\n";
 
   public static final String ABOUT_HTML =
       "<p><b>"
@@ -134,12 +134,12 @@ public final class Globals {
           + ".<br/><br/>"
           + "<b>Authors</b>:"
           + "<ul><li><a href=\"mailto:jourdren@biologie.ens.fr?subject=CorsenSwing\">Laurent Jourdren</a><br/>"
-          + "<a href=\"http://transcriptome.ens.fr\">Microarray platform, �cole Normale Sup�rieure</a>"
+          + "<a href=\"http://transcriptome.ens.fr\">Microarray platform, École Normale Supérieure</a>"
           + "<br/>Main developer, maintener.</li><br/>"
           + "<li><a href=\"mailto:garcia@biologie.ens.fr?subject=CorsenSwing\">Mathilde Garcia</a><br/>"
-          + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de G�n�tique Mol�culaire, �cole Normale Sup�rieure</a>"
+          + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de Génétique Moléculaire, École Normale Supérieure</a>"
           + "<br/>Project leader, R programming, ImageJ scripting, testing.</li></ul>"
-          + "<p>Copyright 2006 �cole Normale Sup�rieure.<br/>" + LICENCE_TXT
+          + "<p>Copyright 2006-2007 École Normale Supérieure.<br/>" + LICENCE_TXT
           + "</p>";
 
   private static String getVersion() {
