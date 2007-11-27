@@ -122,7 +122,7 @@ public final class Particle3D {
    * Get the sphericty of the particle.
    * @return the sphericty of the particle
    */
-  public double getSphericty() {
+  public double getSphericity() {
 
     return this.sphericity;
   }
@@ -704,7 +704,7 @@ public final class Particle3D {
     sb.append('\t');
     sb.append(getVolume());
     sb.append('\t');
-    sb.append(getSphericty());
+    sb.append(getSphericity());
     sb.append('\t');
     sb.append(getIntensity());
     sb.append('\t');

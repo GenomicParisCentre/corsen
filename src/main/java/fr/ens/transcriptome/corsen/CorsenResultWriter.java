@@ -260,7 +260,7 @@ public class CorsenResultWriter {
       out.write("\t");
       out.write(Double.toString(par.getVolume()));
       out.write("\t");
-      out.write(Double.toString(par.getSphericty()));
+      out.write(Double.toString(par.getSphericity()));
       out.write("\t");
       out.write(Long.toString(par.getIntensity()));
       out.write("\t");

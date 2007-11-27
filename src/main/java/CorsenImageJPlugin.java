@@ -502,7 +502,7 @@ public class CorsenImageJPlugin implements PlugInFilter {
       this.rt.setValue(0, count, p.getId());
       this.rt.setValue(1, count, p.getArea());
       this.rt.setValue(2, count, p.getVolume());
-      this.rt.setValue(3, count, p.getSphericty());
+      this.rt.setValue(3, count, p.getSphericity());
       this.rt.setValue(4, count, p.getIntensity());
       this.rt.setValue(5, count, p.getDensity());
 
