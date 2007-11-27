@@ -197,7 +197,10 @@ public final class Particle3D {
    */
   void setSphericity(final double sphericity) {
 
-    this.sphericity = sphericity;
+    if (sphericity == -1)
+      calcSphericity();
+    else
+      this.sphericity = sphericity;
   }
 
   /**
