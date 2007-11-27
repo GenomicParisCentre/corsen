@@ -49,26 +49,27 @@ public class DistancesCalculator {
 
   private AbstractListPoint3D listPointsAForThreads;
   private int freeThreads;
+  private boolean lastThreadCalc;
 
   private UpdateStatus updateStatus;
   private UncaughtExceptionHandler uceh;
   private CorsenResult result;
 
-  private final class CalcThread2 extends Thread {
+  private final class CalcThread extends Thread {
 
     private int count = 0;
 
     private List<Particle3D> listB;
+    private List<Distance> distancesAllThreads;
 
     private DistanceProcessor processorB;
-
-    private List<Distance> distancesAllThreads;
 
     private int threadNumber;
     private int threadsCount;
 
     volatile boolean keepRunning = true;
     boolean waitBeforeNextParticle;
+    private DistancesCalculator dc;
 
     public void pleaseStop() {
 
@@ -85,7 +86,6 @@ public class DistancesCalculator {
 
       final List<Particle3D> listB = this.listB;
 
-      final DistanceProcessor processorB = this.processorB;
       final int threadNumber = this.threadNumber;
       final int threadsCount = this.threadsCount;
 
@@ -96,12 +96,10 @@ public class DistancesCalculator {
         while (listPointsAForThreads == null)
           Thread.yield();
 
-        /*
-         * if (!this.keepRunning) continue;
-         */
+        if (lastThreadCalc)
+          this.keepRunning = false;
 
         listPointsA = listPointsAForThreads;
-        // final int globalCount = allThreadsCount;
 
         // final List<Distance> distances = new LinkedList<Distance>();
         final List<Distance> distances = new MinMaxList<Distance>();
@@ -113,14 +111,16 @@ public class DistancesCalculator {
           if (i++ % threadsCount != threadNumber)
             continue;
 
-          distances.addAll(processorB.calcDistance(parB, listPointsA));
+          distances.addAll(this.processorB.calcDistance(parB, listPointsA));
+
           this.count++;
 
         }
 
-        this.distancesAllThreads.addAll(distances);
-
-        freeThreads++;
+        synchronized (this.dc) {
+          this.distancesAllThreads.addAll(distances);
+          freeThreads++;
+        }
 
         while (listPointsA == listPointsAForThreads && this.keepRunning)
           Thread.yield();
@@ -129,9 +129,10 @@ public class DistancesCalculator {
       logger.info("fin thread " + this.getName() + " (" + count + " calcs).");
     }
 
-    public CalcThread2(final DistanceProcessor processorB,
+    public CalcThread(final DistanceProcessor processorB,
         final List<Particle3D> listB, final List<Distance> distancesAllThreads,
-        final int threadNumber, final int threadsCount) {
+        final int threadNumber, final int threadsCount,
+        final DistancesCalculator dc) {
 
       this.processorB = processorB;
 
@@ -139,92 +140,9 @@ public class DistancesCalculator {
       this.distancesAllThreads = distancesAllThreads;
       this.threadNumber = threadNumber;
       this.threadsCount = threadsCount;
-
+      this.dc = dc;
     }
-
   }
-
-  private final class CalcThread3 extends Thread {
-
-    private int count = 0;
-
-    private List<Particle3D> listA;
-    private List<Particle3D> listB;
-
-    private DistanceProcessor processorA;
-    private DistanceProcessor processorB;
-
-    private int threadNumber;
-    private int threadsCount;
-
-    private Map<Particle3D, Distance> mins =
-        new HashMap<Particle3D, Distance>();
-    private Map<Particle3D, Distance> maxs =
-        new HashMap<Particle3D, Distance>();
-
-    public int getCount() {
-
-      return this.count;
-    }
-
-    public Map<Particle3D, Distance> getMinsDistances() {
-
-      return this.mins;
-    }
-
-    public Map<Particle3D, Distance> getMaxsDistances() {
-
-      return this.maxs;
-    }
-
-    @Override
-    public void run() {
-
-      int i = 0;
-
-      for (Particle3D parA : listA) {
-
-        if (i++ % threadsCount != threadNumber)
-          continue;
-
-        final AbstractListPoint3D pointsA =
-            this.processorA.getPresentationPoints(parA.getInnerPoints());
-        // final List<Distance> distances = new LinkedList<Distance>();
-        final List<Distance> distances = new MinMaxList<Distance>();
-
-        for (Particle3D parB : listB) {
-
-          distances.addAll(this.processorB.calcDistance(parB, pointsA));
-          this.count++;
-        }
-
-        mins.put(parA, Collections.min(distances));
-        maxs.put(parA, Collections.max(distances));
-      }
-
-      freeThreads++;
-    }
-
-    public CalcThread3(final List<Particle3D> listA,
-        final List<Particle3D> listB, final DistanceProcessor processorA,
-        final DistanceProcessor processorB, final int threadNumber,
-        final int threadsCount) {
-
-      this.listA = listA;
-      this.listB = listB;
-
-      this.processorA = processorA;
-      this.processorB = processorB;
-
-      this.threadNumber = threadNumber;
-      this.threadsCount = threadsCount;
-    }
-
-  }
-
-  //
-  // Getters
-  //
 
   /**
    * Get the zFactor.
@@ -506,7 +424,7 @@ public class DistancesCalculator {
     Map<Particle3D, Distance> maxs = new HashMap<Particle3D, Distance>();
 
     if (threadNumber > 1)
-      calcMultiThreads2(listA, listB, mins, maxs, threadNumber);
+      calcMultiThreads(listA, listB, mins, maxs, threadNumber);
     else
       calcOneThread(listA, listB, mins, maxs);
 
@@ -568,11 +486,12 @@ public class DistancesCalculator {
 
   }
 
-  private void calcMultiThreads2(final List<Particle3D> listA,
+  private void calcMultiThreads(final List<Particle3D> listA,
       final List<Particle3D> listB, Map<Particle3D, Distance> mins,
       Map<Particle3D, Distance> maxs, final int threadNumber) {
 
     int count = 0;
+    int countBefore = 0;
 
     final int calcsToDoNumber = listA.size() * listB.size();
     final int calcsBeforeUpdateInfo = calcsToDoNumber / 100;
@@ -585,15 +504,16 @@ public class DistancesCalculator {
     final List<Distance> distancesAllThreads =
         Collections.synchronizedList(new MinMaxList<Distance>());
 
-    final CalcThread2[] threads = new CalcThread2[threadNumber];
+    final CalcThread[] threads = new CalcThread[threadNumber];
 
     this.freeThreads = 0;
+    this.lastThreadCalc = false;
     final long startCalcs = System.currentTimeMillis();
 
     for (int i = 0; i < threadNumber; i++) {
       threads[i] =
-          new CalcThread2(this.processorB, listB, distancesAllThreads, i,
-              threadNumber);
+          new CalcThread(this.processorB, listB, distancesAllThreads, i,
+              threadNumber, this);
       threads[i].setName("Distance computation thread #" + i);
 
       UpdateStatus ups = this.updateStatus.chain();
@@ -603,21 +523,26 @@ public class DistancesCalculator {
       threads[i].start();
     }
 
+    final int n = listA.size();
+    int parCount = 0;
     for (final Particle3D parA : listA) {
 
-      this.freeThreads = 0;
+      synchronized (this) {
 
-      this.listPointsAForThreads =
-          this.processorA.getPresentationPoints(parA.getInnerPoints());
+        this.freeThreads = 0;
+        this.listPointsAForThreads =
+            this.processorA.getPresentationPoints(parA.getInnerPoints());
 
-      if (this.listPointsAForThreads == null)
-        System.err.println("listPointsAForThreads is null !!!");
+        parCount++;
+        if (parCount == n)
+          this.lastThreadCalc = true;
+
+        if (this.listPointsAForThreads == null)
+          logger.severe("listPointsAForThreads is null !!!");
+      }
 
       while (this.freeThreads != threadNumber)
         Thread.yield();
-
-      final int countBefore = count;
-      count = 0;
 
       for (int i = 0; i < threadNumber; i++)
         count += threads[i].getCount();
@@ -627,73 +552,13 @@ public class DistancesCalculator {
       distancesAllThreads.clear();
 
       if ((count - countBefore) > calcsBeforeUpdateInfo) {
+
+        countBefore = count;
         sendEvent(
             ProgressEventType.PROGRESS_CALC_DISTANCES_EVENT,
             (int) (((double) count / (double) calcsToDoNumber) * ProgressEvent.INDEX_IN_PHASE_MAX));
       }
 
-    }
-
-    logger.info("Calc "
-        + count + " distances in " + (System.currentTimeMillis() - startCalcs)
-        + " ms.");
-
-    for (int i = 0; i < threadNumber; i++)
-      threads[i].pleaseStop();
-
-  }
-
-  private void calcMultiThreads3(final List<Particle3D> listA,
-      final List<Particle3D> listB, Map<Particle3D, Distance> mins,
-      Map<Particle3D, Distance> maxs, final int threadNumber) {
-
-    int count = 0;
-    final int calcsToDoNumber = listA.size() * listB.size();
-    final int calcsBeforeUpdateInfo = calcsToDoNumber / 100;
-
-    logger.info("Thread number for distance computation: " + threadNumber);
-    final long startCalcs = System.currentTimeMillis();
-
-    final CalcThread3[] threads = new CalcThread3[threadNumber];
-
-    for (int i = 0; i < threadNumber; i++) {
-      threads[i] =
-          new CalcThread3(listA, listB, this.processorA, this.processorB, i,
-              threadNumber);
-      threads[i].setName("Distance computation thread #" + i);
-
-      UpdateStatus ups = this.updateStatus.chain();
-      final UncaughtExceptionHandler uceh = getUncaughtExceptionHandler(ups);
-      ups.moveToThread(threads[i]);
-
-      threads[i].setUncaughtExceptionHandler(uceh);
-      threads[i].start();
-    }
-
-    while (this.freeThreads != threadNumber) {
-
-      try {
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-
-        logger.severe("InterruptedException during sleeping");
-      }
-
-      count = 0;
-      for (int i = 0; i < threadNumber; i++)
-        count += threads[i].getCount();
-
-      sendEvent(
-          ProgressEventType.PROGRESS_CALC_DISTANCES_EVENT,
-          (int) (((double) count / (double) calcsToDoNumber) * ProgressEvent.INDEX_IN_PHASE_MAX));
-
-    }
-    count = 0;
-    for (int i = 0; i < threadNumber; i++) {
-      CalcThread3 t = threads[i];
-      mins.putAll(t.getMinsDistances());
-      maxs.putAll(t.getMaxsDistances());
-      count += threads[i].getCount();
     }
 
     logger.info("Calc "
