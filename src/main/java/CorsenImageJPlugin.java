@@ -490,8 +490,9 @@ public class CorsenImageJPlugin implements PlugInFilter {
     this.rt.setHeading(0, "Internal id");
     this.rt.setHeading(1, "Area");
     this.rt.setHeading(2, "Volume");
-    this.rt.setHeading(3, "Intensity");
-    this.rt.setHeading(4, "Density");
+    this.rt.setHeading(3, "Sphericity");
+    this.rt.setHeading(4, "Intensity");
+    this.rt.setHeading(5, "Density");
 
     int count = 0;
     for (Particle3D p : this.particles3DToSave) {
@@ -500,8 +501,9 @@ public class CorsenImageJPlugin implements PlugInFilter {
       this.rt.setValue(0, count, p.getId());
       this.rt.setValue(1, count, p.getArea());
       this.rt.setValue(2, count, p.getVolume());
-      this.rt.setValue(3, count, p.getIntensity());
-      this.rt.setValue(4, count, p.getVolume() / p.getIntensity());
+      this.rt.setValue(3, count, p.getSphericty());
+      this.rt.setValue(4, count, p.getIntensity());
+      this.rt.setValue(5, count, p.getVolume() / p.getIntensity());
 
       count++;
     }
