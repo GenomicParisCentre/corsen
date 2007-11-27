@@ -40,6 +40,7 @@ public class Particle3DBuilder {
   private double area = -1;
   private double sphericity = -1;
   private long intensity = -1;
+  private double density = -1;
 
   /**
    * Add a particle 2D to the particle 3D.
@@ -378,6 +379,7 @@ public class Particle3DBuilder {
     result.setIntensity(this.intensity);
     result.setArea(this.area);
     result.setSphericity(this.sphericity);
+    result.setDensity(this.density);
     result.setEdgeParticle(this.edgeParticle);
 
     this.particle = null;

@@ -36,6 +36,7 @@ public final class Particle3D {
   private long intensity;
   private double area;
   private double sphericity;
+  private double density;
   private boolean edgeParticle;
 
   private ParticleType type = ParticleType.UNDEFINED;
@@ -127,6 +128,15 @@ public final class Particle3D {
   }
 
   /**
+   * Get the density of the particle.
+   * @return the density of the particle
+   */
+  public double getDesnity() {
+
+    return this.density;
+  }
+
+  /**
    * Test if the particle is an edge particle.
    * @return true if the particle is an edge particle
    */
@@ -201,6 +211,18 @@ public final class Particle3D {
       calcSphericity();
     else
       this.sphericity = sphericity;
+  }
+
+  /**
+   * Set the density of the particle
+   * @param density Density of the particle
+   */
+  void setDensity(final double density) {
+
+    if (density == -1)
+      calcDensity();
+    else
+      this.density = density;
   }
 
   /**
@@ -923,6 +945,14 @@ public final class Particle3D {
   public void calcSphericity() {
 
     this.sphericity = MathUtil.sphericite2(getVolume(), getArea());
+  }
+
+  /**
+   * Calculate or recalculate the density of the particle.
+   */
+  public void calcDensity() {
+
+    this.density = this.intensity / this.volume;
   }
 
   //
