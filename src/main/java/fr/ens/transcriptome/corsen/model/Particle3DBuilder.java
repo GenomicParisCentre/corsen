@@ -239,6 +239,9 @@ public class Particle3DBuilder {
 
     if (st.hasMoreElements())
       this.intensity = Long.parseLong(st.nextToken());
+    
+    if (st.hasMoreElements())
+      this.density = Double.parseDouble(st.nextToken());
 
     final Set<String> existingPoints = new HashSet<String>();
 

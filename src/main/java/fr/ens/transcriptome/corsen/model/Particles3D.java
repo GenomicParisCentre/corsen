@@ -20,7 +20,7 @@ import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 public class Particles3D {
 
-  private static final String PAR_FILE_VERSION = "1.2";
+  private static final String PAR_FILE_VERSION = "1.3";
 
   public static final String PAR_FILE_VERSION_KEY = "ParFileVersion";
   public static final String WIDTH_KEY = "Width";

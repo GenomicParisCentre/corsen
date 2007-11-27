@@ -131,7 +131,7 @@ public final class Particle3D {
    * Get the density of the particle.
    * @return the density of the particle
    */
-  public double getDesnity() {
+  public double getDensity() {
 
     return this.density;
   }
@@ -707,6 +707,8 @@ public final class Particle3D {
     sb.append(getSphericty());
     sb.append('\t');
     sb.append(getIntensity());
+    sb.append('\t');
+    sb.append(getDensity());
     sb.append('\t');
 
     int n = surfacePointsCount();
