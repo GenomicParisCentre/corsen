@@ -264,6 +264,10 @@ public class ArrayListPoint3D extends AbstractListPoint3D {
    */
   public final void applyXFactor(final float xFactor) {
 
+    final int n = size();
+
+    for (int i = 0; i < n; i++)
+      this.xValues.set(i, this.xValues.get(i) * xFactor);
   }
 
   /**
@@ -272,6 +276,10 @@ public class ArrayListPoint3D extends AbstractListPoint3D {
    */
   public final void applyYFactor(final float yFactor) {
 
+    final int n = size();
+
+    for (int i = 0; i < n; i++)
+      this.yValues.set(i, this.yValues.get(i) * yFactor);
   }
 
   /**
@@ -280,6 +288,10 @@ public class ArrayListPoint3D extends AbstractListPoint3D {
    */
   public final void applyZFactor(final float zFactor) {
 
+    final int n = size();
+
+    for (int i = 0; i < n; i++)
+      this.zValues.set(i, this.zValues.get(i) * zFactor);
   }
 
   /**
