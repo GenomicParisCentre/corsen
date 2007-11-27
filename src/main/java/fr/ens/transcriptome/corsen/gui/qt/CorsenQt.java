@@ -1,15 +1,34 @@
+/*
+ *                      Nividic development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU Lesser General Public Licence.  This should
+ * be distributed with the code.  If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/copyleft/lesser.html
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the �cole Normale Sup�rieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Nividic project and its aims,
+ * or to join the Nividic mailing list, visit the home page
+ * at:
+ *
+ *      http://www.transcriptome.ens.fr/nividic
+ *
+ */
+
 package fr.ens.transcriptome.corsen.gui.qt;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import com.trolltech.qt.QThread;
-import com.trolltech.qt.QtInfo;
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.QUrl;
-import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.ConnectionType;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
@@ -32,27 +51,7 @@ import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
 import fr.ens.transcriptome.corsen.util.Util;
 
-/*
- *                      Nividic development code
- *
- * This code may be freely distributed and modified under the
- * terms of the GNU Lesser General Public Licence.  This should
- * be distributed with the code.  If you do not have a copy,
- * see:
- *
- *      http://www.gnu.org/copyleft/lesser.html
- *
- * Copyright for this code is held jointly by the microarray platform
- * of the �cole Normale Sup�rieure and the individual authors.
- * These should be listed in @author doc comments.
- *
- * For more information on the Nividic project and its aims,
- * or to join the Nividic mailing list, visit the home page
- * at:
- *
- *      http://www.transcriptome.ens.fr/nividic
- *
- */
+
 
 // TODO add an in phase progress for writing/computing distances 
 // TODO Remove the cancel button 
