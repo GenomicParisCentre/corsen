@@ -77,6 +77,9 @@ public class CorsenImageJPlugin implements PlugInFilter {
   /** Use packed list of points. */
   public static final int PACK_PARTICLES_DATA = 32;
 
+  private static final int IMAGEJ_PLUGIN_BASE_FLAGS =
+      DOES_8G + DOES_16 + NO_CHANGES + NO_UNDO + STACK_REQUIRED;
+
   private static final String OPTIONS = Globals.APP_NAME + ".options";
   private static int staticOptions = Prefs.getInt(OPTIONS, 0);
 
@@ -117,9 +120,7 @@ public class CorsenImageJPlugin implements PlugInFilter {
     if (!showDialog())
       return DONE;
 
-    final int baseFlags =
-        DOES_8G + DOES_16 + DOES_32 + NO_CHANGES + NO_UNDO + STACK_REQUIRED;
-    final int flags = IJ.setupDialog(imp, baseFlags);
+    final int flags = IJ.setupDialog(imp, IMAGEJ_PLUGIN_BASE_FLAGS);
 
     slice = 0;
     this.seg3DRunner.clear();
