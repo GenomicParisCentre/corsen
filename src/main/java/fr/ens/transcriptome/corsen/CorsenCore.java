@@ -409,7 +409,7 @@ public class CorsenCore implements Runnable {
 
         final File parent = iFiles.inputParticlesBFile.getParentFile();
 
-        doACell(iFiles.inputParticlesBFile, iFiles.inputParticlesAFile,
+        doACell(iFiles.inputParticlesAFile, iFiles.inputParticlesBFile,
             new File(parent, iFiles.prefix), n, count);
 
       }
