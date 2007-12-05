@@ -268,14 +268,17 @@ public class CorsenCore implements Runnable {
 
     if (s.isSaveIVFile()) {
       sendEvent(ProgressEventType.START_WRITE_IV_MESSENGERS_EVENT);
-      writer.writeMessengersIntensityVolume(resultFile,
-          Globals.EXTENSION_PARTICLES_A_IV_FILE);
+      writer.writeMessengersIntensityVolume(resultFile, "_"
+          + this.settings.getParticlesAName().toLowerCase()
+          + Globals.EXTENSION_IV_FILE);
       sendEvent(ProgressEventType.START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT);
-      writer.writeCuboidsMessengersIntensityVolume(resultFile,
-          Globals.EXTENSION_PARTICLES_A_CUBOIDS_IV_FILE);
+      writer.writeCuboidsMessengersIntensityVolume(resultFile, "_"
+          + this.settings.getParticlesAName().toLowerCase() + "_cuboid"
+          + Globals.EXTENSION_IV_FILE);
       sendEvent(ProgressEventType.START_WRITE_IV_MITOS_EVENT);
-      writer.writeMitosIntensityVolume(resultFile,
-          Globals.EXTENSION_PARTICLES_B_IV_FILE);
+      writer.writeMitosIntensityVolume(resultFile, "_"
+          + this.settings.getParticlesBName().toLowerCase()
+          + Globals.EXTENSION_IV_FILE);
     }
 
     if (s.isSaveResultsFile()) {
@@ -296,27 +299,33 @@ public class CorsenCore implements Runnable {
 
       if (s.isSaveParticleA3dFile()) {
         sendEvent(ProgressEventType.START_WRITE_RPLOT_MESSENGERS_EVENT);
-        new RGL(resultFile, Globals.EXTENSION_PARTICLES_A_RGL_FILE)
-            .writeRPlots(result.getMessengersParticles(), "green", true);
+        new RGL(resultFile, "_"
+            + this.settings.getParticlesAName().toLowerCase()
+            + Globals.EXTENSION_RGL_FILE).writeRPlots(result
+            .getMessengersParticles(), "green", true);
       }
 
       if (s.isSaveParticleB3dFile()) {
         sendEvent(ProgressEventType.START_WRITE_RPLOT_MITOS_EVENT);
-        new RGL(resultFile, Globals.EXTENSION_PARTICLES_B_RGL_FILE)
-            .writeRPlots(result.getMitosParticles(), "red", false);
+        new RGL(resultFile, "_"
+            + this.settings.getParticlesBName().toLowerCase()
+            + Globals.EXTENSION_RGL_FILE).writeRPlots(result
+            .getMitosParticles(), "red", false);
       }
 
       if (s.isSaveParticlesACuboids3dFile()) {
         sendEvent(ProgressEventType.START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT);
-        new RGL(null, resultFile,
-            Globals.EXTENSION_PARTICLES_A_CUBOIDS_RGL_FILE).writeRPlots(result
+        new RGL(null, resultFile, "_"
+            + this.settings.getParticlesAName().toLowerCase() + "_cuboid"
+            + Globals.EXTENSION_RGL_FILE).writeRPlots(result
             .getCuboidsMessengersParticles(), "green", true);
       }
 
       if (s.isSaveParticlesBCuboids3dFile()) {
         sendEvent(ProgressEventType.START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT);
-        new RGL(null, resultFile,
-            Globals.EXTENSION_PARTICLES_B_CUBOIDS_RGL_FILE).writeRPlots(result
+        new RGL(null, resultFile, "_"
+            + this.settings.getParticlesBName().toLowerCase() + "_cuboid"
+            + Globals.EXTENSION_RGL_FILE).writeRPlots(result
             .getCuboidsMitosParticles(), "red", false);
       }
 

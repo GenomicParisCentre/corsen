@@ -1,27 +1,3 @@
-package fr.ens.transcriptome.corsen.gui.qt;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import com.trolltech.qt.QVariant;
-import com.trolltech.qt.core.QAbstractItemModel;
-import com.trolltech.qt.core.QModelIndex;
-import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.core.Qt.Orientation;
-import com.trolltech.qt.gui.QAbstractTableModel;
-import com.trolltech.qt.gui.QSortFilterProxyModel;
-
-import fr.ens.transcriptome.corsen.CorsenResultWriter;
-import fr.ens.transcriptome.corsen.Globals;
-import fr.ens.transcriptome.corsen.calc.CorsenResult;
-import fr.ens.transcriptome.corsen.calc.Distance;
-import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
-import fr.ens.transcriptome.corsen.model.Particle3D;
-import fr.ens.transcriptome.corsen.model.Particles3D;
-
 /*
  *                      Nividic development code
  *
@@ -43,6 +19,31 @@ import fr.ens.transcriptome.corsen.model.Particles3D;
  *      http://www.transcriptome.ens.fr/nividic
  *
  */
+
+package fr.ens.transcriptome.corsen.gui.qt;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.trolltech.qt.core.QAbstractItemModel;
+import com.trolltech.qt.core.QModelIndex;
+import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.core.Qt.Orientation;
+import com.trolltech.qt.gui.QAbstractTableModel;
+import com.trolltech.qt.gui.QSortFilterProxyModel;
+
+import fr.ens.transcriptome.corsen.CorsenResultWriter;
+import fr.ens.transcriptome.corsen.Globals;
+import fr.ens.transcriptome.corsen.calc.CorsenResult;
+import fr.ens.transcriptome.corsen.calc.Distance;
+import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
+import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particles3D;
+
+
 
 public class DataModelQt {
 
@@ -83,8 +84,6 @@ public class DataModelQt {
 
       final int row = mIndex.row();
       final int col = mIndex.column();
-
-      QVariant v = new QVariant();
 
       Particle3D p = this.listParticles.get(row);
 
@@ -517,13 +516,18 @@ public class DataModelQt {
       return Globals.EXTENSION_DATA_FILE;
 
     case 2:
-      return Globals.EXTENSION_PARTICLES_A_IV_FILE;
-
     case 3:
-      return Globals.EXTENSION_PARTICLES_A_CUBOIDS_IV_FILE;
-
-    case 4:
-      return Globals.EXTENSION_PARTICLES_B_IV_FILE;
+    case 4: 
+      return Globals.EXTENSION_IV_FILE;
+      
+//    case 2:
+//      return Globals.EXTENSION_PARTICLES_A_IV_FILE;
+//
+//    case 3:
+//      return Globals.EXTENSION_PARTICLES_A_CUBOIDS_IV_FILE;
+//
+//    case 4:
+//      return Globals.EXTENSION_PARTICLES_B_IV_FILE;
 
     default:
       return "";

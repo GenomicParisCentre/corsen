@@ -34,6 +34,9 @@ public final class Globals {
   /** The name of the application. */
   public static final String APP_NAME = "Corsen";
 
+  /** The name of the application. */
+  public static final String APP_NAME_LOWER_CASE = APP_NAME.toLowerCase();
+
   /** The version of the application. */
   public static final String APP_VERSION = getVersion();
 
@@ -45,7 +48,8 @@ public final class Globals {
 
   public static final boolean IS_JAR = isJar();
 
-  public static final int THREAD_NUMBER_DEFAULT = -1;
+  // public static final int THREAD_NUMBER_DEFAULT = -1;
+  public static final int THREAD_NUMBER_DEFAULT = 0;
 
   public static final boolean DEBUG = true;
   public static final boolean DEBUG_HOME_DIR = IS_JAR ? false : true;
@@ -72,22 +76,9 @@ public final class Globals {
 
   public static final String EXTENSION_PARTICLES_FILE = ".par";
 
-  public static final String EXTENSION_PARTICLES_A_IV_FILE = "_messengers.iv";
+  public static final String EXTENSION_IV_FILE = ".iv";
 
-  public static final String EXTENSION_PARTICLES_A_RGL_FILE = "_messengers.R";
-
-  public static final String EXTENSION_PARTICLES_A_CUBOIDS_IV_FILE =
-      "_cuboids.iv";
-
-  public static final String EXTENSION_PARTICLES_B_CUBOIDS_RGL_FILE =
-      "_mitos_cuboids.R";
-
-  public static final String EXTENSION_PARTICLES_B_RGL_FILE = "_mitos.R";
-
-  public static final String EXTENSION_PARTICLES_B_IV_FILE = "_mitos.iv";
-
-  public static final String EXTENSION_PARTICLES_A_CUBOIDS_RGL_FILE =
-      "_cuboids.R";
+  public static final String EXTENSION_RGL_FILE = ".R";
 
   public static final String EXTENSION_DISTANCES_FILE = "_distances.R";
 
@@ -117,7 +108,8 @@ public final class Globals {
           + "  Mathilde Garcia(**) <garcia@biologie.ens.fr> Project leader, R programming, ImageJ scripting, testing.\n\n"
           + "(*)  Plate-forme transcriptome, École Normale Supérieure\n"
           + "(**) Laboratoire de Génétique Moléculaire, École Normale Supérieure\n\n"
-          + "Copyright 2006-2007 École Normale Supérieure.\n" + LICENCE_TXT + "\n";
+          + "Copyright 2006-2007 École Normale Supérieure.\n" + LICENCE_TXT
+          + "\n";
 
   public static final String ABOUT_HTML =
       "<p><b>"
@@ -139,8 +131,8 @@ public final class Globals {
           + "<li><a href=\"mailto:garcia@biologie.ens.fr?subject=CorsenSwing\">Mathilde Garcia</a><br/>"
           + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de Génétique Moléculaire, École Normale Supérieure</a>"
           + "<br/>Project leader, R programming, ImageJ scripting, testing.</li></ul>"
-          + "<p>Copyright 2006-2007 École Normale Supérieure.<br/>" + LICENCE_TXT
-          + "</p>";
+          + "<p>Copyright 2006-2007 École Normale Supérieure.<br/>"
+          + LICENCE_TXT + "</p>";
 
   private static String getVersion() {
 
