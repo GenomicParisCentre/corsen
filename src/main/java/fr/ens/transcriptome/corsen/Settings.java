@@ -1,16 +1,3 @@
-package fr.ens.transcriptome.corsen;
-
-import java.awt.Color;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Properties;
-
-import fr.ens.transcriptome.corsen.calc.ParticleType;
-
 /*
  *                      Nividic development code
  *
@@ -33,6 +20,22 @@ import fr.ens.transcriptome.corsen.calc.ParticleType;
  *
  */
 
+package fr.ens.transcriptome.corsen;
+
+import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Properties;
+
+import fr.ens.transcriptome.corsen.calc.ParticleType;
+
+/**
+ * This class defines settings of the application.
+ */
 public final class Settings {
 
   private static final String ZFACTOR_KEY = "main.zFactor";
@@ -44,12 +47,15 @@ public final class Settings {
 
   private static final String PARTICLES_A_NAME = "particles.a.name";
   private static final String PARTICLES_A_TYPE = "particles.a.type";
-  private static final String PARTICLES_A_BATCH_PREFIX = "particles.a.batch.prefix";
-  private static final String PARTICLES_A_PROPERTIES = "particles.a.properties.";
+  private static final String PARTICLES_A_BATCH_PREFIX =
+      "particles.a.batch.prefix";
+  private static final String PARTICLES_A_PROPERTIES =
+      "particles.a.properties.";
 
   private static final String PARTICLES_B_NAME = "particles.b.name";
   private static final String PARTICLES_B_TYPE = "particles.b.type";
-  private static final String PARTICLES_B_BATCH_PREFIX = "particles.b.batch.prefix";
+  private static final String PARTICLES_B_BATCH_PREFIX =
+      "particles.b.batch.prefix";
   private static final String PARTICLES_B_PROPERTIES = "particles.b.properties";
 
   private static final String THREAD_NUMBER = "threads.number";
@@ -57,28 +63,46 @@ public final class Settings {
   private static final String SAVE_DATA_FILE_KEY = "save.dataFile";
   private static final String SAVE_IV_FILE_SAVED = "save.IVFile";
   private static final String SAVE_3DFILES_KEY = "save.3dFiles";
-  private static final String SAVE_PARTICLES_A_3DFILES_KEY = "save.3dFiles.particles.a";
-  private static final String SAVE_PARTICLES_A_CUBOIDS_3DFILES_KEY = "save.3dFiles.particles.a";
-  private static final String SAVE_PARTICLES_B_3DFILES_KEY = "save.3dFiles.particles.b";
-  private static final String SAVE_PARTICLES_B_CUBOIDS_3DFILES_KEY = "save.3dFiles.particles.b";
-  private static final String SAVE_DISTANCES_3DFILES_KEY = "save.3dFiles.distances";
+  private static final String SAVE_PARTICLES_A_3DFILES_KEY =
+      "save.3dFiles.particles.a";
+  private static final String SAVE_PARTICLES_A_CUBOIDS_3DFILES_KEY =
+      "save.3dFiles.particles.a";
+  private static final String SAVE_PARTICLES_B_3DFILES_KEY =
+      "save.3dFiles.particles.b";
+  private static final String SAVE_PARTICLES_B_CUBOIDS_3DFILES_KEY =
+      "save.3dFiles.particles.b";
+  private static final String SAVE_DISTANCES_3DFILES_KEY =
+      "save.3dFiles.distances";
   private static final String SAVE_RESULTS_KEY = "save.results";
   private static final String SAVE_FULL_RESULTS_KEY = "save.fullResults";
 
-  private static final String VISUALIZATION_POINTS_SIZE_KEY = "visualization.pointSize";
-  private static final String VISUALIZATION_SHOW_SURFACE_LINES_KEY = "visualization.showSurfaceLines";
-  private static final String VISUALIZATION_SURFACE_LINE_SIZE_KEY = "visualization.surfaceLinesSize";
-  private static final String VISUALIZATION_DISTANCES_LINES_SIZE_KEY = "visualization.distanceLinesSize";
-  private static final String VISUALIZATION_SHOW_NEGATIVE_DISTANCES_KEY = "visualization.showNegativeDistances";
-  private static final String VISUALIZATION_SHOW_PARTICLES_A_DIFFERENT_COLORS_KEY = "visualization.showParticleADifferentColors";
-  private static final String VISUALIZATION_SHOW_PARTICLES_B_DIFFERENT_COLORS_KEY = "visualization.showParticleBDifferentColors";
+  private static final String VISUALIZATION_POINTS_SIZE_KEY =
+      "visualization.pointSize";
+  private static final String VISUALIZATION_SHOW_SURFACE_LINES_KEY =
+      "visualization.showSurfaceLines";
+  private static final String VISUALIZATION_SURFACE_LINE_SIZE_KEY =
+      "visualization.surfaceLinesSize";
+  private static final String VISUALIZATION_DISTANCES_LINES_SIZE_KEY =
+      "visualization.distanceLinesSize";
+  private static final String VISUALIZATION_SHOW_NEGATIVE_DISTANCES_KEY =
+      "visualization.showNegativeDistances";
+  private static final String VISUALIZATION_SHOW_PARTICLES_A_DIFFERENT_COLORS_KEY =
+      "visualization.showParticleADifferentColors";
+  private static final String VISUALIZATION_SHOW_PARTICLES_B_DIFFERENT_COLORS_KEY =
+      "visualization.showParticleBDifferentColors";
 
-  private static final String VISUALIZATION_COLOR_PARTICLE_A_KEY = "visualization.color.particle.a";
-  private static final String VISUALIZATION_COLOR_PARTICLE_B_KEY = "visualization.color.particle.b";
-  private static final String VISUALIZATION_COLOR_BARYCENTERS_KEY = "visualization.color.barycenters";
-  private static final String VISUALIZATION_COLOR_DISTANCES_KEY = "visualization.color.distances";
-  private static final String VISUALIZATION_COLOR_BACKGROUND_KEY = "visualization.color.background";
-  private static final String VISUALIZATION_COLOR_LEGEND_KEY = "visualization.color.legend";
+  private static final String VISUALIZATION_COLOR_PARTICLE_A_KEY =
+      "visualization.color.particle.a";
+  private static final String VISUALIZATION_COLOR_PARTICLE_B_KEY =
+      "visualization.color.particle.b";
+  private static final String VISUALIZATION_COLOR_BARYCENTERS_KEY =
+      "visualization.color.barycenters";
+  private static final String VISUALIZATION_COLOR_DISTANCES_KEY =
+      "visualization.color.distances";
+  private static final String VISUALIZATION_COLOR_BACKGROUND_KEY =
+      "visualization.color.background";
+  private static final String VISUALIZATION_COLOR_LEGEND_KEY =
+      "visualization.color.legend";
 
   private Properties properties = new Properties();
 
@@ -147,8 +171,8 @@ public final class Settings {
    */
   public boolean isSaveDistances3dFile() {
 
-    String value = this.properties.getProperty(SAVE_DISTANCES_3DFILES_KEY,
-        "true");
+    String value =
+        this.properties.getProperty(SAVE_DISTANCES_3DFILES_KEY, "true");
 
     return Boolean.valueOf(value.trim());
   }
@@ -170,8 +194,8 @@ public final class Settings {
    */
   public boolean isSaveParticleA3dFile() {
 
-    String value = this.properties.getProperty(SAVE_PARTICLES_A_3DFILES_KEY,
-        "true");
+    String value =
+        this.properties.getProperty(SAVE_PARTICLES_A_3DFILES_KEY, "true");
 
     return Boolean.valueOf(value);
   }
@@ -182,8 +206,9 @@ public final class Settings {
    */
   public boolean isSaveParticlesACuboids3dFile() {
 
-    String value = this.properties.getProperty(
-        SAVE_PARTICLES_A_CUBOIDS_3DFILES_KEY, "false");
+    String value =
+        this.properties.getProperty(SAVE_PARTICLES_A_CUBOIDS_3DFILES_KEY,
+            "false");
 
     return Boolean.valueOf(value.trim());
   }
@@ -194,8 +219,8 @@ public final class Settings {
    */
   public boolean isSaveParticleB3dFile() {
 
-    String value = this.properties.getProperty(SAVE_PARTICLES_B_3DFILES_KEY,
-        "true");
+    String value =
+        this.properties.getProperty(SAVE_PARTICLES_B_3DFILES_KEY, "true");
 
     return Boolean.valueOf(value.trim());
   }
@@ -206,8 +231,9 @@ public final class Settings {
    */
   public boolean isSaveParticlesBCuboids3dFile() {
 
-    String value = this.properties.getProperty(
-        SAVE_PARTICLES_B_CUBOIDS_3DFILES_KEY, "false");
+    String value =
+        this.properties.getProperty(SAVE_PARTICLES_B_CUBOIDS_3DFILES_KEY,
+            "false");
 
     return Boolean.valueOf(value.trim());
   }
@@ -260,8 +286,8 @@ public final class Settings {
    */
   public float getVisualizationPointsSize() {
 
-    String value = this.properties.getProperty(VISUALIZATION_POINTS_SIZE_KEY,
-        "1.0");
+    String value =
+        this.properties.getProperty(VISUALIZATION_POINTS_SIZE_KEY, "1.0");
 
     return Float.parseFloat(value.trim());
   }
@@ -272,8 +298,8 @@ public final class Settings {
    */
   public float getVisualizationSurfaceLinesSize() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_SURFACE_LINE_SIZE_KEY, "1.0");
+    String value =
+        this.properties.getProperty(VISUALIZATION_SURFACE_LINE_SIZE_KEY, "1.0");
 
     return Float.parseFloat(value.trim());
   }
@@ -284,8 +310,9 @@ public final class Settings {
    */
   public float getVisualizationDistancesLinesSize() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_DISTANCES_LINES_SIZE_KEY, "1.0");
+    String value =
+        this.properties.getProperty(VISUALIZATION_DISTANCES_LINES_SIZE_KEY,
+            "1.0");
 
     return Float.parseFloat(value.trim());
   }
@@ -296,8 +323,9 @@ public final class Settings {
    */
   public boolean isVisualizationShowSurfaceLines() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_SHOW_SURFACE_LINES_KEY, "true");
+    String value =
+        this.properties.getProperty(VISUALIZATION_SHOW_SURFACE_LINES_KEY,
+            "true");
 
     return Boolean.valueOf(value.trim());
   }
@@ -309,8 +337,9 @@ public final class Settings {
    */
   public boolean isVisualizationShowNegativeDistances() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_SHOW_NEGATIVE_DISTANCES_KEY, "false");
+    String value =
+        this.properties.getProperty(VISUALIZATION_SHOW_NEGATIVE_DISTANCES_KEY,
+            "false");
 
     return Boolean.valueOf(value.trim());
   }
@@ -321,8 +350,9 @@ public final class Settings {
    */
   public Color getColorParticlesA() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_COLOR_PARTICLE_A_KEY, colorToString(Color.GREEN));
+    String value =
+        this.properties.getProperty(VISUALIZATION_COLOR_PARTICLE_A_KEY,
+            colorToString(Color.GREEN));
 
     return colorFromString(value);
   }
@@ -333,8 +363,9 @@ public final class Settings {
    */
   public Color getColorParticlesB() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_COLOR_PARTICLE_B_KEY, colorToString(Color.RED));
+    String value =
+        this.properties.getProperty(VISUALIZATION_COLOR_PARTICLE_B_KEY,
+            colorToString(Color.RED));
 
     return colorFromString(value);
   }
@@ -345,8 +376,9 @@ public final class Settings {
    */
   public Color getColorBaryCenters() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_COLOR_BARYCENTERS_KEY, colorToString(Color.BLUE));
+    String value =
+        this.properties.getProperty(VISUALIZATION_COLOR_BARYCENTERS_KEY,
+            colorToString(Color.BLUE));
 
     return colorFromString(value);
   }
@@ -357,8 +389,9 @@ public final class Settings {
    */
   public Color getColorDistances() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_COLOR_DISTANCES_KEY, colorToString(Color.YELLOW));
+    String value =
+        this.properties.getProperty(VISUALIZATION_COLOR_DISTANCES_KEY,
+            colorToString(Color.YELLOW));
 
     return colorFromString(value);
   }
@@ -369,8 +402,9 @@ public final class Settings {
    */
   public Color getColorBackground() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_COLOR_BACKGROUND_KEY, colorToString(Color.BLACK));
+    String value =
+        this.properties.getProperty(VISUALIZATION_COLOR_BACKGROUND_KEY,
+            colorToString(Color.BLACK));
 
     return colorFromString(value);
   }
@@ -381,8 +415,9 @@ public final class Settings {
    */
   public Color getColorLegend() {
 
-    String value = this.properties.getProperty(VISUALIZATION_COLOR_LEGEND_KEY,
-        colorToString(Color.WHITE));
+    String value =
+        this.properties.getProperty(VISUALIZATION_COLOR_LEGEND_KEY,
+            colorToString(Color.WHITE));
 
     return colorFromString(value);
   }
@@ -402,8 +437,9 @@ public final class Settings {
    */
   public ParticleType getParticlesAType() {
 
-    String val = this.properties.getProperty(PARTICLES_A_TYPE,
-        ParticleType.TINY.toString());
+    String val =
+        this.properties.getProperty(PARTICLES_A_TYPE, ParticleType.TINY
+            .toString());
 
     System.out.println("val=" + val);
 
@@ -500,8 +536,9 @@ public final class Settings {
    */
   public int getThreadNumber() {
 
-    String value = this.properties.getProperty(THREAD_NUMBER, ""
-        +Globals.THREAD_NUMBER_DEFAULT);
+    String value =
+        this.properties.getProperty(THREAD_NUMBER, ""
+            + Globals.THREAD_NUMBER_DEFAULT);
 
     return Integer.parseInt(value.trim());
   }
@@ -512,8 +549,9 @@ public final class Settings {
    */
   public boolean isVisualisationParticlesAInDifferentsColor() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_SHOW_PARTICLES_A_DIFFERENT_COLORS_KEY, "false");
+    String value =
+        this.properties.getProperty(
+            VISUALIZATION_SHOW_PARTICLES_A_DIFFERENT_COLORS_KEY, "false");
 
     return Boolean.valueOf(value.trim());
   }
@@ -524,8 +562,9 @@ public final class Settings {
    */
   public boolean isVisualisationParticlesBInDifferentsColor() {
 
-    String value = this.properties.getProperty(
-        VISUALIZATION_SHOW_PARTICLES_B_DIFFERENT_COLORS_KEY, "false");
+    String value =
+        this.properties.getProperty(
+            VISUALIZATION_SHOW_PARTICLES_B_DIFFERENT_COLORS_KEY, "false");
 
     return Boolean.valueOf(value.trim());
   }
@@ -754,7 +793,7 @@ public final class Settings {
   /**
    * Set if the distances lines must be shown in a different color if negative.
    * @param value if the distances lines must be shown in a different color if
-   *          negative
+   *            negative
    */
   public void setVisualizationShowNegativeDistances(final boolean value) {
 
@@ -935,7 +974,7 @@ public final class Settings {
   /**
    * Set if Particles A must be shown in different colors.
    * @param differentColors true if Particles A must be shown in different
-   *          colors
+   *            colors
    */
   public void setVisualisationParticlesAInDifferentsColors(
       final boolean differentColors) {
@@ -948,7 +987,7 @@ public final class Settings {
   /**
    * Set if Particles B must be shown in different colors.
    * @param differentColors true if Particles A must be shown in different
-   *          colors
+   *            colors
    */
   public void setVisualisationParticlesBInDifferentsColors(
       final boolean differentColors) {
@@ -990,8 +1029,8 @@ public final class Settings {
     if (c == null)
       return null;
 
-    return c.getRed() + "," + c.getGreen() + "," + c.getBlue() + ","
-        + c.getAlpha();
+    return c.getRed()
+        + "," + c.getGreen() + "," + c.getBlue() + "," + c.getAlpha();
 
   }
 
@@ -1001,9 +1040,11 @@ public final class Settings {
     final String home = System.getProperty("user.home");
 
     if (os.toLowerCase().startsWith("windows"))
-      return home + File.separator + "Application DataDouble" + "corsen.conf";
+      return home
+          + File.separator + "Application DataDouble"
+          + Globals.APP_NAME_LOWER_CASE + ".conf";
 
-    return home + File.separator + ".corsen";
+    return home + File.separator + "." + Globals.APP_NAME_LOWER_CASE;
   }
 
   /**
@@ -1023,8 +1064,9 @@ public final class Settings {
 
     FileOutputStream fos = new FileOutputStream(file);
 
-    this.properties.store(fos, " " + Globals.APP_NAME + " version "
-        + Globals.APP_VERSION + " configuration file");
+    this.properties.store(fos, " "
+        + Globals.APP_NAME + " version " + Globals.APP_VERSION
+        + " configuration file");
 
   }
 
