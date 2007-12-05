@@ -38,6 +38,45 @@
 	</properties>
 	<body>
 
+		<release version="0.29" date="2007-12-05">
+			<action dev="jourdren" type="fix">
+				Bogue dans le nom des fichiers ".data" dans le
+				traitement en lots de fichiers ".par".
+			</action>
+			<action dev="jourdren" type="update">
+				Le nom des fichiers ".iv" et ".R" tient maintenant
+				compte du nom de la particule entrée dans les paramètres
+				de corsen.
+			</action>
+			<action dev="jourdren" type="fix">
+				Calcule l'aire, le volume et l'intensité des cuboides.
+			</action>
+			<action dev="jourdren" type="update">
+				Ajoute l'aire, la sphericité et la densité au fichiers
+				".iv".
+			</action>
+			<action dev="jourdren" type="update">
+				Les images 32 bits ne sont plus autorisées dans le
+				plugin corsen.
+			</action>
+			<action dev="jourdren" type="update">
+				Ajout de la densité dans les fichiers ".par". Le format
+				des fichiers ".par" passe maintenant à la version 1.3.
+				Corsen ne peut lire les version précédente de ce format
+				de fichier.
+			</action>
+			<action dev="jourdren" type="update">
+				Affiche la sphércité dans le résumé du Plugin Corsen.
+			</action>
+			<action dev="jourdren" type="fix">
+				Corsen ne gele plus en mode multi-thread.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout d'un menu à propos de Corsen pour le plugin Corsen
+				dans Image J
+			</action>
+		</release>
+
 		<release version="0.28" date="2007-11-26">
 			<action dev="jourdren" type="update">
 				Nouveau plugin ImageJ écrit "from scratch".
