@@ -1,9 +1,3 @@
-package fr.ens.transcriptome.corsen;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 /*
  *                      Nividic development code
  *
@@ -25,6 +19,12 @@ import java.util.Properties;
  *      http://www.transcriptome.ens.fr/nividic
  *
  */
+
+package fr.ens.transcriptome.corsen;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public final class Globals {
 
@@ -48,8 +48,8 @@ public final class Globals {
 
   public static final boolean IS_JAR = isJar();
 
-  // public static final int THREAD_NUMBER_DEFAULT = -1;
-  public static final int THREAD_NUMBER_DEFAULT = 0;
+  public static final int THREAD_NUMBER_DEFAULT = -1;
+  //public static final int THREAD_NUMBER_DEFAULT = 0;
 
   public static final boolean DEBUG = true;
   public static final boolean DEBUG_HOME_DIR = IS_JAR ? false : true;
