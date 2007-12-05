@@ -351,7 +351,7 @@ public class CorsenCore implements Runnable {
 
       String between =
           filename.substring(prefix.length(), filename.length()
-              - suffix.length() + 1);
+              - suffix.length());
 
       InputFiles iFile;
 
