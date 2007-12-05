@@ -171,7 +171,7 @@ public final class Particle3D {
    */
   void setVolume(final double volume) {
 
-    if (volume == -1)
+    if (volume == -1 || volume == 0)
       calcVolume();
     else
       this.volume = volume;
@@ -183,7 +183,7 @@ public final class Particle3D {
    */
   void setIntensity(final long intensity) {
 
-    if (intensity == -1)
+    if (intensity == -1 || intensity == 0)
       calcIntensity();
     else
       this.intensity = intensity;
@@ -195,7 +195,7 @@ public final class Particle3D {
    */
   void setArea(final double area) {
 
-    if (area == -1)
+    if (area == -1 || area == 0)
       calcArea();
     else
       this.area = area;
