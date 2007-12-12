@@ -73,8 +73,8 @@ public class CLIGui {
         break;
 
       case END_CELLS_SUCCESSFULL_EVENT:
-        final long timeToDoCells = System.currentTimeMillis()
-            - this.timeStartCells;
+        final long timeToDoCells =
+            System.currentTimeMillis() - this.timeStartCells;
 
         System.out.println("Process all cells in "
             + Util.toTimeHumanReadable(timeToDoCells) + " (" + timeToDoCells
@@ -85,21 +85,31 @@ public class CLIGui {
       }
 
     }
-    
+
     /**
      * Move to a thread. Needed by Qt.
      * @param thread Thread to move
      */
     public void moveToThread(Thread thread) {
     }
-    
+
     /**
      * Chain the update status for the differents threads. Needed by Qt.
      * @return an UpdateStatus instance
      */
     public UpdateStatus chain() {
-      
+
       return this;
+    }
+
+    /**
+     * Create a new Thread.
+     * @param runnable Runnable Object for the thread
+     * @return a new Thread
+     */
+    public Thread newThread(final Runnable runnable) {
+
+      return new Thread(runnable);
     }
 
   }

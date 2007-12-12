@@ -301,6 +301,16 @@ public class CorsenSwing implements UpdateStatus {
     
     return this;
   }
+  
+  /**
+   * Create a new Thread.
+   * @param runnable Runnable Object for the thread
+   * @return a new Thread
+   */
+  public Thread newThread(final Runnable runnable) {
+    
+    return new Thread(runnable);
+  }
 
   /**
    * Test if the system is Windows.

@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.trolltech.qt.QThread;
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.QUrl;
@@ -89,6 +90,16 @@ public class CorsenQt extends QMainWindow {
 
     public void endProcess(CorsenResult result) {
       this.resultSignal.emit(result);
+    }
+    
+    /**
+     * Create a new Thread.
+     * @param runnable Runnable Object for the thread
+     * @return a new Thread
+     */
+    public Thread newThread(final Runnable runnable) {
+      
+      return new QThread(runnable);
     }
 
     /**
@@ -458,10 +469,7 @@ public class CorsenQt extends QMainWindow {
       cc.setDirFiles(new File(dirFile));
       cc.setMultipleFiles(true);
 
-      // Thread t = new Thread(cc);
-      // t.start();
-
-      Thread t = new Thread(cc);
+      QThread t = new QThread(cc);
       updateStatus.moveToThread(t);
       t.start();
 

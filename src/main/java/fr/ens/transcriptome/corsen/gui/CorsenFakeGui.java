@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -87,6 +87,16 @@ public class CorsenFakeGui {
       return this;
     }
 
+    /**
+     * Create a new Thread.
+     * @param runnable Runnable Object for the thread
+     * @return a new Thread
+     */
+    public Thread newThread(final Runnable runnable) {
+      
+      return new Thread(runnable);
+    }
+    
   }
 
   public static void main(String[] args) throws IOException {

@@ -1,6 +1,7 @@
 package fr.ens.transcriptome.corsen;
 
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
+
 /*
  *                      Nividic development code
  *
@@ -12,7 +13,7 @@ import fr.ens.transcriptome.corsen.calc.CorsenResult;
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -42,23 +43,30 @@ public interface UpdateStatus {
    * @param msg Message to display
    */
   void showMessage(final String msg);
-  
+
   /**
    * Send corsen result at the end of the process.
    * @param result The corsen result
    */
-  void endProcess(CorsenResult result) ;
-  
+  void endProcess(CorsenResult result);
+
   /**
    * Move to a thread. Needed by Qt.
    * @param thread Thread to move
    */
   void moveToThread(Thread thread);
-  
+
   /**
    * Chain the update status for the differents threads. Needed by Qt.
    * @return an UpdateStatus instance
    */
   UpdateStatus chain();
-  
+
+  /**
+   * Create a new Thread.
+   * @param runnable Runnable Object for the thread
+   * @return a new Thread
+   */
+  Thread newThread(final Runnable runnable);
+
 }

@@ -55,7 +55,7 @@ public class DistancesCalculator {
   private UncaughtExceptionHandler uceh;
   private CorsenResult result;
 
-  private final class CalcThread extends Thread {
+  private final class CalcThread implements Runnable {
 
     private int count = 0;
 
@@ -81,7 +81,6 @@ public class DistancesCalculator {
       return this.count;
     }
 
-    @Override
     public void run() {
 
       final List<Particle3D> listB = this.listB;
@@ -126,7 +125,7 @@ public class DistancesCalculator {
           Thread.yield();
       }
 
-      logger.info("fin thread " + this.getName() + " (" + count + " calcs).");
+      logger.info("fin thread (" + count + " calcs).");
     }
 
     public CalcThread(final DistanceProcessor processorB,
@@ -504,16 +503,21 @@ public class DistancesCalculator {
     final List<Distance> distancesAllThreads =
         Collections.synchronizedList(new MinMaxList<Distance>());
 
-    final CalcThread[] threads = new CalcThread[threadNumber];
+    final CalcThread[] calcthreads = new CalcThread[threadNumber];
+    final Thread[] threads = new Thread[threadNumber];
 
     this.freeThreads = 0;
     this.lastThreadCalc = false;
     final long startCalcs = System.currentTimeMillis();
 
     for (int i = 0; i < threadNumber; i++) {
-      threads[i] =
+
+      final CalcThread ct =
           new CalcThread(this.processorB, listB, distancesAllThreads, i,
               threadNumber, this);
+      calcthreads[i] = ct;
+
+      threads[i] = this.updateStatus.newThread(ct);
       threads[i].setName("Distance computation thread #" + i);
 
       UpdateStatus ups = this.updateStatus.chain();
@@ -545,7 +549,7 @@ public class DistancesCalculator {
         Thread.yield();
 
       for (int i = 0; i < threadNumber; i++)
-        count += threads[i].getCount();
+        count += calcthreads[i].getCount();
 
       mins.put(parA, Collections.min(distancesAllThreads));
       maxs.put(parA, Collections.max(distancesAllThreads));
