@@ -61,12 +61,16 @@ public class TestGL extends QGLWidget {
   private static final double MAX_ZOOM = 2;
 
   public static final int STACKS = 20;
-  private static final float LEN = 0.5f;
+  private static final float LEN = 1f / 3f;
   private boolean remakeObject = true;
 
   QPoint lastPos;
 
   private int gllist = -1;
+
+  private float xScale = 1;
+  private float yScale = 1.5f;
+  private float zScale = 2;
 
   /**
    * Test if the particles can be drawed
@@ -292,6 +296,7 @@ public class TestGL extends QGLWidget {
 
     gl.glPushMatrix();
 
+    gl.glScalef(this.xScale, this.yScale, this.zScale);
     gl.glTranslatef(x, y, z);
 
     gl.glClipPlane(GL.GL_CLIP_PLANE0, eqnX);
@@ -335,6 +340,7 @@ public class TestGL extends QGLWidget {
 
     gl.glPushMatrix();
 
+    gl.glScalef(this.xScale, this.yScale, this.zScale);
     gl.glTranslatef(x, y, z);
 
     if (sens == 1)
@@ -375,6 +381,8 @@ public class TestGL extends QGLWidget {
     final GL gl = this.gl;
 
     gl.glPushMatrix();
+
+    gl.glScalef(this.xScale, this.yScale, this.zScale);
     gl.glTranslatef(x, y, z);
 
     if (sens == 1)
@@ -397,6 +405,82 @@ public class TestGL extends QGLWidget {
     gl.glFlush();
   }
 
+  private void makeDice(final float x, final float y, final float z) {
+
+    final float xr = x + LEN / 2;
+    final float yr = y - LEN / 2;
+    final float zr = z - LEN / 2;
+
+    // First level
+
+    makeObjectSphere(xr, yr + LEN, zr + LEN, 1, 1, 1);
+
+    makeObjectSquare(xr - LEN, yr, zr + LEN * 2, 0);
+
+    makeObjectCylinder(xr - LEN, yr + LEN, zr + LEN, -1, 1, 1, 1);
+    makeObjectSphere(xr - LEN, yr + LEN, zr + LEN, -1, 1, 1);
+    makeObjectCylinder(xr, yr + LEN, zr + LEN, 1, 1, 1, 2);
+    makeObjectCylinder(xr - LEN, yr + LEN, zr + LEN, -1, 1, 1, 2);
+    makeObjectCylinder(xr - LEN, yr, zr + LEN, -1, -1, 1, 1);
+    makeObjectSphere(xr, yr, zr + LEN, 1, -1, 1);
+    makeObjectSphere(xr - LEN, yr, zr + LEN, -1, -1, 1);
+
+    // Second level
+
+    makeObjectSquare(xr - 2 * LEN, yr, zr + LEN, 1);
+    makeObjectSquare(xr + LEN, yr, zr + LEN, 1);
+    makeObjectSquare(xr - LEN, yr - LEN, zr, 2);
+    makeObjectSquare(xr - LEN, yr + 2 * LEN, zr, 2);
+
+    makeObjectCylinder(xr, yr + LEN, zr, 1, 1, 1, 0);
+    makeObjectCylinder(xr - LEN, yr + LEN, zr, -1, 1, 1, 0);
+    makeObjectCylinder(xr, yr, zr, 1, -1, 1, 0);
+    makeObjectCylinder(xr - LEN, yr, zr, -1, -1, 1, 0);
+
+    // Third level
+
+    makeObjectSphere(xr, yr + LEN, zr, 1, 1, -1);
+    makeObjectCylinder(xr - LEN, yr + LEN, zr, 1, 1, 1, 1);
+    makeObjectSphere(xr - LEN, yr + LEN, zr, -1, 1, -1);
+    makeObjectCylinder(xr, yr + LEN, zr, 1, -1, 1, 2);
+    makeObjectSphere(xr, yr, zr, 1, -1, -1);
+
+    makeObjectCylinder(xr - LEN, yr + LEN, zr, -1, -1, 1, 2);
+
+    makeObjectCylinder(xr - LEN, yr, zr, 1, -1, 1, 1);
+    makeObjectSphere(xr - LEN, yr, zr, -1, -1, -1);
+
+    makeObjectSquare(xr - LEN, yr, zr - LEN, 0);
+
+  }
+
+  public int getPixel(final int x, final int y, final int z) {
+
+    if (x < 0 || y < 0 || z < 0 || x >= xLen || y >= yLen || z >= zLen)
+      return 0;
+
+    return this.array[z][y][x];
+  }
+
+  private int xLen, yLen, zLen;
+
+  private int[][][] array =
+      {
+          { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0},
+              {0, 0, 0, 0, 0}},
+
+          { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 10, 0}, {0, 0, 0, 0, 0},
+              {0, 0, 0, 0, 0}},
+
+          { {0, 0, 0, 0, 0}, {0, 0, 1, 0, 0}, {0, 1, 1, 1, 0}, {0, 0, 1, 0, 0},
+              {0, 0, 0, 0, 0}},
+
+          { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 10, 0}, {0, 0, 0, 0, 0},
+              {0, 0, 0, 0, 0}},
+
+          { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0},
+              {0, 0, 0, 0, 0}}};
+
   private void makeObject() {
 
     if (gllist > 0)
@@ -405,53 +489,28 @@ public class TestGL extends QGLWidget {
 
     this.gl.glNewList(list, GL.GL_COMPILE);
 
-    // makeObjectCylinder2(0, 0, 0, 1, 1, 1);
-    // makeObjectCylinder2(-1,-1, -1, 1, 1, 1);
-    // makeObjectCylinder2(1,1, 1, 1, 1, 1);
+    this.xLen = 4;
+    this.yLen = 4;
+    this.zLen = 4;
 
-    // makeObjectSphere(0, 0.5f, 0);
-    // makeObjectSquare(0, 0, 0);
+    for (int i = 0; i < array.length; i++) {
+      for (int j = 0; j < array[i].length; j++)
+        for (int k = 0; k < array[i][j].length; k++) {
 
-    // First level
+          if (getPixel(i, j, k) > 0)
+            makeDice(i, j, k);
 
-    makeObjectSphere(0, LEN, LEN, 1, 1, 1);
+        }
 
-    makeObjectSquare(-LEN, 0, LEN * 2, 0);
+    }
 
-    makeObjectCylinder(-LEN, LEN, LEN, -1, 1, 1, 1);
-    makeObjectSphere(-LEN, LEN, LEN, -1, 1, 1);
-    makeObjectCylinder(0, LEN, LEN, 1, 1, 1, 2);
-    makeObjectCylinder(-LEN, LEN, LEN, -1, 1, 1, 2);
-    makeObjectCylinder(-LEN, 0, LEN, -1, -1, 1, 1);
-    makeObjectSphere(0, 0, LEN, 1, -1, 1);
-    makeObjectSphere(-LEN, 0, LEN, -1, -1, 1);
-
-    // Second level
-
-    makeObjectSquare(-2 * LEN, 0, LEN, 1);
-    makeObjectSquare(LEN, 0, LEN, 1);
-    makeObjectSquare(-LEN, -LEN, 0, 2);
-    makeObjectSquare(-LEN, 2 * LEN, 0, 2);
-
-    makeObjectCylinder(0, LEN, 0, 1, 1, 1, 0);
-    makeObjectCylinder(-LEN, LEN, 0, -1, 1, 1, 0);
-    makeObjectCylinder(0, 0, 0, 1, -1, 1, 0);
-    makeObjectCylinder(-LEN, 0, 0, -1, -1, 1, 0);
-
-    // Third level
-
-    makeObjectSphere(0, LEN, 0, 1, 1, -1);
-    makeObjectCylinder(-LEN, LEN, 0, 1, 1, 1, 1);
-    makeObjectSphere(-LEN, LEN, 0, -1, 1, -1);
-    makeObjectCylinder(0, LEN, 0, 1, -1, 1, 2);
-    makeObjectSphere(0, 0, 0, 1, -1, -1);
-
-    makeObjectCylinder(-LEN, LEN, 0, -1, -1, 1, 2);
-
-    makeObjectCylinder(-LEN, 0, 0, 1, -1, 1, 1);
-    makeObjectSphere(-LEN, 0, 0, -1, -1, -1);
-
-    makeObjectSquare(-LEN, 0, -LEN, 0);
+    // makeDice(0, 0, 0);
+    //
+    // makeDice(-1, 0, 0);
+    // makeDice(1, 0, 0);
+    //
+    // makeDice(0, -1, 0);
+    // makeDice(0, 1, 0);
 
     gl.glFlush();
     gl.glEndList();
