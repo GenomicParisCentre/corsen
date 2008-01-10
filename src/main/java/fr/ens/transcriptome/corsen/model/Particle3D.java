@@ -28,6 +28,8 @@ public final class Particle3D {
   private final AbstractListPoint3D unmodifiableSurfacePoints;
   private final AbstractListPoint3D unmodifiableInnerPoints;
 
+  private BitMapParticle3D bitMapParticle;
+
   private float pixelWidth = 1.0f;
   private float pixelHeight = 1.0f;
   private float pixelDepth = 1.0f;
@@ -143,6 +145,18 @@ public final class Particle3D {
   public boolean isEdgeParticle() {
 
     return this.edgeParticle;
+  }
+
+  /**
+   * Get the bitmap particle.
+   * @return The bitmap particle
+   */
+  public BitMapParticle3D getBitMapParticle() {
+
+    if (this.bitMapParticle == null)
+      calcBitMap();
+
+    return this.bitMapParticle;
   }
 
   //
@@ -938,7 +952,7 @@ public final class Particle3D {
    */
   public void calcArea() {
 
-    this.area = new PixelizedParticle3D(this).calcSurface();
+    this.area = getBitMapParticle().calcSurface();
   }
 
   /**
@@ -955,6 +969,14 @@ public final class Particle3D {
   public void calcDensity() {
 
     this.density = this.intensity / this.volume;
+  }
+
+  /**
+   * Calc the bitMap particle.
+   */
+  public void calcBitMap() {
+
+    this.bitMapParticle = new BitMapParticle3D(this);
   }
 
   //

@@ -28,7 +28,7 @@ import fr.ens.transcriptome.corsen.util.MathUtil;
  * This class define a Particle3D without using vector coordinates.
  * @author Laurent Jourdren
  */
-public class PixelizedParticle3D {
+public class BitMapParticle3D {
 
   private float x0, y0, z0;
   private float pixelWidth, pixelHeight, pixelDepth;
@@ -93,7 +93,7 @@ public class PixelizedParticle3D {
     }
   }
 
-  public byte getPixel(final int x, final int y, final int z) {
+  private byte getPixel(final int x, final int y, final int z) {
 
     if (x < 0 || y < 0 || z < 0 || x >= xLen || y >= yLen || z >= zLen)
       return 0;
@@ -154,7 +154,7 @@ public class PixelizedParticle3D {
    * Public constructor.
    * @param particle Particle3D to "pixelised"
    */
-  public PixelizedParticle3D(final Particle3D particle) {
+  public BitMapParticle3D(final Particle3D particle) {
 
     this(particle, particle.getPixelWidth(), particle.getPixelHeight(),
         particle.getPixelDepth());
@@ -167,7 +167,7 @@ public class PixelizedParticle3D {
    * @param pixelWidth pixel height
    * @param pixelDepth pixel depth
    */
-  public PixelizedParticle3D(final Particle3D particle, final float pixelWidth,
+  public BitMapParticle3D(final Particle3D particle, final float pixelWidth,
       final float pixelHeight, final float pixelDepth) {
 
     this.pixelWidth = pixelWidth;
