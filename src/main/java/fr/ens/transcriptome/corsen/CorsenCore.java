@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
-import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 public class CorsenCore implements Runnable {
 
@@ -240,8 +239,8 @@ public class CorsenCore implements Runnable {
     dc.setZCoordinatesFactor(settings.getZFactor());
     dc.loadParticles();
 
-    result.getMessengersParticles().setType(ParticleType.TINY);
-    result.getMitosParticles().setType(ParticleType.HUGE);
+    result.getMessengersParticles().setType(settings.getParticlesAType());
+    result.getMitosParticles().setType(settings.getParticlesBType());
 
     dc.calc();
 
