@@ -52,10 +52,8 @@ import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
 import fr.ens.transcriptome.corsen.util.Util;
 
-
-
-// TODO add an in phase progress for writing/computing distances 
-// TODO Remove the cancel button 
+// TODO add an in phase progress for writing/computing distances
+// TODO Remove the cancel button
 // TODO When alt-f4 -> System.exit(0)
 public class CorsenQt extends QMainWindow {
 
@@ -91,14 +89,14 @@ public class CorsenQt extends QMainWindow {
     public void endProcess(CorsenResult result) {
       this.resultSignal.emit(result);
     }
-    
+
     /**
      * Create a new Thread.
      * @param runnable Runnable Object for the thread
      * @return a new Thread
      */
     public Thread newThread(final Runnable runnable) {
-      
+
       return new QThread(runnable);
     }
 
@@ -314,10 +312,9 @@ public class CorsenQt extends QMainWindow {
     mainWindowUi.viewOGL.setResult(result);
     mainWindowUi.viewOGL.setSettings(this.settings);
 
-    // No update of the result tab
-    // this.models.setResult(result);
-    // this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
-    // .currentIndex()));
+    this.models.setResult(result);
+    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+        .currentIndex()));
 
     if (result == null || result.getCuboidsMessengersParticles() == null) {
       mainWindowUi.particlesACuboidsRadioButton.setEnabled(false);
@@ -606,7 +603,10 @@ public class CorsenQt extends QMainWindow {
     int i = ((Integer) o).intValue();
     mainWindowUi.resultTableView.setModel(this.models.getModel(i));
 
+    mainWindowUi.imageLabel.setPixmap(this.models.getImage(i));
+
     mainWindowUi.resultTableView.setAlternatingRowColors(true);
+
     // mainWindowUi.resultTableView.setSortingEnabled(true);
     // mainWindowUi.resultTableView.sortByColumn(1,
     // Qt.SortOrder.AscendingOrder);

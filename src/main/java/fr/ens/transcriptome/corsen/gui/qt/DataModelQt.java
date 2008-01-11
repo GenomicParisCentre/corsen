@@ -33,6 +33,7 @@ import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.Orientation;
 import com.trolltech.qt.gui.QAbstractTableModel;
+import com.trolltech.qt.gui.QPixmap;
 import com.trolltech.qt.gui.QSortFilterProxyModel;
 
 import fr.ens.transcriptome.corsen.CorsenResultWriter;
@@ -43,16 +44,17 @@ import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 
-
-
 public class DataModelQt {
 
   private static final int VIEWS_COUNT = 5;
   private static final String DATA_SUMMARY_DESCRIPTION = "Data result summary";
   private static final String DATA_VIEW_DESCRIPTION = "Full data results";
-  private static final String IV_MESSENGERS_DESCRIPTION = "Intensities and volumes of messengers";
-  private static final String IV_MESSENGERS_CUBOIDS_DESCRIPTION = "Intensities and volumes of messengers cuboids";
-  private static final String IV_CUBOIDS_DESCRIPTION = "Intensities and volumes of mitochondria ";
+  private static final String IV_MESSENGERS_DESCRIPTION =
+      "Intensities and volumes of messengers";
+  private static final String IV_MESSENGERS_CUBOIDS_DESCRIPTION =
+      "Intensities and volumes of messengers cuboids";
+  private static final String IV_CUBOIDS_DESCRIPTION =
+      "Intensities and volumes of mitochondria ";
 
   private CorsenResult result;
 
@@ -517,22 +519,32 @@ public class DataModelQt {
 
     case 2:
     case 3:
-    case 4: 
+    case 4:
       return Globals.EXTENSION_IV_FILE;
-      
-//    case 2:
-//      return Globals.EXTENSION_PARTICLES_A_IV_FILE;
-//
-//    case 3:
-//      return Globals.EXTENSION_PARTICLES_A_CUBOIDS_IV_FILE;
-//
-//    case 4:
-//      return Globals.EXTENSION_PARTICLES_B_IV_FILE;
+
+      // case 2:
+      // return Globals.EXTENSION_PARTICLES_A_IV_FILE;
+      //
+      // case 3:
+      // return Globals.EXTENSION_PARTICLES_A_CUBOIDS_IV_FILE;
+      //
+      // case 4:
+      // return Globals.EXTENSION_PARTICLES_B_IV_FILE;
 
     default:
       return "";
     }
 
+  }
+
+  public QPixmap getImage(final int index) {
+
+    final CorsenResult r = getResult();
+
+    if (r == null)
+      return null;
+
+    return QPixmap.fromImage(new ResultGraphs().createDistanceDistributionImage(r));
   }
 
 }

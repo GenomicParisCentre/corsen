@@ -25,12 +25,6 @@
   </property>
   <widget class="QWidget" name="centralwidget" >
    <layout class="QVBoxLayout" >
-    <property name="margin" >
-     <number>9</number>
-    </property>
-    <property name="spacing" >
-     <number>6</number>
-    </property>
     <item>
      <widget class="QTabWidget" name="tabWidget" >
       <property name="toolTip" >
@@ -50,12 +44,6 @@
         <string>Main and status tab</string>
        </attribute>
        <layout class="QVBoxLayout" >
-        <property name="margin" >
-         <number>9</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
         <item>
          <widget class="QGroupBox" name="filesGroupBox" >
           <property name="toolTip" >
@@ -68,19 +56,19 @@
            <string>Files</string>
           </property>
           <layout class="QVBoxLayout" >
-           <property name="margin" >
-            <number>9</number>
-           </property>
-           <property name="spacing" >
-            <number>6</number>
-           </property>
            <item>
             <layout class="QHBoxLayout" >
-             <property name="margin" >
+             <property name="rightMargin" >
               <number>0</number>
              </property>
-             <property name="spacing" >
-              <number>6</number>
+             <property name="leftMargin" >
+              <number>0</number>
+             </property>
+             <property name="topMargin" >
+              <number>0</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>0</number>
              </property>
              <item>
               <widget class="QLabel" name="label" >
@@ -95,7 +83,7 @@
              <item>
               <spacer>
                <property name="orientation" >
-                <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeHint" >
                 <size>
@@ -122,11 +110,17 @@
            </item>
            <item>
             <layout class="QHBoxLayout" >
-             <property name="margin" >
+             <property name="rightMargin" >
               <number>0</number>
              </property>
-             <property name="spacing" >
-              <number>6</number>
+             <property name="leftMargin" >
+              <number>0</number>
+             </property>
+             <property name="topMargin" >
+              <number>0</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>0</number>
              </property>
              <item>
               <widget class="QLabel" name="particleAFileLabel" >
@@ -147,7 +141,7 @@ p, li { white-space: pre-wrap; }
              <item>
               <spacer>
                <property name="orientation" >
-                <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeHint" >
                 <size>
@@ -174,11 +168,17 @@ p, li { white-space: pre-wrap; }
            </item>
            <item>
             <layout class="QHBoxLayout" >
-             <property name="margin" >
+             <property name="rightMargin" >
               <number>0</number>
              </property>
-             <property name="spacing" >
-              <number>6</number>
+             <property name="leftMargin" >
+              <number>0</number>
+             </property>
+             <property name="topMargin" >
+              <number>0</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>0</number>
              </property>
              <item>
               <widget class="QLabel" name="particleBFileLabel" >
@@ -199,7 +199,7 @@ p, li { white-space: pre-wrap; }
              <item>
               <spacer>
                <property name="orientation" >
-                <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeHint" >
                 <size>
@@ -226,11 +226,17 @@ p, li { white-space: pre-wrap; }
            </item>
            <item>
             <layout class="QHBoxLayout" >
-             <property name="margin" >
+             <property name="rightMargin" >
               <number>0</number>
              </property>
-             <property name="spacing" >
-              <number>6</number>
+             <property name="leftMargin" >
+              <number>0</number>
+             </property>
+             <property name="topMargin" >
+              <number>0</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>0</number>
              </property>
              <item>
               <widget class="QLabel" name="label_9" >
@@ -248,7 +254,7 @@ p, li { white-space: pre-wrap; }
              <item>
               <spacer>
                <property name="orientation" >
-                <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeHint" >
                 <size>
@@ -288,12 +294,6 @@ p, li { white-space: pre-wrap; }
            <string>Status</string>
           </property>
           <layout class="QVBoxLayout" >
-           <property name="margin" >
-            <number>9</number>
-           </property>
-           <property name="spacing" >
-            <number>6</number>
-           </property>
            <item>
             <widget class="QTextEdit" name="logTextEdit" >
              <property name="toolTip" >
@@ -309,11 +309,17 @@ p, li { white-space: pre-wrap; }
            </item>
            <item>
             <layout class="QHBoxLayout" >
-             <property name="margin" >
+             <property name="rightMargin" >
               <number>0</number>
              </property>
-             <property name="spacing" >
-              <number>6</number>
+             <property name="leftMargin" >
+              <number>0</number>
+             </property>
+             <property name="topMargin" >
+              <number>0</number>
+             </property>
+             <property name="bottomMargin" >
+              <number>0</number>
              </property>
              <item>
               <widget class="QLabel" name="progressLabel" >
@@ -352,7 +358,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <spacer>
           <property name="orientation" >
-           <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
+           <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeHint" >
            <size>
@@ -364,16 +370,22 @@ p, li { white-space: pre-wrap; }
         </item>
         <item>
          <layout class="QHBoxLayout" >
-          <property name="margin" >
+          <property name="rightMargin" >
            <number>0</number>
           </property>
-          <property name="spacing" >
-           <number>6</number>
+          <property name="leftMargin" >
+           <number>0</number>
+          </property>
+          <property name="topMargin" >
+           <number>0</number>
+          </property>
+          <property name="bottomMargin" >
+           <number>0</number>
           </property>
           <item>
            <spacer>
             <property name="orientation" >
-             <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+             <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeHint" >
              <size>
@@ -411,127 +423,120 @@ p, li { white-space: pre-wrap; }
        <attribute name="title" >
         <string>&amp;Results</string>
        </attribute>
-       <layout class="QVBoxLayout" >
-        <property name="margin" >
-         <number>9</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
-        <item>
-         <layout class="QVBoxLayout" >
-          <property name="margin" >
+       <layout class="QGridLayout" >
+        <item row="0" column="0" colspan="2" >
+         <layout class="QHBoxLayout" >
+          <property name="rightMargin" >
            <number>0</number>
           </property>
-          <property name="spacing" >
-           <number>6</number>
+          <property name="leftMargin" >
+           <number>0</number>
+          </property>
+          <property name="topMargin" >
+           <number>0</number>
+          </property>
+          <property name="bottomMargin" >
+           <number>0</number>
           </property>
           <item>
-           <layout class="QHBoxLayout" >
-            <property name="margin" >
-             <number>0</number>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
             </property>
-            <property name="spacing" >
-             <number>6</number>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
             </property>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" >
-              <property name="margin" >
-               <number>0</number>
-              </property>
-              <property name="spacing" >
-               <number>6</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="label_2" >
-                <property name="toolTip" >
-                 <string>Select the result to display</string>
-                </property>
-                <property name="statusTip" >
-                 <string>Select the result to display</string>
-                </property>
-                <property name="text" >
-                 <string>Result to &amp;display:</string>
-                </property>
-                <property name="buddy" >
-                 <cstring>resultViewComboBox</cstring>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="resultViewComboBox" >
-                <property name="toolTip" >
-                 <string>Select the result to display</string>
-                </property>
-                <property name="statusTip" >
-                 <string>Select the result to display</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
+           </spacer>
           </item>
           <item>
-           <widget class="QTableView" name="resultTableView" >
+           <widget class="QLabel" name="label_2" >
             <property name="toolTip" >
-             <string>Result</string>
+             <string>Select the result to display</string>
             </property>
             <property name="statusTip" >
-             <string>Result</string>
+             <string>Select the result to display</string>
+            </property>
+            <property name="text" >
+             <string>Result to &amp;display:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>resultViewComboBox</cstring>
             </property>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" >
-            <property name="margin" >
-             <number>0</number>
+           <widget class="QComboBox" name="resultViewComboBox" >
+            <property name="toolTip" >
+             <string>Select the result to display</string>
             </property>
-            <property name="spacing" >
-             <number>6</number>
+            <property name="statusTip" >
+             <string>Select the result to display</string>
             </property>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="saveResultPushButton" >
-              <property name="toolTip" >
-               <string>Save the result</string>
-              </property>
-              <property name="statusTip" >
-               <string>Save the result</string>
-              </property>
-              <property name="text" >
-               <string>S&amp;ave result</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           </widget>
           </item>
          </layout>
+        </item>
+        <item row="1" column="0" colspan="2" >
+         <widget class="QTableView" name="resultTableView" >
+          <property name="toolTip" >
+           <string>Result</string>
+          </property>
+          <property name="statusTip" >
+           <string>Result</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2" >
+         <widget class="QLabel" name="imageLabel" >
+          <property name="text" >
+           <string/>
+          </property>
+          <property name="alignment" >
+           <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1" >
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>302</width>
+            <height>51</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="0" >
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="1" >
+         <widget class="QPushButton" name="saveResultPushButton" >
+          <property name="toolTip" >
+           <string>Save the result</string>
+          </property>
+          <property name="statusTip" >
+           <string>Save the result</string>
+          </property>
+          <property name="text" >
+           <string>S&amp;ave result</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -543,26 +548,24 @@ p, li { white-space: pre-wrap; }
         <string>3D result view</string>
        </attribute>
        <layout class="QVBoxLayout" >
-        <property name="margin" >
-         <number>9</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
         <item>
          <layout class="QHBoxLayout" >
-          <property name="margin" >
+          <property name="rightMargin" >
            <number>0</number>
           </property>
-          <property name="spacing" >
-           <number>6</number>
+          <property name="leftMargin" >
+           <number>0</number>
+          </property>
+          <property name="topMargin" >
+           <number>0</number>
+          </property>
+          <property name="bottomMargin" >
+           <number>0</number>
           </property>
           <item>
            <widget class="ViewOGL" native="1" name="viewOGL" >
             <property name="sizePolicy" >
-             <sizepolicy>
-              <hsizetype>7</hsizetype>
-              <vsizetype>3</vsizetype>
+             <sizepolicy vsizetype="MinimumExpanding" hsizetype="Expanding" >
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -571,11 +574,17 @@ p, li { white-space: pre-wrap; }
           </item>
           <item>
            <layout class="QVBoxLayout" >
-            <property name="margin" >
+            <property name="rightMargin" >
              <number>0</number>
             </property>
-            <property name="spacing" >
-             <number>6</number>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
             </property>
             <item>
              <widget class="QGroupBox" name="particlesAGroupBox" >
@@ -589,12 +598,6 @@ p, li { white-space: pre-wrap; }
                <string>Messengers</string>
               </property>
               <layout class="QVBoxLayout" >
-               <property name="margin" >
-                <number>9</number>
-               </property>
-               <property name="spacing" >
-                <number>6</number>
-               </property>
                <item>
                 <widget class="QRadioButton" name="particlesANothingRadioButton" >
                  <property name="text" >
@@ -634,12 +637,6 @@ p, li { white-space: pre-wrap; }
                <string>Mitochondria</string>
               </property>
               <layout class="QVBoxLayout" >
-               <property name="margin" >
-                <number>9</number>
-               </property>
-               <property name="spacing" >
-                <number>6</number>
-               </property>
                <item>
                 <widget class="QRadioButton" name="particlesBNothingRadioButton" >
                  <property name="text" >
@@ -699,7 +696,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <spacer>
               <property name="orientation" >
-               <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
+               <enum>Qt::Vertical</enum>
               </property>
               <property name="sizeHint" >
                <size>
@@ -863,11 +860,6 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>ViewOGL</class>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>logTextEdit</tabstop>
