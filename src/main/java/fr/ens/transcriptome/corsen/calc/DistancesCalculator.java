@@ -220,24 +220,7 @@ public class DistancesCalculator {
     if (particles == null)
       return null;
 
-    DistanceProcessor result;
-
-    switch (particles.getType()) {
-
-    case TINY:
-      result = new TinyParticles3D();
-      break;
-
-    case HUGE:
-      result = new HugeParticles3D();
-      break;
-
-    default:
-      result = new UndefinedParticles3D();
-      break;
-
-    }
-
+    DistanceProcessor result = particles.getType().getDistanceProcessor();
     result.setSourceParticles(particles);
 
     return result;
@@ -339,6 +322,7 @@ public class DistancesCalculator {
     // Define the processor for particle A
     this.processorA = getProcessor(particlesA);
     this.processorA.setUpdateStatus(this.updateStatus.chain());
+    logger.info("Particle A processor: " + particlesA.getType().name());
 
     // Start the preprocess of the particle A
     sendEvent(ProgressEventType.START_CALC_MESSENGERS_CUBOIDS_EVENT);
@@ -354,6 +338,7 @@ public class DistancesCalculator {
     // Define the processor for particle B
     this.processorB = getProcessor(particlesB);
     this.processorB.setUpdateStatus(this.updateStatus.chain());
+    logger.info("Particle B processor: " + particlesB.getType().name());
 
     // Start the preprocess of the particle A
     sendEvent(ProgressEventType.START_CALC_MITOS_CUBOIDS_EVENT);
