@@ -109,7 +109,7 @@ public class CorsenResultWriter {
 
     Writer out = new OutputStreamWriter(os);
 
-    out.write("#Intensity\tmin distance\tmax distance\n");
+    out.write("#Internal id\tIntensity\tMin distance\tMax distance\tComment\n");
 
     Map<Particle3D, Distance> mins = r.getMinDistances();
     Map<Particle3D, Distance> maxs = r.getMaxDistances();
@@ -119,11 +119,15 @@ public class CorsenResultWriter {
     while (it.hasNext()) {
 
       Particle3D p = it.next();
-      out.write("" + p.getIntensity());
+      out.write(p.getId());
+      out.write("\t");
+      out.write(Long.toString(p.getIntensity()));
       out.write("\t");
       out.write(Float.toString(mins.get(p).getDistance()));
       out.write("\t");
       out.write(Float.toString(maxs.get(p).getDistance()));
+      out.write("\t");
+      out.write(p.getComment());
       out.write("\n");
     }
 

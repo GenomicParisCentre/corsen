@@ -21,6 +21,7 @@ public final class Particle3D {
 
   private final int id = count;
   private String name = "" + this.id;
+  private String comment = "";
 
   private final AbstractListPoint3D surfacePoints;
   private final AbstractListPoint3D innerPoints;
@@ -69,6 +70,14 @@ public final class Particle3D {
    */
   public String getName() {
     return this.name;
+  }
+
+  /**
+   * Get the comment about the particle.
+   * @return Returns the comment about of the particle
+   */
+  public String getComment() {
+    return this.comment;
   }
 
   /**
@@ -169,6 +178,17 @@ public final class Particle3D {
    */
   public void setName(final String name) {
     this.name = name;
+  }
+
+  /**
+   * Set the comment about of the particle.
+   * @param comment the comment about the particle
+   */
+  public void setComment(final String comment) {
+
+    if (comment == null)
+      return;
+    this.comment = comment;
   }
 
   /**
@@ -952,7 +972,10 @@ public final class Particle3D {
    */
   public void calcArea() {
 
-    this.area = getBitMapParticle().calcSurface();
+    if (innerPoints.size() == 0)
+      this.area = 0;
+    else
+      this.area = getBitMapParticle().calcSurface();
   }
 
   /**

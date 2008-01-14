@@ -92,6 +92,7 @@ public final class Particle3DUtil {
                   .getPixelHeight(), particle.getPixelDepth());
 
           builder.setName(particle.getName() + "-" + builder.getId());
+          builder.setComment("Cuboid from Particle #"+particle.getId());
           addSurfacePoint(builder, i, j, k);
           addSurfacePoint(builder, x1, j, k);
           addSurfacePoint(builder, x1, y1, k);

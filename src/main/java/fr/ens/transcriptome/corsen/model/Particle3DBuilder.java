@@ -353,6 +353,17 @@ public class Particle3DBuilder {
     this.particle.setName(name);
   }
 
+  /**
+   * Set the comment about the particle.
+   * @param comment Comment about the particle
+   */
+  public void setComment(final String comment) {
+    
+    init();
+    
+    this.particle.setComment(comment);    
+  }
+  
   private void init() {
 
     if (this.particle != null)
