@@ -119,7 +119,7 @@ public class CorsenResultWriter {
     while (it.hasNext()) {
 
       Particle3D p = it.next();
-      out.write(p.getId());
+      out.write(Integer.toString(p.getId()));
       out.write("\t");
       out.write(Long.toString(p.getIntensity()));
       out.write("\t");
