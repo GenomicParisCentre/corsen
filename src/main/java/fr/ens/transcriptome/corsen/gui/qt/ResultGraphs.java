@@ -25,18 +25,25 @@ package fr.ens.transcriptome.corsen.gui.qt;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYDotRenderer;
+import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
 import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.xy.DefaultXYDataset;
 
 import com.trolltech.qt.gui.QImage;
 
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.Distance;
 import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particles3D;
 
 /**
  * This class create graph for corsen results
@@ -99,10 +106,7 @@ public class ResultGraphs {
     if (buffer == null)
       return null;
 
-    System.out.println(buffer.getDataType());
-
     final int size = buffer.getSize();
-    System.out.println(size);
 
     byte[] result = new byte[size * 4];
 
@@ -152,14 +156,8 @@ public class ResultGraphs {
   // Image generating methods
   //
 
-  /**
-   * Create a histogram of distance distribution.
-   * @param results Result to use
-   * @return a QImage of the graph
-   */
-  public QImage createDistanceDistributionImage(final CorsenResult results) {
-
-    Map<Particle3D, Distance> dists = results.getMinDistances();
+  private void createHistoDataSet(final Map<Particle3D, Distance> dists,
+      final String name, final HistogramDataset histogramdataset) {
 
     ArrayList<Float> list = new ArrayList<Float>();
 
@@ -167,7 +165,6 @@ public class ResultGraphs {
 
       final long intensity = p.getIntensity();
       final float distance = dists.get(p).getDistance();
-      // System.out.println("d=" + distance);
 
       for (int i = 0; i < intensity; i++)
         list.add(distance);
@@ -177,13 +174,25 @@ public class ResultGraphs {
     for (int i = 0; i < data.length; i++)
       data[i] = list.get(i);
 
-    HistogramDataset histogramdataset = new HistogramDataset();
-
     final double max = getMax(data);
     final double min = getMin(data);
 
-    histogramdataset.addSeries("Particles", data, 50, min, max);
-    // ((int) (max / 10)) * 10 + 1);
+    histogramdataset.addSeries(name, data, 20, min, max);
+  }
+
+  /**
+   * Create a histogram of distance distribution.
+   * @param results Result to use
+   * @return a QImage of the graph
+   */
+  public QImage createDistanceDistributionImage(final CorsenResult results) {
+
+    HistogramDataset histogramdataset = new HistogramDataset();
+
+    createHistoDataSet(results.getMinDistances(), "Min distances",
+        histogramdataset);
+    // createHistoDataSet(results.getMaxDistances(), "Max distances",
+    // histogramdataset);
 
     JFreeChart chart =
         ChartFactory.createHistogram("Distribution of minimal distances",
@@ -193,10 +202,102 @@ public class ResultGraphs {
             histogramdataset, // data
 
             PlotOrientation.VERTICAL, // orientation
-            true, // include legend
+            false, // include legend
             true, // tooltips?
             false // URLs?
             );
+
+    final BufferedImage image =
+        chart.createBufferedImage(this.width, this.height,
+            BufferedImage.TYPE_INT_ARGB, null);
+
+    return new QImage(toByte(image.getData().getDataBuffer()), this.width,
+        this.height, QImage.Format.Format_ARGB32);
+  }
+
+  public QImage createBoxPlot(final CorsenResult results) {
+
+    this.width = this.width / 2;
+
+    Map<Particle3D, Distance> distsMin = results.getMinDistances();
+    Map<Particle3D, Distance> distsMax = results.getMaxDistances();
+
+    List<Float> listMin = new ArrayList<Float>();
+    List<Float> listMax = new ArrayList<Float>();
+
+    for (Particle3D p : distsMin.keySet()) {
+
+      final long intensity = p.getIntensity();
+      final float distanceMin = distsMin.get(p).getDistance();
+      final float distanceMax = distsMax.get(p).getDistance();
+
+      for (int i = 0; i < intensity; i++) {
+        listMin.add(distanceMin);
+        listMax.add(distanceMax);
+      }
+    }
+
+    DefaultBoxAndWhiskerCategoryDataset defaultboxandwhiskercategorydataset =
+        new DefaultBoxAndWhiskerCategoryDataset();
+    defaultboxandwhiskercategorydataset.add(listMin, "Distances", "Min");
+    // defaultboxandwhiskercategorydataset.add(listMax, "Distances", "Max");
+
+    JFreeChart chart =
+        ChartFactory.createBoxAndWhiskerChart("Intensities Boxplot", "",
+            "Distance", defaultboxandwhiskercategorydataset, false);
+    // CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
+    // // chart.setBackgroundPaint(Color.white);
+    // categoryplot.setBackgroundPaint(Color.lightGray);
+    // categoryplot.setDomainGridlinePaint(Color.white);
+    // categoryplot.setDomainGridlinesVisible(true);
+    // categoryplot.setRangeGridlinePaint(Color.white);
+    //
+    // NumberAxis numberaxis = (NumberAxis) categoryplot.getRangeAxis();
+    // numberaxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+    final BufferedImage image =
+        chart.createBufferedImage(this.width, this.height,
+            BufferedImage.TYPE_INT_ARGB, null);
+
+    return new QImage(toByte(image.getData().getDataBuffer()), this.width,
+        this.height, QImage.Format.Format_ARGB32);
+  }
+
+  public QImage createScatterPlot(final Particles3D particles,
+      final String title) {
+
+    if (particles == null)
+      return null;
+
+    List<Particle3D> pars = particles.getParticles();
+
+    final int count = pars.size();
+
+    final double[][] data = new double[2][];
+    data[0] = new double[count];
+    data[1] = new double[count];
+
+    int i = 0;
+    for (Particle3D p : pars) {
+
+      data[0][i] = p.getIntensity();
+      data[1][i] = p.getVolume();
+      i++;
+    }
+
+    DefaultXYDataset xydataset = new DefaultXYDataset();
+    xydataset.addSeries("data", data);
+
+    JFreeChart chart =
+        ChartFactory.createScatterPlot(title, "Intensity", "Volume", xydataset,
+            PlotOrientation.VERTICAL, false, true, false);
+    XYPlot xyplot = (XYPlot) chart.getPlot();
+    XYDotRenderer xydotrenderer = new XYDotRenderer();
+    xydotrenderer.setDotWidth(2);
+    xydotrenderer.setDotHeight(2);
+    xyplot.setRenderer(xydotrenderer);
+    NumberAxis numberaxis = (NumberAxis) xyplot.getDomainAxis();
+    numberaxis.setAutoRangeIncludesZero(false);
 
     final BufferedImage image =
         chart.createBufferedImage(this.width, this.height,

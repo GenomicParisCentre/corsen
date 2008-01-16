@@ -249,6 +249,7 @@ public class DistancesCalculator {
     // Read messengers
     sendEvent(ProgressEventType.START_READ_MESSENGERS_EVENT);
     Particles3D particlesA = new Particles3D(result.getMessengersStream());
+    particlesA.setName(result.getSettings().getParticlesAName());
 
     // Transform coordinates of messengers
     sendEvent(ProgressEventType.START_CHANGE_MESSENGERS_COORDINATES_EVENT);
@@ -258,6 +259,7 @@ public class DistancesCalculator {
     // Read mitos
     sendEvent(ProgressEventType.START_READ_MITOS_EVENT);
     Particles3D particlesB = new Particles3D(result.getMitosStream());
+    particlesB.setName(result.getSettings().getParticlesBName());
 
     // Transform coordinates of messengers
     sendEvent(ProgressEventType.START_CHANGE_MITOS_COORDINATES_EVENT);

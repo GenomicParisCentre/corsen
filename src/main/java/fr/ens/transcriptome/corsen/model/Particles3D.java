@@ -45,6 +45,7 @@ public class Particles3D {
   private String unitOfLength = "";
   private double minThreshold;
   private double maxThreshold;
+  private String name;
   private ParticleType type;
   private String imageFilename;
   private Date imageFilenameDate;
@@ -151,6 +152,15 @@ public class Particles3D {
    */
   public Date getImageFilenameDate() {
     return imageFilenameDate;
+  }
+
+  /**
+   * Get the name of the particle.
+   * @return the name of the particle
+   */
+  public String getName() {
+
+    return this.name;
   }
 
   //
@@ -285,6 +295,17 @@ public class Particles3D {
    */
   public void setImageFilenameDate(final Date imageFilenameDate) {
     this.imageFilenameDate = imageFilenameDate;
+  }
+
+  /**
+   * Set the name of the particle.
+   * @param name Name of the particle
+   */
+  public void setName(final String name) {
+
+    if (name == null)
+      return;
+    this.name = name;
   }
 
   //

@@ -25,6 +25,7 @@ package fr.ens.transcriptome.corsen.gui.qt;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,10 +54,11 @@ public class DataModelQt {
       "Intensities and volumes of messengers";
   private static final String IV_MESSENGERS_CUBOIDS_DESCRIPTION =
       "Intensities and volumes of messengers cuboids";
-  private static final String IV_CUBOIDS_DESCRIPTION =
+  private static final String IV_MITO_DESCRIPTION =
       "Intensities and volumes of mitochondria ";
 
   private CorsenResult result;
+  private Map<Integer, QPixmap> cacheImage = new HashMap<Integer, QPixmap>();
 
   private class FullDataModel extends QAbstractTableModel {
 
@@ -408,7 +410,7 @@ public class DataModelQt {
     case 3:
       return IV_MESSENGERS_CUBOIDS_DESCRIPTION;
     case 4:
-      return IV_CUBOIDS_DESCRIPTION;
+      return IV_MITO_DESCRIPTION;
 
     default:
       return null;
@@ -544,7 +546,74 @@ public class DataModelQt {
     if (r == null)
       return null;
 
-    return QPixmap.fromImage(new ResultGraphs().createDistanceDistributionImage(r));
+    switch (index) {
+
+    case 0:
+
+      if (!this.cacheImage.containsKey(0)) {
+
+        QPixmap image = QPixmap.fromImage(new ResultGraphs().createBoxPlot(r));
+        this.cacheImage.put(0, image);
+      }
+
+      return this.cacheImage.get(0);
+
+    case 1:
+
+      if (!this.cacheImage.containsKey(1)) {
+
+        QPixmap image =
+            QPixmap.fromImage(new ResultGraphs()
+                .createDistanceDistributionImage(r));
+        cacheImage.put(1, image);
+      }
+
+      return this.cacheImage.get(1);
+
+    case 2:
+
+      if (!this.cacheImage.containsKey(2)) {
+
+        QPixmap image =
+            QPixmap.fromImage(new ResultGraphs().createScatterPlot(r
+                .getMessengersParticles(), r.getMessengersParticles().getName()
+                + " intensity/volume"));
+        cacheImage.put(2, image);
+      }
+
+      return this.cacheImage.get(2);
+
+    case 3:
+
+      if (!this.cacheImage.containsKey(3)) {
+
+        QPixmap image =
+            QPixmap.fromImage(new ResultGraphs().createScatterPlot(r
+                .getCuboidsMessengersParticles(), r.getMessengersParticles()
+                .getName()
+                + " cuboids intensity/volume"));
+        cacheImage.put(3, image);
+      }
+
+      return this.cacheImage.get(3);
+
+    case 4:
+
+      if (!this.cacheImage.containsKey(4)) {
+
+        QPixmap image =
+            QPixmap.fromImage(new ResultGraphs().createScatterPlot(r
+                .getMitosParticles(), r.getMitosParticles().getName()
+                + " intensity/volume"));
+        cacheImage.put(4, image);
+      }
+
+      return this.cacheImage.get(4);
+
+    default:
+      return null;
+
+    }
   }
 
 }
