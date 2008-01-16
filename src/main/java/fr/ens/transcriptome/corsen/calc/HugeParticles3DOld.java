@@ -34,7 +34,7 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 
-public class HugeParticles3D extends DistanceProcessor {
+public class HugeParticles3DOld extends DistanceProcessor {
 
   private static String TYPE = "Huge";
 
