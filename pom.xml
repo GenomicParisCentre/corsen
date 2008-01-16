@@ -6,7 +6,7 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.29</version>
+	<version>0.30</version>
 	<name>Corsen</name>
 	<description>
 		A tool to calc distance between mitochondria and RNA
@@ -75,7 +75,7 @@
 			<url>http://hestia.ens.fr/maven2</url>
 			<layout>default</layout>
 		</repository>
-		<repository>
+		<!--repository>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -83,7 +83,7 @@
 			<name>seteh repository</name>
 			<url>http://maven.sateh.com/repository</url>
 			<layout>default</layout>
-		</repository>
+		</repository-->
 		<repository>
 			<snapshots>
 				<enabled>true</enabled>
@@ -164,7 +164,7 @@
 		<dependency>
 			<groupId>jogl</groupId>
 			<artifactId>jogl-native-${os.name}-${os.arch}</artifactId>
-			<version>1.0.0</version>
+			<version>1.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>sun</groupId>
@@ -172,9 +172,25 @@
 			<version>1.5</version>
 			<scope>compile</scope>
 		</dependency>
-<groupId>org.apache.maven.skins</groupId>
-     <artifactId>maven-stylus-skin</artifactId>
-     <version>1.0</version>
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jcommon</artifactId>
+			<version>1.0.9</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.8a</version>
+			<scope>compile</scope>
+		</dependency>
+	
+		<!--dependency>
+			<groupId>org.apache.maven.skins</groupId>
+			<artifactId>maven-stylus-skin</artifactId>
+			<version>1.0</version>
+		</dependency-->
 	</dependencies>
 
 	<build>
