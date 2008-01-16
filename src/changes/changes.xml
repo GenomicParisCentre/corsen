@@ -38,6 +38,33 @@
 	</properties>
 	<body>
 
+		<release version="0.30" date="2008-01-16">
+
+			<action dev="jourdren" type="fix">
+				Qt fuite en multi-thread.
+			</action>
+			<action dev="jourdren" type="fix">
+				Comparaison dans des distances négatives
+			</action>
+			<action dev="jourdren" type="update">
+				L'onglet result est de nouveau fonctionnel
+			</action>
+			<action dev="jourdren" type="fix">
+				Le type de particule utilisé est bien celui défini dans
+				les paramètres
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout des identifiants internes et des commentaire des
+				particules dans les fichiers data
+			</action>
+			<action dev="jourdren" type="update">
+				Réécriture du processor pour les grosses particules
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de graphique dans l'onglet résultat
+			</action>
+		</release>
+
 		<release version="0.29" date="2007-12-05">
 			<action dev="jourdren" type="fix">
 				Bogue dans le nom des fichiers ".data" dans le
