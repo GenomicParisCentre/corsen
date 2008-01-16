@@ -36,7 +36,7 @@ import fr.ens.transcriptome.corsen.model.Point3D;
 
 public class HugeParticles3D extends DistanceProcessor {
 
-  private static String TYPE = "Huge2";
+  private static String TYPE = "Huge";
 
   @Override
   public String getPreProcessorType() {
