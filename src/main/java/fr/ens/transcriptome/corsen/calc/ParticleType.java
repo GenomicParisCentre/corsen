@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -97,8 +97,7 @@ public enum ParticleType {
     case TINY:
       Properties properties = new Properties();
       properties.setProperty("cuboid.automatic.size", "true");
-      properties.setProperty("cuboid.custom.size", ""
-          + 1.0);
+      properties.setProperty("cuboid.custom.size", "" + 1.0);
       return properties;
 
     default:

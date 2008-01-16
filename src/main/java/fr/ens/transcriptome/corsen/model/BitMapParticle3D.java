@@ -30,12 +30,55 @@ import fr.ens.transcriptome.corsen.util.MathUtil;
  */
 public class BitMapParticle3D {
 
+  private static final byte NO_POINT = 0;
+  private static final byte INNER_POINT = 1;
+  private static final byte SURFACE_POINT = 2;
+
   private float x0, y0, z0;
   private float pixelWidth, pixelHeight, pixelDepth;
   private int xLen, yLen, zLen;
   private byte[][][] array;
 
+  private Particle3D particle;
+
+  private void setBitMapValue(final float x, final float y, final float z,
+      final byte value) {
+
+    final int dx =
+        (int) Math.floor(MathUtil.roundValue((x / this.pixelWidth) - this.x0));
+    final int dy =
+        (int) Math.floor(MathUtil.roundValue((y / this.pixelHeight) - this.y0));
+    final int dz =
+        (int) Math.floor(MathUtil.roundValue((z / this.pixelDepth) - this.z0));
+
+    if (dx < 0
+        || dx >= this.xLen || dy < 0 || dy >= this.yLen || dz < 0
+        || dz >= this.zLen)
+      return;
+
+    this.array[dz][dy][dx] = value;
+  }
+
+  private byte getBitMapValue(final float x, final float y, final float z) {
+
+    final int dx =
+        (int) Math.floor(MathUtil.roundValue((x / this.pixelWidth) - this.x0));
+    final int dy =
+        (int) Math.floor(MathUtil.roundValue((y / this.pixelHeight) - this.y0));
+    final int dz =
+        (int) Math.floor(MathUtil.roundValue((z / this.pixelDepth) - this.z0));
+
+    if (dx < 0
+        || dx >= this.xLen || dy < 0 || dy >= this.yLen || dz < 0
+        || dz >= this.zLen)
+      return NO_POINT;
+
+    return this.array[dz][dy][dx];
+  }
+
   private void initArray(final AbstractListPoint3D lp) {
+
+    // new Exception().printStackTrace();
 
     final float xMin = lp.getXMin();
     final float yMin = lp.getYMin();
@@ -47,7 +90,8 @@ public class BitMapParticle3D {
 
     this.x0 = (float) Math.floor(MathUtil.roundValue(xMin / this.pixelWidth));
     this.y0 = (float) Math.floor(MathUtil.roundValue(yMin / this.pixelHeight));
-    this.z0 = (float) Math.floor(MathUtil.roundValue(zMin / this.pixelDepth));
+    this.z0 =
+        (float) (Math.floor(MathUtil.roundValue(zMin / this.pixelDepth)) - this.pixelDepth / 2);
 
     final int xLen =
         (int) MathUtil.roundValue((xMax - xMin) / this.pixelWidth) + 1;
@@ -71,26 +115,10 @@ public class BitMapParticle3D {
 
   }
 
-  private void fillArray(final AbstractListPoint3D lp) {
+  private void fillArray(final AbstractListPoint3D lp, final byte pointType) {
 
-    final float x0 = this.x0;
-    final float y0 = this.y0;
-    final float z0 = this.z0;
-
-    for (Point3D p : lp) {
-
-      final int dx =
-          (int) Math.floor(MathUtil.roundValue((p.getX() / this.pixelWidth)
-              - x0));
-      final int dy =
-          (int) Math.floor(MathUtil.roundValue((p.getY() / this.pixelHeight)
-              - y0));
-      final int dz =
-          (int) Math.floor(MathUtil.roundValue((p.getZ() / this.pixelDepth)
-              - z0));
-
-      this.array[dz][dy][dx] = 1;
-    }
+    for (Point3D p : lp)
+      setBitMapValue(p.getX(), p.getY(), p.getZ(), pointType);
   }
 
   private byte getPixel(final int x, final int y, final int z) {
@@ -146,6 +174,147 @@ public class BitMapParticle3D {
     return surface;
   }
 
+  /**
+   * Test if a point is in the BitMap.
+   * @param p Point to test
+   * @return true if the point to test is in the bitmap
+   */
+  public boolean isParticlePoint(final Point3D p) {
+
+    if (p == null)
+      return false;
+
+    return getBitMapValue(p.getX(), p.getY(), p.getZ()) != NO_POINT;
+  }
+
+  /**
+   * Test if a point is in a Surface in the BitMap.
+   * @param p Point to test
+   * @return true if the point to test is in the surface of the bitmap
+   */
+  public boolean isParticleSurfacePoint(final Point3D p) {
+
+    if (p == null)
+      return false;
+
+    return getBitMapValue(p.getX(), p.getY(), p.getZ()) != SURFACE_POINT;
+  }
+
+  /**
+   * Test if a point is under the surface in the BitMap.
+   * @param p Point to test
+   * @return true if the point to test is under the surface in the bitmap
+   */
+  public boolean isParticleInnerPoint(final Point3D p) {
+
+    if (p == null)
+      return false;
+
+    return getBitMapValue(p.getX(), p.getY(), p.getZ()) != SURFACE_POINT;
+  }
+
+  /**
+   * Test if a point is in the particle.
+   * @param point Point to test
+   * @return true if the point is in the particle
+   */
+  public boolean isPointInParticle(final Point3D point) {
+
+    final boolean in = isParticlePoint(point);
+
+    final boolean result;
+
+    if (!in)
+      return false;
+    else if (isParticleInnerPoint(point))
+      return true;
+
+    final Point3D nearest = findNearestInnerPointNotSurfacePoint(point);
+
+    final float x = nearest.getX();
+    final float y = nearest.getY();
+    final float z = nearest.getZ();
+
+    boolean found = false;
+    for (int i = -1; i <= 1; i++)
+      for (int j = -1; j <= 1; j++)
+        for (int k = -1; k <= 1; k++) {
+
+          if (i == 0 && j == 00 && k == 0)
+            continue;
+
+          final Point3D p =
+              new SimplePoint3DImpl(x + i * this.pixelWidth, y
+                  + j * this.pixelHeight, z + k * this.pixelDepth);
+
+          if (isParticlePoint(p)) {
+
+            final Point3D middle = getMiddle(nearest, p);
+            if (isPointInSphere(middle, point)) {
+
+              found = true;
+              break;
+            }
+          }
+        }
+
+    if (found)
+      result = true;
+    else
+      result = false;
+
+    return result;
+  }
+
+  private Point3D findNearestInnerPointNotSurfacePoint(final Point3D point) {
+
+    Point3D nearest = null;
+    float minDistance = Float.MAX_VALUE;
+
+    final int n = this.particle.innerPointsCount();
+
+    for (int j = 0; j < n; j++) {
+      final Point3D p2 = this.particle.getInnerPoint(j);
+
+      if (nearest == null) {
+        nearest = p2;
+        minDistance = p2.distance(point);
+      } else {
+
+        float d = p2.distance(point);
+        if (d < minDistance && isParticleInnerPoint(p2)) {
+          minDistance = d;
+          nearest = p2;
+        }
+
+      }
+
+    }
+
+    return nearest;
+  }
+
+  private Point3D getMiddle(final Point3D point1, final Point3D point2) {
+
+    final ArrayListPoint3D lineSegment = new ArrayListPoint3D();
+    lineSegment.add(point1);
+    lineSegment.add(point2);
+
+    return lineSegment.getCenter();
+  }
+
+  private boolean isPointInSphere(final Point3D ref, final Point3D point) {
+
+    if (Math.abs(ref.getX() - point.getX()) > this.pixelWidth / 2)
+      return false;
+    if (Math.abs(ref.getY() - point.getY()) > this.pixelHeight / 2)
+      return false;
+    if (Math.abs(ref.getZ() - point.getZ()) > this.pixelDepth / 2)
+      return false;
+
+    return true;
+  }
+
   //
   // Constructors
   //
@@ -154,7 +323,7 @@ public class BitMapParticle3D {
    * Public constructor.
    * @param particle Particle3D to "pixelised"
    */
-  public BitMapParticle3D(final Particle3D particle) {
+  BitMapParticle3D(final Particle3D particle) {
 
     this(particle, particle.getPixelWidth(), particle.getPixelHeight(),
         particle.getPixelDepth());
@@ -167,7 +336,7 @@ public class BitMapParticle3D {
    * @param pixelWidth pixel height
    * @param pixelDepth pixel depth
    */
-  public BitMapParticle3D(final Particle3D particle, final float pixelWidth,
+  BitMapParticle3D(final Particle3D particle, final float pixelWidth,
       final float pixelHeight, final float pixelDepth) {
 
     this.pixelWidth = pixelWidth;
@@ -175,7 +344,10 @@ public class BitMapParticle3D {
     this.pixelDepth = pixelDepth;
 
     initArray(particle.getInnerPoints());
-    fillArray(particle.getInnerPoints());
+    fillArray(particle.getInnerPoints(), INNER_POINT);
+    fillArray(particle.getSurfacePoints(), SURFACE_POINT);
+
+    this.particle = particle;
   }
 
 }
