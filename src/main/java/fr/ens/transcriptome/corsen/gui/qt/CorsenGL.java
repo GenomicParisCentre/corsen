@@ -42,6 +42,10 @@ public abstract class CorsenGL {
   public static final Color COLOR_WHITE = Color.white;
   public static final Color COLOR_BLACK = Color.black;
 
+  protected float xScale = 1;
+  protected float yScale = 1;
+  protected float zScale = 1;
+
   public abstract void drawPoint3D(Point3D point, final Color color,
       final float size);
 
@@ -122,7 +126,14 @@ public abstract class CorsenGL {
     if (particle == null)
       return;
 
-    drawPoints3D(particle.getInnerPoints(), color, particle.getPixelDepth()/2);
+    this.xScale = particle.getPixelWidth();
+    this.yScale = particle.getPixelHeight();
+    this.zScale = particle.getPixelDepth();
+
+    // drawPoints3D(particle.getInnerPoints(), color,
+    // particle.getPixelDepth()/2);
+    drawPoints3D(particle.getInnerPoints(), color,
+        particle.getPixelDepth() / 2);
     // drawPolygon3D(particle.getSurfacePoints(), getLowColor(color));
 
     /*
