@@ -153,8 +153,14 @@ public class CorsenImageJPlugin implements PlugInFilter {
     // Update Progress bar
     IJ.showProgress((double) this.slice / (double) this.nSlices);
 
-    if (slice == this.nSlices)
+    if (slice == this.nSlices) {
       afterSegmentation();
+
+      // Clear memory
+      this.seg2DRunner = null;
+      this.seg3DRunner.clear();
+      this.particles3DToSave.clear();
+    }
 
   }
 
