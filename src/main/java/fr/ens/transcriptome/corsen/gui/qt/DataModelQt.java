@@ -34,6 +34,7 @@ import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.Orientation;
 import com.trolltech.qt.gui.QAbstractTableModel;
+import com.trolltech.qt.gui.QImage;
 import com.trolltech.qt.gui.QPixmap;
 import com.trolltech.qt.gui.QSortFilterProxyModel;
 
@@ -552,8 +553,11 @@ public class DataModelQt {
 
       if (!this.cacheImage.containsKey(0)) {
 
-        QPixmap image = QPixmap.fromImage(new ResultGraphs().createBoxPlot(r));
-        this.cacheImage.put(0, image);
+        final QImage img = new ResultGraphs().createBoxPlot(r);
+
+        if (img == null)
+          return null;
+        this.cacheImage.put(0, QPixmap.fromImage(img));
       }
 
       return this.cacheImage.get(0);
@@ -562,10 +566,13 @@ public class DataModelQt {
 
       if (!this.cacheImage.containsKey(1)) {
 
-        QPixmap image =
-            QPixmap.fromImage(new ResultGraphs()
-                .createDistanceDistributionImage(r));
-        cacheImage.put(1, image);
+        final QImage img =
+            new ResultGraphs().createDistanceDistributionImage(r);
+
+        if (img == null)
+          return null;
+
+        cacheImage.put(1, QPixmap.fromImage(img));
       }
 
       return this.cacheImage.get(1);
@@ -574,11 +581,15 @@ public class DataModelQt {
 
       if (!this.cacheImage.containsKey(2)) {
 
-        QPixmap image =
-            QPixmap.fromImage(new ResultGraphs().createScatterPlot(r
-                .getMessengersParticles(), r.getMessengersParticles().getName()
-                + " intensity/volume"));
-        cacheImage.put(2, image);
+        final QImage img =
+            new ResultGraphs().createScatterPlot(r.getMessengersParticles(), r
+                .getMessengersParticles().getName()
+                + " intensity/volume");
+
+        if (img == null)
+          return null;
+
+        cacheImage.put(2, QPixmap.fromImage(img));
       }
 
       return this.cacheImage.get(2);
@@ -587,12 +598,16 @@ public class DataModelQt {
 
       if (!this.cacheImage.containsKey(3)) {
 
-        QPixmap image =
-            QPixmap.fromImage(new ResultGraphs().createScatterPlot(r
+        final QImage img =
+            new ResultGraphs().createScatterPlot(r
                 .getCuboidsMessengersParticles(), r.getMessengersParticles()
                 .getName()
-                + " cuboids intensity/volume"));
-        cacheImage.put(3, image);
+                + " cuboids intensity/volume");
+
+        if (img == null)
+          return null;
+
+        cacheImage.put(3, QPixmap.fromImage(img));
       }
 
       return this.cacheImage.get(3);
@@ -601,11 +616,15 @@ public class DataModelQt {
 
       if (!this.cacheImage.containsKey(4)) {
 
-        QPixmap image =
-            QPixmap.fromImage(new ResultGraphs().createScatterPlot(r
-                .getMitosParticles(), r.getMitosParticles().getName()
-                + " intensity/volume"));
-        cacheImage.put(4, image);
+        final QImage img =
+            new ResultGraphs().createScatterPlot(r.getMitosParticles(), r
+                .getMitosParticles().getName()
+                + " intensity/volume");
+
+        if (img == null)
+          return null;
+
+        cacheImage.put(4, QPixmap.fromImage(img));
       }
 
       return this.cacheImage.get(4);
