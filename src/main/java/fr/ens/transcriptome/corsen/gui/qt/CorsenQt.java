@@ -50,6 +50,7 @@ import fr.ens.transcriptome.corsen.UpdateStatus;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
+import fr.ens.transcriptome.corsen.gui.qt.DataModelQt.HistoryDataModel;
 import fr.ens.transcriptome.corsen.util.Util;
 
 // TODO add an in phase progress for writing/computing distances
@@ -600,12 +601,20 @@ public class CorsenQt extends QMainWindow {
   @SuppressWarnings("unused")
   private void resultViewChanged(Object o) {
 
+    final HistoryDataModel historyModel = DataModelQt.getHistoryModel();
+
     int i = ((Integer) o).intValue();
     mainWindowUi.resultTableView.setModel(this.models.getModel(i));
+    mainWindowUi.historyTableView.setModel(null);
+    mainWindowUi.historyTableView.setModel(historyModel);
+    mainWindowUi.historyBoxplotLabel.setPixmap(historyModel.getBoxplot());
+    mainWindowUi.historyHistogramLabel.setPixmap(historyModel.getHisto());
+    mainWindowUi.HistoryResultlabel.setText(historyModel.getResultMessage());
 
     mainWindowUi.imageLabel.setPixmap(this.models.getImage(i));
 
     mainWindowUi.resultTableView.setAlternatingRowColors(true);
+    mainWindowUi.historyTableView.setAlternatingRowColors(true);
 
     // mainWindowUi.resultTableView.setSortingEnabled(true);
     // mainWindowUi.resultTableView.sortByColumn(1,

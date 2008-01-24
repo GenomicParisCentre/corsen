@@ -40,9 +40,11 @@ import com.trolltech.qt.gui.QSortFilterProxyModel;
 
 import fr.ens.transcriptome.corsen.CorsenResultWriter;
 import fr.ens.transcriptome.corsen.Globals;
+import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.Distance;
 import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
+import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults.Entry;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 
@@ -58,6 +60,8 @@ public class DataModelQt {
   private static final String IV_MITO_DESCRIPTION =
       "Intensities and volumes of mitochondria ";
 
+  private static HistoryDataModel historyModelSingleton =
+      new HistoryDataModel();
   private CorsenResult result;
   private Map<Integer, QPixmap> cacheImage = new HashMap<Integer, QPixmap>();
 
@@ -356,9 +360,119 @@ public class DataModelQt {
 
   }
 
+  static class HistoryDataModel extends QAbstractTableModel {
+
+    private CorsenHistoryResults results =
+        CorsenHistoryResults.getCorsenHistoryResults();
+
+    @Override
+    public int columnCount(QModelIndex arg0) {
+
+      return 3;
+    }
+
+    @Override
+    public Object data(QModelIndex mIndex, int role) {
+
+      if (mIndex == null || role != Qt.ItemDataRole.DisplayRole)
+        return null;
+
+      Entry e = this.results.getEntry(mIndex.row());
+
+      final int col = mIndex.column();
+
+      switch (col) {
+      case 0:
+        return e.getFileA();
+
+      case 1:
+        return e.getFileB();
+
+      case 2:
+        return e.getMedianMinDistance();
+
+      default:
+        break;
+      }
+
+      return null;
+    }
+
+    @Override
+    public int rowCount(QModelIndex arg0) {
+
+      return results.size();
+    }
+
+    @Override
+    public Object headerData(int section, Orientation orientation, int role) {
+
+      if (orientation != Orientation.Horizontal
+          || role != Qt.ItemDataRole.DisplayRole)
+        return null;
+
+      switch (section) {
+
+      case 0:
+        return "File A";
+
+      case 1:
+        return "File B";
+
+      case 2:
+        return "Median minimal distance";
+
+      default:
+        return null;
+      }
+
+    }
+
+    public QPixmap getBoxplot() {
+
+      final QImage img =
+          new ResultGraphs().createBoxPlot(this.results.getDistances());
+
+      if (img == null)
+        return null;
+
+      return QPixmap.fromImage(img);
+    }
+
+    public QPixmap getHisto() {
+
+      final QImage img =
+          new ResultGraphs().createDistanceDistributionImage(this.results
+              .getDistances());
+
+      if (img == null)
+        return null;
+
+      return QPixmap.fromImage(img);
+    }
+
+    public String getResultMessage() {
+
+      final double result = this.results.getMedianOfMedianMinDistances();
+
+      return "The median of minimal distances is: "
+          + (result == Double.NaN ? "undefined" : result);
+    }
+
+  }
+
   //
   // Getters
   //
+
+  /**
+   * Get the HistoryDataModel model.
+   * @return the HistoryDataModel model
+   */
+  public static HistoryDataModel getHistoryModel() {
+
+    return historyModelSingleton;
+  }
 
   /**
    * Get the corsen result.

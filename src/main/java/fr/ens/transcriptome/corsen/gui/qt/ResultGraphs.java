@@ -180,6 +180,40 @@ public class ResultGraphs {
     histogramdataset.addSeries(name, data, 20, min, max);
   }
 
+  public QImage createDistanceDistributionImage(final double[] data) {
+
+    if (data == null || data.length < 2)
+      return null;
+
+    HistogramDataset histogramdataset = new HistogramDataset();
+
+    histogramdataset.addSeries("Min distances", data, 20, getMin(data),
+        getMax(data));
+
+    // createHistoDataSet(results.getMaxDistances(), "Max distances",
+    // histogramdataset);
+
+    JFreeChart chart =
+        ChartFactory.createHistogram("Distribution of minimal distances",
+        // title
+            "Distance", // domain axis label
+            "Intensity", // range axis label
+            histogramdataset, // data
+
+            PlotOrientation.VERTICAL, // orientation
+            false, // include legend
+            true, // tooltips?
+            false // URLs?
+            );
+
+    final BufferedImage image =
+        chart.createBufferedImage(this.width, this.height,
+            BufferedImage.TYPE_INT_ARGB, null);
+
+    return new QImage(toByte(image.getData().getDataBuffer()), this.width,
+        this.height, QImage.Format.Format_ARGB32);
+  }
+
   /**
    * Create a histogram of distance distribution.
    * @param results Result to use
@@ -215,12 +249,51 @@ public class ResultGraphs {
         this.height, QImage.Format.Format_ARGB32);
   }
 
+  /**
+   * Create a box plot qimage.
+   * @param data Data to use
+   * @return a QImage
+   */
+  public QImage createBoxPlot(final double[] data) {
+
+    if (data == null || data.length < 2)
+      return null;
+
+    List<Float> listData = new ArrayList<Float>(data.length);
+    for (int i = 0; i < data.length; i++)
+      listData.add((float) data[i]);
+
+    DefaultBoxAndWhiskerCategoryDataset defaultboxandwhiskercategorydataset =
+        new DefaultBoxAndWhiskerCategoryDataset();
+    defaultboxandwhiskercategorydataset.add(listData, "Distances", "Min");
+
+    JFreeChart chart =
+        ChartFactory.createBoxAndWhiskerChart("Intensities Boxplot", "",
+            "Distance", defaultboxandwhiskercategorydataset, false);
+
+    final BufferedImage image =
+        chart.createBufferedImage(this.width, this.height,
+            BufferedImage.TYPE_INT_ARGB, null);
+
+    return new QImage(toByte(image.getData().getDataBuffer()), this.width,
+        this.height, QImage.Format.Format_ARGB32);
+
+  }
+
+  /**
+   * Create a boxplot.
+   * @param results Results to use
+   * @return a QImage
+   */
   public QImage createBoxPlot(final CorsenResult results) {
 
     this.width = this.width / 2;
 
     Map<Particle3D, Distance> distsMin = results.getMinDistances();
     Map<Particle3D, Distance> distsMax = results.getMaxDistances();
+
+    if (distsMin == null || distsMax == null)
+      return null;
 
     List<Float> listMin = new ArrayList<Float>();
     List<Float> listMax = new ArrayList<Float>();
@@ -263,6 +336,12 @@ public class ResultGraphs {
         this.height, QImage.Format.Format_ARGB32);
   }
 
+  /**
+   * Create a scatter plot
+   * @param particles Particle data to use
+   * @param title Title of the graph
+   * @return a QImage
+   */
   public QImage createScatterPlot(final Particles3D particles,
       final String title) {
 
