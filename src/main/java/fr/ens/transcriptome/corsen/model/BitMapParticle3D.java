@@ -129,11 +129,21 @@ public class BitMapParticle3D {
     return this.array[z][y][x];
   }
 
+  private byte getPixelPresent(final int x, final int y, final int z) {
+
+    if (x < 0 || y < 0 || z < 0 || x >= xLen || y >= yLen || z >= zLen)
+      return 0;
+
+    final byte value = this.array[z][y][x];
+
+    return value > 0 ? (byte) 1 : (byte) 0;
+  }
+
   private int[] countAxesSurfaces(final int x, final int y, final int z) {
 
-    final int xCount = 2 - getPixel(x - 1, y, z) - getPixel(x + 1, y, z);
-    final int yCount = 2 - getPixel(x, y - 1, z) - getPixel(x, y + 1, z);
-    final int zCount = 2 - getPixel(x, y, z - 1) - getPixel(x, y, z + 1);
+    final int xCount = 2 - getPixelPresent(x - 1, y, z) - getPixelPresent(x + 1, y, z);
+    final int yCount = 2 - getPixelPresent(x, y - 1, z) - getPixelPresent(x, y + 1, z);
+    final int zCount = 2 - getPixelPresent(x, y, z - 1) - getPixelPresent(x, y, z + 1);
 
     return new int[] {xCount, yCount, zCount};
   }
