@@ -43,6 +43,7 @@ public class CorsenJOGL extends CorsenGL {
 
   private GL gl;
   private GLUT glut;
+  private GLU glu;
   private QGLWidget widgetGL;
 
   public static Color inverseColor(final Color c) {
@@ -126,9 +127,9 @@ public class CorsenJOGL extends CorsenGL {
     if (a == null || b == null)
       return;
 
-    final FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {
-        color.getRed() / 255.0f, color.getGreen() / 255.0f,
-        color.getBlue() / 255.0f, 1});
+    final FloatBuffer mat_diffuse =
+        FloatBuffer.wrap(new float[] {color.getRed() / 255.0f,
+            color.getGreen() / 255.0f, color.getBlue() / 255.0f, 1});
 
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, no_mat);
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, mat_diffuse);
@@ -137,7 +138,7 @@ public class CorsenJOGL extends CorsenGL {
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, mat_emission);
 
     this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_LINE);
-    //setGLColor(color);
+    // setGLColor(color);
 
     this.gl.glBegin(GL.GL_LINES);
 
@@ -199,8 +200,9 @@ public class CorsenJOGL extends CorsenGL {
     // drawDiamondPoint(x, y, z, d);
 
     FloatBuffer no_mat = FloatBuffer.wrap(new float[] {0, 0, 0, 1});
-    FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {color.getRed(),
-        color.getGreen(), color.getBlue(), 1});
+    FloatBuffer mat_diffuse =
+        FloatBuffer.wrap(new float[] {color.getRed(), color.getGreen(),
+            color.getBlue(), 1});
     // FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {1f, 0f, 0f, 1});
 
     FloatBuffer no_shininess = FloatBuffer.wrap(new float[] {0});
@@ -336,51 +338,66 @@ public class CorsenJOGL extends CorsenGL {
 
   }
 
-  private static final FloatBuffer no_mat = FloatBuffer.wrap(new float[] {0, 0,
-      0, 1});
+  private static final FloatBuffer no_mat =
+      FloatBuffer.wrap(new float[] {0, 0, 0, 1});
 
-  private static final FloatBuffer no_shininess = FloatBuffer
-      .wrap(new float[] {0});
+  private static final FloatBuffer no_shininess =
+      FloatBuffer.wrap(new float[] {0});
 
-  private static final FloatBuffer mat_emission = FloatBuffer.wrap(new float[] {
-      1f, 1f, 1f, 0});
+  private static final FloatBuffer mat_emission =
+      FloatBuffer.wrap(new float[] {1f, 1f, 1f, 0});
 
   public void solidCube(float size, Point3D p, Color c) {
 
-    final FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {
-        c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f, 1});
+    final FloatBuffer mat_diffuse =
+        FloatBuffer.wrap(new float[] {c.getRed() / 255.0f,
+            c.getGreen() / 255.0f, c.getBlue() / 255.0f, .5f});
     this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_FILL);
+
     gl.glPushMatrix();
+
+    this.gl.glEnable(GL.GL_BLEND);
+    this.gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+
     gl.glTranslatef(p.getX(), p.getY(), p.getZ());
+    gl.glScalef(this.xScale, this.yScale, this.zScale);
     // gl.glScalef(.25f, .25f, .25f);
+
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, no_mat);
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, mat_diffuse);
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, no_mat);
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, no_shininess);
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, no_mat);
+
     // this.glut.glutSolidSphere(1, 16, 16);
     // this.glut.glutSolidCube(size);
     // this.glut.glutSolidOctahedron();
-     //this.glut.glutSolidDodecahedron();
-    this.glut.glutSolidSphere(size, 4, 4);
+    // this.glut.glutSolidDodecahedron();
+
+    this.glu.gluSphere(glu.gluNewQuadric(), 1, 4, 4);
+    // this.glut.glutSolidCube(1f);
+    // this.glut.glutSolidSphere(1.0, 4, 4);
+
+    this.gl.glDisable(GL.GL_BLEND);
 
     gl.glPopMatrix();
 
     // solidCube(size, p.getX(), p.getY(), p.getZ(), c);
   }
 
-  public void solidCube(float size, float x, float y, float z, Color c) {
+  private void solidCube(float size, float x, float y, float z, Color c) {
 
     this.gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_FILL);
     drawBox(GLU.getCurrentGL(), size, GL.GL_QUADS, x, y, z, c);
   }
 
   private static float[][] boxVertices;
-  private static final float[][] boxNormals = { {-1.0f, 0.0f, 0.0f},
-      {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, -1.0f, 0.0f},
-      {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, -1.0f}};
-  private static final int[][] boxFaces = { {0, 1, 2, 3}, {3, 2, 6, 7},
-      {7, 6, 5, 4}, {4, 5, 1, 0}, {5, 6, 2, 1}, {7, 4, 0, 3}};
+  private static final float[][] boxNormals =
+      { {-1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f},
+          {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, -1.0f}};
+  private static final int[][] boxFaces =
+      { {0, 1, 2, 3}, {3, 2, 6, 7}, {7, 6, 5, 4}, {4, 5, 1, 0}, {5, 6, 2, 1},
+          {7, 4, 0, 3}};
 
   private void drawBox(GL gl, float size, int type, float x, float y, float z,
       Color c) {
@@ -402,8 +419,9 @@ public class CorsenJOGL extends CorsenGL {
     float[][] n = boxNormals;
     int[][] faces = boxFaces;
 
-    FloatBuffer mat_diffuse = FloatBuffer.wrap(new float[] {c.getRed(),
-        c.getGreen(), c.getBlue(), 1});
+    FloatBuffer mat_diffuse =
+        FloatBuffer
+            .wrap(new float[] {c.getRed(), c.getGreen(), c.getBlue(), 1});
 
     for (int i = 5; i >= 0; i--) {
       gl.glBegin(type);
@@ -430,9 +448,12 @@ public class CorsenJOGL extends CorsenGL {
   //
 
   public CorsenJOGL(final GL gl, final QGLWidget widgetGL) {
+
     this.gl = gl;
     this.widgetGL = widgetGL;
     this.glut = new GLUT();
+    this.glu = new GLU();
+
   }
 
 }

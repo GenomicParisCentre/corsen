@@ -54,7 +54,7 @@ public class ViewOGL extends QGLWidget {
 
   private int zRot = 0;
 
-  private double zoom = 100; //1000; // 0.5;
+  private double zoom = 100; // 1000; // 0.5;
 
   private static final double ZOOM_FACTOR = 1.2;
 
@@ -237,8 +237,8 @@ public class ViewOGL extends QGLWidget {
 
   public void initializeGL() {
 
-    GLContext context = GLDrawableFactory.getFactory()
-        .createExternalGLContext();
+    GLContext context =
+        GLDrawableFactory.getFactory().createExternalGLContext();
 
     this.gl = context.getGL();
 
@@ -251,37 +251,33 @@ public class ViewOGL extends QGLWidget {
 
     // qglClearColor(trolltechPurple.dark());
 
-    
-    /*gl.glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
-    gl.glEnable(GL.GL_DEPTH_TEST);
-    gl.glEnable(GL.GL_CULL_FACE);
-    gl.glShadeModel(GL.GL_FLAT);
-    gl.glDisable(GL.GL_NORMALIZE);
-    gl.glEnable(GL.GL_COLOR_MATERIAL);
-    gl.glEnable(GL.GL_LIGHTING);
-    gl. glEnable(GL.GL_LIGHT0);
+    /*
+     * gl.glClearColor( 0.0f, 0.0f, 0.0f, 1.0f ); gl.glEnable(GL.GL_DEPTH_TEST);
+     * gl.glEnable(GL.GL_CULL_FACE); gl.glShadeModel(GL.GL_FLAT);
+     * gl.glDisable(GL.GL_NORMALIZE); gl.glEnable(GL.GL_COLOR_MATERIAL);
+     * gl.glEnable(GL.GL_LIGHTING); gl. glEnable(GL.GL_LIGHT0); gl.glLightfv(
+     * GL.GL_LIGHT0, GL.GL_AMBIENT, FloatBuffer.wrap(new float[] {.3f, .3f, .3f,
+     * .3f}) ); gl.glLightfv( GL.GL_LIGHT0, GL.GL_DIFFUSE, FloatBuffer.wrap(new
+     * float[] {.8f, .8f, .8f, .8f}) ); gl.glLightfv( GL.GL_LIGHT0,
+     * GL.GL_SPECULAR, FloatBuffer.wrap(new float[] {1, 1, 1, 1}) );
+     */
 
-    
-    gl.glLightfv( GL.GL_LIGHT0, GL.GL_AMBIENT,  FloatBuffer.wrap(new float[] {.3f, .3f, .3f, .3f}) );
-    gl.glLightfv( GL.GL_LIGHT0, GL.GL_DIFFUSE,  FloatBuffer.wrap(new float[] {.8f, .8f, .8f, .8f}) );
-    gl.glLightfv( GL.GL_LIGHT0, GL.GL_SPECULAR, FloatBuffer.wrap(new float[] {1, 1, 1, 1}) );*/
-    
-    
-    
     FloatBuffer mat_specular = FloatBuffer.wrap(new float[] {1, 1, 1, 1});
     FloatBuffer mat_shininess = FloatBuffer.wrap(new float[] {50});
-    
 
     FloatBuffer white_light = FloatBuffer.wrap(new float[] {1, 1, 1, 1});
-    FloatBuffer lmodel_ambient = FloatBuffer.wrap(new float[] {0.9f, 0.9f,
-        0.9f, 1.0f});
+    FloatBuffer lmodel_ambient =
+        FloatBuffer.wrap(new float[] {0.9f, 0.9f, 0.9f, 1.0f});
 
-    //FloatBuffer light_ambient = FloatBuffer.wrap(new float[] {.9f, .9f, .9f, 1});
-    FloatBuffer light_ambient = FloatBuffer.wrap(new float[] {.3f, .3f, .3f, 3f});
+    // FloatBuffer light_ambient = FloatBuffer.wrap(new float[] {.9f, .9f, .9f,
+    // 1});
+    FloatBuffer light_ambient =
+        FloatBuffer.wrap(new float[] {.3f, .3f, .3f, 3f});
     FloatBuffer light_diffuse = FloatBuffer.wrap(new float[] {1, 1, 1, 1});
     FloatBuffer light_specular = FloatBuffer.wrap(new float[] {1, 1, 1, 1});
-    FloatBuffer light_position0 = FloatBuffer.wrap(new float[] {1, 1, 1, 0});
-    FloatBuffer light_position1 = FloatBuffer.wrap(new float[] {-1, -1, -1, 0});
+    FloatBuffer light_position0 = FloatBuffer.wrap(new float[] {1, 0, 0, 0});
+    FloatBuffer light_position1 = FloatBuffer.wrap(new float[] {0, 1, 0, 0});
+    FloatBuffer light_position2 = FloatBuffer.wrap(new float[] {0, 0, 1, 0});
 
     gl.glClearColor(0, 0, 0, 0);
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, mat_specular);
@@ -297,13 +293,7 @@ public class ViewOGL extends QGLWidget {
 
     gl.glLightf(GL.GL_LIGHT0, GL.GL_LINEAR_ATTENUATION, 1.0f);
     gl.glLightf(GL.GL_LIGHT0, GL.GL_CONSTANT_ATTENUATION, 2.0f);
-    
-    
 
-
-    
-    
-    
     gl.glLightfv(GL.GL_LIGHT1, GL.GL_POSITION, light_position1);
     gl.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, white_light);
     gl.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, white_light);
@@ -315,24 +305,32 @@ public class ViewOGL extends QGLWidget {
 
     gl.glLightf(GL.GL_LIGHT1, GL.GL_LINEAR_ATTENUATION, 1.0f);
     gl.glLightf(GL.GL_LIGHT1, GL.GL_CONSTANT_ATTENUATION, 2.0f);
-    
-    
+
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_POSITION, light_position2);
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_DIFFUSE, white_light);
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_SPECULAR, white_light);
+
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_AMBIENT, light_ambient);
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_DIFFUSE, light_diffuse);
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_SPECULAR, light_specular);
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_POSITION, light_position2);
+
+    gl.glLightf(GL.GL_LIGHT2, GL.GL_LINEAR_ATTENUATION, 1.0f);
+    gl.glLightf(GL.GL_LIGHT2, GL.GL_CONSTANT_ATTENUATION, 2.0f);
 
     gl.glLightModelfv(GL.GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
 
     gl.glEnable(GL.GL_LIGHTING);
     gl.glEnable(GL.GL_LIGHT0);
     gl.glEnable(GL.GL_LIGHT1);
+    gl.glEnable(GL.GL_LIGHT2);
     gl.glEnable(GL.GL_DEPTH_TEST);
 
-    
-    
     makeObject();
     setRemakeObject(true);
-    //this.gl.glShadeModel(GL.GL_FLAT);
-    //this.gl.glEnable(GL.GL_DEPTH_TEST);
-    
-    
+    // this.gl.glShadeModel(GL.GL_FLAT);
+    // this.gl.glEnable(GL.GL_DEPTH_TEST);
+
     // this.gl.glEnable(GL.GL_CULL_FACE);
 
     // Lights parameters
@@ -488,11 +486,6 @@ public class ViewOGL extends QGLWidget {
     if (this.gl == null)
       return;
 
-    
-    
-   
-    
-    
     setRemakeObject(false);
 
     if (gllist > 0)
@@ -500,10 +493,11 @@ public class ViewOGL extends QGLWidget {
     int list = this.gl.glGenLists(++gllist);
 
     this.gl.glNewList(list, GL.GL_COMPILE);
+
+
+
     CorsenJOGL cjogl = new CorsenJOGL(this.gl, this);
 
-    
-    
     // point(0f, 0f, 0f, 0.01f);
 
     System.out.println("makeObject(" + System.currentTimeMillis() + ")");
@@ -516,7 +510,6 @@ public class ViewOGL extends QGLWidget {
      * this.settings.getColorBackground();
      */
 
-    
     clearGL();
 
     final CorsenResult r = getResult();
@@ -525,7 +518,6 @@ public class ViewOGL extends QGLWidget {
     if (r != null) {
 
       this.gl.glColor3d(100, 0, 100);
-     
 
       if (r.getMessengersParticles() != null) {
 
@@ -533,7 +525,7 @@ public class ViewOGL extends QGLWidget {
         gl.glTranslated(-1 * pars.getWidth() * pars.getPixelWidth() / 2, -1
             * pars.getHeight() * pars.getPixelHeight() / 2, -1
             * pars.getZSlices() * pars.getPixelDepth() / 2);
-        //this.gl.glLoadIdentity();
+        // this.gl.glLoadIdentity();
 
         cjogl.drawLegend(r.getMessengersParticles().getUnitOfLength());
 
@@ -576,18 +568,13 @@ public class ViewOGL extends QGLWidget {
 
     }
 
-    /*this.gl.glLoadIdentity();
-    Particles3D pars = r.getMessengersParticles();
-    if (pars == null)
-      pars = r.getMitosParticles();
-
-    if (pars != null)
-      gl.glTranslated(-1 * pars.getWidth() * pars.getPixelWidth() / 2, -1
-          * pars.getHeight() * pars.getPixelHeight() / 2, -1
-          * pars.getZSlices() * pars.getPixelDepth() / 2); */
-
-    
-    
+    /*
+     * this.gl.glLoadIdentity(); Particles3D pars = r.getMessengersParticles();
+     * if (pars == null) pars = r.getMitosParticles(); if (pars != null)
+     * gl.glTranslated(-1 * pars.getWidth() * pars.getPixelWidth() / 2, -1
+     * pars.getHeight() * pars.getPixelHeight() / 2, -1 pars.getZSlices() *
+     * pars.getPixelDepth() / 2);
+     */
 
     this.gl.glEndList();
 
