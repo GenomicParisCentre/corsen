@@ -37,8 +37,8 @@ public class CorsenResult {
 
   private UpdateStatus updateStatus;
   private Settings settings;
-  private String messengersFilename;
-  private String mitosFilename;
+  private File messengersFile;
+  private File mitosFile;
   private InputStream messengersStream;
   private InputStream mitosStream;
   private Particles3D particlesA;
@@ -114,16 +114,16 @@ public class CorsenResult {
    * Get the particlesA file.
    * @return Returns the messengersFile
    */
-  public String getMessengersFilename() {
-    return messengersFilename;
+  public File getMessengersFile() {
+    return messengersFile;
   }
 
   /**
    * Get the particlesB file.
    * @return Returns the mitosFile
    */
-  public String getMitosFilename() {
-    return mitosFilename;
+  public File getMitosFile() {
+    return mitosFile;
   }
 
   /**
@@ -166,8 +166,6 @@ public class CorsenResult {
     return minAnalyser;
   }
 
-  
-  
   //
   // Setters
   //
@@ -260,9 +258,8 @@ public class CorsenResult {
       final Settings settings, final UpdateStatus updateStatus)
       throws FileNotFoundException {
 
-    this(particlesAFile.getAbsolutePath(), particlesBFile.getAbsolutePath(),
-        new FileInputStream(particlesAFile), new FileInputStream(particlesBFile),
-        settings, updateStatus);
+    this(particlesAFile, particlesBFile, new FileInputStream(particlesAFile),
+        new FileInputStream(particlesBFile), settings, updateStatus);
 
   }
 
@@ -272,18 +269,17 @@ public class CorsenResult {
    * @param messengersFile File of the particlesA particles
    * @param updateStatus The updateStatus
    */
-  public CorsenResult(final String particlesAFilename,
-      final String particlesBFilename, final InputStream messengersStream,
-      final InputStream mitosStream, final Settings settings,
-      final UpdateStatus updateStatus) {
+  public CorsenResult(final File particlesAFile, final File particlesBFile,
+      final InputStream messengersStream, final InputStream mitosStream,
+      final Settings settings, final UpdateStatus updateStatus) {
 
     if (mitosStream == null)
       throw new RuntimeException("Unable to find mito file");
     if (messengersStream == null)
       throw new RuntimeException("Unable to find messenger file");
 
-    this.mitosFilename = particlesBFilename;
-    this.messengersFilename = particlesAFilename;
+    this.mitosFile = particlesBFile;
+    this.messengersFile = particlesAFile;
     this.mitosStream = mitosStream;
     this.messengersStream = messengersStream;
     this.settings = settings;

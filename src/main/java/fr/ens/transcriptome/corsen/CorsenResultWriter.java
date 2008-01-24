@@ -427,9 +427,9 @@ public class CorsenResultWriter {
     sb
         .append("Mins min\tMaxs first quartile\tMaxs median\tMaxs mean\tMaxs median\tMaxs third quartile\tMaxs max\n");
 
-    out.write(cr.getMessengersFilename());
+    out.write(cr.getMessengersFile().getAbsolutePath());
     sb.append("\t");
-    out.write(cr.getMitosFilename());
+    out.write(cr.getMitosFile().getAbsolutePath());
     sb.append("\t");
 
     DistanceAnalyser min = cr.getMinAnalyser();

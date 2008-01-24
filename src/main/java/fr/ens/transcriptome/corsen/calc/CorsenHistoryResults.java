@@ -22,6 +22,7 @@
 
 package fr.ens.transcriptome.corsen.calc;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,15 +50,15 @@ public class CorsenHistoryResults {
    */
   public class Entry {
 
-    private String fileA;
-    private String fileB;
+    private File fileA;
+    private File fileB;
     private double medianMinDistance;
 
     /**
      * Get File A.
      * @return the file A
      */
-    public String getFileA() {
+    public File getFileA() {
 
       return this.fileA;
     }
@@ -66,7 +67,7 @@ public class CorsenHistoryResults {
      * Get File B.
      * @return the file B
      */
-    public String getFileB() {
+    public File getFileB() {
 
       return this.fileB;
     }
@@ -80,7 +81,7 @@ public class CorsenHistoryResults {
       return this.medianMinDistance;
     }
 
-    private Entry(final String fileA, final String fileB,
+    private Entry(final File fileA, final File fileB,
         final double medianMinDistance) {
 
       this.fileA = fileA;
@@ -99,8 +100,8 @@ public class CorsenHistoryResults {
     if (cr == null)
       return;
 
-    final String fileA = cr.getMessengersFilename();
-    final String fileB = cr.getMitosFilename();
+    final File fileA = cr.getMessengersFile();
+    final File fileB = cr.getMitosFile();
 
     final String key = fileA + "-" + fileB;
 

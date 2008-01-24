@@ -22,6 +22,7 @@
 
 package fr.ens.transcriptome.corsen.gui;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -93,10 +94,10 @@ public class CorsenFakeGui {
      * @return a new Thread
      */
     public Thread newThread(final Runnable runnable) {
-      
+
       return new Thread(runnable);
     }
-    
+
   }
 
   public static void main(String[] args) throws IOException {
@@ -118,8 +119,9 @@ public class CorsenFakeGui {
 
     UpdateStatus updateStatus = new CorsenFakeGui.FakeGuiUpdateStatus();
 
-    CorsenResult result = new CorsenResult("atp16", "mito", isA, isB, settings,
-        updateStatus);
+    CorsenResult result =
+        new CorsenResult(new File("atp16"), new File("mito"), isA, isB,
+            settings, updateStatus);
 
     DistancesCalculator dc = new DistancesCalculator(result);
     dc.loadParticles();
