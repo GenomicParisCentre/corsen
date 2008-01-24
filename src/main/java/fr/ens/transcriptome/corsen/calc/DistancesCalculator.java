@@ -428,6 +428,9 @@ public class DistancesCalculator {
 
     this.result.setMinAnalyser(daMins);
     this.result.setMaxAnalyser(daMaxs);
+    
+    // Add to history results
+    CorsenHistoryResults.getCorsenHistoryResults().addResult(this.result);
   }
 
   private void calcOneThread(final List<Particle3D> listA,
