@@ -919,6 +919,7 @@ public final class Particle3D {
 
     this.surfacePoints.applyXFactor(xFactor);
     this.innerPoints.applyXFactor(xFactor);
+    this.pixelWidth *= xFactor;
   }
 
   /**
@@ -929,6 +930,7 @@ public final class Particle3D {
 
     this.surfacePoints.applyYFactor(yFactor);
     this.innerPoints.applyYFactor(yFactor);
+    this.pixelHeight *= yFactor;
   }
 
   /**
@@ -939,6 +941,7 @@ public final class Particle3D {
 
     this.surfacePoints.applyZFactor(zFactor);
     this.innerPoints.applyZFactor(zFactor);
+    this.pixelDepth *= zFactor;
   }
 
   //
