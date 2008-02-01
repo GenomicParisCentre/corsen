@@ -23,7 +23,9 @@
 package fr.ens.transcriptome.corsen.gui.qt;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +36,7 @@ import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.Orientation;
 import com.trolltech.qt.gui.QAbstractTableModel;
+import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QImage;
 import com.trolltech.qt.gui.QPixmap;
 import com.trolltech.qt.gui.QSortFilterProxyModel;
@@ -368,7 +371,7 @@ public class DataModelQt {
     @Override
     public int columnCount(QModelIndex arg0) {
 
-      return 3;
+      return 4;
     }
 
     @Override
@@ -377,18 +380,22 @@ public class DataModelQt {
       if (mIndex == null || role != Qt.ItemDataRole.DisplayRole)
         return null;
 
-      Entry e = this.results.getEntry(mIndex.row());
+      Entry e = this.results.get(mIndex.row());
 
       final int col = mIndex.column();
 
       switch (col) {
+
       case 0:
-        return e.getFileA();
+        return e.getId();
 
       case 1:
-        return e.getFileB();
+        return e.getFileA().getName();
 
       case 2:
+        return e.getFileB().getName();
+
+      case 3:
         return e.getMedianMinDistance();
 
       default:
@@ -414,12 +421,15 @@ public class DataModelQt {
       switch (section) {
 
       case 0:
-        return "File A";
+        return "Id";
 
       case 1:
-        return "File B";
+        return "File A";
 
       case 2:
+        return "File B";
+
+      case 3:
         return "Median minimal distance";
 
       default:
@@ -457,6 +467,11 @@ public class DataModelQt {
 
       return "The median of minimal distances is: "
           + (result == Double.NaN ? "undefined" : result);
+    }
+
+    public void update() {
+
+      super.reset();
     }
 
   }
@@ -582,7 +597,7 @@ public class DataModelQt {
    * Save DataDouble of a view.
    * @param index The index of the view
    * @param filename File to save
-   * @throws IOException
+   * @throws IOException IOException if an error occurs while writing data
    */
   public void saveViewl(final int index, final String filename)
       throws IOException {
@@ -594,9 +609,21 @@ public class DataModelQt {
    * Save DataDouble of a view.
    * @param index The index of the view
    * @param File File to save
-   * @throws IOException
+   * @throws IOException IOException if an error occurs while writing data
    */
   public void saveViewl(final int index, final File file) throws IOException {
+
+    saveViewl(index, new FileOutputStream(file));
+  }
+
+  /**
+   * Save DataDouble of a view.
+   * @param index The index of the view
+   * @param os OutputStream to use
+   * @throws IOException if an error occurs while writing data
+   */
+  public void saveViewl(final int index, final OutputStream os)
+      throws IOException {
 
     final CorsenResult r = getResult();
 
@@ -606,20 +633,25 @@ public class DataModelQt {
     final CorsenResultWriter crw = new CorsenResultWriter(r);
 
     switch (index) {
+
+    case 0:
+      crw.writeSummaryResultFile(os);
+      break;
+
     case 1:
-      crw.writeDataFile(file);
+      crw.writeDataFile(os);
       break;
 
     case 2:
-      crw.writeMessengersIntensityVolume(file);
+      crw.writeMessengersIntensityVolume(os);
       break;
 
     case 3:
-      crw.writeCuboidsMessengersIntensityVolume(file);
+      crw.writeCuboidsMessengersIntensityVolume(os);
       break;
 
     case 4:
-      crw.writeMitosIntensityVolume(file);
+      crw.writeMitosIntensityVolume(os);
       break;
 
     default:
@@ -685,7 +717,7 @@ public class DataModelQt {
 
         if (img == null)
           return null;
-
+        QApplication.processEvents();
         cacheImage.put(1, QPixmap.fromImage(img));
       }
 
@@ -702,7 +734,7 @@ public class DataModelQt {
 
         if (img == null)
           return null;
-
+        QApplication.processEvents();
         cacheImage.put(2, QPixmap.fromImage(img));
       }
 
@@ -720,7 +752,7 @@ public class DataModelQt {
 
         if (img == null)
           return null;
-
+        QApplication.processEvents();
         cacheImage.put(3, QPixmap.fromImage(img));
       }
 
@@ -737,7 +769,7 @@ public class DataModelQt {
 
         if (img == null)
           return null;
-
+        QApplication.processEvents();
         cacheImage.put(4, QPixmap.fromImage(img));
       }
 

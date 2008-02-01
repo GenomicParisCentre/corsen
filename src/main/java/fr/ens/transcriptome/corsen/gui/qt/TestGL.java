@@ -59,6 +59,8 @@ public class TestGL extends QGLWidget {
   private static final double MIN_ZOOM = 0.1;
 
   private static final double MAX_ZOOM = 2;
+  
+  private float alpha = 1f;
 
   public static final int STACKS = 20;
   private static final float LEN = 1f / 3f;
@@ -104,8 +106,9 @@ public class TestGL extends QGLWidget {
         FloatBuffer.wrap(new float[] {.3f, .3f, .3f, 3f});
     FloatBuffer light_diffuse = FloatBuffer.wrap(new float[] {1, 1, 1, 1});
     FloatBuffer light_specular = FloatBuffer.wrap(new float[] {1, 1, 1, 1});
-    FloatBuffer light_position0 = FloatBuffer.wrap(new float[] {1, 1, 1, 0});
-    FloatBuffer light_position1 = FloatBuffer.wrap(new float[] {-1, -1, -1, 0});
+    FloatBuffer light_position0 = FloatBuffer.wrap(new float[] {1, 0, 0, 0});
+    FloatBuffer light_position1 = FloatBuffer.wrap(new float[] {0, 1,0, 0});
+    FloatBuffer light_position2 = FloatBuffer.wrap(new float[] {0, 0, 1, 0});
 
     gl.glClearColor(0, 0, 0, 0);
     gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, mat_specular);
@@ -133,17 +136,34 @@ public class TestGL extends QGLWidget {
 
     gl.glLightf(GL.GL_LIGHT1, GL.GL_LINEAR_ATTENUATION, 1.0f);
     gl.glLightf(GL.GL_LIGHT1, GL.GL_CONSTANT_ATTENUATION, 2.0f);
+    
+    
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_POSITION, light_position2);
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_DIFFUSE, white_light);
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_SPECULAR, white_light);
+
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_AMBIENT, light_ambient);
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_DIFFUSE, light_diffuse);
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_SPECULAR, light_specular);
+    gl.glLightfv(GL.GL_LIGHT2, GL.GL_POSITION, light_position2);
+
+    gl.glLightf(GL.GL_LIGHT2, GL.GL_LINEAR_ATTENUATION, 1.0f);
+    gl.glLightf(GL.GL_LIGHT2, GL.GL_CONSTANT_ATTENUATION, 2.0f);
 
     gl.glLightModelfv(GL.GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
 
     gl.glEnable(GL.GL_LIGHTING);
     gl.glEnable(GL.GL_LIGHT0);
     gl.glEnable(GL.GL_LIGHT1);
+    gl.glEnable(GL.GL_LIGHT2);
     gl.glEnable(GL.GL_DEPTH_TEST);
 
+    
+    
+    
     this.gl.glMatrixMode(GL.GL_PROJECTION);
     makeObject();
-
+    this.gl.glDisable(GL.GL_BLEND);
     this.gl.glShadeModel(GL.GL_FLAT);
   }
 
@@ -295,6 +315,26 @@ public class TestGL extends QGLWidget {
     // 0
 
     gl.glPushMatrix();
+    
+    this.gl.glEnable(GL.GL_BLEND);
+    this.gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+
+    final FloatBuffer mat_diffuse =
+        FloatBuffer.wrap(new float[] {255 / 255.0f, 255 / 255.0f, 255 / 255.0f,
+            this.alpha});
+
+    final FloatBuffer no_mat = FloatBuffer.wrap(new float[] {0, 0, 0, 1});
+
+    final FloatBuffer no_shininess = FloatBuffer.wrap(new float[] {0});
+
+    final FloatBuffer mat_emission =
+        FloatBuffer.wrap(new float[] {1f, 1f, 1f, 0});
+
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, mat_diffuse);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, no_shininess);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, no_mat);
 
     gl.glScalef(this.xScale, this.yScale, this.zScale);
     gl.glTranslatef(x, y, z);
@@ -314,7 +354,7 @@ public class TestGL extends QGLWidget {
     gl.glDisable(GL.GL_CLIP_PLANE2);
 
     gl.glPopMatrix();
-
+    this.gl.glDisable(GL.GL_BLEND);
     gl.glFlush();
   }
 
@@ -340,6 +380,26 @@ public class TestGL extends QGLWidget {
 
     gl.glPushMatrix();
 
+    this.gl.glEnable(GL.GL_BLEND);
+    this.gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+
+    final FloatBuffer mat_diffuse =
+        FloatBuffer.wrap(new float[] {255 / 255.0f, 255 / 255.0f, 255 / 255.0f,
+            this.alpha});
+
+    final FloatBuffer no_mat = FloatBuffer.wrap(new float[] {0, 0, 0, 1});
+
+    final FloatBuffer no_shininess = FloatBuffer.wrap(new float[] {0});
+
+    final FloatBuffer mat_emission =
+        FloatBuffer.wrap(new float[] {1f, 1f, 1f, 0});
+
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, mat_diffuse);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, no_shininess);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, no_mat);
+    
     gl.glScalef(this.xScale, this.yScale, this.zScale);
     gl.glTranslatef(x, y, z);
 
@@ -365,7 +425,7 @@ public class TestGL extends QGLWidget {
     gl.glDisable(GL.GL_CLIP_PLANE2);
 
     gl.glPopMatrix();
-
+    this.gl.glDisable(GL.GL_BLEND);
     gl.glFlush();
   }
 
@@ -382,15 +442,39 @@ public class TestGL extends QGLWidget {
 
     gl.glPushMatrix();
 
+    this.gl.glEnable(GL.GL_BLEND);
+    this.gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+
+    final FloatBuffer mat_diffuse =
+        FloatBuffer.wrap(new float[] {255 / 255.0f, 255 / 255.0f, 255 / 255.0f,
+            this.alpha});
+
+    final FloatBuffer no_mat = FloatBuffer.wrap(new float[] {0, 0, 0, 1});
+
+    final FloatBuffer no_shininess = FloatBuffer.wrap(new float[] {0});
+
+    final FloatBuffer mat_emission =
+        FloatBuffer.wrap(new float[] {1f, 1f, 1f, 0});
+
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, mat_diffuse);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, no_mat);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, no_shininess);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_EMISSION, no_mat);
+    
     gl.glScalef(this.xScale, this.yScale, this.zScale);
     gl.glTranslatef(x, y, z);
 
-    if (sens == 1)
+    if (sens == 1) {
       gl.glRotatef(90, 0, 1, 0);
-    else if (sens == 2)
+      gl.glNormal3fv(new float[] {0.0f, 0.0f, 1.0f}, 0);
+    }
+    else if (sens == 2) {
       gl.glRotatef(90, 1, 0, 0);
+      gl.glNormal3fv(new float[] {0.0f, 0.0f, -1.0f}, 0);
+    }
 
-    gl.glNormal3fv(new float[] {0.0f, 0.0f, -1.0f}, 0);
+    
 
     gl.glBegin(GL.GL_POLYGON);
 
@@ -400,12 +484,13 @@ public class TestGL extends QGLWidget {
     gl.glVertex3f(LEN, 0, 0);
 
     gl.glEnd();
+    this.gl.glDisable(GL.GL_BLEND);
     gl.glPopMatrix();
 
     gl.glFlush();
   }
 
-  private void makeDice(final float x, final float y, final float z) {
+  private void makeDice(final int x, final int y, final int z) {
 
     final float xr = x + LEN / 2;
     final float yr = y - LEN / 2;
@@ -413,18 +498,118 @@ public class TestGL extends QGLWidget {
 
     // First level
 
-    makeObjectSphere(xr, yr + LEN, zr + LEN, 1, 1, 1);
+    boolean c = false;
 
+    // x+1 y+1
+
+    if ((getPixel(x + 1, y, z) != 0)
+        && (getPixel(x, y + 1, z) != 0) && (getPixel(x + 1, y + 1, z) != 0)) {
+      makeObjectSquare(xr, yr + LEN, zr + LEN * 2, 0);
+    } else {
+
+      if (getPixel(x + 1, y, z) != 0) {
+        makeObjectCylinder(xr, yr + LEN, zr + LEN, -1, 1, 1, 1);
+        c = true;
+      }
+      if (getPixel(x, y + 1, z) != 0) {
+        makeObjectCylinder(xr, yr + 2 * LEN, zr + LEN, 1, 1, 1, 2);
+        c = true;
+      }
+      if (!c)
+        makeObjectSphere(xr, yr + LEN, zr + LEN, 1, 1, 1);
+    }
+
+    // x y
     makeObjectSquare(xr - LEN, yr, zr + LEN * 2, 0);
 
-    makeObjectCylinder(xr - LEN, yr + LEN, zr + LEN, -1, 1, 1, 1);
-    makeObjectSphere(xr - LEN, yr + LEN, zr + LEN, -1, 1, 1);
-    makeObjectCylinder(xr, yr + LEN, zr + LEN, 1, 1, 1, 2);
-    makeObjectCylinder(xr - LEN, yr + LEN, zr + LEN, -1, 1, 1, 2);
-    makeObjectCylinder(xr - LEN, yr, zr + LEN, -1, -1, 1, 1);
-    makeObjectSphere(xr, yr, zr + LEN, 1, -1, 1);
-    makeObjectSphere(xr - LEN, yr, zr + LEN, -1, -1, 1);
+    // x y+1
+    c = false;
+    if (getPixel(x, y + 1, z) != 0) {
+      makeObjectSquare(xr - LEN, yr + LEN, zr + LEN * 2, 0);
+      c = true;
+    }
+    if (!c)
+      makeObjectCylinder(xr - LEN, yr + LEN, zr + LEN, -1, 1, 1, 1);
 
+    // x-1 y+1
+    c = false;
+
+    if ((getPixel(x - 1, y, z) != 0)
+        && (getPixel(x, y + 1, z) != 0) && (getPixel(x - 1, y + 1, z) != 0)) {
+      makeObjectSquare(xr - 2 * LEN, yr + LEN, zr + LEN * 2, 0);
+    } else {
+
+      if (getPixel(x - 1, y, z) != 0) {
+        makeObjectCylinder(xr - 2 * LEN, yr + 1 * LEN, zr + LEN, -1, 1, 1, 1);
+        c = true;
+      }
+      if (getPixel(x, y + 1, z) != 0) {
+        makeObjectCylinder(xr - LEN, yr + 2 * LEN, zr + LEN, -1, 1, 1, 2);
+        c = true;
+      }
+      if (!c)
+        makeObjectSphere(xr - LEN, yr + LEN, zr + LEN, -1, 1, 1);
+    }
+    // x+1 y
+    if (getPixel(x + 1, y, z) == 0)
+      makeObjectCylinder(xr, yr + LEN, zr + LEN, 1, 1, 1, 2);
+    else
+      makeObjectSquare(xr, yr, zr + LEN * 2, 0);
+
+    // x-1 y
+    if (getPixel(x - 1, y, z) == 0)
+      makeObjectCylinder(xr - LEN, yr + LEN, zr + LEN, -1, 1, 1, 2);
+    else
+      makeObjectSquare(xr - 2 * LEN, yr, zr + LEN * 2, 0);
+
+    // x y-1
+    c = false;
+    if (getPixel(x, y - 1, z) != 0) {
+      makeObjectSquare(xr - LEN, yr - LEN, zr + LEN * 2, 0);
+      c = true;
+    }
+    if (!c)
+      makeObjectCylinder(xr - LEN, yr, zr + LEN, -1, -1, 1, 1);
+
+    // x+1 y-1
+    c = false;
+
+    if ((getPixel(x + 1, y, z) != 0)
+        && (getPixel(x, y - 1, z) != 0) && (getPixel(x + 1, y - 1, z) != 0)) {
+      makeObjectSquare(xr - 0 * LEN, yr - LEN, zr + LEN * 2, 0);
+    } else {
+
+      if (getPixel(x + 1, y, z) != 0) {
+        makeObjectCylinder(xr, yr, zr + LEN, -1, -1, 1, 1);
+        c = true;
+      }
+      if (getPixel(x, y - 1, z) != 0) {
+        makeObjectCylinder(xr, yr, zr + LEN, 1, 1, 1, 2);
+        c = true;
+      }
+      if (!c)
+        makeObjectSphere(xr, yr, zr + LEN, 1, -1, 1);
+    }
+    // x-1 y-1
+    c = false;
+
+    if ((getPixel(x - 1, y, z) != 0)
+        && (getPixel(x, y - 1, z) != 0) && (getPixel(x - 1, y - 1, z) != 0)) {
+      makeObjectSquare(xr - 2 * LEN, yr - LEN, zr + LEN * 2, 0);
+    } else {
+
+      if (getPixel(x - 1, y, z) != 0) {
+        makeObjectCylinder(xr - 2 * LEN, yr, zr + LEN, -1, -1, 1, 1);
+        c = true;
+      }
+      if (getPixel(x, y - 1, z) != 0) {
+        makeObjectCylinder(xr - LEN, yr, zr + LEN, -1, 1, 1, 2);
+        c = true;
+      }
+
+      if (!c)
+        makeObjectSphere(xr - LEN, yr, zr + LEN, -1, -1, 1);
+    }
     // Second level
 
     makeObjectSquare(xr - 2 * LEN, yr, zr + LEN, 1);
@@ -469,13 +654,13 @@ public class TestGL extends QGLWidget {
           { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0},
               {0, 0, 0, 0, 0}},
 
-          { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 10, 0}, {0, 0, 0, 0, 0},
+          { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0},
               {0, 0, 0, 0, 0}},
 
-          { {0, 0, 0, 0, 0}, {0, 0, 1, 0, 0}, {0, 1, 1, 1, 0}, {0, 0, 1, 0, 0},
+          { {0, 0, 0, 0, 0}, {0, 0, 1, 0, 0}, {0, 1, 1, 1, 0}, {0, 1, 1, 0, 0},
               {0, 0, 0, 0, 0}},
 
-          { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 10, 0}, {0, 0, 0, 0, 0},
+          { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0},
               {0, 0, 0, 0, 0}},
 
           { {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0},
@@ -486,6 +671,9 @@ public class TestGL extends QGLWidget {
     if (gllist > 0)
       this.gl.glDeleteLists(gllist, 1);
     int list = this.gl.glGenLists(++gllist);
+
+    
+    
 
     this.gl.glNewList(list, GL.GL_COMPILE);
 
@@ -514,6 +702,7 @@ public class TestGL extends QGLWidget {
 
     gl.glFlush();
     gl.glEndList();
+    
     System.out.println(gllist);
 
   }

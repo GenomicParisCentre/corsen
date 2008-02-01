@@ -24,6 +24,7 @@ package fr.ens.transcriptome.corsen.calc;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
@@ -38,9 +39,14 @@ public class CorsenHistoryResults {
 
   private static CorsenHistoryResults singleton = new CorsenHistoryResults();
 
-  private LinkedHashMap<String, Entry> entries =
-      new LinkedHashMap<String, Entry>();
-  private List<String> keys;
+  private LinkedHashMap<Integer, Entry> entries =
+      new LinkedHashMap<Integer, Entry>();
+  private Set<String> filesKeys = new HashSet<String>();
+  private List<Integer> index = new ArrayList<Integer>();
+
+  // private List<String> keys = new ArrayList<String>();
+
+  private static int count = 0;
 
   private double[] data;
 
@@ -50,9 +56,20 @@ public class CorsenHistoryResults {
    */
   public class Entry {
 
+    private int id = count++;
     private File fileA;
     private File fileB;
+    private File resultsPath;
     private double medianMinDistance;
+
+    /**
+     * Get the id of the entry.
+     * @return the id of the entry
+     */
+    public int getId() {
+
+      return this.id;
+    }
 
     /**
      * Get File A.
@@ -73,6 +90,15 @@ public class CorsenHistoryResults {
     }
 
     /**
+     * Get the result path.
+     * @return the result path
+     */
+    public File getResultsPath() {
+
+      return this.resultsPath;
+    }
+
+    /**
      * Get median of the median distances.
      * @return the median of the median distances.
      */
@@ -81,11 +107,12 @@ public class CorsenHistoryResults {
       return this.medianMinDistance;
     }
 
-    private Entry(final File fileA, final File fileB,
+    private Entry(final File fileA, final File fileB, final File resultsPath,
         final double medianMinDistance) {
 
       this.fileA = fileA;
       this.fileB = fileB;
+      this.resultsPath = resultsPath;
       this.medianMinDistance = medianMinDistance;
     }
 
@@ -103,13 +130,21 @@ public class CorsenHistoryResults {
     final File fileA = cr.getMessengersFile();
     final File fileB = cr.getMitosFile();
 
-    final String key = fileA + "-" + fileB;
+    final String key = fileA.getAbsolutePath() + "-" + fileB.getAbsolutePath();
 
-    final double dist = cr.getMinAnalyser().getMedian();
+    if (!this.filesKeys.contains(key)) {
 
-    this.entries.put(key, new Entry(fileA, fileB, dist));
+      final double dist = cr.getMinAnalyser().getMedian();
 
-    this.data = null;
+      final Entry e = new Entry(fileA, fileB, cr.getResultsPath(), dist);
+      final int id = e.getId();
+
+      this.entries.put(id, e);
+      this.filesKeys.add(key);
+      this.index.add(id);
+
+      this.data = null;
+    }
   }
 
   /**
@@ -117,7 +152,6 @@ public class CorsenHistoryResults {
    */
   public void clear() {
 
-    this.keys = null;
     this.entries.clear();
     this.data = null;
   }
@@ -133,40 +167,42 @@ public class CorsenHistoryResults {
 
   /**
    * Get an entry
-   * @param index index of the element to get
+   * @param id index of the element to get
    * @return an antry
    */
-  public Entry getEntry(int index) {
+  public Entry getEntry(int id) {
 
-    if (this.keys == null)
-      fillKeys();
+    return this.entries.get(id);
+  }
 
-    return this.entries.get(this.keys.get(index));
+  public Entry get(int index) {
+
+    return getEntry(this.index.get(index));
   }
 
   /**
    * Remove an entry
-   * @param index index of the element to get
+   * @param id index of the element to get
    */
-  public void removeEntry(int index) {
+  public void removeEntry(int id) {
 
-    if (this.entries.remove(this.keys.get(index)) != null) {
-      this.keys = null;
-      this.data = null;
+    Entry e = getEntry(id);
+
+    if (e != null) {
+
+      String key =
+          e.getFileA().getAbsolutePath() + "-" + e.getFileB().getAbsolutePath();
+      this.filesKeys.remove(key);
+      this.entries.remove(id);
+
+      // Recreate the index
+      this.index.clear();
+      for (int id2 : this.entries.keySet()) 
+        this.index.add(id2);
+      
+
     }
 
-  }
-
-  private void fillKeys() {
-
-    final List<String> result = new ArrayList<String>();
-
-    Set<String> set = this.entries.keySet();
-
-    for (String s : set)
-      result.add(s);
-
-    this.keys = result;
   }
 
   /**
@@ -181,9 +217,9 @@ public class CorsenHistoryResults {
     final double[] data = new double[size()];
 
     int count = 0;
-    for (String key : this.entries.keySet()) {
+    for (int id : this.entries.keySet()) {
 
-      Entry e = this.entries.get(key);
+      Entry e = this.entries.get(id);
       data[count++] = e.getMedianMinDistance();
     }
 

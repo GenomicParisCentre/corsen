@@ -9,9 +9,11 @@ import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map;
 
+import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.Distance;
 import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
+import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults.Entry;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 
@@ -392,8 +394,58 @@ public class CorsenResultWriter {
   }
 
   /**
+   * Write data in full resut file
+   * @param messengers Messengers particles
+   * @param mitos Mitochondia particles
+   * @param out Writer
+   * @throws IOException if an error occurs while writing data
+   */
+  public void writeSummaryResultFile(final OutputStream os)
+      throws IOException {
+
+    final Writer out = new OutputStreamWriter(os);
+
+    out.write("\tMinimum\t1st Quartile\tMedian\tMean\t3rd Quartile\tMaximum\n");
+
+    DistanceAnalyser da = result.getMinAnalyser();
+
+    out.write("Min distances");
+    out.write(Double.toString(da.getMin()));
+    out.write("\t");
+    out.write(Double.toString(da.getFirstQuartile()));
+    out.write("\t");
+    out.write(Double.toString(da.getMedian()));
+    out.write("\t");
+    out.write(Double.toString(da.getMean()));
+    out.write("\t");
+    out.write(Double.toString(da.getThirdQuartile()));
+    out.write("\t");
+    out.write(Double.toString(da.getMax()));
+    out.write("\n");
+
+    da = result.getMaxAnalyser();
+
+    out.write("Max distances");
+    out.write(Double.toString(da.getMin()));
+    out.write("\t");
+    out.write(Double.toString(da.getFirstQuartile()));
+    out.write("\t");
+    out.write(Double.toString(da.getMedian()));
+    out.write("\t");
+    out.write(Double.toString(da.getMean()));
+    out.write("\t");
+    out.write(Double.toString(da.getThirdQuartile()));
+    out.write("\t");
+    out.write(Double.toString(da.getMax()));
+    out.write("\n");
+
+    out.close();
+  }
+
+  /**
    * Write the result file
-   * @param os OutputStream
+   * @param File File to write
+   * @param suffix Suffix
    * @throws IOException if an error occurs while writing the stream
    */
   public void writeResult(final File file, final String suffix)
@@ -404,7 +456,7 @@ public class CorsenResultWriter {
 
   /**
    * Write the result file
-   * @param os OutputStream
+   * @param File File to write
    * @throws IOException if an error occurs while writing the stream
    */
   public void writeResult(final File file) throws IOException {
@@ -412,6 +464,11 @@ public class CorsenResultWriter {
     writeResult(new FileOutputStream(file));
   }
 
+  /**
+   * Write the result file
+   * @param os OutputStream
+   * @throws IOException if an error occurs while writing the stream
+   */
   public void writeResult(final FileOutputStream os) throws IOException {
 
     final Writer out = new OutputStreamWriter(os);
@@ -462,6 +519,48 @@ public class CorsenResultWriter {
     sb.append(max.getMax());
     sb.append("\n");
 
+  }
+
+  /**
+   * Write the history results file
+   * @param File File output file
+   * @throws IOException if an error occurs while writing the stream
+   */
+  public static void writeHistoryResults(final File file) throws IOException {
+
+    writeHistoryResults(new FileOutputStream(file));
+  }
+
+  /**
+   * Write the history results file
+   * @param os the OutputStream
+   * @throws IOException if an error occurs while writing the stream
+   */
+  public static void writeHistoryResults(final OutputStream os)
+      throws IOException {
+
+    final Writer out = new OutputStreamWriter(os);
+
+    out.write("#File A\tFile B\tMin distance\n");
+
+    CorsenHistoryResults history =
+        CorsenHistoryResults.getCorsenHistoryResults();
+
+    final int size = history.size();
+
+    for (int i = 0; i < size; i++) {
+
+      Entry e = history.getEntry(i);
+
+      out.write(e.getFileA().getAbsolutePath());
+      out.write("\t");
+      out.write(e.getFileB().getAbsolutePath());
+      out.write("\t");
+      out.write(Double.toString(e.getMedianMinDistance()));
+      out.write("\n");
+    }
+
+    out.close();
   }
 
   //

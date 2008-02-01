@@ -39,6 +39,7 @@ public class CorsenResult {
   private Settings settings;
   private File messengersFile;
   private File mitosFile;
+  private File resultPath;
   private InputStream messengersStream;
   private InputStream mitosStream;
   private Particles3D particlesA;
@@ -124,6 +125,14 @@ public class CorsenResult {
    */
   public File getMitosFile() {
     return mitosFile;
+  }
+
+  /**
+   * Get the result path
+   * @return a file object with the path of results
+   */
+  public File getResultsPath() {
+    return resultPath;
   }
 
   /**
@@ -255,11 +264,12 @@ public class CorsenResult {
    * @throws FileNotFoundException
    */
   public CorsenResult(final File particlesAFile, final File particlesBFile,
-      final Settings settings, final UpdateStatus updateStatus)
-      throws FileNotFoundException {
+      final File resultsPath, final Settings settings,
+      final UpdateStatus updateStatus) throws FileNotFoundException {
 
     this(particlesAFile, particlesBFile, new FileInputStream(particlesAFile),
-        new FileInputStream(particlesBFile), settings, updateStatus);
+        new FileInputStream(particlesBFile), resultsPath, settings,
+        updateStatus);
 
   }
 
@@ -271,17 +281,22 @@ public class CorsenResult {
    */
   public CorsenResult(final File particlesAFile, final File particlesBFile,
       final InputStream messengersStream, final InputStream mitosStream,
-      final Settings settings, final UpdateStatus updateStatus) {
+      final File resultsPath, final Settings settings,
+      final UpdateStatus updateStatus) {
 
     if (mitosStream == null)
       throw new RuntimeException("Unable to find mito file");
     if (messengersStream == null)
       throw new RuntimeException("Unable to find messenger file");
 
+    System.out.println("Corsen Result A: " + particlesAFile);
+    System.out.println("Corsen Result B: " + particlesBFile);
+
     this.mitosFile = particlesBFile;
     this.messengersFile = particlesAFile;
     this.mitosStream = mitosStream;
     this.messengersStream = messengersStream;
+    this.resultPath = resultsPath;
     this.settings = settings;
 
     setUpdateStatus(updateStatus);

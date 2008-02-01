@@ -120,7 +120,7 @@ public class CorsenFakeGui {
     UpdateStatus updateStatus = new CorsenFakeGui.FakeGuiUpdateStatus();
 
     CorsenResult result =
-        new CorsenResult(new File("atp16"), new File("mito"), isA, isB,
+        new CorsenResult(new File("atp16"), new File("mito"), isA, isB, null,
             settings, updateStatus);
 
     DistancesCalculator dc = new DistancesCalculator(result);

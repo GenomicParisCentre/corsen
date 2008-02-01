@@ -229,7 +229,8 @@ public class CorsenCore implements Runnable {
         resultFile.getAbsolutePath());
 
     final CorsenResult result =
-        new CorsenResult(particlesAFile, particlesBFile, s, getUpdateStatus());
+        new CorsenResult(particlesAFile, particlesBFile, resultFile, s,
+            getUpdateStatus());
 
     // Create writer object
     final CorsenResultWriter writer = new CorsenResultWriter(result);
@@ -375,6 +376,9 @@ public class CorsenCore implements Runnable {
     String prefixA = this.settings.getParticlesABatchPrefix();
     String prefixB = this.settings.getParticlesBBatchPrefix();
 
+    System.out.println("prefixA:" + prefixA);
+    System.out.println("prefixB:" + prefixB);
+
     // Store in an HashMap the input files
     final Map<String, InputFiles> map = new HashMap<String, InputFiles>();
 
@@ -416,7 +420,8 @@ public class CorsenCore implements Runnable {
           && iFiles.inputParticlesAFile != null) {
 
         final File parent = iFiles.inputParticlesBFile.getParentFile();
-
+        System.out.println("fileA: " + iFiles.inputParticlesAFile);
+        System.out.println("fileB: " + iFiles.inputParticlesBFile);
         doACell(iFiles.inputParticlesAFile, iFiles.inputParticlesBFile,
             new File(parent, iFiles.prefix), n, count);
 

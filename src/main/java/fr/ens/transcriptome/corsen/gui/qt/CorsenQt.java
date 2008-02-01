@@ -22,6 +22,7 @@
 
 package fr.ens.transcriptome.corsen.gui.qt;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -43,13 +44,16 @@ import com.trolltech.qt.gui.QFileDialog.FileMode;
 
 import fr.ens.transcriptome.corsen.Corsen;
 import fr.ens.transcriptome.corsen.CorsenCore;
+import fr.ens.transcriptome.corsen.CorsenResultWriter;
 import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.UpdateStatus;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
+import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
+import fr.ens.transcriptome.corsen.gui.GuiUtils;
 import fr.ens.transcriptome.corsen.gui.qt.DataModelQt.HistoryDataModel;
 import fr.ens.transcriptome.corsen.util.Util;
 
@@ -58,12 +62,20 @@ import fr.ens.transcriptome.corsen.util.Util;
 // TODO When alt-f4 -> System.exit(0)
 public class CorsenQt extends QMainWindow {
 
+  private static final int PATH_STRING_MAX_LEN = 50;
+
+  private static CorsenQt mainw;
+
   private Ui_CorsenMainWindow mainWindowUi = new Ui_CorsenMainWindow();
 
   private DataModelQt models = new DataModelQt();
   private Settings settings = new Settings();
   private String lastDir =
       Globals.DEBUG_HOME_DIR ? "/home/jourdren/Desktop/atp16" : "";
+
+  private String mitoPath = "";
+  private String messengerPath = "";
+  private String directoryPath = "";
 
   private class UpdateStatusQt extends QObject implements UpdateStatus {
 
@@ -169,6 +181,32 @@ public class CorsenQt extends QMainWindow {
   // Qt triggered methods
   //
 
+  @SuppressWarnings("unused")
+  private void clearHistoryResults() {
+
+    CorsenHistoryResults.getCorsenHistoryResults().clear();
+    resultsHistoryChanged();
+  }
+
+  @SuppressWarnings("unused")
+  private void saveHistoryResults() {
+
+    System.out.println("save...");
+
+    String fileName =
+        QFileDialog.getSaveFileName(this, "Save result", this.lastDir,
+            new QFileDialog.Filter("Result file (*.txt)"));
+    if (fileName.length() != 0) {
+
+      try {
+        CorsenResultWriter.writeHistoryResults(new File(fileName));
+      } catch (IOException e) {
+        showError("An error occurs while writing result file.");
+      }
+    }
+
+  }
+
   /**
    * Show About dialog box.
    */
@@ -195,17 +233,23 @@ public class CorsenQt extends QMainWindow {
 
   private void setMessengerPathLabelText(String text) {
 
-    mainWindowUi.messengerPathLabel.setText(text);
+    this.messengerPath = text;
+    mainWindowUi.messengerPathLabel.setText(GuiUtils.shortPath(text,
+        PATH_STRING_MAX_LEN));
   }
 
   private void setMitoPathLabelText(String text) {
 
-    mainWindowUi.mitoPathLabel.setText(text);
+    this.mitoPath = text;
+    mainWindowUi.mitoPathLabel.setText(GuiUtils.shortPath(text,
+        PATH_STRING_MAX_LEN));
   }
 
   private void setDirectoryPathLabelText(String text) {
 
-    mainWindowUi.directoryPathLabel.setText(text);
+    this.directoryPath = text;
+    mainWindowUi.directoryPathLabel.setText(GuiUtils.shortPath(text,
+        PATH_STRING_MAX_LEN));
   }
 
   /**
@@ -384,8 +428,8 @@ public class CorsenQt extends QMainWindow {
     this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
         .currentIndex()));
 
-    String arnFile = mainWindowUi.messengerPathLabel.text();
-    String mitoFile = mainWindowUi.mitoPathLabel.text();
+    String arnFile = messengerPath;
+    String mitoFile = mitoPath;
 
     if (arnFile.length() == 0) {
       showError("No particles particles A ("
@@ -405,7 +449,7 @@ public class CorsenQt extends QMainWindow {
 
       mainWindowUi.logTextEdit.setText("");
       CorsenResult cr =
-          new CorsenResult(new File(arnFile), new File(mitoFile),
+          new CorsenResult(new File(arnFile), new File(mitoFile), null,
               this.settings, null);
       DistancesCalculator dc = new DistancesCalculator(cr);
       dc.setCoordinatesFactor(settings.getFactor());
@@ -432,23 +476,10 @@ public class CorsenQt extends QMainWindow {
     setStartEnable(true);
   }
 
-  /**
-   * Launch analysis.
-   */
-  @SuppressWarnings("unused")
-  private void launchAnalysis() {
+  private UpdateStatusQt createNewUpdateStatus() {
 
-    mainWindowUi.viewOGL.clear();
-    this.models.setResult(null);
-    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
-        .currentIndex()));
+    final UpdateStatusQt updateStatus = new UpdateStatusQt();
 
-    final CorsenCore cc = new CorsenCore();
-
-    cc.setSettings(this.settings);
-    UpdateStatusQt updateStatus = new UpdateStatusQt();
-
-    cc.setUpdateStatus(updateStatus);
     updateStatus.errorSignal.connect(this, "showError(String)",
         ConnectionType.QueuedConnection);
     updateStatus.messageSignal.connect(this, "showMessage(String)",
@@ -458,17 +489,38 @@ public class CorsenQt extends QMainWindow {
     updateStatus.resultSignal.connect(this, "endProcess(CorsenResult)",
         ConnectionType.QueuedConnection);
 
-    String dirFile = mainWindowUi.directoryPathLabel.text();
-    String arnFile = mainWindowUi.messengerPathLabel.text();
-    String mitoFile = mainWindowUi.mitoPathLabel.text();
+    return updateStatus;
+  }
 
-    if (dirFile.length() > 0) {
+  /**
+   * Launch analysis.
+   */
+  @SuppressWarnings("unused")
+  void launchAnalysis() {
+
+    launchAnalysis(this.directoryPath, this.messengerPath, this.mitoPath, null);
+  }
+
+  void launchAnalysis(final String dirFile, String arnFile, String mitoFile,
+      final String resultDir) {
+
+    mainWindowUi.viewOGL.clear();
+    this.models.setResult(null);
+    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+        .currentIndex()));
+
+    final CorsenCore cc = new CorsenCore();
+
+    cc.setSettings(this.settings);
+    cc.setUpdateStatus(createNewUpdateStatus());
+
+    if (dirFile != null && dirFile.length() > 0) {
 
       cc.setDirFiles(new File(dirFile));
       cc.setMultipleFiles(true);
 
       QThread t = new QThread(cc);
-      updateStatus.moveToThread(t);
+      cc.getUpdateStatus().moveToThread(t);
       t.start();
 
     } else if (arnFile.length() == 0 || mitoFile.length() == 0) {
@@ -482,39 +534,41 @@ public class CorsenQt extends QMainWindow {
 
     } else {
 
-      // final JFileChooser jfc = new JFileChooser();
-      QFileDialog dialog = new QFileDialog(this);
-      dialog.setFileMode(QFileDialog.FileMode.AnyFile);
-      dialog.setWindowTitle("Set output files prefix");
-      // if (dirFile.length() > 0)
-      // jfc.setCurrentDirectory(CorsenSwing.this.gui.getCurrentDirectory());
-      dialog.setDirectory(this.lastDir);
+      String outputDir = resultDir;
 
-      if (dialog.exec() == QDialog.DialogCode.Accepted.value()) {
+      if (outputDir == null) {
 
-        List<String> fileNames = dialog.selectedFiles();
+        QFileDialog dialog = new QFileDialog(this);
+        dialog.setFileMode(QFileDialog.FileMode.AnyFile);
+        dialog.setWindowTitle("Set output files prefix");
 
-        File f = new File(fileNames.get(0));
-        String prefixFilename = f.getAbsolutePath();
-        // String prefixFilename = f.getName();
-        mainWindowUi.outputFilesPathLabel.setText(prefixFilename);
+        dialog.setDirectory(this.lastDir);
+
+        if (dialog.exec() == QDialog.DialogCode.Accepted.value()) {
+
+          List<String> fileNames = dialog.selectedFiles();
+          File f = new File(fileNames.get(0));
+          outputDir = f.getAbsolutePath();
+        }
+      }
+
+      if (outputDir != null) {
+
+        mainWindowUi.messengerPathLabel.setText(arnFile);
+        mainWindowUi.mitoPathLabel.setText(mitoFile);
+        mainWindowUi.outputFilesPathLabel.setText(outputDir);
 
         cc.setParticlesBFile(new File(mitoFile));
         cc.setParticlesAFile(new File(arnFile));
-        cc.setResultFile(new File(prefixFilename));
+        cc.setResultFile(new File(outputDir));
         cc.setMultipleFiles(false);
 
         Thread t = new Thread(cc);
-        updateStatus.moveToThread(t);
+        cc.getUpdateStatus().moveToThread(t);
         t.start();
-
-        // new Thread(cc).start();
-        // SwingUtilities.invokeLater(cc);
-
       }
 
     }
-
   }
 
   /**
@@ -590,6 +644,59 @@ public class CorsenQt extends QMainWindow {
   }
 
   @SuppressWarnings("unused")
+  private void copy() {
+
+    if (this.mainWindowUi.tabWidget.currentIndex() == 1)
+      copyCorsenResult();
+
+    if (this.mainWindowUi.tabWidget.currentIndex() == 3)
+      copyHistoryResult();
+
+  }
+
+  private void copyCorsenResult() {
+
+    int index = this.mainWindowUi.resultViewComboBox.currentIndex();
+
+    if (this.models.getResult() == null)
+      return;
+
+    try {
+      ByteArrayOutputStream os = new ByteArrayOutputStream();
+      this.models.saveViewl(index, os);
+
+      QApplication.clipboard().setText(new String(os.toByteArray()));
+
+    } catch (IOException e) {
+
+      showError(e.getMessage());
+      this.mainWindowUi.statusbar.showMessage(
+          "Error while copying result to clipboard", 2000);
+
+    }
+
+  }
+
+  private void copyHistoryResult() {
+
+    try {
+      ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+      CorsenResultWriter.writeHistoryResults(os);
+
+      QApplication.clipboard().setText(new String(os.toByteArray()));
+
+    } catch (IOException e) {
+
+      showError(e.getMessage());
+      this.mainWindowUi.statusbar.showMessage(
+          "Error while copying result to clipboard", 2000);
+
+    }
+
+  }
+
+  @SuppressWarnings("unused")
   public void configureDialog() {
 
     CorsenConfigureQt cc = new CorsenConfigureQt(this, this.settings);
@@ -598,18 +705,29 @@ public class CorsenQt extends QMainWindow {
     updateVisualisation();
   }
 
-  @SuppressWarnings("unused")
-  private void resultViewChanged(Object o) {
+  private void resultsHistoryChanged() {
 
     final HistoryDataModel historyModel = DataModelQt.getHistoryModel();
 
-    int i = ((Integer) o).intValue();
-    mainWindowUi.resultTableView.setModel(this.models.getModel(i));
-    mainWindowUi.historyTableView.setModel(null);
-    mainWindowUi.historyTableView.setModel(historyModel);
+    if (mainWindowUi.historyTableView.model() == null) {
+      mainWindowUi.historyTableView.setModel(historyModel);
+      mainWindowUi.historyTableView.setSortingEnabled(true);
+    } else
+      historyModel.update();
+    // mainWindowUi.historyTableView.setModel(null);
+    // mainWindowUi.historyTableView.setModel(historyModel);
     mainWindowUi.historyBoxplotLabel.setPixmap(historyModel.getBoxplot());
     mainWindowUi.historyHistogramLabel.setPixmap(historyModel.getHisto());
     mainWindowUi.HistoryResultlabel.setText(historyModel.getResultMessage());
+  }
+
+  @SuppressWarnings("unused")
+  private void resultViewChanged(Object o) {
+
+    resultsHistoryChanged();
+
+    int i = ((Integer) o).intValue();
+    mainWindowUi.resultTableView.setModel(this.models.getModel(i));
 
     mainWindowUi.imageLabel.setPixmap(this.models.getImage(i));
 
@@ -670,8 +788,8 @@ public class CorsenQt extends QMainWindow {
       this.status.timeStartCell = System.currentTimeMillis();
       this.status.currentCellToProcess = e.getIntValue1();
       this.status.cellToProcessCount = e.getIntValue2();
-      this.status.mitoFilePath = e.getStringValue1();
-      this.status.rnaFilePath = e.getStringValue2();
+      this.status.rnaFilePath = e.getStringValue1();
+      this.status.mitoFilePath = e.getStringValue2();
       this.status.resultFilePath = e.getStringValue3();
       setMessengerPathLabelText(this.status.rnaFilePath);
       setMitoPathLabelText(this.status.mitoFilePath);
@@ -857,6 +975,32 @@ public class CorsenQt extends QMainWindow {
     mui.updateViewPushButton.setGeometry(gBt.x(), gBt.y(), max, gBt.height());
   }
 
+  /**
+   * Launch an analysis for a recalculation of a result
+   * @param arnFile path of arn file
+   * @param mitoFile path of mito file
+   * @param dirFile path of results files
+   */
+  static void launchAnalysis(final String arnFile, final String mitoFile,
+      final String dirFile) {
+
+    mainw.launchAnalysis(null, arnFile, mitoFile, dirFile);
+  }
+
+  /**
+   * Update the history results.
+   */
+  static void updateHistoryResults() {
+
+    mainw.resultsHistoryChanged();
+  }
+
+  static boolean isCalculation() {
+
+    return !mainw.mainWindowUi.launchAnalysisPushButton.isEnabled();
+
+  }
+
   //
   // Utility methods
   //
@@ -868,7 +1012,7 @@ public class CorsenQt extends QMainWindow {
   public static void main(final String[] args) {
     QApplication.initialize(args);
 
-    CorsenQt mainw = new CorsenQt();
+    mainw = new CorsenQt();
 
     // QApplication.invokeLater(mainw);
 
@@ -932,6 +1076,11 @@ public class CorsenQt extends QMainWindow {
         "updateVisualisation()");
     mainWindowUi.showDistancesCheckBox.clicked.connect(this,
         "updateVisualisation()");
+    mainWindowUi.historyClearPushButton.clicked.connect(this,
+        "clearHistoryResults()");
+    mainWindowUi.historySaveResultsPushButton.clicked.connect(this,
+        "saveHistoryResults()");
+    mainWindowUi.action_Copy.triggered.connect(this, "copy()");
 
     setWidgetTexts();
 

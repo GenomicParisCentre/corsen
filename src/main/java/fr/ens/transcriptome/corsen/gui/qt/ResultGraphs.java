@@ -259,6 +259,8 @@ public class ResultGraphs {
     if (data == null || data.length < 2)
       return null;
 
+    this.width = this.width / 2;
+    
     List<Float> listData = new ArrayList<Float>(data.length);
     for (int i = 0; i < data.length; i++)
       listData.add((float) data[i]);
