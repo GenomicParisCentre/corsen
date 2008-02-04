@@ -3,6 +3,7 @@ package fr.ens.transcriptome.corsen;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -400,6 +401,16 @@ public class CorsenCore implements Runnable {
         iFile.inputParticlesBFile = files[i];
     }
 
+    // Remove bad entries
+    for (String key : new HashSet<String>(map.keySet())) {
+
+      final InputFiles iFiles = map.get(key);
+
+      if (iFiles.inputParticlesBFile == null
+          || iFiles.inputParticlesAFile == null)
+        map.remove(key);
+    }
+
     // Start the process
 
     int n = 0;
@@ -520,7 +531,6 @@ public class CorsenCore implements Runnable {
 
       if (isMultipleFiles()) {
         if (processMultipleCells(getDirFiles())) {
-          sendEvent(ProgressEventType.END_CELLS_SUCCESSFULL_EVENT, 1, 1);
           showMessage("Particles distances computations successful.");
         } else
           showError("Directory not exists or no files to process");
