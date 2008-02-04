@@ -224,6 +224,9 @@ public class CorsenCore implements Runnable {
 
     final Settings s = this.getSettings();
 
+    logger.info("File A: " + particlesAFile);
+    logger.info("File B: " + particlesBFile);
+
     // Send Start cell event
     sendEvent(ProgressEventType.START_CELL_EVENT, currentCell, cellCount,
         particlesAFile.getAbsolutePath(), particlesBFile.getAbsolutePath(),
@@ -377,9 +380,6 @@ public class CorsenCore implements Runnable {
     String prefixA = this.settings.getParticlesABatchPrefix();
     String prefixB = this.settings.getParticlesBBatchPrefix();
 
-    System.out.println("prefixA:" + prefixA);
-    System.out.println("prefixB:" + prefixB);
-
     // Store in an HashMap the input files
     final Map<String, InputFiles> map = new HashMap<String, InputFiles>();
 
@@ -431,11 +431,8 @@ public class CorsenCore implements Runnable {
           && iFiles.inputParticlesAFile != null) {
 
         final File parent = iFiles.inputParticlesBFile.getParentFile();
-        System.out.println("fileA: " + iFiles.inputParticlesAFile);
-        System.out.println("fileB: " + iFiles.inputParticlesBFile);
         doACell(iFiles.inputParticlesAFile, iFiles.inputParticlesBFile,
             new File(parent, iFiles.prefix), n, count);
-
       }
 
     }

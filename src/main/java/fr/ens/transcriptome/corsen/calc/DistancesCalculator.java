@@ -350,7 +350,7 @@ public class DistancesCalculator {
      */
     final Thread tpB =
         preprocessExecution(this.processorB, useThreads,
-            ProgressEventType.START_CALC_MITOS_CUBOIDS_EVENT,
+            ProgressEventType.PROGRESS_CALC_MITOS_CUBOIDS_EVENT,
             "preprocess Particle B");
 
     if (tpA != null)
@@ -428,7 +428,7 @@ public class DistancesCalculator {
 
     this.result.setMinAnalyser(daMins);
     this.result.setMaxAnalyser(daMaxs);
-    
+
     // Add to history results
     CorsenHistoryResults.getCorsenHistoryResults().addResult(this.result);
   }

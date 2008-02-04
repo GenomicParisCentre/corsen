@@ -65,11 +65,11 @@ public class HugeParticles3D extends DistanceProcessor {
 
     for (Particle3D mito : mitoParticles.getParticles()) {
 
-      final double p = (double) i / (double) n * 1000.0;
-      sendEvent(eventType, (int) p);
-
       final List<Particle3D> cuboids =
           CuboidUtil.defineCuboids(mito, xlen, ylen, zlen);
+
+      final double p = (double) ++i / (double) n * 1000.0;
+      sendEvent(eventType, (int) p);
 
       mapCuboids.put(mito, cuboids);
     }

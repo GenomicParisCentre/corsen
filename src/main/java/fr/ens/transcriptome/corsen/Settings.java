@@ -441,10 +441,7 @@ public final class Settings {
         this.properties.getProperty(PARTICLES_A_TYPE, ParticleType.TINY
             .toString());
 
-    System.out.println("val=" + val);
-
     return ParticleType.getParticleType(val);
-
   }
 
   /**

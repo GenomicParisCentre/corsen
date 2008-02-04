@@ -1,33 +1,34 @@
 package fr.ens.transcriptome.corsen;
 
-
 public class ProgressEvent {
 
   public enum ProgressEventType {
 
     START_READ_MESSENGERS_EVENT("Read messengers PAR file"),
-
     START_READ_MITOS_EVENT("Read mitos PAR file"),
-
     START_CHANGE_MESSENGERS_COORDINATES_EVENT(
-        "Transform messengers coordinates"), START_CHANGE_MITOS_COORDINATES_EVENT(
-        "Transform mitos coordinates"), START_CALC_MESSENGERS_CUBOIDS_EVENT(
-        "Calc messengers cuboids"), START_CALC_MITOS_CUBOIDS_EVENT(
-        "Calc mitochondrions cuboids"), START_CALC_MIN_DISTANCES_EVENT(
-        "Calc distances"), START_DISTANCES_ANALYSIS("Distances analysis"), START_WRITE_DATA_EVENT(
+        "Transform messengers coordinates"),
+    START_CHANGE_MITOS_COORDINATES_EVENT("Transform mitos coordinates"),
+    START_CALC_MESSENGERS_CUBOIDS_EVENT("Calc messengers cuboids"),
+    START_CALC_MITOS_CUBOIDS_EVENT("Calc mitochondrions cuboids"),
+    START_CALC_MIN_DISTANCES_EVENT("Calc distances"), START_DISTANCES_ANALYSIS(
+        "Distances analysis"), START_WRITE_DATA_EVENT(
         "Write results data file for R"), START_WRITE_IV_MESSENGERS_EVENT(
-        "Write messengers intensities and volumes"), START_WRITE_IV_MITOS_EVENT(
-        "Write mitocondria intensities and volumes"), START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT(
-        "Write messengers cuboids intensities and volumes"), START_WRITE_RESULT_EVENT(
-        "Write results"), START_WRITE_FULLRESULT_EVENT("Write full results"), START_WRITE_RPLOT_MESSENGERS_EVENT(
+        "Write messengers intensities and volumes"),
+    START_WRITE_IV_MITOS_EVENT("Write mitocondria intensities and volumes"),
+    START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT(
+        "Write messengers cuboids intensities and volumes"),
+    START_WRITE_RESULT_EVENT("Write results"), START_WRITE_FULLRESULT_EVENT(
+        "Write full results"), START_WRITE_RPLOT_MESSENGERS_EVENT(
         "Write messengers R plot file"), START_WRITE_RPLOT_MITOS_EVENT(
         "Write mitos R plot file"), START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT(
-        "Write messengers cuboids R plot file"), START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT(
-        "Write cuboids cuboids R plot file"), START_WRITE_RPLOT_DISTANCES_EVENT(
-        "Write distances R plot file"), PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT(
-        ""), PROGRESS_CALC_MITOS_CUBOIDS_EVENT(""), PROGRESS_CALC_DISTANCES_EVENT(
-        ""), START_CELLS_EVENT(""), START_CELL_EVENT(""), END_CELLS_SUCCESSFULL_EVENT(
-        ""), END_CELL_EVENT(""), END_ERROR_EVENT("");
+        "Write messengers cuboids R plot file"),
+    START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT("Write cuboids cuboids R plot file"),
+    START_WRITE_RPLOT_DISTANCES_EVENT("Write distances R plot file"),
+    PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT(""),
+    PROGRESS_CALC_MITOS_CUBOIDS_EVENT(""), PROGRESS_CALC_DISTANCES_EVENT(""),
+    START_CELLS_EVENT(""), START_CELL_EVENT(""),
+    END_CELLS_SUCCESSFULL_EVENT(""), END_CELL_EVENT(""), END_ERROR_EVENT("");
 
     private String description;
 
@@ -54,8 +55,8 @@ public class ProgressEvent {
     }
   }
 
-  public static final int PHASE_COUNT = ProgressEventType.START_WRITE_RPLOT_DISTANCES_EVENT
-      .ordinal();
+  public static final int PHASE_COUNT =
+      ProgressEventType.START_WRITE_RPLOT_DISTANCES_EVENT.ordinal();
   public static final int INDEX_IN_PHASE_MAX = 1000;
 
   private ProgressEventType type;

@@ -289,9 +289,6 @@ public class CorsenResult {
     if (messengersStream == null)
       throw new RuntimeException("Unable to find messenger file");
 
-    System.out.println("Corsen Result A: " + particlesAFile);
-    System.out.println("Corsen Result B: " + particlesBFile);
-
     this.mitosFile = particlesBFile;
     this.messengersFile = particlesAFile;
     this.mitosStream = mitosStream;
