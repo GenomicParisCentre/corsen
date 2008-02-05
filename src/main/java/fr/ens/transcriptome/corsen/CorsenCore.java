@@ -2,8 +2,11 @@ package fr.ens.transcriptome.corsen;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -422,7 +425,10 @@ public class CorsenCore implements Runnable {
     sendEvent(ProgressEventType.START_CELLS_EVENT, ProgressEvent
         .countPhase(this.settings));
 
-    for (String key : map.keySet()) {
+    List<String> sortedKeys = new ArrayList<String>(map.keySet());
+    Collections.sort(sortedKeys);
+
+    for (String key : sortedKeys) {
 
       n++;
       final InputFiles iFiles = map.get(key);
