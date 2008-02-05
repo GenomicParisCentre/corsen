@@ -53,7 +53,6 @@ import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
-import fr.ens.transcriptome.corsen.gui.GuiUtils;
 import fr.ens.transcriptome.corsen.gui.qt.DataModelQt.HistoryDataModel;
 import fr.ens.transcriptome.corsen.util.Util;
 
@@ -234,21 +233,21 @@ public class CorsenQt extends QMainWindow {
   private void setMessengerPathLabelText(String text) {
 
     this.messengerPath = text;
-    mainWindowUi.messengerPathLabel.setText(GuiUtils.shortPath(text,
+    mainWindowUi.messengerPathLabel.setText(Util.shortPath(text,
         PATH_STRING_MAX_LEN));
   }
 
   private void setMitoPathLabelText(String text) {
 
     this.mitoPath = text;
-    mainWindowUi.mitoPathLabel.setText(GuiUtils.shortPath(text,
+    mainWindowUi.mitoPathLabel.setText(Util.shortPath(text,
         PATH_STRING_MAX_LEN));
   }
 
   private void setDirectoryPathLabelText(String text) {
 
     this.directoryPath = text;
-    mainWindowUi.directoryPathLabel.setText(GuiUtils.shortPath(text,
+    mainWindowUi.directoryPathLabel.setText(Util.shortPath(text,
         PATH_STRING_MAX_LEN));
   }
 

@@ -224,10 +224,13 @@ public final class Util {
     final double diff12Y = p1.getY() - p2.getY();
 
     double a = 1;
-    final double b = -a
-        * (p3.getX() * diff21Z + p3.getZ() * diff12X - p1.getX() - p1.getZ()
-            * diff12X)
-        / (p3.getY() * diff21Z + 9 * diff12Y - p1.getY() - p1.getZ() * diff12Y);
+    final double b =
+        -a
+            * (p3.getX() * diff21Z + p3.getZ() * diff12X - p1.getX() - p1
+                .getZ()
+                * diff12X)
+            / (p3.getY() * diff21Z + 9 * diff12Y - p1.getY() - p1.getZ()
+                * diff12Y);
 
     final double c = (a * diff12X + b * diff12Y) / diff21Z;
     final double d = -a * p1.getX() - b * p1.getY() - c * p1.getZ();
@@ -291,7 +294,7 @@ public final class Util {
    * @param f File
    */
   public static String getExtension(final File f) {
-    
+
     String ext = null;
     String s = f.getName();
     int i = s.lastIndexOf('.');
@@ -300,6 +303,59 @@ public final class Util {
       ext = s.substring(i + 1).toLowerCase();
     }
     return ext;
+  }
+
+  /**
+   * Return a string with the path of a file in only a maximal size.
+   * @param file File which we want to show the path
+   * @param maxLen maximal length of the path to show
+   * @return a String with the path of a file in only a maximal size
+   */
+  public static final String shortPath(final File file, final int maxLen) {
+
+    if (file == null)
+      return "";
+
+    final String path = file.getAbsolutePath();
+    final int len = path.length();
+
+    if (len > maxLen) {
+
+      final String filename = file.getName();
+      final int filenameLen = filename.length();
+
+      if (filenameLen > (maxLen - 4)) {
+
+        int startLen = maxLen / 3;
+
+        return "..."
+            + File.separator
+            + filename.substring(0, startLen)
+            + "..."
+            + filename.substring(filenameLen - maxLen + 7 + startLen,
+                filenameLen);
+
+      }
+
+      return path.substring(0, maxLen - 4 - filenameLen)
+          + "..." + File.separator + filename;
+    }
+
+    return path;
+  }
+
+  /**
+   * Return a string with the path of a file in only a maximal size.
+   * @param filename filename which we want to show the path
+   * @param maxLen maximal length of the path to show
+   * @return a String with the path of a file in only a maximal size
+   */
+  public static final String shortPath(final String filename, final int maxLen) {
+
+    if (filename == null || "".equals(filename))
+      return "";
+
+    return shortPath(new File(filename), maxLen);
   }
 
 }
