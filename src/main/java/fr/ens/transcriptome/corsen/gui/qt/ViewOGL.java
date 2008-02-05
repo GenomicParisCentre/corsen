@@ -15,16 +15,13 @@ import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.gui.QMouseEvent;
-import com.trolltech.qt.gui.QSizePolicy;
 import com.trolltech.qt.gui.QWheelEvent;
 import com.trolltech.qt.gui.QWidget;
 import com.trolltech.qt.opengl.QGLWidget;
 
 import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
-import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
-import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
 
 public class ViewOGL extends QGLWidget {
 
@@ -42,7 +39,7 @@ public class ViewOGL extends QGLWidget {
   private boolean drawDistances;
 
   private boolean remakeObject = true;
-  private int gllist = -1;
+  private int gllist = 0;
 
   private Color backgroundColor = Color.black;
 
@@ -58,9 +55,9 @@ public class ViewOGL extends QGLWidget {
 
   private static final double ZOOM_FACTOR = 1.2;
 
-  private static final double MIN_ZOOM = 0.1;
+  // private static final double MIN_ZOOM = 0.1;
 
-  private static final double MAX_ZOOM = 2;
+  // private static final double MAX_ZOOM = 2;
 
   QPoint lastPos;
 
@@ -219,7 +216,8 @@ public class ViewOGL extends QGLWidget {
   public void clear() {
 
     setResult(null);
-    this.remakeObject = true;
+    // this.remakeObject = true;
+    setRemakeObject(true);
     repaint();
   }
 
@@ -326,8 +324,8 @@ public class ViewOGL extends QGLWidget {
     gl.glEnable(GL.GL_LIGHT2);
     gl.glEnable(GL.GL_DEPTH_TEST);
 
-    makeObject();
-    setRemakeObject(true);
+    make3DObject();
+
     // this.gl.glShadeModel(GL.GL_FLAT);
     // this.gl.glEnable(GL.GL_DEPTH_TEST);
 
@@ -382,13 +380,11 @@ public class ViewOGL extends QGLWidget {
     this.gl.glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
     this.gl.glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-    if (isRemakeObject()) {
-      makeObject();
-      this.remakeObject = false;
-      // setOkToDraw(false);
-    }
+    if (isRemakeObject())
+      make3DObject();
 
     this.gl.glMatrixMode(GL.GL_MODELVIEW);
+
     this.gl.glCallList(this.gllist);
 
     this.gl.glMatrixMode(GL.GL_PROJECTION);
@@ -481,26 +477,24 @@ public class ViewOGL extends QGLWidget {
   //
   // Other methods
   //
-  private void makeObject() {
+  private void make3DObject() {
 
     if (this.gl == null)
       return;
 
+    System.out.println("make3DObject.");
+
     setRemakeObject(false);
 
-    if (gllist > 0)
-      this.gl.glDeleteLists(gllist, 1);
+    if (this.gllist >= 0)
+      this.gl.glDeleteLists(this.gllist, 1);
     int list = this.gl.glGenLists(++gllist);
 
     this.gl.glNewList(list, GL.GL_COMPILE);
 
-
-
     CorsenJOGL cjogl = new CorsenJOGL(this.gl, this);
 
     // point(0f, 0f, 0f, 0.01f);
-
-    System.out.println("makeObject(" + System.currentTimeMillis() + ")");
 
     /*
      * this.messengersColor = this.settings.getColorMessengers();
