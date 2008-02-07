@@ -26,8 +26,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import com.trolltech.qt.QThread;
+import com.trolltech.qt.core.QLocale;
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.QUrl;
@@ -1058,6 +1060,11 @@ public class CorsenQt extends QMainWindow {
   public static void main(final String[] args) {
     QApplication.initialize(args);
 
+    // Set locales
+    Locale.setDefault(Locale.UK);
+    QLocale.setDefault(new QLocale(QLocale.Language.English,
+        QLocale.Country.UnitedKingdom));
+    
     mainw = new CorsenQt();
 
     // QApplication.invokeLater(mainw);
