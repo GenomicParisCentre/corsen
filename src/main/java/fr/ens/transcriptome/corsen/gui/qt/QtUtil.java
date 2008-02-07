@@ -23,12 +23,38 @@
 package fr.ens.transcriptome.corsen.gui.qt;
 
 import com.trolltech.qt.gui.QImage;
+import com.trolltech.qt.gui.QPixmap;
 
 /**
  * This utility class contains useful methods for Qt.
  * @author Laurent Jourdren
  */
 public final class QtUtil {
+
+  public static abstract class CreateQPixmapThread implements Runnable {
+
+    private boolean end = false;
+    private QPixmap pixmap;
+
+    public boolean isEnd() {
+
+      return this.end;
+    }
+
+    public QPixmap getPixmap() {
+
+      return this.pixmap;
+    }
+
+    protected abstract QPixmap createQPixmap();
+
+    public void run() {
+
+      this.pixmap = createQPixmap();
+      this.end = true;
+    }
+
+  }
 
   /**
    * Transform a color image into a gray image

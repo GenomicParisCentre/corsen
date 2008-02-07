@@ -26,7 +26,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.trolltech.qt.QThread;
 import com.trolltech.qt.core.QObject;
@@ -65,8 +64,6 @@ import fr.ens.transcriptome.corsen.util.Util;
 public class CorsenQt extends QMainWindow {
 
   private static final int PATH_STRING_MAX_LEN = 50;
-
-  private static Logger logger = Logger.getLogger(CorsenQt.class.getName());
 
   private static CorsenQt mainw;
 
@@ -736,25 +733,15 @@ public class CorsenQt extends QMainWindow {
 
         this.refreshHistoryGraphics = false;
 
-        // mainWindowUi.historyBoxplotLabel
-        // .setText("Waiting the end of the process to show graphics.");
-        // mainWindowUi.historyHistogramLabel.setText("");
-
-        final long start = System.currentTimeMillis();
-
         QImage img = mainWindowUi.historyBoxplotLabel.pixmap().toImage();
-        if (img != null)
+        if (img != null && !img.isNull())
           mainWindowUi.historyBoxplotLabel.setPixmap(QPixmap.fromImage(QtUtil
               .toGrayscale(img)));
 
         img = mainWindowUi.historyHistogramLabel.pixmap().toImage();
-        if (img != null)
+        if (img != null && !img.isNull())
           mainWindowUi.historyHistogramLabel.setPixmap(QPixmap.fromImage(QtUtil
               .toGrayscale(img)));
-
-        final long end = System.currentTimeMillis();
-
-        logger.info("toGray=" + (end - start) + " ms");
       }
     }
 
@@ -766,18 +753,30 @@ public class CorsenQt extends QMainWindow {
 
     resultsHistoryChanged();
 
-    int i = ((Integer) o).intValue();
+    final int i = ((Integer) o).intValue();
     mainWindowUi.resultTableView.setModel(this.models.getModel(i));
 
     if (mainWindowUi.launchAnalysisPushButton.isEnabled()) {
 
-      final long start = System.currentTimeMillis();
+      if (this.models.getResult() == null)
+        return;
 
-      mainWindowUi.imageLabel.setPixmap(this.models.getImage(i, this.settings));
+      QtUtil.CreateQPixmapThread cqpt = new QtUtil.CreateQPixmapThread() {
 
-      final long end = System.currentTimeMillis();
+        @Override
+        protected QPixmap createQPixmap() {
 
-      logger.info("Render result graph: " + (end - start) + " ms.");
+          return models.getImage(i, settings);
+        }
+      };
+
+      Thread t = new Thread(cqpt);
+      t.start();
+
+      while (!cqpt.isEnd())
+        QApplication.processEvents();
+
+      mainWindowUi.imageLabel.setPixmap(cqpt.getPixmap());
 
     } else
       mainWindowUi.imageLabel
@@ -785,11 +784,6 @@ public class CorsenQt extends QMainWindow {
 
     mainWindowUi.resultTableView.setAlternatingRowColors(true);
     mainWindowUi.historyTableView.setAlternatingRowColors(true);
-
-    // mainWindowUi.resultTableView.setSortingEnabled(true);
-    // mainWindowUi.resultTableView.sortByColumn(1,
-    // Qt.SortOrder.AscendingOrder);
-
   }
 
   public void closeEvent(QCloseEvent event) {

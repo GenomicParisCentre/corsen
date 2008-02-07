@@ -76,7 +76,7 @@
                 <string/>
                </property>
                <property name="text" >
-                <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Directory to process:&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+                <string>&lt;b&gt;Directory to process:&lt;/b&gt;</string>
                </property>
               </widget>
              </item>
@@ -131,10 +131,7 @@
                 <string>Messenger particle file path</string>
                </property>
                <property name="text" >
-                <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Particles A () file:&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+                <string>&lt;b&gt;Particles A () file:&lt;/b&gt;</string>
                </property>
               </widget>
              </item>
@@ -189,10 +186,7 @@ p, li { white-space: pre-wrap; }
                 <string>Mitochondria particle file path</string>
                </property>
                <property name="text" >
-                <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Particles B () file:&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+                <string>&lt;b&gt;Particles B () file:&lt;/b&gt;</string>
                </property>
               </widget>
              </item>
@@ -247,7 +241,7 @@ p, li { white-space: pre-wrap; }
                 <string>Path and prefix of the output files</string>
                </property>
                <property name="text" >
-                <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Output files prefix:&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+                <string>&lt;b&gt;Output files prefix:&lt;/b&gt;</string>
                </property>
               </widget>
              </item>
