@@ -380,8 +380,10 @@ public class CorsenCore implements Runnable {
     if (directory == null || !directory.exists())
       return false;
 
-    String prefixA = this.settings.getParticlesABatchPrefix();
-    String prefixB = this.settings.getParticlesBBatchPrefix();
+    final long startTime = System.currentTimeMillis();
+
+    final String prefixA = this.settings.getParticlesABatchPrefix();
+    final String prefixB = this.settings.getParticlesBBatchPrefix();
 
     // Store in an HashMap the input files
     final Map<String, InputFiles> map = new HashMap<String, InputFiles>();
@@ -442,6 +444,10 @@ public class CorsenCore implements Runnable {
       }
 
     }
+
+    final long endTime = System.currentTimeMillis();
+
+    logger.info("Calc " + n + " cells in " + (endTime - startTime) + " ms.");
 
     sendEvent(ProgressEventType.END_CELLS_SUCCESSFULL_EVENT, 1, 1);
     return true;
