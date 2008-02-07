@@ -466,8 +466,22 @@ public class DataModelQt {
 
       final double result = this.results.getMedianOfMedianMinDistances();
 
-      return "The median of minimal distances is: "
-          + (result == Double.NaN ? "undefined" : result);
+      StringBuilder sb = new StringBuilder();
+      sb.append("The median of minimal distances is: ");
+
+      if (Double.isNaN(result))
+        sb.append("undefined");
+      else
+        sb.append(String.format("%.3f", result));
+
+      sb.append(" (");
+      sb.append(this.results.size());
+      if (this.results.size() > 1)
+        sb.append(" cells).");
+      else
+        sb.append(" cell).");
+
+      return sb.toString();
     }
 
     public void update() {
@@ -507,7 +521,7 @@ public class DataModelQt {
    * @param result The result to set
    */
   public void setResult(final CorsenResult result) {
-    
+
     this.result = result;
     this.cacheImage.clear();
   }
