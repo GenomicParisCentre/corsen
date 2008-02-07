@@ -851,10 +851,10 @@ public class CorsenQt extends QMainWindow {
       showStatusMessage("Process cell "
           + this.status.currentCellToProcess + " of "
           + this.status.cellToProcessCount + " cells");
-      showStatusMessage("Mitochondria particles file: "
+      showStatusMessage(this.settings.getParticlesAName() + " particles file: " + this.status.rnaFilePath);
+      showStatusMessage(this.settings.getParticlesBName() +  " particles file: "
           + this.status.mitoFilePath);
-      showStatusMessage("Messengers particles file: " + this.status.rnaFilePath);
-      showStatusMessage("Output files prefix: " + this.status.resultFilePath);
+            showStatusMessage("Output files prefix: " + this.status.resultFilePath);
 
       break;
 
@@ -1064,10 +1064,8 @@ public class CorsenQt extends QMainWindow {
     Locale.setDefault(Locale.UK);
     QLocale.setDefault(new QLocale(QLocale.Language.English,
         QLocale.Country.UnitedKingdom));
-    
-    mainw = new CorsenQt();
 
-    // QApplication.invokeLater(mainw);
+    mainw = new CorsenQt();
 
     mainw.show();
     QApplication.exec();
