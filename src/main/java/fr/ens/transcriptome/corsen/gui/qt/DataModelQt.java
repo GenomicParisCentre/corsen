@@ -43,6 +43,7 @@ import com.trolltech.qt.gui.QSortFilterProxyModel;
 
 import fr.ens.transcriptome.corsen.CorsenResultWriter;
 import fr.ens.transcriptome.corsen.Globals;
+import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.Distance;
@@ -449,11 +450,11 @@ public class DataModelQt {
       return QPixmap.fromImage(img);
     }
 
-    public QPixmap getHisto() {
+    public QPixmap getHisto(final int classes) {
 
       final QImage img =
           new ResultGraphs().createDistanceDistributionImage(this.results
-              .getDistances());
+              .getDistances(), classes);
 
       if (img == null)
         return null;
@@ -506,7 +507,9 @@ public class DataModelQt {
    * @param result The result to set
    */
   public void setResult(final CorsenResult result) {
+    
     this.result = result;
+    this.cacheImage.clear();
   }
 
   //
@@ -686,7 +689,7 @@ public class DataModelQt {
 
   }
 
-  public QPixmap getImage(final int index) {
+  public QPixmap getImage(final int index, final Settings settings) {
 
     final CorsenResult r = getResult();
 
@@ -713,7 +716,8 @@ public class DataModelQt {
       if (!this.cacheImage.containsKey(1)) {
 
         final QImage img =
-            new ResultGraphs().createDistanceDistributionImage(r);
+            new ResultGraphs().createDistanceDistributionImage(r, settings
+                .getHistogramResultsNumberClasses());
 
         if (img == null)
           return null;

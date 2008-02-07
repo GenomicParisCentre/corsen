@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.trolltech.qt.QThread;
 import com.trolltech.qt.core.QObject;
@@ -38,8 +39,10 @@ import com.trolltech.qt.gui.QDesktopServices;
 import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QFileDialog;
 import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QImage;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QPixmap;
 import com.trolltech.qt.gui.QFileDialog.FileMode;
 
 import fr.ens.transcriptome.corsen.Corsen;
@@ -63,6 +66,8 @@ public class CorsenQt extends QMainWindow {
 
   private static final int PATH_STRING_MAX_LEN = 50;
 
+  private static Logger logger = Logger.getLogger(CorsenQt.class.getName());
+
   private static CorsenQt mainw;
 
   private Ui_CorsenMainWindow mainWindowUi = new Ui_CorsenMainWindow();
@@ -75,6 +80,8 @@ public class CorsenQt extends QMainWindow {
   private String mitoPath = "";
   private String messengerPath = "";
   private String directoryPath = "";
+
+  private boolean refreshHistoryGraphics;
 
   private class UpdateStatusQt extends QObject implements UpdateStatus {
 
@@ -190,8 +197,6 @@ public class CorsenQt extends QMainWindow {
   @SuppressWarnings("unused")
   private void saveHistoryResults() {
 
-    System.out.println("save...");
-
     String fileName =
         QFileDialog.getSaveFileName(this, "Save result", this.lastDir,
             new QFileDialog.Filter("Result file (*.txt)"));
@@ -240,8 +245,8 @@ public class CorsenQt extends QMainWindow {
   private void setMitoPathLabelText(String text) {
 
     this.mitoPath = text;
-    mainWindowUi.mitoPathLabel.setText(Util.shortPath(text,
-        PATH_STRING_MAX_LEN));
+    mainWindowUi.mitoPathLabel.setText(Util
+        .shortPath(text, PATH_STRING_MAX_LEN));
   }
 
   private void setDirectoryPathLabelText(String text) {
@@ -391,8 +396,6 @@ public class CorsenQt extends QMainWindow {
    */
   @SuppressWarnings("unused")
   private void updateVisualisation() {
-
-    System.out.println("update visualisation");
 
     final ViewOGL v = mainWindowUi.viewOGL;
 
@@ -585,6 +588,9 @@ public class CorsenQt extends QMainWindow {
     else
       this.mainWindowUi.saveResultPushButton.setEnabled(false);
 
+    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+        .currentIndex()));
+    this.resultsHistoryChanged();
   }
 
   private void showStatusMessage(final String message) {
@@ -715,8 +721,43 @@ public class CorsenQt extends QMainWindow {
       historyModel.update();
     // mainWindowUi.historyTableView.setModel(null);
     // mainWindowUi.historyTableView.setModel(historyModel);
-    mainWindowUi.historyBoxplotLabel.setPixmap(historyModel.getBoxplot());
-    mainWindowUi.historyHistogramLabel.setPixmap(historyModel.getHisto());
+
+    if (mainWindowUi.launchAnalysisPushButton.isEnabled()) {
+
+      mainWindowUi.historyBoxplotLabel.setPixmap(historyModel.getBoxplot());
+      mainWindowUi.historyHistogramLabel.setPixmap(historyModel
+          .getHisto(this.settings.getHistogramHistoryNumberClasses()));
+
+      this.refreshHistoryGraphics = true;
+
+    } else {
+
+      if (this.refreshHistoryGraphics) {
+
+        this.refreshHistoryGraphics = false;
+
+        // mainWindowUi.historyBoxplotLabel
+        // .setText("Waiting the end of the process to show graphics.");
+        // mainWindowUi.historyHistogramLabel.setText("");
+
+        final long start = System.currentTimeMillis();
+
+        QImage img = mainWindowUi.historyBoxplotLabel.pixmap().toImage();
+        if (img != null)
+          mainWindowUi.historyBoxplotLabel.setPixmap(QPixmap.fromImage(QtUtil
+              .toGrayscale(img)));
+
+        img = mainWindowUi.historyHistogramLabel.pixmap().toImage();
+        if (img != null)
+          mainWindowUi.historyHistogramLabel.setPixmap(QPixmap.fromImage(QtUtil
+              .toGrayscale(img)));
+
+        final long end = System.currentTimeMillis();
+
+        logger.info("toGray=" + (end - start) + " ms");
+      }
+    }
+
     mainWindowUi.HistoryResultlabel.setText(historyModel.getResultMessage());
   }
 
@@ -728,7 +769,19 @@ public class CorsenQt extends QMainWindow {
     int i = ((Integer) o).intValue();
     mainWindowUi.resultTableView.setModel(this.models.getModel(i));
 
-    mainWindowUi.imageLabel.setPixmap(this.models.getImage(i));
+    if (mainWindowUi.launchAnalysisPushButton.isEnabled()) {
+
+      final long start = System.currentTimeMillis();
+
+      mainWindowUi.imageLabel.setPixmap(this.models.getImage(i, this.settings));
+
+      final long end = System.currentTimeMillis();
+
+      logger.info("Render result graph: " + (end - start) + " ms.");
+
+    } else
+      mainWindowUi.imageLabel
+          .setText("Waiting the end of the process to show graphics");
 
     mainWindowUi.resultTableView.setAlternatingRowColors(true);
     mainWindowUi.historyTableView.setAlternatingRowColors(true);

@@ -157,7 +157,8 @@ public class ResultGraphs {
   //
 
   private void createHistoDataSet(final Map<Particle3D, Distance> dists,
-      final String name, final HistogramDataset histogramdataset) {
+      final String name, final HistogramDataset histogramdataset,
+      final int classes) {
 
     ArrayList<Float> list = new ArrayList<Float>();
 
@@ -177,17 +178,18 @@ public class ResultGraphs {
     final double max = getMax(data);
     final double min = getMin(data);
 
-    histogramdataset.addSeries(name, data, 20, min, max);
+    histogramdataset.addSeries(name, data, classes, min, max);
   }
 
-  public QImage createDistanceDistributionImage(final double[] data) {
+  public QImage createDistanceDistributionImage(final double[] data,
+      final int classes) {
 
     if (data == null || data.length < 2)
       return null;
 
     HistogramDataset histogramdataset = new HistogramDataset();
 
-    histogramdataset.addSeries("Min distances", data, 20, getMin(data),
+    histogramdataset.addSeries("Min distances", data, classes, getMin(data),
         getMax(data));
 
     // createHistoDataSet(results.getMaxDistances(), "Max distances",
@@ -219,12 +221,13 @@ public class ResultGraphs {
    * @param results Result to use
    * @return a QImage of the graph
    */
-  public QImage createDistanceDistributionImage(final CorsenResult results) {
+  public QImage createDistanceDistributionImage(final CorsenResult results,
+      final int classes) {
 
     HistogramDataset histogramdataset = new HistogramDataset();
 
     createHistoDataSet(results.getMinDistances(), "Min distances",
-        histogramdataset);
+        histogramdataset, classes);
     // createHistoDataSet(results.getMaxDistances(), "Max distances",
     // histogramdataset);
 
@@ -260,7 +263,7 @@ public class ResultGraphs {
       return null;
 
     this.width = this.width / 2;
-    
+
     List<Float> listData = new ArrayList<Float>(data.length);
     for (int i = 0; i < data.length; i++)
       listData.add((float) data[i]);
