@@ -104,6 +104,11 @@ public final class Settings {
   private static final String VISUALIZATION_COLOR_LEGEND_KEY =
       "visualization.color.legend";
 
+  private static final String HISTOGRAM_RESULTS_NB_CLASSES_KEY =
+      "histogram.results.classes";
+  private static final String HISTOGRAM_HISTORY_NB_CLASSES_KEY =
+      "histogram.results.classes";
+
   private Properties properties = new Properties();
 
   //
@@ -566,9 +571,34 @@ public final class Settings {
     return Boolean.valueOf(value.trim());
   }
 
+  /**
+   * Get the number of classes for the result histogram.
+   * @return the number of classes for the histogram results
+   */
+  public int getHistogramResultsNumberClasses() {
+
+    String value =
+        this.properties.getProperty(HISTOGRAM_RESULTS_NB_CLASSES_KEY, "50");
+
+    return Integer.valueOf(value.trim());
+  }
+
+  /**
+   * Get the number of classes for the history histogram.
+   * @return the number of classes for the histogram results
+   */
+  public int getHistogramHistoryNumberClasses() {
+
+    String value =
+        this.properties.getProperty(HISTOGRAM_HISTORY_NB_CLASSES_KEY, "50");
+
+    return Integer.valueOf(value.trim());
+  }
+
   //
   // Setters
   //
+
   /**
    * Set if the iv file must be saved.
    * @param saveIVFile true if the iv file must be saved
@@ -905,9 +935,7 @@ public final class Settings {
 
       this.properties.setProperty(PARTICLES_A_PROPERTIES + key, properties
           .getProperty(key));
-
     }
-
   }
 
   /**
@@ -954,9 +982,7 @@ public final class Settings {
 
       this.properties.setProperty(PARTICLES_B_PROPERTIES + key, properties
           .getProperty(key));
-
     }
-
   }
 
   /**
@@ -992,6 +1018,26 @@ public final class Settings {
     this.properties.setProperty(
         VISUALIZATION_SHOW_PARTICLES_B_DIFFERENT_COLORS_KEY, Boolean
             .toString(differentColors));
+  }
+
+  /**
+   * Set the number of classes for the result histogram.
+   * @param classes the number of classes for the histogram
+   */
+  public void setHistogramResultsNumberClasses(final int classes) {
+
+    this.properties.setProperty(HISTOGRAM_RESULTS_NB_CLASSES_KEY, Integer
+        .toString(classes));
+  }
+
+  /**
+   * Set the number of classes for the history histogram.
+   * @param classes the number of classes for the histogram
+   */
+  public void setHistogramHistoryNumberClasses(final int classes) {
+
+    this.properties.setProperty(HISTOGRAM_HISTORY_NB_CLASSES_KEY, Integer
+        .toString(classes));
   }
 
   //

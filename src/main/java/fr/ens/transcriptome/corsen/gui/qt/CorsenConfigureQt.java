@@ -319,6 +319,13 @@ public class CorsenConfigureQt {
         .setIcon(createIcon(this.backgroundColor));
     dialogUi.legendColorPushButton.setIcon(createIcon(this.legendColor));
 
+    // Fourth tab
+
+    dialogUi.histoResultClassesNumberSpinBox.setValue(s
+        .getHistogramResultsNumberClasses());
+    dialogUi.histoHistoryClassesNumberSpinBox.setValue(s
+        .getHistogramHistoryNumberClasses());
+
     if (dialog.exec() == QDialog.DialogCode.Accepted.value()) {
 
       try {
@@ -405,6 +412,13 @@ public class CorsenConfigureQt {
       s.setColorDistances(qColorToColor(this.distancesColor));
       s.setColorBackground(qColorToColor(this.backgroundColor));
       s.setColorLegend(qColorToColor(this.legendColor));
+
+      s
+          .setHistogramResultsNumberClasses(dialogUi.histoResultClassesNumberSpinBox
+              .value());
+      s
+          .setHistogramHistoryNumberClasses(dialogUi.histoHistoryClassesNumberSpinBox
+              .value());
 
     }
 

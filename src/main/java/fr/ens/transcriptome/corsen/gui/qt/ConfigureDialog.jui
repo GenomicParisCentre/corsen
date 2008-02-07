@@ -15,12 +15,6 @@
    <string>Corsen settings</string>
   </property>
   <layout class="QVBoxLayout" >
-   <property name="margin" >
-    <number>9</number>
-   </property>
-   <property name="spacing" >
-    <number>6</number>
-   </property>
    <item>
     <widget class="QTabWidget" name="tabWidget" >
      <property name="currentIndex" >
@@ -28,34 +22,28 @@
      </property>
      <widget class="QWidget" name="tab" >
       <attribute name="title" >
-       <string>Particles</string>
+       <string>&amp;Particles</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
-       <property name="spacing" >
-        <number>6</number>
-       </property>
        <item>
         <widget class="QGroupBox" name="ParticleBGroupBox" >
          <property name="title" >
           <string>Particles A</string>
          </property>
          <layout class="QVBoxLayout" >
-          <property name="margin" >
-           <number>9</number>
-          </property>
-          <property name="spacing" >
-           <number>6</number>
-          </property>
           <item>
            <layout class="QGridLayout" >
-            <property name="margin" >
+            <property name="rightMargin" >
              <number>0</number>
             </property>
-            <property name="spacing" >
-             <number>6</number>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
             </property>
             <item row="2" column="1" colspan="2" >
              <widget class="QLineEdit" name="particleABatchPrefixLineEdit" />
@@ -108,19 +96,19 @@
           <string>Particles B</string>
          </property>
          <layout class="QVBoxLayout" >
-          <property name="margin" >
-           <number>9</number>
-          </property>
-          <property name="spacing" >
-           <number>6</number>
-          </property>
           <item>
            <layout class="QGridLayout" >
-            <property name="margin" >
+            <property name="rightMargin" >
              <number>0</number>
             </property>
-            <property name="spacing" >
-             <number>6</number>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
             </property>
             <item row="2" column="1" colspan="2" >
              <widget class="QLineEdit" name="particleBBatchPrefixLineEdit" />
@@ -173,19 +161,19 @@
           <string>Coordinates</string>
          </property>
          <layout class="QVBoxLayout" >
-          <property name="margin" >
-           <number>9</number>
-          </property>
-          <property name="spacing" >
-           <number>6</number>
-          </property>
           <item>
            <layout class="QGridLayout" >
-            <property name="margin" >
+            <property name="rightMargin" >
              <number>0</number>
             </property>
-            <property name="spacing" >
-             <number>6</number>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
             </property>
             <item row="0" column="1" >
              <widget class="QLineEdit" name="zFactorLineEdit" />
@@ -234,7 +222,7 @@
        <item>
         <spacer>
          <property name="orientation" >
-          <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
+          <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" >
           <size>
@@ -248,31 +236,19 @@
      </widget>
      <widget class="QWidget" name="tab_3" >
       <attribute name="title" >
-       <string>Computation</string>
+       <string>&amp;Computation</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
-       <property name="spacing" >
-        <number>6</number>
-       </property>
        <item>
         <widget class="QGroupBox" name="groupBox_6" >
          <property name="title" >
           <string>Distance computation threads</string>
          </property>
          <layout class="QGridLayout" >
-          <property name="margin" >
-           <number>9</number>
-          </property>
-          <property name="spacing" >
-           <number>6</number>
-          </property>
           <item row="2" column="3" >
            <spacer>
             <property name="orientation" >
-             <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+             <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeHint" >
              <size>
@@ -335,19 +311,19 @@
           <string>Output files</string>
          </property>
          <layout class="QVBoxLayout" >
-          <property name="margin" >
-           <number>9</number>
-          </property>
-          <property name="spacing" >
-           <number>6</number>
-          </property>
           <item>
            <layout class="QGridLayout" >
-            <property name="margin" >
+            <property name="rightMargin" >
              <number>0</number>
             </property>
-            <property name="spacing" >
-             <number>6</number>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
             </property>
             <item row="0" column="0" >
              <widget class="QCheckBox" name="dataFileCheckBox" >
@@ -405,7 +381,7 @@
             <item row="6" column="2" >
              <spacer>
               <property name="orientation" >
-               <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+               <enum>Qt::Vertical</enum>
               </property>
               <property name="sizeHint" >
                <size>
@@ -464,7 +440,7 @@
        <item>
         <spacer>
          <property name="orientation" >
-          <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
+          <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" >
           <size>
@@ -478,34 +454,28 @@
      </widget>
      <widget class="QWidget" name="tab_2" >
       <attribute name="title" >
-       <string>Visualisation</string>
+       <string>&amp;Visualisation</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
-       <property name="spacing" >
-        <number>6</number>
-       </property>
        <item>
         <widget class="QGroupBox" name="groupBox_4" >
          <property name="title" >
           <string>General</string>
          </property>
          <layout class="QVBoxLayout" >
-          <property name="margin" >
-           <number>9</number>
-          </property>
-          <property name="spacing" >
-           <number>6</number>
-          </property>
           <item>
            <layout class="QGridLayout" >
-            <property name="margin" >
+            <property name="rightMargin" >
              <number>0</number>
             </property>
-            <property name="spacing" >
-             <number>6</number>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
             </property>
             <item row="6" column="0" colspan="2" >
              <widget class="QCheckBox" name="showParticlesBDifferentColorCcheckBox" >
@@ -576,12 +546,6 @@
           <string>Colors</string>
          </property>
          <layout class="QGridLayout" >
-          <property name="margin" >
-           <number>9</number>
-          </property>
-          <property name="spacing" >
-           <number>6</number>
-          </property>
           <item row="0" column="0" >
            <widget class="QLabel" name="label_10" >
             <property name="text" >
@@ -708,7 +672,117 @@
        <item>
         <spacer>
          <property name="orientation" >
-          <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_4" >
+      <attribute name="title" >
+       <string>&amp;Graphics</string>
+      </attribute>
+      <layout class="QVBoxLayout" >
+       <item>
+        <widget class="QGroupBox" name="resultsHistogramGroupBox" >
+         <property name="title" >
+          <string>Results Histograms</string>
+         </property>
+         <layout class="QVBoxLayout" >
+          <item>
+           <layout class="QHBoxLayout" >
+            <property name="rightMargin" >
+             <number>0</number>
+            </property>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_21" >
+              <property name="text" >
+               <string>Classes number:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="histoResultClassesNumberSpinBox" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
+              </property>
+              <property name="minimum" >
+               <number>1</number>
+              </property>
+              <property name="maximum" >
+               <number>9999</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="historyHistogramGroupBox" >
+         <property name="title" >
+          <string>History histogram</string>
+         </property>
+         <layout class="QVBoxLayout" >
+          <item>
+           <layout class="QHBoxLayout" >
+            <property name="rightMargin" >
+             <number>0</number>
+            </property>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_20" >
+              <property name="text" >
+               <string>Classes number:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="histoHistoryClassesNumberSpinBox" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
+              </property>
+              <property name="minimum" >
+               <number>1</number>
+              </property>
+              <property name="maximum" >
+               <number>9999</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" >
           <size>
@@ -724,16 +798,22 @@
    </item>
    <item>
     <layout class="QHBoxLayout" >
-     <property name="margin" >
+     <property name="rightMargin" >
       <number>0</number>
      </property>
-     <property name="spacing" >
-      <number>6</number>
+     <property name="leftMargin" >
+      <number>0</number>
+     </property>
+     <property name="topMargin" >
+      <number>0</number>
+     </property>
+     <property name="bottomMargin" >
+      <number>0</number>
      </property>
      <item>
       <spacer>
        <property name="orientation" >
-        <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+        <enum>Qt::Vertical</enum>
        </property>
        <property name="sizeHint" >
         <size>
