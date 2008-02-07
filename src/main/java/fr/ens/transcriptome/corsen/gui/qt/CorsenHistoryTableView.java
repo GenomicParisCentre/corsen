@@ -26,16 +26,17 @@ import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.gui.QContextMenuEvent;
 import com.trolltech.qt.gui.QCursor;
 import com.trolltech.qt.gui.QMenu;
+import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QSortFilterProxyModel;
 import com.trolltech.qt.gui.QTableView;
 import com.trolltech.qt.gui.QWidget;
 
-
-/**
- * This class implements
- */
 import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
 
+/**
+ * This class extends a tableview to add contextual menu
+ * @author Laurent Jourdren
+ */
 public class CorsenHistoryTableView extends QTableView {
 
   private int lastRowIndex;
@@ -51,6 +52,7 @@ public class CorsenHistoryTableView extends QTableView {
       QMenu menu = new QMenu(this);
       menu.addAction("Redo calcultion for this result", this, "recalcResult()");
       menu.addAction("Delete this result", this, "deleteResult()");
+      menu.addAction("Delete all results", this, "deleteAllResults()");
       menu.setEnabled(!CorsenQt.isCalculation());
       menu.exec(QCursor.pos());
 
@@ -123,6 +125,25 @@ public class CorsenHistoryTableView extends QTableView {
 
     CorsenHistoryResults.getCorsenHistoryResults().removeEntry(id);
     CorsenQt.updateHistoryResults();
+  }
+
+  /**
+   * Remove all results.
+   */
+  @SuppressWarnings("unused")
+  private void deleteAllResults() {
+
+    QMessageBox.StandardButton result =
+        QMessageBox.warning(this, "Delete all results",
+            "Are you sure to remove all results ?",
+            new QMessageBox.StandardButtons(QMessageBox.StandardButton.Yes,
+                QMessageBox.StandardButton.No), QMessageBox.StandardButton.No);
+
+    if (result == QMessageBox.StandardButton.Yes) {
+      System.out.println("clear all results");
+      CorsenHistoryResults.getCorsenHistoryResults().clear();
+      CorsenQt.updateHistoryResults();
+    }
   }
 
   //

@@ -153,6 +153,8 @@ public class CorsenHistoryResults {
   public void clear() {
 
     this.entries.clear();
+    this.filesKeys.clear();
+    this.index.clear();
     this.data = null;
   }
 
@@ -197,10 +199,10 @@ public class CorsenHistoryResults {
 
       // Recreate the index
       this.index.clear();
-      for (int id2 : this.entries.keySet()) 
+      for (int id2 : this.entries.keySet())
         this.index.add(id2);
-      
 
+      this.data = null;
     }
 
   }
@@ -222,6 +224,8 @@ public class CorsenHistoryResults {
       Entry e = this.entries.get(id);
       data[count++] = e.getMedianMinDistance();
     }
+
+    this.data = data;
 
     return data;
   }
