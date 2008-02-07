@@ -83,10 +83,10 @@ public class CorsenHistoryTableView extends QTableView {
           Number na = (Number) oa;
           Number nb = (Number) b.data();
 
-          return na.doubleValue() < nb.doubleValue();
+          return na.doubleValue() > nb.doubleValue();
         }
 
-        return oa.toString().compareTo(b.data().toString()) < 0;
+        return oa.toString().compareTo(b.data().toString()) > 0;
       }
 
     };
