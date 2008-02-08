@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public final class Particle2D {
 
-  public static int count;
+  private static int count;
 
   private final int id = count;
   private String name = "" + this.id;
