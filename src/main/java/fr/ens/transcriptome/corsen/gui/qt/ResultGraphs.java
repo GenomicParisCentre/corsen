@@ -162,10 +162,10 @@ public class ResultGraphs {
 
     ArrayList<Float> list = new ArrayList<Float>();
 
-    for (Particle3D p : dists.keySet()) {
+    for (Map.Entry<Particle3D, Distance> e : dists.entrySet()) {
 
-      final long intensity = p.getIntensity();
-      final float distance = dists.get(p).getDistance();
+      final long intensity = e.getKey().getIntensity();
+      final float distance = e.getValue().getDistance();
 
       for (int i = 0; i < intensity; i++)
         list.add(distance);
@@ -303,10 +303,12 @@ public class ResultGraphs {
     List<Float> listMin = new ArrayList<Float>();
     List<Float> listMax = new ArrayList<Float>();
 
-    for (Particle3D p : distsMin.keySet()) {
+    for (Map.Entry<Particle3D, Distance> e : distsMin.entrySet()) {
+
+      final Particle3D p = e.getKey();
 
       final long intensity = p.getIntensity();
-      final float distanceMin = distsMin.get(p).getDistance();
+      final float distanceMin = e.getValue().getDistance();
       final float distanceMax = distsMax.get(p).getDistance();
 
       for (int i = 0; i < intensity; i++) {

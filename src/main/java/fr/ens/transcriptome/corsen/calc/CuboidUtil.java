@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -75,18 +75,16 @@ final class CuboidUtil {
     if (particle == null)
       throw new NullPointerException("Particle is null");
 
-    Map<String, Particle3D> cuboids = Particle3DUtil.createCuboidToMap(
-        particle, xlen * 2, ylen * 2, zlen * 2);
-
-    Iterator it = cuboids.keySet().iterator();
+    Map<String, Particle3D> cuboids =
+        Particle3DUtil
+            .createCuboidToMap(particle, xlen * 2, ylen * 2, zlen * 2);
 
     Set<Particle3D> toRemove = new HashSet<Particle3D>();
 
-    while (it.hasNext()) {
+    for (Map.Entry<String, Particle3D> e : cuboids.entrySet()) {
 
-      String key = (String) it.next();
-
-      Particle3D p = cuboids.get(key);
+      String key = e.getKey();
+      Particle3D p = e.getValue();
 
       final int count = p.innerPointsCount();
 
@@ -113,15 +111,10 @@ final class CuboidUtil {
       }
     }
 
-    it = toRemove.iterator();
+    Iterator<Particle3D> it = toRemove.iterator();
     while (it.hasNext())
       cuboids.remove(it.next());
 
     return new ArrayList<Particle3D>(cuboids.values());
-    // final Particle3D[] result = new Particle3D[cuboids.size()];
-    // cuboids.values().toArray(result);
-
-    // return result;
   }
-
 }

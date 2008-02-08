@@ -80,9 +80,8 @@ public abstract class DistanceProcessor {
 
     this.destParticles = new ArrayList<Particle3D>();
 
-    for (Particle3D particles : destParticles.keySet())
-      this.destParticles.addAll(destParticles.get(particles));
-
+    for (Map.Entry<Particle3D, List<Particle3D>> e : destParticles.entrySet())
+      this.destParticles.addAll(e.getValue());
   }
 
   /**
@@ -98,10 +97,10 @@ public abstract class DistanceProcessor {
    * @return the UpdateStatus
    */
   public UpdateStatus getUpdateStatus() {
-    
+
     return this.updateStatus;
   }
-  
+
   //
   // Other methods
   //
@@ -124,8 +123,8 @@ public abstract class DistanceProcessor {
 
     List<Distance> resultForOnePoint = null;
     for (Point3D point : points)
-      result.addAll(resultForOnePoint = calcDistance(particle, point,
-          resultForOnePoint));
+      result.addAll(resultForOnePoint =
+          calcDistance(particle, point, resultForOnePoint));
 
     return result;
   }

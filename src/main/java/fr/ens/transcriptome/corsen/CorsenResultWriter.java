@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.Iterator;
 import java.util.Map;
 
 import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
@@ -116,16 +115,16 @@ public class CorsenResultWriter {
     Map<Particle3D, Distance> mins = r.getMinDistances();
     Map<Particle3D, Distance> maxs = r.getMaxDistances();
 
-    Iterator<Particle3D> it = mins.keySet().iterator();
+    for (Map.Entry<Particle3D, Distance> e : mins.entrySet()) {
 
-    while (it.hasNext()) {
+      final Particle3D p = e.getKey();
+      final Distance d = e.getValue();
 
-      Particle3D p = it.next();
       out.write(Integer.toString(p.getId()));
       out.write("\t");
       out.write(Long.toString(p.getIntensity()));
       out.write("\t");
-      out.write(Float.toString(mins.get(p).getDistance()));
+      out.write(Float.toString(d.getDistance()));
       out.write("\t");
       out.write(Float.toString(maxs.get(p).getDistance()));
       out.write("\t");

@@ -58,9 +58,10 @@ public class DistanceAnalyser {
 
     this.data = new ArrayList<DataDouble>();
 
-    for (Particle3D par : mapDistances.keySet()) {
+    for (Map.Entry<Particle3D, Distance> e : mapDistances.entrySet()) {
 
-      Distance d = mapDistances.get(par);
+      final Distance d = e.getValue();
+      final Particle3D par = e.getKey();
 
       data.add(new DataDouble(d.getDistance(), par.getIntensity()));
     }

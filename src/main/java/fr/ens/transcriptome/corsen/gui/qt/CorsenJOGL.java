@@ -2,7 +2,6 @@ package fr.ens.transcriptome.corsen.gui.qt;
 
 import java.awt.Color;
 import java.nio.FloatBuffer;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.media.opengl.GL;
@@ -160,12 +159,9 @@ public class CorsenJOGL extends CorsenGL {
     if (distances == null)
       return;
 
-    Iterator<Particle3D> it = distances.keySet().iterator();
+    for (Map.Entry<Particle3D, Distance> e : distances.entrySet()) {
 
-    while (it.hasNext()) {
-
-      Particle3D p = it.next();
-      Distance d = distances.get(p);
+      final Distance d = e.getValue();
 
       if (showNegativesDistances) {
 
