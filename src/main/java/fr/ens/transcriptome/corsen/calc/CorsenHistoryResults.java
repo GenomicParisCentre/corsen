@@ -54,7 +54,7 @@ public class CorsenHistoryResults {
    * Define an entry of the last corsen results.
    * @author Laurent Jourdren
    */
-  public class Entry {
+  public static final class Entry {
 
     private int id = count++;
     private File fileA;

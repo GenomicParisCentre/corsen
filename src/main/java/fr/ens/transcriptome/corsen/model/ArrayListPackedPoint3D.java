@@ -43,7 +43,7 @@ final class ArrayListPackedPoint3D extends AbstractListPoint3D {
    * ArrayLists. No data about the point are stored inside this object.
    * @author Laurent Jourdren
    */
-  private final class InnerPoint3DImpl extends Point3D {
+  private final static class InnerPoint3DImpl extends Point3D {
 
     private ArrayListPackedPoint3D listPoints;
     private int index;

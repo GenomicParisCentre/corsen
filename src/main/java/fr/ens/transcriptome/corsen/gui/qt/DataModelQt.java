@@ -69,7 +69,7 @@ public class DataModelQt {
   private CorsenResult result;
   private Map<Integer, QPixmap> cacheImage = new HashMap<Integer, QPixmap>();
 
-  private class FullDataModel extends QAbstractTableModel {
+  private static final class FullDataModel extends QAbstractTableModel {
 
     private Map<Particle3D, Distance> mins = null;
     private Map<Particle3D, Distance> maxs = null;
@@ -163,7 +163,7 @@ public class DataModelQt {
 
   }
 
-  private class IVModel extends QAbstractTableModel {
+  private static class IVModel extends QAbstractTableModel {
 
     private List<Particle3D> pars;
 
@@ -240,7 +240,7 @@ public class DataModelQt {
 
   }
 
-  private class SummaryDataModel extends QAbstractTableModel {
+  private static class SummaryDataModel extends QAbstractTableModel {
 
     private DistanceAnalyser daMins = null;
     private DistanceAnalyser daMaxs = null;

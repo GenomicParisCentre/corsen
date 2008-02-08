@@ -139,7 +139,7 @@ public class CorsenQt extends QMainWindow {
 
   }
 
-  private class StatusInfo {
+  private static final class StatusInfo {
 
     int currentCellToProcess;
     int cellToProcessCount;

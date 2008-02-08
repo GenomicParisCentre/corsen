@@ -30,7 +30,7 @@ public class CorsenSwing implements UpdateStatus {
   private static final CorsenSwing corsen = new CorsenSwing();
   private CorsenUI gui;
 
-  private class StatusInfo {
+  private static final class StatusInfo {
 
     int currentFile;
     int maxFiles;

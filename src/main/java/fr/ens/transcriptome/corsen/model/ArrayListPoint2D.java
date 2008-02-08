@@ -35,7 +35,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
    * ArrayLists.
    * @author Laurent Jourdren
    */
-  private class InnerPoint2DImpl extends Point2D {
+  private static final class InnerPoint2DImpl extends Point2D {
 
     private ArrayListPoint2D listPoints;
     private int index;
