@@ -230,8 +230,6 @@ public class CorsenSwing implements UpdateStatus {
 
       this.status.phaseStart = System.currentTimeMillis();
       this.status.currentPhase = e.getType().ordinal();
-      this.status.phaseIndex = 0;
-      this.status.phaseEnd = 0;
 
       break;
 
