@@ -3,7 +3,6 @@ package fr.ens.transcriptome.corsen.model;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -497,7 +496,8 @@ public final class Particle3D {
     return p1.distance(p2);
   }
 
-  public static final Map getSurfacePointSlices(final Particle3D particle) {
+  public static final Map<Float, Particle2D> getSurfacePointSlices(
+      final Particle3D particle) {
 
     final Map<Float, Particle2D> slices = new HashMap<Float, Particle2D>();
 
@@ -702,16 +702,16 @@ public final class Particle3D {
     if (particle == null)
       return false;
 
-    final Map slices = getSurfacePointSlices(this);
-    final Map particlesSlices = getSurfacePointSlices(particle);
+    final Map<Float, Particle2D> slices = getSurfacePointSlices(this);
+    final Map<Float, Particle2D> particlesSlices =
+        getSurfacePointSlices(particle);
 
-    final Iterator it = slices.keySet().iterator();
-    while (it.hasNext()) {
+    for (Map.Entry<Float, Particle2D> e : slices.entrySet()) {
 
-      final Float z = (Float) it.next();
+      final Float z = e.getKey();
 
-      final Particle2D p1 = (Particle2D) slices.get(z);
-      final Particle2D p2 = (Particle2D) particlesSlices.get(z);
+      final Particle2D p1 = e.getValue();
+      final Particle2D p2 = particlesSlices.get(z);
 
       if (p1 != null && p2 != null && p1.innerPointIntersect(p2))
         return true;

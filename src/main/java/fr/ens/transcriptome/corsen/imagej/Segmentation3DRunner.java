@@ -187,11 +187,11 @@ public class Segmentation3DRunner {
     if (map == null || oldParticle3D == null || newParticle3D == null)
       return;
 
-    for (Particle2D key : map.keySet()) {
+    for (Map.Entry<Particle2D, Particle3DBuilder> e : map.entrySet()) {
 
-      Particle3DBuilder value = map.get(key);
+      final Particle3DBuilder value = e.getValue();
       if (value == oldParticle3D)
-        map.put(key, newParticle3D);
+        map.put(e.getKey(), newParticle3D);
     }
   }
 
