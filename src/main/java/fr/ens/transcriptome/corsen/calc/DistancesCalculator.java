@@ -68,7 +68,6 @@ public class DistancesCalculator {
     private int threadsCount;
 
     volatile boolean keepRunning = true;
-    boolean waitBeforeNextParticle;
     private DistancesCalculator dc;
 
     public void pleaseStop() {
