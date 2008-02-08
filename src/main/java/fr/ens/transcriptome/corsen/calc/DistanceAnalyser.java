@@ -56,9 +56,6 @@ public class DistanceAnalyser {
 
   private void setDistances(Map<Particle3D, Distance> mapDistances) {
 
-    if (mapDistances == null)
-      data = null;
-
     this.data = new ArrayList<DataDouble>();
 
     for (Particle3D par : mapDistances.keySet()) {
@@ -185,9 +182,9 @@ public class DistanceAnalyser {
 
     sb.append("Min.\t1st Qu.\tMedian\tMean\t3rd Qu.\tMax.\n");
 
-    sb.append(String.format("%2.3f\t%2.3f\t%2.3f\t%2.3f\t%2.3f\t%2.3f",
-        this.getMin(), this.getFirstQuartile(), this.getMedian(), this
-            .getMean(), this.getThirdQuartile(), this.getMax()));
+    sb.append(String.format("%2.3f\t%2.3f\t%2.3f\t%2.3f\t%2.3f\t%2.3f", this
+        .getMin(), this.getFirstQuartile(), this.getMedian(), this.getMean(),
+        this.getThirdQuartile(), this.getMax()));
 
     return sb.toString();
   }
@@ -208,8 +205,9 @@ public class DistanceAnalyser {
 
   public static void main(String[] args) throws IOException {
 
-    DistanceAnalyser da = new DistanceAnalyser(new File(
-        "/home/jourdren/Desktop/atp16/result.result.data"));
+    DistanceAnalyser da =
+        new DistanceAnalyser(new File(
+            "/home/jourdren/Desktop/atp16/result.result.data"));
 
     System.out.println("Min.\t1st Qu.\tMedian\tMean\t3rd Qu.\tMax.");
 
