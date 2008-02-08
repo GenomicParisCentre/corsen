@@ -203,20 +203,4 @@ public class DistanceAnalyser {
     load(file);
   }
 
-  public static void main(String[] args) throws IOException {
-
-    DistanceAnalyser da =
-        new DistanceAnalyser(new File(
-            "/home/jourdren/Desktop/atp16/result.result.data"));
-
-    System.out.println("Min.\t1st Qu.\tMedian\tMean\t3rd Qu.\tMax.");
-
-    System.out.printf("%2.3f  %2.3f  %2.3f  %2.3f  %2.3f  %2.3f\n\n", da
-        .getMin(), da.getFirstQuartile(), da.getMedian(), da.getMean(), da
-        .getThirdQuartile(), da.getMax());
-
-    System.out.println("  Min. 1st Qu.  Median    Mean 3rd Qu.    Max.\n"
-        + "-1.729  14.300  22.170  21.080  29.440  39.510");
-
-  }
 }
