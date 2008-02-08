@@ -155,7 +155,7 @@ public class DistanceAnalyser {
           .parseLong(values[0])));
 
     }
-
+    is.close();
   }
 
   public void calcAll() {
