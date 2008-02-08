@@ -62,7 +62,7 @@ public class DistancesCalculator {
     private List<Particle3D> listB;
     private List<Distance> distancesAllThreads;
 
-    private DistanceProcessor processorB;
+    private DistanceProcessor threadProcessorB;
 
     private int threadNumber;
     private int threadsCount;
@@ -109,7 +109,8 @@ public class DistancesCalculator {
           if (i++ % threadsCount != threadNumber)
             continue;
 
-          distances.addAll(this.processorB.calcDistance(parB, listPointsA));
+          distances.addAll(this.threadProcessorB
+              .calcDistance(parB, listPointsA));
 
           this.count++;
 
@@ -132,7 +133,7 @@ public class DistancesCalculator {
         final int threadNumber, final int threadsCount,
         final DistancesCalculator dc) {
 
-      this.processorB = processorB;
+      this.threadProcessorB = processorB;
 
       this.listB = listB;
       this.distancesAllThreads = distancesAllThreads;
