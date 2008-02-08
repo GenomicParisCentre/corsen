@@ -38,7 +38,6 @@ import fr.ens.transcriptome.corsen.model.Point3D;
 public abstract class DistanceProcessor {
 
   private Particles3D sourceParticles;
-  private Map<Particle3D, List<Particle3D>> mapDestParticles;
   private List<Particle3D> destParticles;
 
   private UpdateStatus updateStatus;
@@ -79,7 +78,6 @@ public abstract class DistanceProcessor {
   private void setDestParticles(
       final Map<Particle3D, List<Particle3D>> destParticles) {
 
-    this.mapDestParticles = destParticles;
     this.destParticles = new ArrayList<Particle3D>();
 
     for (Particle3D particles : destParticles.keySet())
