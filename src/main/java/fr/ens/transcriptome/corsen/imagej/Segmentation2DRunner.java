@@ -205,8 +205,7 @@ public class Segmentation2DRunner {
         queueY.add(y);
       }
 
-      byte c = count;
-      return ++c;
+      return (byte) (count + 1);
     }
 
     return count;
