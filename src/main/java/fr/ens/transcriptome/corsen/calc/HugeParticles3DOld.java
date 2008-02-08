@@ -73,10 +73,9 @@ public class HugeParticles3DOld extends DistanceProcessor {
     this.ylen = ylen;
     this.zlen = zlen;
     this.radius = (float) Math.sqrt(xlen * xlen + ylen * ylen + zlen * zlen);
-    this.exclusionPoints = new HashMap<Point3D, Float>();
 
-    // ArrayList<Particle3D> al = new ArrayList<Particle3D>();
-    Map<Particle3D, List<Particle3D>> mapCuboids = new HashMap<Particle3D, List<Particle3D>>();
+    Map<Particle3D, List<Particle3D>> mapCuboids =
+        new HashMap<Particle3D, List<Particle3D>>();
 
     final int n = mitoParticles.getParticles().size();
     int i = 0;
@@ -86,8 +85,8 @@ public class HugeParticles3DOld extends DistanceProcessor {
       final double p = (double) i / (double) n * 1000.0;
       sendEvent(eventType, (int) p);
 
-      final List<Particle3D> cuboids = CuboidUtil.defineCuboids(mito, xlen,
-          ylen, zlen);
+      final List<Particle3D> cuboids =
+          CuboidUtil.defineCuboids(mito, xlen, ylen, zlen);
 
       /*
        * for (int j = 0; j < cuboids.length; j++) { al.add(cuboids[j]); }
@@ -200,9 +199,9 @@ public class HugeParticles3DOld extends DistanceProcessor {
     boolean result = saveLastPointResult(point, d < 0);
 
     if (nearest != null && result != testResult) {
-      System.err.println("error optimisation !!!\td=" + d + "\tnearstDistance="
-          + nearestDistance + "\tnearestDistanceToMito="
-          + nearestDistanceToMito);
+      System.err.println("error optimisation !!!\td="
+          + d + "\tnearstDistance=" + nearestDistance
+          + "\tnearestDistanceToMito=" + nearestDistanceToMito);
 
     }
 
