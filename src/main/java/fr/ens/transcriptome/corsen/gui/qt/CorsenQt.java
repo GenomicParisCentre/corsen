@@ -148,7 +148,6 @@ public class CorsenQt extends QMainWindow {
     int nbPhaseDone;
     int maxPhase;
     int indexInPhase;
-    long timeStartPhase;
     long timeStartCells;
     long timeStartCell;
     String mitoFilePath;
@@ -851,10 +850,11 @@ public class CorsenQt extends QMainWindow {
       showStatusMessage("Process cell "
           + this.status.currentCellToProcess + " of "
           + this.status.cellToProcessCount + " cells");
-      showStatusMessage(this.settings.getParticlesAName() + " particles file: " + this.status.rnaFilePath);
-      showStatusMessage(this.settings.getParticlesBName() +  " particles file: "
-          + this.status.mitoFilePath);
-            showStatusMessage("Output files prefix: " + this.status.resultFilePath);
+      showStatusMessage(this.settings.getParticlesAName()
+          + " particles file: " + this.status.rnaFilePath);
+      showStatusMessage(this.settings.getParticlesBName()
+          + " particles file: " + this.status.mitoFilePath);
+      showStatusMessage("Output files prefix: " + this.status.resultFilePath);
 
       break;
 
@@ -877,7 +877,6 @@ public class CorsenQt extends QMainWindow {
     case START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT:
     case START_WRITE_RPLOT_DISTANCES_EVENT:
 
-      this.status.timeStartPhase = System.currentTimeMillis();
       this.status.currentPhase = e.getType().ordinal();
       this.status.indexInPhase = 0;
       this.status.nbPhaseDone++;
