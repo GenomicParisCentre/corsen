@@ -6,7 +6,7 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.30</version>
+	<version>0.31</version>
 	<name>Corsen</name>
 	<description>
 		A tool to calc distance between mitochondria and RNA
@@ -346,6 +346,7 @@
 									<replacetoken>jar href="ij</replacetoken>
 									<replacevalue>jar main="true" href="ij</replacevalue>
 								</replace-->
+								<echo message="totot" />
 								<replace dir="${basedir}/target/site" value="${pom.url}">
 									<include name="**/*.jnlp"/>
 									<include name="**/*.html"/>
@@ -421,6 +422,8 @@
 						<includes>
 							<include>commons-cli:commons-cli</include>
 							<include>commons-math:commons-math</include>
+							<include>jfree:jcommon</include>
+							<include>jfree:jfreechart</include>
 							<!--include>NIH:ij</include-->
 							<!--include>trolltech:qtjambi-launcher</include-->
 							<!--include>trolltech:qtjambi</include>

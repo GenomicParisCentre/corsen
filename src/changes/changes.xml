@@ -38,6 +38,58 @@
 	</properties>
 	<body>
 
+		<release version="0.31" date="2008-02-08">
+			
+			<action dev="jourdren" type="fix">
+				La locale de l'application est désormais Anglais/Royaume-Uni.
+			</action>
+			
+			<action dev="jourdren" type="fix">
+				La créations des graphique se fait maintenant dans un thread
+				 différent pour éviter de bloquer l'application.
+			</action>
+			
+			<action dev="jourdren" type="add">
+				Le nombre de classes des histogrammes peut être défini par l'utilisateur.
+			</action>
+			
+			<action dev="jourdren" type="fix">
+				Les histogrames ne sont plus actualisé lors des calculs.
+			</action>
+			
+			<action dev="jourdren" type="add">
+				Le temps de calcul pour toutes les cellules est affiché dans le log.
+			</action>
+			
+			<action dev="jourdren" type="fix">
+				La vue 3D n'est plus calculée qu'une seule fois.
+			</action>
+			
+			<action dev="jourdren" type="fix">
+				Les chemins des fichiers ne sont plus affiché en entier dans les boites d'informations
+				pour éviter de trop agrandir la fenetre de l'application.
+			</action>
+			
+			<action dev="jourdren" type="add">
+				On relancer un calcul à partir de l'onglet historique.
+			</action>
+			
+			<action dev="jourdren" type="add">
+				Ajout d'un onglet gardant, l'historique des calculs. Cet onglet contient également 
+				un histograme et un boxplot.
+			</action>
+			
+			<action dev="jourdren" type="update">
+				Ajout de la transparence à la visualisation 3D.
+			</action>
+			
+			<action dev="jourdren" type="fix">
+				Bogue dans apply() pour changer les coordonnées des pixels.
+			</action>
+		
+		
+		</release>
+
 		<release version="0.30" date="2008-01-16">
 
 			<action dev="jourdren" type="fix">
