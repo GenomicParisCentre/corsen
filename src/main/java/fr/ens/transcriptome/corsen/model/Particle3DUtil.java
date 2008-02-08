@@ -92,7 +92,7 @@ public final class Particle3DUtil {
                   .getPixelHeight(), particle.getPixelDepth());
 
           builder.setName(particle.getName() + "-" + builder.getId());
-          builder.setComment("Cuboid from Particle #"+particle.getId());
+          builder.setComment("Cuboid from Particle #" + particle.getId());
           addSurfacePoint(builder, i, j, k);
           addSurfacePoint(builder, x1, j, k);
           addSurfacePoint(builder, x1, y1, k);
@@ -127,17 +127,14 @@ public final class Particle3DUtil {
       final float y = points.getYAt(i);
       final float z = points.getZAt(i);
 
-      final Integer xMapIndex = new Integer((int) (x / xlenght));
-      final Integer yMapIndex = new Integer((int) (y / ylenght));
-      final Integer zMapIndex = new Integer((int) (z / zlenght));
-
-      // final Particle3D p = (Particle3D) mapZ.get(zMapIndex);
+      final Integer xMapIndex = Integer.valueOf((int) (x / xlenght));
+      final Integer yMapIndex = Integer.valueOf((int) (y / ylenght));
+      final Integer zMapIndex = Integer.valueOf((int) (z / zlenght));
 
       Particle3DBuilder builder =
           mapCuboids.get(xMapIndex, yMapIndex, zMapIndex);
 
       builder.addInnerPoint(x, y, z, points.getIAt(i));
-      // p.addInnerPoint(x, y, z, points.getIAt(i));
     }
 
   }

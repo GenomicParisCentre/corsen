@@ -360,7 +360,7 @@ public class CorsenQt extends QMainWindow {
     mainWindowUi.viewOGL.setSettings(this.settings);
 
     this.models.setResult(result);
-    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+    this.resultViewChanged(Integer.valueOf(this.mainWindowUi.resultViewComboBox
         .currentIndex()));
 
     if (result == null || result.getCuboidsMessengersParticles() == null) {
@@ -425,7 +425,7 @@ public class CorsenQt extends QMainWindow {
 
     mainWindowUi.viewOGL.clear();
     this.models.setResult(null);
-    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+    this.resultViewChanged(Integer.valueOf(this.mainWindowUi.resultViewComboBox
         .currentIndex()));
 
     String arnFile = messengerPath;
@@ -506,7 +506,7 @@ public class CorsenQt extends QMainWindow {
 
     mainWindowUi.viewOGL.clear();
     this.models.setResult(null);
-    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+    this.resultViewChanged(Integer.valueOf(this.mainWindowUi.resultViewComboBox
         .currentIndex()));
 
     final CorsenCore cc = new CorsenCore();
@@ -586,7 +586,7 @@ public class CorsenQt extends QMainWindow {
     else
       this.mainWindowUi.saveResultPushButton.setEnabled(false);
 
-    this.resultViewChanged(new Integer(this.mainWindowUi.resultViewComboBox
+    this.resultViewChanged(Integer.valueOf(this.mainWindowUi.resultViewComboBox
         .currentIndex()));
     this.resultsHistoryChanged();
   }
@@ -973,12 +973,12 @@ public class CorsenQt extends QMainWindow {
 
     for (int i = 0; i < n; i++)
       mainWindowUi.resultViewComboBox.addItem(
-          this.models.getViewDescription(i), new Integer(i));
+          this.models.getViewDescription(i), Integer.valueOf(i));
 
     mainWindowUi.resultViewComboBox.currentIndexChanged.connect(this,
         "resultViewChanged(Object)");
 
-    resultViewChanged(new Integer(0));
+    resultViewChanged(Integer.valueOf(0));
 
     mainWindowUi.saveResultPushButton.clicked.connect(this, "saveResultFile()");
 
