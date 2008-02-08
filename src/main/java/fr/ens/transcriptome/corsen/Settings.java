@@ -1110,7 +1110,7 @@ public final class Settings {
     this.properties.store(fos, " "
         + Globals.APP_NAME + " version " + Globals.APP_VERSION
         + " configuration file");
-
+    fos.close();
   }
 
   /**
@@ -1144,6 +1144,7 @@ public final class Settings {
     FileInputStream fis = new FileInputStream(file);
 
     this.properties.load(fis);
+    fis.close();
   }
 
   /**
