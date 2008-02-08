@@ -44,7 +44,7 @@ public class CorsenHistoryTableView extends QTableView {
 
   public void contextMenuEvent(QContextMenuEvent e) {
 
-    QModelIndex index = indexAt(e.pos());
+    QModelIndex index = this.sorter.mapToSource(indexAt(e.pos()));
 
     if (index != null) {
       this.lastRowIndex = index.row();
@@ -94,9 +94,7 @@ public class CorsenHistoryTableView extends QTableView {
     };
 
     this.sorter.setSourceModel(model);
-
     super.setModel(this.sorter);
-
   }
 
   /**
@@ -105,14 +103,11 @@ public class CorsenHistoryTableView extends QTableView {
   @SuppressWarnings("unused")
   private void recalcResult() {
 
-    int id = (Integer) this.sorter.data(this.lastRowIndex, 0);
-
     CorsenHistoryResults.Entry e =
-        CorsenHistoryResults.getCorsenHistoryResults().getEntry(id);
+        CorsenHistoryResults.getCorsenHistoryResults().get(this.lastRowIndex);
 
     CorsenQt.launchAnalysis(e.getFileA().getAbsolutePath(), e.getFileB()
         .getAbsolutePath(), e.getResultsPath().getAbsolutePath());
-
   }
 
   /**
@@ -121,9 +116,7 @@ public class CorsenHistoryTableView extends QTableView {
   @SuppressWarnings("unused")
   private void deleteResult() {
 
-    int id = (Integer) this.sorter.data(this.lastRowIndex, 0);
-
-    CorsenHistoryResults.getCorsenHistoryResults().removeEntry(id);
+    CorsenHistoryResults.getCorsenHistoryResults().remove(this.lastRowIndex);
     CorsenQt.updateHistoryResults();
   }
 

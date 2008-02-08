@@ -177,9 +177,23 @@ public class CorsenHistoryResults {
     return this.entries.get(id);
   }
 
-  public Entry get(int index) {
+  /**
+   * Get an entry by this index.
+   * @param index Index of the entry to get
+   * @return an Entry object
+   */
+  public Entry get(final int index) {
 
     return getEntry(this.index.get(index));
+  }
+  
+  /**
+   * Remove an entry by this index
+   * @param index
+   */
+  public void remove(final int index) {
+    
+    removeEntry(this.index.get(index));
   }
 
   /**
