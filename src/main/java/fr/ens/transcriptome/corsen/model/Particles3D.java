@@ -151,7 +151,7 @@ public class Particles3D {
    * @return Returns the imageFilenameDate
    */
   public Date getImageFilenameDate() {
-    return imageFilenameDate;
+    return imageFilenameDate == null ? null : (Date) imageFilenameDate.clone();
   }
 
   /**
@@ -294,7 +294,8 @@ public class Particles3D {
    * @param imageFilenameDate The imageFilenameDate to set
    */
   public void setImageFilenameDate(final Date imageFilenameDate) {
-    this.imageFilenameDate = imageFilenameDate;
+    this.imageFilenameDate =
+        imageFilenameDate == null ? null : (Date) imageFilenameDate.clone();
   }
 
   /**
