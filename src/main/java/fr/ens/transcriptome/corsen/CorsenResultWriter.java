@@ -249,11 +249,6 @@ public class CorsenResultWriter {
     if (particles == null || os == null)
       return;
 
-    // Particle3D[] pars = particles.getParticles();
-
-    if (particles == null)
-      return;
-
     final Writer out = new OutputStreamWriter(os);
 
     out.write("#Internal id\tArea\tVolume\tSphericity\tIntensity\tDensity\n");
@@ -400,8 +395,7 @@ public class CorsenResultWriter {
    * @param out Writer
    * @throws IOException if an error occurs while writing data
    */
-  public void writeSummaryResultFile(final OutputStream os)
-      throws IOException {
+  public void writeSummaryResultFile(final OutputStream os) throws IOException {
 
     final Writer out = new OutputStreamWriter(os);
 
