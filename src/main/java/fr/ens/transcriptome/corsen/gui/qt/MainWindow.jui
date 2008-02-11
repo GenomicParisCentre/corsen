@@ -76,7 +76,7 @@
                 <string/>
                </property>
                <property name="text" >
-                <string>&lt;b&gt;Directory to process:&lt;/b&gt;</string>
+                <string>&lt;b>Directory to process:&lt;/b></string>
                </property>
               </widget>
              </item>
@@ -131,7 +131,7 @@
                 <string>Messenger particle file path</string>
                </property>
                <property name="text" >
-                <string>&lt;b&gt;Particles A () file:&lt;/b&gt;</string>
+                <string>&lt;b>Particles A () file:&lt;/b></string>
                </property>
               </widget>
              </item>
@@ -186,7 +186,7 @@
                 <string>Mitochondria particle file path</string>
                </property>
                <property name="text" >
-                <string>&lt;b&gt;Particles B () file:&lt;/b&gt;</string>
+                <string>&lt;b>Particles B () file:&lt;/b></string>
                </property>
               </widget>
              </item>
@@ -241,7 +241,7 @@
                 <string>Path and prefix of the output files</string>
                </property>
                <property name="text" >
-                <string>&lt;b&gt;Output files prefix:&lt;/b&gt;</string>
+                <string>&lt;b>Output files prefix:&lt;/b></string>
                </property>
               </widget>
              </item>
@@ -417,8 +417,8 @@
        <attribute name="title" >
         <string>&amp;Results</string>
        </attribute>
-       <layout class="QGridLayout" >
-        <item row="0" column="0" colspan="2" >
+       <layout class="QVBoxLayout" >
+        <item>
          <layout class="QHBoxLayout" >
           <property name="rightMargin" >
            <number>0</number>
@@ -473,64 +473,70 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="0" colspan="2" >
-         <widget class="QTableView" name="resultTableView" >
-          <property name="toolTip" >
-           <string>Result</string>
-          </property>
-          <property name="statusTip" >
-           <string>Result</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="2" >
-         <widget class="QLabel" name="imageLabel" >
-          <property name="text" >
-           <string/>
-          </property>
-          <property name="alignment" >
-           <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1" >
-         <spacer>
+        <item>
+         <widget class="QSplitter" name="splitter" >
           <property name="orientation" >
-           <enum>Qt::Vertical</enum>
+           <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
           </property>
-          <property name="sizeHint" >
-           <size>
-            <width>302</width>
-            <height>51</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="4" column="0" >
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="4" column="1" >
-         <widget class="QPushButton" name="saveResultPushButton" >
-          <property name="toolTip" >
-           <string>Save the result</string>
-          </property>
-          <property name="statusTip" >
-           <string>Save the result</string>
-          </property>
-          <property name="text" >
-           <string>S&amp;ave result</string>
-          </property>
+          <widget class="QTableView" name="resultTableView" >
+           <property name="toolTip" >
+            <string>Result</string>
+           </property>
+           <property name="statusTip" >
+            <string>Result</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="imageLabel" >
+           <property name="text" >
+            <string/>
+           </property>
+           <property name="alignment" >
+            <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+           </property>
+          </widget>
          </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" >
+          <property name="rightMargin" >
+           <number>0</number>
+          </property>
+          <property name="leftMargin" >
+           <number>0</number>
+          </property>
+          <property name="topMargin" >
+           <number>0</number>
+          </property>
+          <property name="bottomMargin" >
+           <number>0</number>
+          </property>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="saveResultPushButton" >
+            <property name="toolTip" >
+             <string>Save the result</string>
+            </property>
+            <property name="statusTip" >
+             <string>Save the result</string>
+            </property>
+            <property name="text" >
+             <string>S&amp;ave result</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -723,22 +729,75 @@
        <attribute name="title" >
         <string>Results &amp;History</string>
        </attribute>
-       <layout class="QGridLayout" >
-        <item row="0" column="0" colspan="2" >
-         <widget class="CorsenHistoryTableView" name="historyTableView" >
-          <property name="focusPolicy" >
-           <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
+       <layout class="QVBoxLayout" >
+        <item>
+         <widget class="QSplitter" name="splitter_2" >
+          <property name="orientation" >
+           <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
           </property>
+          <widget class="QWidget" name="" >
+           <layout class="QVBoxLayout" >
+            <property name="rightMargin" >
+             <number>0</number>
+            </property>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="CorsenHistoryTableView" native="1" name="historyTableView" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="HistoryResultlabel" >
+              <property name="text" >
+               <string>The median of minimal distances is:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="" >
+           <layout class="QHBoxLayout" >
+            <property name="rightMargin" >
+             <number>0</number>
+            </property>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="historyBoxplotLabel" >
+              <property name="text" >
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="historyHistogramLabel" >
+              <property name="text" >
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
-        <item row="1" column="0" colspan="2" >
-         <widget class="QLabel" name="HistoryResultlabel" >
-          <property name="text" >
-           <string>The median of minimal distances is:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="2" >
+        <item>
          <layout class="QHBoxLayout" >
           <property name="rightMargin" >
            <number>0</number>
@@ -753,80 +812,53 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="historyBoxplotLabel" >
-            <property name="text" >
-             <string/>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
             </property>
-           </widget>
+            <property name="sizeHint" >
+             <size>
+              <width>431</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="historyHistogramLabel" >
-            <property name="text" >
-             <string/>
+           <layout class="QHBoxLayout" >
+            <property name="rightMargin" >
+             <number>0</number>
             </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="3" column="0" >
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>20</width>
-            <height>201</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="4" column="0" >
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>431</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="4" column="1" >
-         <layout class="QHBoxLayout" >
-          <property name="rightMargin" >
-           <number>0</number>
-          </property>
-          <property name="leftMargin" >
-           <number>0</number>
-          </property>
-          <property name="topMargin" >
-           <number>0</number>
-          </property>
-          <property name="bottomMargin" >
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="historyClearPushButton" >
-            <property name="focusPolicy" >
-             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            <property name="leftMargin" >
+             <number>0</number>
             </property>
-            <property name="text" >
-             <string>&amp;Clear</string>
+            <property name="topMargin" >
+             <number>0</number>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="historySaveResultsPushButton" >
-            <property name="focusPolicy" >
-             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            <property name="bottomMargin" >
+             <number>0</number>
             </property>
-            <property name="text" >
-             <string>S&amp;ave Results</string>
-            </property>
-           </widget>
+            <item>
+             <widget class="QPushButton" name="historyClearPushButton" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
+              <property name="text" >
+               <string>&amp;Clear</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="historySaveResultsPushButton" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
+              <property name="text" >
+               <string>S&amp;ave Results</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
