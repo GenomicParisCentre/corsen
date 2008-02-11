@@ -45,6 +45,7 @@ import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.Distance;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
+import fr.ens.transcriptome.corsen.util.SystemUtil;
 
 /**
  * This class create graph for corsen results
@@ -211,7 +212,8 @@ public class ResultGraphs {
             false // URLs?
             );
 
-    chart.setBackgroundPaint(TRANSPARENT_COLOR);
+    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
+      chart.setBackgroundPaint(TRANSPARENT_COLOR);
 
     final BufferedImage image =
         chart.createBufferedImage(this.width, this.height,
@@ -249,7 +251,8 @@ public class ResultGraphs {
             false // URLs?
             );
 
-    chart.setBackgroundPaint(TRANSPARENT_COLOR);
+    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
+      chart.setBackgroundPaint(TRANSPARENT_COLOR);
 
     final BufferedImage image =
         chart.createBufferedImage(this.width, this.height,
@@ -283,7 +286,8 @@ public class ResultGraphs {
         ChartFactory.createBoxAndWhiskerChart("Intensities Boxplot", "",
             "Distance", defaultboxandwhiskercategorydataset, false);
 
-    chart.setBackgroundPaint(TRANSPARENT_COLOR);
+    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
+      chart.setBackgroundPaint(TRANSPARENT_COLOR);
 
     final BufferedImage image =
         chart.createBufferedImage(this.width, this.height,
@@ -335,7 +339,8 @@ public class ResultGraphs {
         ChartFactory.createBoxAndWhiskerChart("Intensities Boxplot", "",
             "Distance", defaultboxandwhiskercategorydataset, false);
 
-    chart.setBackgroundPaint(TRANSPARENT_COLOR);
+    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
+      chart.setBackgroundPaint(TRANSPARENT_COLOR);
 
     // CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
     // // chart.setBackgroundPaint(Color.white);
@@ -390,7 +395,8 @@ public class ResultGraphs {
         ChartFactory.createScatterPlot(title, "Intensity", "Volume", xydataset,
             PlotOrientation.VERTICAL, false, true, false);
 
-    chart.setBackgroundPaint(new Color(255, 255, 255, 0));
+    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
+      chart.setBackgroundPaint(new Color(255, 255, 255, 0));
 
     XYPlot xyplot = (XYPlot) chart.getPlot();
     XYDotRenderer xydotrenderer = new XYDotRenderer();
