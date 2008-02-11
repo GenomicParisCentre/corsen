@@ -109,6 +109,9 @@ public final class Settings {
   private static final String HISTOGRAM_HISTORY_NB_CLASSES_KEY =
       "histogram.history.classes";
 
+  private static final String CLEAR_HISTORY_WHEN_NEW_CALC =
+      "main.clear.history.new.calc";
+
   private Properties properties = new Properties();
 
   //
@@ -595,6 +598,18 @@ public final class Settings {
     return Integer.valueOf(value.trim());
   }
 
+  /**
+   * Test if the history must be cleared when launching a new batch.
+   * @return true if the history must be cleared when launching a new batch
+   */
+  public boolean isClearHistoryWhenLaunchingNewCalc() {
+
+    String value =
+        this.properties.getProperty(CLEAR_HISTORY_WHEN_NEW_CALC, "false");
+
+    return Boolean.valueOf(value);
+  }
+
   //
   // Setters
   //
@@ -1038,6 +1053,12 @@ public final class Settings {
 
     this.properties.setProperty(HISTOGRAM_HISTORY_NB_CLASSES_KEY, Integer
         .toString(classes));
+  }
+
+  public void setClearHistoryWhenLaunchNewCalc(final boolean value) {
+
+    this.properties.setProperty(CLEAR_HISTORY_WHEN_NEW_CALC, Boolean
+        .toString(value));
   }
 
   //

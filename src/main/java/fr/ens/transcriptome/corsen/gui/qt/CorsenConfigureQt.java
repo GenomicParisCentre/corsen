@@ -269,6 +269,9 @@ public class CorsenConfigureQt {
     dialogUi.mitosCuboidsCheckBox.setChecked(s.isSaveParticlesBCuboids3dFile());
     dialogUi.distancesCheckBox.setChecked(s.isSaveDistances3dFile());
 
+    dialogUi.clearHistoryCheckBox.setChecked(s
+        .isClearHistoryWhenLaunchingNewCalc());
+
     // Third tab
 
     dialogUi.messengersColorPushButton.clicked.connect(o,
@@ -325,6 +328,8 @@ public class CorsenConfigureQt {
     dialogUi.histoHistoryClassesNumberSpinBox.setValue(s
         .getHistogramHistoryNumberClasses());
 
+    // Validation
+
     if (dialog.exec() == QDialog.DialogCode.Accepted.value()) {
 
       try {
@@ -373,6 +378,9 @@ public class CorsenConfigureQt {
       s.setSaveParticlesBCuboids3dFile(dialogUi.mitosCuboidsCheckBox
           .isChecked());
       s.setSaveDistances3dFile(dialogUi.distancesCheckBox.isChecked());
+
+      s.setClearHistoryWhenLaunchNewCalc(dialogUi.clearHistoryCheckBox
+          .isChecked());
 
       try {
         s.setVisualizationPointsSize(Float

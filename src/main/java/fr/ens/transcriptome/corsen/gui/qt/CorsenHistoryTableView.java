@@ -133,7 +133,7 @@ public class CorsenHistoryTableView extends QTableView {
                 QMessageBox.StandardButton.No), QMessageBox.StandardButton.No);
 
     if (result == QMessageBox.StandardButton.Yes) {
-      System.out.println("clear all results");
+
       CorsenHistoryResults.getCorsenHistoryResults().clear();
       CorsenQt.updateHistoryResults();
     }

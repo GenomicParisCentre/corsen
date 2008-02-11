@@ -519,6 +519,11 @@ public class CorsenQt extends QMainWindow {
       cc.setDirFiles(new File(dirFile));
       cc.setMultipleFiles(true);
 
+      if (this.settings.isClearHistoryWhenLaunchingNewCalc()) {
+        CorsenHistoryResults.getCorsenHistoryResults().clear();
+        CorsenQt.updateHistoryResults();
+      }
+
       QThread t = new QThread(cc);
       cc.getUpdateStatus().moveToThread(t);
       t.start();
