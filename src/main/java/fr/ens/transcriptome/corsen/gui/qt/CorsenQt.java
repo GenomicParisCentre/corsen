@@ -186,7 +186,7 @@ public class CorsenQt extends QMainWindow {
   //
 
   @SuppressWarnings("unused")
-  private void clearHistoryResults() {
+  void clearHistoryResults() {
 
     CorsenHistoryResults.getCorsenHistoryResults().clear();
     resultsHistoryChanged();
@@ -963,6 +963,19 @@ public class CorsenQt extends QMainWindow {
   public void showMessage(final String msg) {
 
     QMessageBox.information(this, Globals.APP_NAME, msg);
+  }
+
+  void redrawResultGraph() {
+
+    this.models.setResult(this.models.getResult());
+    this.resultViewChanged(Integer.valueOf(this.mainWindowUi.resultViewComboBox
+        .currentIndex()));
+  }
+
+  void redrawHistoryGraph() {
+
+    this.refreshHistoryGraphics = true;
+    resultsHistoryChanged();
   }
 
   //

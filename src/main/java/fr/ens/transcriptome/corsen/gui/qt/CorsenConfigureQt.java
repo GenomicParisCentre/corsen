@@ -8,7 +8,6 @@ import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.gui.QColorDialog;
 import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QPixmap;
 
 import fr.ens.transcriptome.corsen.Settings;
@@ -38,7 +37,7 @@ import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 public class CorsenConfigureQt {
 
-  private QMainWindow mainWindow;
+  private CorsenQt mainWindow;
   private Settings settings;
 
   private QColor messengersColor;
@@ -413,12 +412,21 @@ public class CorsenConfigureQt {
       s.setColorBackground(qColorToColor(this.backgroundColor));
       s.setColorLegend(qColorToColor(this.legendColor));
 
-      s
-          .setHistogramResultsNumberClasses(dialogUi.histoResultClassesNumberSpinBox
-              .value());
-      s
-          .setHistogramHistoryNumberClasses(dialogUi.histoHistoryClassesNumberSpinBox
-              .value());
+      final int histoResultClassesNumber =
+          dialogUi.histoResultClassesNumberSpinBox.value();
+
+      final int histoHistoryClassesNumber =
+          dialogUi.histoHistoryClassesNumberSpinBox.value();
+
+      if (histoResultClassesNumber != s.getHistogramResultsNumberClasses()) {
+        s.setHistogramResultsNumberClasses(histoResultClassesNumber);
+        this.mainWindow.redrawResultGraph();
+      }
+
+      if (histoHistoryClassesNumber != s.getHistogramHistoryNumberClasses()) {
+        s.setHistogramHistoryNumberClasses(histoHistoryClassesNumber);
+        this.mainWindow.redrawHistoryGraph();
+      }
 
     }
 
@@ -472,7 +480,7 @@ public class CorsenConfigureQt {
   /**
    * public constructor.
    */
-  CorsenConfigureQt(final QMainWindow mainWindow, final Settings settings) {
+  CorsenConfigureQt(final CorsenQt mainWindow, final Settings settings) {
 
     this.mainWindow = mainWindow;
     this.settings = settings;

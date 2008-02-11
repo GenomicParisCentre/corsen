@@ -107,7 +107,7 @@ public final class Settings {
   private static final String HISTOGRAM_RESULTS_NB_CLASSES_KEY =
       "histogram.results.classes";
   private static final String HISTOGRAM_HISTORY_NB_CLASSES_KEY =
-      "histogram.results.classes";
+      "histogram.history.classes";
 
   private Properties properties = new Properties();
 
