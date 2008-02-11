@@ -22,6 +22,7 @@
 
 package fr.ens.transcriptome.corsen.gui.qt;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.util.ArrayList;
@@ -56,6 +57,8 @@ public class ResultGraphs {
 
   private int width = IMAGE_WIDTH_DEFAULT;
   private int height = IMAGE_HEIGHT_DEFAULT;
+
+  private static final Color TRANSPARENT_COLOR = new Color(255, 255, 255, 0);
 
   //
   // Getters
@@ -208,6 +211,8 @@ public class ResultGraphs {
             false // URLs?
             );
 
+    chart.setBackgroundPaint(TRANSPARENT_COLOR);
+
     final BufferedImage image =
         chart.createBufferedImage(this.width, this.height,
             BufferedImage.TYPE_INT_ARGB, null);
@@ -244,6 +249,8 @@ public class ResultGraphs {
             false // URLs?
             );
 
+    chart.setBackgroundPaint(TRANSPARENT_COLOR);
+
     final BufferedImage image =
         chart.createBufferedImage(this.width, this.height,
             BufferedImage.TYPE_INT_ARGB, null);
@@ -275,6 +282,8 @@ public class ResultGraphs {
     JFreeChart chart =
         ChartFactory.createBoxAndWhiskerChart("Intensities Boxplot", "",
             "Distance", defaultboxandwhiskercategorydataset, false);
+
+    chart.setBackgroundPaint(TRANSPARENT_COLOR);
 
     final BufferedImage image =
         chart.createBufferedImage(this.width, this.height,
@@ -325,6 +334,9 @@ public class ResultGraphs {
     JFreeChart chart =
         ChartFactory.createBoxAndWhiskerChart("Intensities Boxplot", "",
             "Distance", defaultboxandwhiskercategorydataset, false);
+
+    chart.setBackgroundPaint(TRANSPARENT_COLOR);
+
     // CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
     // // chart.setBackgroundPaint(Color.white);
     // categoryplot.setBackgroundPaint(Color.lightGray);
@@ -377,6 +389,9 @@ public class ResultGraphs {
     JFreeChart chart =
         ChartFactory.createScatterPlot(title, "Intensity", "Volume", xydataset,
             PlotOrientation.VERTICAL, false, true, false);
+
+    chart.setBackgroundPaint(new Color(255, 255, 255, 0));
+
     XYPlot xyplot = (XYPlot) chart.getPlot();
     XYDotRenderer xydotrenderer = new XYDotRenderer();
     xydotrenderer.setDotWidth(2);
