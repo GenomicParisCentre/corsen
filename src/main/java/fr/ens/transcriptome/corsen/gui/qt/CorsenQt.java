@@ -850,10 +850,12 @@ public class CorsenQt extends QMainWindow {
       showStatusMessage("Process cell "
           + this.status.currentCellToProcess + " of "
           + this.status.cellToProcessCount + " cells");
-      showStatusMessage(this.settings.getParticlesAName()
-          + " particles file: " + this.status.rnaFilePath);
-      showStatusMessage(this.settings.getParticlesBName()
-          + " particles file: " + this.status.mitoFilePath);
+      showStatusMessage("Particles A ("
+          + this.settings.getParticlesAName() + ") file: "
+          + this.status.rnaFilePath);
+      showStatusMessage("Particles B ("
+          + this.settings.getParticlesBName() + ") file: "
+          + this.status.mitoFilePath);
       showStatusMessage("Output files prefix: " + this.status.resultFilePath);
 
       break;
