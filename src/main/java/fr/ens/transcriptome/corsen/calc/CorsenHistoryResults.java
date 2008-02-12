@@ -29,6 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.math.stat.descriptive.moment.Mean;
 import org.apache.commons.math.stat.descriptive.rank.Median;
 
 /**
@@ -186,13 +187,13 @@ public class CorsenHistoryResults {
 
     return getEntry(this.index.get(index));
   }
-  
+
   /**
    * Remove an entry by this index
    * @param index
    */
   public void remove(final int index) {
-    
+
     removeEntry(this.index.get(index));
   }
 
@@ -251,6 +252,15 @@ public class CorsenHistoryResults {
   public double getMedianOfMedianMinDistances() {
 
     return new Median().evaluate(getDistances());
+  }
+
+  /**
+   * Get the mean of the median of Min Distances.
+   * @return thee mean of the median of Min Distances
+   */
+  public double getMeanOfMedianMinDistances() {
+
+    return new Mean().evaluate(getDistances());
   }
 
   //
