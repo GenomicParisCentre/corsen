@@ -1040,6 +1040,12 @@ public class CorsenQt extends QMainWindow {
 
     QRect gBt = mui.updateViewPushButton.geometry();
     mui.updateViewPushButton.setGeometry(gBt.x(), gBt.y(), max, gBt.height());
+    
+    mui.historyTableView.setToolTip("Results history table");
+    mui.historyTableView.setStatusTip("Results history table");
+    
+    mui.viewOGL.setToolTip("3D Visualisation");
+    mui.viewOGL.setStatusTip("3D Visualisation");    
   }
 
   /**
@@ -1103,9 +1109,9 @@ public class CorsenQt extends QMainWindow {
 
     setWindowTitle(Globals.getWindowsTitle());
 
-    mainWindowUi.actionAbout_Corsen.triggered.connect(this, "about()");
-    mainWindowUi.actionAbout_QtJambi.triggered.connect(QApplication.instance(),
-        "aboutQtJambi()");
+//    mainWindowUi.actionAbout_Corsen.triggered.connect(this, "about()");
+//    mainWindowUi.actionAbout_QtJambi.triggered.connect(QApplication.instance(),
+//        "aboutQtJambi()");
 
     mainWindowUi.actionCorsen_Website.triggered.connect(this, "openWebsite()");
     mainWindowUi.actionCorsen_Handbook.triggered
