@@ -28,10 +28,10 @@
     <item>
      <widget class="QTabWidget" name="tabWidget" >
       <property name="toolTip" >
-       <string/>
+       <string>Results history</string>
       </property>
       <property name="statusTip" >
-       <string/>
+       <string>Results history</string>
       </property>
       <property name="currentIndex" >
        <number>0</number>
@@ -417,6 +417,9 @@
        <attribute name="title" >
         <string>&amp;Results</string>
        </attribute>
+       <attribute name="toolTip" >
+        <string>Results tab</string>
+       </attribute>
        <layout class="QVBoxLayout" >
         <item>
          <layout class="QHBoxLayout" >
@@ -480,10 +483,10 @@
           </property>
           <widget class="QTableView" name="resultTableView" >
            <property name="toolTip" >
-            <string>Result</string>
+            <string>Result table</string>
            </property>
            <property name="statusTip" >
-            <string>Result</string>
+            <string>Result table</string>
            </property>
           </widget>
           <widget class="QLabel" name="imageLabel" >
@@ -595,11 +598,17 @@
                </size>
               </property>
               <property name="title" >
-               <string>Messengers</string>
+               <string>Particles A</string>
               </property>
               <layout class="QVBoxLayout" >
                <item>
                 <widget class="QRadioButton" name="particlesANothingRadioButton" >
+                 <property name="toolTip" >
+                  <string>Nothing</string>
+                 </property>
+                 <property name="statusTip" >
+                  <string>Nothing</string>
+                 </property>
                  <property name="text" >
                   <string>Nothing</string>
                  </property>
@@ -608,7 +617,7 @@
                <item>
                 <widget class="QRadioButton" name="particlesARadioButton" >
                  <property name="text" >
-                  <string>Messengers</string>
+                  <string>Particles A</string>
                  </property>
                  <property name="checked" >
                   <bool>true</bool>
@@ -617,8 +626,14 @@
                </item>
                <item>
                 <widget class="QRadioButton" name="particlesACuboidsRadioButton" >
+                 <property name="toolTip" >
+                  <string>Particles A processed</string>
+                 </property>
+                 <property name="statusTip" >
+                  <string>Particles A processed</string>
+                 </property>
                  <property name="text" >
-                  <string>Messengers preprocessed</string>
+                  <string>Particles A processed</string>
                  </property>
                 </widget>
                </item>
@@ -634,11 +649,17 @@
                </size>
               </property>
               <property name="title" >
-               <string>Mitochondria</string>
+               <string>Particles B</string>
               </property>
               <layout class="QVBoxLayout" >
                <item>
                 <widget class="QRadioButton" name="particlesBNothingRadioButton" >
+                 <property name="toolTip" >
+                  <string>Nothing</string>
+                 </property>
+                 <property name="statusTip" >
+                  <string>Nothing</string>
+                 </property>
                  <property name="text" >
                   <string>Nothing</string>
                  </property>
@@ -646,8 +667,14 @@
                </item>
                <item>
                 <widget class="QRadioButton" name="particlesBRadioButton" >
+                 <property name="statusTip" >
+                  <string>Particles B</string>
+                 </property>
+                 <property name="whatsThis" >
+                  <string>Particles B</string>
+                 </property>
                  <property name="text" >
-                  <string>Mitochondria</string>
+                  <string>Partciles B</string>
                  </property>
                  <property name="checked" >
                   <bool>true</bool>
@@ -656,8 +683,14 @@
                </item>
                <item>
                 <widget class="QRadioButton" name="particlesBCuboidsRadioButton" >
+                 <property name="toolTip" >
+                  <string>Particles B processed</string>
+                 </property>
+                 <property name="statusTip" >
+                  <string>Particles B processed</string>
+                 </property>
                  <property name="text" >
-                  <string>Mitochondria proprocessed</string>
+                  <string>Particles B processed</string>
                  </property>
                 </widget>
                </item>
@@ -671,6 +704,12 @@
                 <width>150</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="toolTip" >
+               <string>Show Barycenters</string>
+              </property>
+              <property name="statusTip" >
+               <string>Show Barycenters</string>
               </property>
               <property name="text" >
                <string>Show Barycenters</string>
@@ -687,6 +726,12 @@
                 <width>150</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="toolTip" >
+               <string>Show distances</string>
+              </property>
+              <property name="statusTip" >
+               <string>Show distances</string>
               </property>
               <property name="text" >
                <string>Show distances</string>
@@ -714,6 +759,12 @@
                 <height>16777215</height>
                </size>
               </property>
+              <property name="toolTip" >
+               <string>Update view</string>
+              </property>
+              <property name="statusTip" >
+               <string>Update view</string>
+              </property>
               <property name="text" >
                <string>Update view</string>
               </property>
@@ -735,7 +786,7 @@
           <property name="orientation" >
            <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
           </property>
-          <widget class="QWidget" name="" >
+          <widget class="QWidget" name="layoutWidget" >
            <layout class="QVBoxLayout" >
             <property name="rightMargin" >
              <number>0</number>
@@ -754,6 +805,12 @@
               <property name="focusPolicy" >
                <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
               </property>
+              <property name="statusTip" >
+               <string>Results history table</string>
+              </property>
+              <property name="whatsThis" >
+               <string>Results history table</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -765,7 +822,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="" >
+          <widget class="QWidget" name="layoutWidget" >
            <layout class="QHBoxLayout" >
             <property name="rightMargin" >
              <number>0</number>
@@ -869,6 +926,12 @@
               <property name="focusPolicy" >
                <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
               </property>
+              <property name="toolTip" >
+               <string>Clear history</string>
+              </property>
+              <property name="statusTip" >
+               <string>Clear history</string>
+              </property>
               <property name="text" >
                <string>&amp;Clear</string>
               </property>
@@ -878,6 +941,12 @@
              <widget class="QPushButton" name="historySaveResultsPushButton" >
               <property name="focusPolicy" >
                <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
+              <property name="toolTip" >
+               <string>Save results</string>
+              </property>
+              <property name="statusTip" >
+               <string>Save results</string>
               </property>
               <property name="text" >
                <string>S&amp;ave Results</string>
