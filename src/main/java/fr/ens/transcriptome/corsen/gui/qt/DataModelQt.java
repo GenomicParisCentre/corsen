@@ -464,15 +464,23 @@ public class DataModelQt {
 
     public String getResultMessage() {
 
-      final double result = this.results.getMedianOfMedianMinDistances();
+      final double median = this.results.getMedianOfMedianMinDistances();
+      final double mean = this.results.getMeanOfMedianMinDistances();
 
       StringBuilder sb = new StringBuilder();
       sb.append("The median of minimal distances is: ");
 
-      if (Double.isNaN(result))
+      if (Double.isNaN(median))
         sb.append("undefined");
       else
-        sb.append(String.format("%.3f", result));
+        sb.append(String.format("%.3f", median));
+
+      sb.append(" and the mean of minimal distances is: ");
+
+      if (Double.isNaN(mean))
+        sb.append("undefined");
+      else
+        sb.append(String.format("%.3f", mean));
 
       sb.append(" (");
       sb.append(this.results.size());
