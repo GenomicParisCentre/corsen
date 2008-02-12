@@ -429,7 +429,7 @@ public class Particles3D {
     for (Particle3D par : this.particles)
       changeZCoord(par, zCoef);
 
-    this.pixelDepth = this.pixelDepth * zCoef;
+    this.pixelDepth *= zCoef;
   }
 
   /**
@@ -457,9 +457,9 @@ public class Particles3D {
     for (Particle3D par : this.particles)
       changeCoord(par, coef);
 
-    this.pixelWidth = this.pixelWidth * coef;
-    this.pixelHeight = this.pixelHeight * coef;
-    this.pixelDepth = this.pixelDepth * coef;
+    this.pixelWidth *= coef;
+    this.pixelHeight *= coef;
+    this.pixelDepth *= coef;
   }
 
   private void changeCoord(final Particle3D particle, float coef) {

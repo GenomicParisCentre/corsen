@@ -88,17 +88,22 @@ public class BitMapParticle3D {
     final float yMax = lp.getYMax();
     final float zMax = lp.getZMax();
 
-    this.x0 = (float) Math.floor(MathUtil.roundValue(xMin / this.pixelWidth));
-    this.y0 = (float) Math.floor(MathUtil.roundValue(yMin / this.pixelHeight));
+    this.x0 =
+        (float) Math.floor(MathUtil.roundValue((xMin - 2 * this.pixelWidth)
+            / this.pixelWidth));
+    this.y0 =
+        (float) Math.floor(MathUtil.roundValue((yMin - 2 * this.pixelHeight)
+            / this.pixelHeight));
     this.z0 =
-        (float) (Math.floor(MathUtil.roundValue(zMin / this.pixelDepth)) - this.pixelDepth / 2);
+        (float) Math.floor(MathUtil.roundValue((zMin - 2 * this.pixelDepth)
+            / this.pixelDepth));
 
     final int xLen =
-        (int) MathUtil.roundValue((xMax - xMin) / this.pixelWidth) + 1;
+        (int) MathUtil.roundValue((xMax - xMin) / this.pixelWidth) + 5;
     final int yLen =
-        (int) MathUtil.roundValue((yMax - yMin) / this.pixelHeight) + 1;
+        (int) MathUtil.roundValue((yMax - yMin) / this.pixelHeight) + 5;
     final int zLen =
-        (int) MathUtil.roundValue((zMax - zMin) / this.pixelDepth) + 1;
+        (int) MathUtil.roundValue((zMax - zMin) / this.pixelDepth) + 5;
 
     this.xLen = xLen;
     this.yLen = yLen;
@@ -141,9 +146,12 @@ public class BitMapParticle3D {
 
   private int[] countAxesSurfaces(final int x, final int y, final int z) {
 
-    final int xCount = 2 - getPixelPresent(x - 1, y, z) - getPixelPresent(x + 1, y, z);
-    final int yCount = 2 - getPixelPresent(x, y - 1, z) - getPixelPresent(x, y + 1, z);
-    final int zCount = 2 - getPixelPresent(x, y, z - 1) - getPixelPresent(x, y, z + 1);
+    final int xCount =
+        2 - getPixelPresent(x - 1, y, z) - getPixelPresent(x + 1, y, z);
+    final int yCount =
+        2 - getPixelPresent(x, y - 1, z) - getPixelPresent(x, y + 1, z);
+    final int zCount =
+        2 - getPixelPresent(x, y, z - 1) - getPixelPresent(x, y, z + 1);
 
     return new int[] {xCount, yCount, zCount};
   }

@@ -148,7 +148,7 @@ public class DistancesCalculator {
    * @return Returns the zFactor
    */
   public float getZCoordinatesFactor() {
-    return zCoordinatesFactor;
+    return this.zCoordinatesFactor;
   }
 
   /**
@@ -156,7 +156,7 @@ public class DistancesCalculator {
    * @return Returns the factor
    */
   public float getCoordinatesFactor() {
-    return coordinatesFactor;
+    return this.coordinatesFactor;
   }
 
   //
@@ -168,7 +168,7 @@ public class DistancesCalculator {
    * @param factor The zFactor to set
    */
   public void setZCoordinatesFactor(final float factor) {
-    zCoordinatesFactor = factor;
+    this.zCoordinatesFactor = factor;
   }
 
   /**

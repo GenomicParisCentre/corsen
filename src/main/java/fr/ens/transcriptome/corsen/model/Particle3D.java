@@ -40,6 +40,7 @@ public final class Particle3D {
   private double sphericity;
   private double density;
   private boolean edgeParticle;
+  private boolean pixelDimChange;
 
   private ParticleType type = ParticleType.UNDEFINED;
 
@@ -52,6 +53,10 @@ public final class Particle3D {
    * @return The volume of the particle
    */
   public double getVolume() {
+
+    if (this.volume == -1)
+      calcVolume();
+
     return this.volume;
   }
 
@@ -125,6 +130,8 @@ public final class Particle3D {
    */
   public double getArea() {
 
+    if (this.area == -1)
+      calcArea();
     return this.area;
   }
 
@@ -134,6 +141,9 @@ public final class Particle3D {
    */
   public double getSphericity() {
 
+    if (this.sphericity == -1)
+      calcSphericity();
+
     return this.sphericity;
   }
 
@@ -142,6 +152,9 @@ public final class Particle3D {
    * @return the density of the particle
    */
   public double getDensity() {
+
+    if (this.density == -1)
+      calcDensity();
 
     return this.density;
   }
@@ -161,7 +174,7 @@ public final class Particle3D {
    */
   public BitMapParticle3D getBitMapParticle() {
 
-    if (this.bitMapParticle == null)
+    if (this.bitMapParticle == null || this.pixelDimChange)
       calcBitMap();
 
     return this.bitMapParticle;
@@ -920,6 +933,10 @@ public final class Particle3D {
     this.surfacePoints.applyXFactor(xFactor);
     this.innerPoints.applyXFactor(xFactor);
     this.pixelWidth *= xFactor;
+
+    this.pixelDimChange = true;
+
+    clearMesurements();
   }
 
   /**
@@ -931,6 +948,10 @@ public final class Particle3D {
     this.surfacePoints.applyYFactor(yFactor);
     this.innerPoints.applyYFactor(yFactor);
     this.pixelHeight *= yFactor;
+
+    this.pixelDimChange = true;
+
+    clearMesurements();
   }
 
   /**
@@ -942,6 +963,10 @@ public final class Particle3D {
     this.surfacePoints.applyZFactor(zFactor);
     this.innerPoints.applyZFactor(zFactor);
     this.pixelDepth *= zFactor;
+
+    this.pixelDimChange = true;
+
+    clearMesurements();
   }
 
   //
@@ -1003,6 +1028,15 @@ public final class Particle3D {
   public void calcBitMap() {
 
     this.bitMapParticle = new BitMapParticle3D(this);
+    this.pixelDimChange = false;
+  }
+
+  private void clearMesurements() {
+
+    this.volume = -1;
+    this.area = -1;
+    this.sphericity = -1;
+    this.density = -1;
   }
 
   //
