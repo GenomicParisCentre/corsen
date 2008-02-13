@@ -38,56 +38,101 @@
 	</properties>
 	<body>
 
-		<release version="0.31" date="2008-02-08">
-			
+		<release version="0.32" date="2008-02-13">
+
 			<action dev="jourdren" type="fix">
-				La locale de l'application est désormais Anglais/Royaume-Uni.
+				Nombreux autres correction de bogues mineurs.
 			</action>
-			
+
 			<action dev="jourdren" type="fix">
-				La créations des graphique se fait maintenant dans un thread
-				 différent pour éviter de bloquer l'application.
+				Ajout des unités dans les légendes des graphiques
 			</action>
-			
+
+			<action dev="jourdren" type="update">
+				Le nombre de classes des histogrammes est maintenant de
+				25.
+			</action>
+
+			<action dev="jourdren" type="fix">
+				Bogue dans le calcul de l'aire.
+			</action>
+
 			<action dev="jourdren" type="add">
-				Le nombre de classes des histogrammes peut être défini par l'utilisateur.
+				Ajout de la moyenne des medianes dans les résultats de
+				l'historique.
 			</action>
-			
+
+			<action dev="jourdren" type="update">
+				Ajout de la transparence aux graphiques.
+			</action>
+
+			<action dev="jourdren" type="update">
+				Utilisation de d'un QSplitter pour séparer les Tables
+				des graphiques
+			</action>
+
+			<action dev="jourdren" type="update">
+				Nombreux correction de bogues et optimisations detectées
+				avec findbugs.
+			</action>
+
+		</release>
+
+		<release version="0.31" date="2008-02-08">
+
+			<action dev="jourdren" type="fix">
+				La locale de l'application est désormais
+				Anglais/Royaume-Uni.
+			</action>
+
+			<action dev="jourdren" type="fix">
+				La créations des graphique se fait maintenant dans un
+				thread différent pour éviter de bloquer l'application.
+			</action>
+
+			<action dev="jourdren" type="add">
+				Le nombre de classes des histogrammes peut être défini
+				par l'utilisateur.
+			</action>
+
 			<action dev="jourdren" type="fix">
 				Les histogrames ne sont plus actualisé lors des calculs.
 			</action>
-			
+
 			<action dev="jourdren" type="add">
-				Le temps de calcul pour toutes les cellules est affiché dans le log.
+				Le temps de calcul pour toutes les cellules est affiché
+				dans le log.
 			</action>
-			
+
 			<action dev="jourdren" type="fix">
 				La vue 3D n'est plus calculée qu'une seule fois.
 			</action>
-			
+
 			<action dev="jourdren" type="fix">
-				Les chemins des fichiers ne sont plus affiché en entier dans les boites d'informations
-				pour éviter de trop agrandir la fenetre de l'application.
+				Les chemins des fichiers ne sont plus affiché en entier
+				dans les boites d'informations pour éviter de trop
+				agrandir la fenetre de l'application.
 			</action>
-			
+
 			<action dev="jourdren" type="add">
 				On relancer un calcul à partir de l'onglet historique.
 			</action>
-			
+
 			<action dev="jourdren" type="add">
-				Ajout d'un onglet gardant, l'historique des calculs. Cet onglet contient également 
-				un histograme et un boxplot.
+				Ajout d'un onglet gardant, l'historique des calculs. Cet
+				onglet contient également un histograme et un boxplot.
 			</action>
-			
+
 			<action dev="jourdren" type="update">
 				Ajout de la transparence à la visualisation 3D.
 			</action>
-			
+
 			<action dev="jourdren" type="fix">
-				Bogue dans apply() pour changer les coordonnées des pixels.
+				Bogue dans apply() pour changer les coordonnées des
+				pixels.
 			</action>
-		
-		
+
+
 		</release>
 
 		<release version="0.30" date="2008-01-16">
