@@ -156,6 +156,32 @@ public class ResultGraphs {
     return min;
   }
 
+  private static final String unitLegend(final String unit) {
+
+    if (unit == null)
+      return "";
+
+    final String trimedUnit = unit.trim();
+
+    if ("".equals(trimedUnit))
+      return "";
+
+    return " (" + trimedUnit + ")";
+  }
+
+  private static final String unitLegendCude(final String unit) {
+
+    if (unit == null)
+      return "";
+
+    final String trimedUnit = unit.trim();
+
+    if ("".equals(trimedUnit))
+      return "";
+
+    return " (" + trimedUnit + "\u00B3)";
+  }
+
   //
   // Image generating methods
   //
@@ -229,7 +255,7 @@ public class ResultGraphs {
    * @return a QImage of the graph
    */
   public QImage createDistanceDistributionImage(final CorsenResult results,
-      final int classes) {
+      final int classes, final String unit) {
 
     HistogramDataset histogramdataset = new HistogramDataset();
 
@@ -241,7 +267,7 @@ public class ResultGraphs {
     JFreeChart chart =
         ChartFactory.createHistogram("Distribution of minimal distances",
         // title
-            "Distance", // domain axis label
+            "Distance" + unitLegend(unit), // domain axis label
             "Intensity", // range axis label
             histogramdataset, // data
 
@@ -267,7 +293,7 @@ public class ResultGraphs {
    * @param data Data to use
    * @return a QImage
    */
-  public QImage createBoxPlot(final double[] data) {
+  public QImage createBoxPlot(final double[] data, final String unit) {
 
     if (data == null || data.length < 2)
       return null;
@@ -284,7 +310,8 @@ public class ResultGraphs {
 
     JFreeChart chart =
         ChartFactory.createBoxAndWhiskerChart("Intensities Boxplot", "",
-            "Distance", defaultboxandwhiskercategorydataset, false);
+            "Distance" + unitLegend(unit), defaultboxandwhiskercategorydataset,
+            false);
 
     if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
       chart.setBackgroundPaint(TRANSPARENT_COLOR);
@@ -303,7 +330,7 @@ public class ResultGraphs {
    * @param results Results to use
    * @return a QImage
    */
-  public QImage createBoxPlot(final CorsenResult results) {
+  public QImage createBoxPlot(final CorsenResult results, final String unit) {
 
     this.width = this.width / 2;
 
@@ -337,7 +364,8 @@ public class ResultGraphs {
 
     JFreeChart chart =
         ChartFactory.createBoxAndWhiskerChart("Intensities Boxplot", "",
-            "Distance", defaultboxandwhiskercategorydataset, false);
+            "Distance" + unitLegend(unit), defaultboxandwhiskercategorydataset,
+            false);
 
     if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
       chart.setBackgroundPaint(TRANSPARENT_COLOR);
@@ -367,7 +395,7 @@ public class ResultGraphs {
    * @return a QImage
    */
   public QImage createScatterPlot(final Particles3D particles,
-      final String title) {
+      final String title, final String unit) {
 
     if (particles == null)
       return null;
@@ -392,8 +420,9 @@ public class ResultGraphs {
     xydataset.addSeries("data", data);
 
     JFreeChart chart =
-        ChartFactory.createScatterPlot(title, "Intensity", "Volume", xydataset,
-            PlotOrientation.VERTICAL, false, true, false);
+        ChartFactory.createScatterPlot(title, "Intensity", "Volume"
+            + unitLegendCude(unit), xydataset, PlotOrientation.VERTICAL, false,
+            true, false);
 
     if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
       chart.setBackgroundPaint(new Color(255, 255, 255, 0));

@@ -439,10 +439,11 @@ public class DataModelQt {
 
     }
 
-    public QPixmap getBoxplot() {
+    public QPixmap getBoxplot(final Settings settings) {
 
       final QImage img =
-          new ResultGraphs().createBoxPlot(this.results.getDistances());
+          new ResultGraphs().createBoxPlot(this.results.getDistances(),
+              settings.getUnit());
 
       if (img == null)
         return null;
@@ -724,7 +725,8 @@ public class DataModelQt {
 
       if (!this.cacheImage.containsKey(0)) {
 
-        final QImage img = new ResultGraphs().createBoxPlot(r);
+        final QImage img =
+            new ResultGraphs().createBoxPlot(r, settings.getUnit());
 
         if (img == null)
           return null;
@@ -739,7 +741,7 @@ public class DataModelQt {
 
         final QImage img =
             new ResultGraphs().createDistanceDistributionImage(r, settings
-                .getHistogramResultsNumberClasses());
+                .getHistogramResultsNumberClasses(), settings.getUnit());
 
         if (img == null)
           return null;
@@ -756,7 +758,7 @@ public class DataModelQt {
         final QImage img =
             new ResultGraphs().createScatterPlot(r.getMessengersParticles(), r
                 .getMessengersParticles().getName()
-                + " intensity/volume");
+                + " intensity/volume", settings.getUnit());
 
         if (img == null)
           return null;
@@ -774,7 +776,7 @@ public class DataModelQt {
             new ResultGraphs().createScatterPlot(r
                 .getCuboidsMessengersParticles(), r.getMessengersParticles()
                 .getName()
-                + " cuboids intensity/volume");
+                + " cuboids intensity/volume", settings.getUnit());
 
         if (img == null)
           return null;
@@ -791,7 +793,7 @@ public class DataModelQt {
         final QImage img =
             new ResultGraphs().createScatterPlot(r.getMitosParticles(), r
                 .getMitosParticles().getName()
-                + " intensity/volume");
+                + " intensity/volume", settings.getUnit());
 
         if (img == null)
           return null;
