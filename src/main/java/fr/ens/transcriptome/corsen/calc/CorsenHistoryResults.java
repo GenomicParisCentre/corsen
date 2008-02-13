@@ -24,10 +24,10 @@ package fr.ens.transcriptome.corsen.calc;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.apache.commons.math.stat.descriptive.moment.Mean;
 import org.apache.commons.math.stat.descriptive.rank.Median;
@@ -42,7 +42,7 @@ public class CorsenHistoryResults {
 
   private LinkedHashMap<Integer, Entry> entries =
       new LinkedHashMap<Integer, Entry>();
-  private Set<String> filesKeys = new HashSet<String>();
+  private Map<String, Entry> filesKeys = new HashMap<String, Entry>();
   private List<Integer> index = new ArrayList<Integer>();
 
   // private List<String> keys = new ArrayList<String>();
@@ -133,19 +133,21 @@ public class CorsenHistoryResults {
 
     final String key = fileA.getAbsolutePath() + "-" + fileB.getAbsolutePath();
 
-    if (!this.filesKeys.contains(key)) {
-
-      final double dist = cr.getMinAnalyser().getMedian();
-
-      final Entry e = new Entry(fileA, fileB, cr.getResultsPath(), dist);
-      final int id = e.getId();
-
-      this.entries.put(id, e);
-      this.filesKeys.add(key);
-      this.index.add(id);
-
-      this.data = null;
+    if (this.filesKeys.containsKey(key)) {
+      Entry e = this.filesKeys.get(key);
+      removeEntry(e.getId());
     }
+
+    final double dist = cr.getMinAnalyser().getMedian();
+
+    final Entry e = new Entry(fileA, fileB, cr.getResultsPath(), dist);
+    final int id = e.getId();
+
+    this.entries.put(id, e);
+    this.filesKeys.put(key, e);
+    this.index.add(id);
+
+    this.data = null;
   }
 
   /**
