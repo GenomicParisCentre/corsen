@@ -729,8 +729,8 @@ public class CorsenQt extends QMainWindow {
 
       mainWindowUi.historyBoxplotLabel.setPixmap(historyModel
           .getBoxplot(this.settings));
-      mainWindowUi.historyHistogramLabel.setPixmap(historyModel
-          .getHisto(this.settings.getHistogramHistoryNumberClasses()));
+      mainWindowUi.historyHistogramLabel.setPixmap(historyModel.getHisto(
+          this.settings.getHistogramHistoryNumberClasses(), this.settings));
 
       this.refreshHistoryGraphics = true;
 

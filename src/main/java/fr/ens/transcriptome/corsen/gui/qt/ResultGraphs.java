@@ -212,7 +212,7 @@ public class ResultGraphs {
   }
 
   public QImage createDistanceDistributionImage(final double[] data,
-      final int classes) {
+      final int classes, final String unit) {
 
     if (data == null || data.length < 2)
       return null;
@@ -228,7 +228,7 @@ public class ResultGraphs {
     JFreeChart chart =
         ChartFactory.createHistogram("Distribution of minimal distances",
         // title
-            "Distance", // domain axis label
+            "Distance" + unitLegend(unit), // domain axis label
             "Intensity", // range axis label
             histogramdataset, // data
 

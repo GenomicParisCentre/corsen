@@ -451,11 +451,11 @@ public class DataModelQt {
       return QPixmap.fromImage(img);
     }
 
-    public QPixmap getHisto(final int classes) {
+    public QPixmap getHisto(final int classes, final Settings settings) {
 
       final QImage img =
           new ResultGraphs().createDistanceDistributionImage(this.results
-              .getDistances(), classes);
+              .getDistances(), classes, settings.getUnit());
 
       if (img == null)
         return null;
