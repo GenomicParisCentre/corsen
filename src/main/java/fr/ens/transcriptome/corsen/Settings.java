@@ -581,7 +581,7 @@ public final class Settings {
   public int getHistogramResultsNumberClasses() {
 
     String value =
-        this.properties.getProperty(HISTOGRAM_RESULTS_NB_CLASSES_KEY, "50");
+        this.properties.getProperty(HISTOGRAM_RESULTS_NB_CLASSES_KEY, "25");
 
     return Integer.valueOf(value.trim());
   }
@@ -593,7 +593,7 @@ public final class Settings {
   public int getHistogramHistoryNumberClasses() {
 
     String value =
-        this.properties.getProperty(HISTOGRAM_HISTORY_NB_CLASSES_KEY, "50");
+        this.properties.getProperty(HISTOGRAM_HISTORY_NB_CLASSES_KEY, "25");
 
     return Integer.valueOf(value.trim());
   }
