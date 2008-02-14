@@ -38,6 +38,16 @@
 	</properties>
 	<body>
 
+		<release version="0.33" date="2008-02-14">
+
+			<action dev="jourdren" type="fix">
+				Utilise les statistiques des distances minimales pour
+				l'affichage du boxplot des distances minimales. Evite
+				les recalculs inutiles.
+			</action>
+
+		</release>
+
 		<release version="0.32" date="2008-02-13">
 
 			<action dev="jourdren" type="fix">
