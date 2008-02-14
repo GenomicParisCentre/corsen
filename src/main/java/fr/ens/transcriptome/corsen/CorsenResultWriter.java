@@ -543,7 +543,7 @@ public class CorsenResultWriter {
 
     for (int i = 0; i < size; i++) {
 
-      Entry e = history.getEntry(i);
+      Entry e = history.get(i);
 
       out.write(e.getFileA().getAbsolutePath());
       out.write("\t");

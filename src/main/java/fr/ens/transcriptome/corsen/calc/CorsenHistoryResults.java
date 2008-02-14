@@ -24,7 +24,6 @@ package fr.ens.transcriptome.corsen.calc;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,12 +39,8 @@ public class CorsenHistoryResults {
 
   private static CorsenHistoryResults singleton = new CorsenHistoryResults();
 
-  private LinkedHashMap<Integer, Entry> entries =
-      new LinkedHashMap<Integer, Entry>();
-  private Map<String, Entry> filesKeys = new HashMap<String, Entry>();
-  private List<Integer> index = new ArrayList<Integer>();
-
-  // private List<String> keys = new ArrayList<String>();
+  private Map<String, Entry> entries = new LinkedHashMap<String, Entry>();
+  private List<String> keys = new ArrayList<String>();
 
   private static int count = 0;
 
@@ -133,19 +128,15 @@ public class CorsenHistoryResults {
 
     final String key = fileA.getAbsolutePath() + "-" + fileB.getAbsolutePath();
 
-    if (this.filesKeys.containsKey(key)) {
-      Entry e = this.filesKeys.get(key);
-      removeEntry(e.getId());
-    }
+    if (this.entries.containsKey(key))
+      this.keys.remove(key);
 
     final double dist = cr.getMinAnalyser().getMedian();
 
     final Entry e = new Entry(fileA, fileB, cr.getResultsPath(), dist);
-    final int id = e.getId();
 
-    this.entries.put(id, e);
-    this.filesKeys.put(key, e);
-    this.index.add(id);
+    this.entries.put(key, e);
+    this.keys.add(key);
 
     this.data = null;
   }
@@ -156,8 +147,7 @@ public class CorsenHistoryResults {
   public void clear() {
 
     this.entries.clear();
-    this.filesKeys.clear();
-    this.index.clear();
+    this.keys.clear();
     this.data = null;
   }
 
@@ -171,57 +161,29 @@ public class CorsenHistoryResults {
   }
 
   /**
-   * Get an entry
-   * @param id index of the element to get
-   * @return an antry
-   */
-  public Entry getEntry(int id) {
-
-    return this.entries.get(id);
-  }
-
-  /**
-   * Get an entry by this index.
-   * @param index Index of the entry to get
-   * @return an Entry object
-   */
-  public Entry get(final int index) {
-
-    return getEntry(this.index.get(index));
-  }
-
-  /**
-   * Remove an entry by this index
-   * @param index
-   */
-  public void remove(final int index) {
-
-    removeEntry(this.index.get(index));
-  }
-
-  /**
    * Remove an entry
    * @param id index of the element to get
    */
-  public void removeEntry(int id) {
+  public void remove(final int index) {
 
-    Entry e = getEntry(id);
+    String key = this.keys.get(index);
 
-    if (e != null) {
+    this.entries.remove(key);
+    this.keys.remove(index);
 
-      String key =
-          e.getFileA().getAbsolutePath() + "-" + e.getFileB().getAbsolutePath();
-      this.filesKeys.remove(key);
-      this.entries.remove(id);
+    this.data = null;
+  }
 
-      // Recreate the index
-      this.index.clear();
-      for (int id2 : this.entries.keySet())
-        this.index.add(id2);
+  /**
+   * Get an entry
+   * @param index Index of the entry to get
+   * @return an entry
+   */
+  public Entry get(final int index) {
 
-      this.data = null;
-    }
+    final String key = this.keys.get(index);
 
+    return this.entries.get(key);
   }
 
   /**
@@ -236,11 +198,8 @@ public class CorsenHistoryResults {
     final double[] data = new double[size()];
 
     int count = 0;
-    for (int id : this.entries.keySet()) {
-
-      Entry e = this.entries.get(id);
-      data[count++] = e.getMedianMinDistance();
-    }
+    for (Map.Entry<String, Entry> e : this.entries.entrySet())
+      data[count++] = e.getValue().getMedianMinDistance();
 
     this.data = data;
 
