@@ -35,6 +35,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYDotRenderer;
+import org.jfree.data.statistics.BoxAndWhiskerItem;
 import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.xy.DefaultXYDataset;
@@ -43,6 +44,7 @@ import com.trolltech.qt.gui.QImage;
 
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.Distance;
+import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.util.SystemUtil;
@@ -58,6 +60,8 @@ public class ResultGraphs {
 
   private int width = IMAGE_WIDTH_DEFAULT;
   private int height = IMAGE_HEIGHT_DEFAULT;
+
+  private static final boolean TRANSPARENT_ENABLE = true;
 
   private static final Color TRANSPARENT_COLOR = new Color(255, 255, 255, 0);
 
@@ -182,6 +186,32 @@ public class ResultGraphs {
     return " (" + trimedUnit + "\u00B3)";
   }
 
+  private static final BoxAndWhiskerItem convertDistanceAnalyserToBoxAndWhiskerItem(
+      final DistanceAnalyser da) {
+
+    // final BoxAndWhiskerItem result =
+    // new BoxAndWhiskerItem(da.getMean(), da.getMedian(), da
+    // .getFirstQuartile(), da.getThirdQuartile(), da.getMin(), da
+    // .getMax(), da.getMin(), da.getMax(), new ArrayList());
+
+    final BoxAndWhiskerItem result =
+        new BoxAndWhiskerItem(da.getMean(), da.getMedian(), da
+            .getFirstQuartile(), da.getThirdQuartile(),
+            da.getMinRegularValue(), da.getMaxRegularValue(), da
+                .getMinOutlier(), da.getMaxOutlier(), da.getOutliers());
+
+    return result;
+  }
+
+  private void addTransparency(final JFreeChart chart) {
+
+    if (!TRANSPARENT_ENABLE)
+      return;
+
+    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
+      chart.setBackgroundPaint(TRANSPARENT_COLOR);
+  }
+
   //
   // Image generating methods
   //
@@ -238,8 +268,7 @@ public class ResultGraphs {
             false // URLs?
             );
 
-    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
-      chart.setBackgroundPaint(TRANSPARENT_COLOR);
+    addTransparency(chart);
 
     final BufferedImage image =
         chart.createBufferedImage(this.width, this.height,
@@ -277,8 +306,7 @@ public class ResultGraphs {
             false // URLs?
             );
 
-    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
-      chart.setBackgroundPaint(TRANSPARENT_COLOR);
+    addTransparency(chart);
 
     final BufferedImage image =
         chart.createBufferedImage(this.width, this.height,
@@ -313,8 +341,7 @@ public class ResultGraphs {
             "Distance" + unitLegend(unit), defaultboxandwhiskercategorydataset,
             false);
 
-    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
-      chart.setBackgroundPaint(TRANSPARENT_COLOR);
+    addTransparency(chart);
 
     final BufferedImage image =
         chart.createBufferedImage(this.width, this.height,
@@ -359,7 +386,12 @@ public class ResultGraphs {
 
     DefaultBoxAndWhiskerCategoryDataset defaultboxandwhiskercategorydataset =
         new DefaultBoxAndWhiskerCategoryDataset();
-    defaultboxandwhiskercategorydataset.add(listMin, "Distances", "Min");
+
+    defaultboxandwhiskercategorydataset.add(
+        convertDistanceAnalyserToBoxAndWhiskerItem(results.getMinAnalyser()),
+        "Distances", "Min");
+
+    // defaultboxandwhiskercategorydataset.add(listMin, "Distances", "Min");
     // defaultboxandwhiskercategorydataset.add(listMax, "Distances", "Max");
 
     JFreeChart chart =
@@ -367,8 +399,7 @@ public class ResultGraphs {
             "Distance" + unitLegend(unit), defaultboxandwhiskercategorydataset,
             false);
 
-    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
-      chart.setBackgroundPaint(TRANSPARENT_COLOR);
+    addTransparency(chart);
 
     // CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
     // // chart.setBackgroundPaint(Color.white);
@@ -424,8 +455,7 @@ public class ResultGraphs {
             + unitLegendCude(unit), xydataset, PlotOrientation.VERTICAL, false,
             true, false);
 
-    if (SystemUtil.isWindowsSystem() || SystemUtil.isMacOsX())
-      chart.setBackgroundPaint(new Color(255, 255, 255, 0));
+    addTransparency(chart);
 
     XYPlot xyplot = (XYPlot) chart.getPlot();
     XYDotRenderer xydotrenderer = new XYDotRenderer();

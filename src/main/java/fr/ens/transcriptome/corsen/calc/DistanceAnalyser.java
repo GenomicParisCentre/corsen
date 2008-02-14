@@ -45,12 +45,19 @@ public class DistanceAnalyser {
   private double thirdQuartile = Double.NaN;
   private double max = Double.NaN;
 
+  private double minRegularValue = Double.NaN;
+  private double maxRegularValue = Double.NaN;
+  private double minOutlier = Double.NaN;
+  private double maxOutlier = Double.NaN;
+  private List<Double> listOutliers;
+
   private boolean minCalcDone;
   private boolean firstQuartileCalcDone;
   private boolean medianCalcDone;
   private boolean meanCalcDone;
   private boolean thirdQuartileCalcDone;
   private boolean maxCalcDone;
+  private boolean outliersCalcDone;
 
   private List<DataDouble> data;
 
@@ -132,6 +139,46 @@ public class DistanceAnalyser {
     return this.max;
   }
 
+  public double getMinRegularValue() {
+
+    if (!this.outliersCalcDone)
+      calcOutliers();
+
+    return this.minRegularValue;
+  }
+
+  public double getMaxRegularValue() {
+
+    if (!this.outliersCalcDone)
+      calcOutliers();
+
+    return this.maxRegularValue;
+  }
+
+  public double getMinOutlier() {
+
+    if (!this.outliersCalcDone)
+      calcOutliers();
+
+    return this.minOutlier;
+  }
+
+  public double getMaxOutlier() {
+
+    if (!this.outliersCalcDone)
+      calcOutliers();
+
+    return this.maxOutlier;
+  }
+
+  public List<Double> getOutliers() {
+
+    if (!this.outliersCalcDone)
+      calcOutliers();
+
+    return this.listOutliers;
+  }
+
   private void load(final File file) throws IOException {
 
     InputStream is = new FileInputStream(file);
@@ -154,6 +201,56 @@ public class DistanceAnalyser {
 
     }
     reader.close();
+  }
+
+  private void calcOutliers() {
+
+    final double q1 = getFirstQuartile();
+    final double q3 = getThirdQuartile();
+
+    double interQuartileRange = q3 - q1;
+
+    double upperOutlierThreshold = q3 + (interQuartileRange * 1.5);
+    double lowerOutlierThreshold = q1 - (interQuartileRange * 1.5);
+
+    double upperFaroutThreshold = q3 + (interQuartileRange * 2.0);
+    double lowerFaroutThreshold = q1 - (interQuartileRange * 2.0);
+
+    double minRegularValue = Double.POSITIVE_INFINITY;
+    double maxRegularValue = Double.NEGATIVE_INFINITY;
+    double minOutlier = Double.POSITIVE_INFINITY;
+    double maxOutlier = Double.NEGATIVE_INFINITY;
+
+    final List<Double> outliers = new ArrayList<Double>();
+
+    for (DataDouble d : data) {
+
+      double value = d.value;
+      if (value > upperOutlierThreshold) {
+        outliers.add(value);
+        if (value > maxOutlier && value <= upperFaroutThreshold) {
+          maxOutlier = value;
+        }
+      } else if (value < lowerOutlierThreshold) {
+        outliers.add(value);
+        if (value < minOutlier && value >= lowerFaroutThreshold) {
+          minOutlier = value;
+        }
+      } else {
+        minRegularValue = Math.min(minRegularValue, value);
+        maxRegularValue = Math.max(maxRegularValue, value);
+      }
+      minOutlier = Math.min(minOutlier, minRegularValue);
+      maxOutlier = Math.max(maxOutlier, maxRegularValue);
+    }
+
+    this.minRegularValue = minRegularValue;
+    this.maxRegularValue = maxRegularValue;
+    this.minOutlier = minOutlier;
+    this.maxOutlier = maxOutlier;
+    this.listOutliers = outliers;
+
+    this.outliersCalcDone = true;
   }
 
   public void calcAll() {
