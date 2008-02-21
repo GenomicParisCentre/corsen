@@ -28,7 +28,8 @@ public enum ParticleType {
 
   HUGE("Huge particle", "full description for HUGE particle"), TINY(
       "Tiny particle", "full description for TINY particle"), UNDEFINED(
-      "Undefined particle", "full description for UNDEFINED particle");
+      "Undefined particle", "full description for UNDEFINED particle"),
+  BARYCENTER("Barycenter particle", "full description for BARYCENTER particle");
 
   private String description;
   private String fullDescription;
@@ -67,6 +68,9 @@ public enum ParticleType {
 
     case UNDEFINED:
       return new UndefinedParticles3D();
+
+    case BARYCENTER:
+      return new BarycenterParticles3D();
 
     default:
       return null;
