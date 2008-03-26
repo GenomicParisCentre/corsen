@@ -27,8 +27,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 import com.trolltech.qt.QThread;
+import com.trolltech.qt.QtInfo;
 import com.trolltech.qt.core.QLocale;
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QRect;
@@ -64,6 +66,8 @@ import fr.ens.transcriptome.corsen.util.Util;
 // TODO Remove the cancel button
 // TODO When alt-f4 -> System.exit(0)
 public class CorsenQt extends QMainWindow {
+
+  private static Logger logger = Logger.getLogger(CorsenQt.class.getName());
 
   private static final int PATH_STRING_MAX_LEN = 50;
 
@@ -768,22 +772,7 @@ public class CorsenQt extends QMainWindow {
       if (this.models.getResult() == null)
         return;
 
-      QtUtil.CreateQPixmapThread cqpt = new QtUtil.CreateQPixmapThread() {
-
-        @Override
-        protected QPixmap createQPixmap() {
-
-          return models.getImage(i, settings);
-        }
-      };
-
-      Thread t = new Thread(cqpt);
-      t.start();
-
-      while (!cqpt.isEnd())
-        QApplication.processEvents();
-
-      mainWindowUi.imageLabel.setPixmap(cqpt.getPixmap());
+      mainWindowUi.imageLabel.setPixmap(this.models.getPixmap(i, settings));
 
     } else
       mainWindowUi.imageLabel
@@ -1084,7 +1073,9 @@ public class CorsenQt extends QMainWindow {
    * @param application args
    */
   public static void main(final String[] args) {
+
     QApplication.initialize(args);
+    logger.info("Qt version: " + QtInfo.versionString());
 
     // Set locales
     Locale.setDefault(Locale.UK);

@@ -23,7 +23,6 @@
 package fr.ens.transcriptome.corsen.gui.qt;
 
 import com.trolltech.qt.gui.QImage;
-import com.trolltech.qt.gui.QPixmap;
 
 /**
  * This utility class contains useful methods for Qt.
@@ -31,26 +30,26 @@ import com.trolltech.qt.gui.QPixmap;
  */
 public final class QtUtil {
 
-  public static abstract class CreateQPixmapThread implements Runnable {
+  public static abstract class CreateQImageThread implements Runnable {
 
     private boolean end = false;
-    private QPixmap pixmap;
+    private QImage qImage;
 
     public boolean isEnd() {
 
       return this.end;
     }
 
-    public QPixmap getPixmap() {
+    public QImage getQImage() {
 
-      return this.pixmap;
+      return this.qImage;
     }
 
-    protected abstract QPixmap createQPixmap();
+    protected abstract QImage createQImage();
 
     public void run() {
 
-      this.pixmap = createQPixmap();
+      this.qImage = createQImage();
       this.end = true;
     }
 

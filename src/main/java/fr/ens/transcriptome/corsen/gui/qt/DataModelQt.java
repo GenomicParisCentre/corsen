@@ -67,7 +67,8 @@ public class DataModelQt {
   private static HistoryDataModel historyModelSingleton =
       new HistoryDataModel();
   private CorsenResult result;
-  private Map<Integer, QPixmap> cacheImage = new HashMap<Integer, QPixmap>();
+  private Map<Integer, QImage> cacheImage = new HashMap<Integer, QImage>();
+  private Map<Integer, QPixmap> cachePixmap = new HashMap<Integer, QPixmap>();
 
   private static final class FullDataModel extends QAbstractTableModel {
 
@@ -533,6 +534,7 @@ public class DataModelQt {
 
     this.result = result;
     this.cacheImage.clear();
+    this.cachePixmap.clear();
   }
 
   //
@@ -712,7 +714,36 @@ public class DataModelQt {
 
   }
 
-  public QPixmap getImage(final int index, final Settings settings) {
+  public QPixmap getPixmap(final int index, final Settings settings) {
+
+    final QPixmap result;
+
+    if (!this.cachePixmap.containsKey(index)) {
+
+      QtUtil.CreateQImageThread cqpt = new QtUtil.CreateQImageThread() {
+
+        @Override
+        protected QImage createQImage() {
+
+          return getImage(index, settings);
+        }
+      };
+
+      Thread t = new Thread(cqpt);
+      t.start();
+
+      while (!cqpt.isEnd())
+        QApplication.processEvents();
+
+      result = QPixmap.fromImage(cqpt.getQImage());
+      this.cachePixmap.put(index, result);
+    } else
+      result = this.cachePixmap.get(index);
+
+    return result;
+  }
+
+  public QImage getImage(final int index, final Settings settings) {
 
     final CorsenResult r = getResult();
 
@@ -730,7 +761,7 @@ public class DataModelQt {
 
         if (img == null)
           return null;
-        this.cacheImage.put(0, QPixmap.fromImage(img));
+        this.cacheImage.put(0, img);
       }
 
       return this.cacheImage.get(0);
@@ -746,7 +777,7 @@ public class DataModelQt {
         if (img == null)
           return null;
         QApplication.processEvents();
-        cacheImage.put(1, QPixmap.fromImage(img));
+        cacheImage.put(1, img);
       }
 
       return this.cacheImage.get(1);
@@ -763,7 +794,7 @@ public class DataModelQt {
         if (img == null)
           return null;
         QApplication.processEvents();
-        cacheImage.put(2, QPixmap.fromImage(img));
+        cacheImage.put(2, img);
       }
 
       return this.cacheImage.get(2);
@@ -781,7 +812,7 @@ public class DataModelQt {
         if (img == null)
           return null;
         QApplication.processEvents();
-        cacheImage.put(3, QPixmap.fromImage(img));
+        cacheImage.put(3, img);
       }
 
       return this.cacheImage.get(3);
@@ -798,7 +829,7 @@ public class DataModelQt {
         if (img == null)
           return null;
         QApplication.processEvents();
-        cacheImage.put(4, QPixmap.fromImage(img));
+        cacheImage.put(4, img);
       }
 
       return this.cacheImage.get(4);
