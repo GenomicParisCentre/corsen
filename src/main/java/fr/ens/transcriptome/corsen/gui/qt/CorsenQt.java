@@ -1130,6 +1130,7 @@ public class CorsenQt extends QMainWindow {
 
     mainWindowUi.updateViewPushButton.clicked.connect(this,
         "updateVisualisation()");
+    mainWindowUi.updateViewPushButton.setHidden(true);
     mainWindowUi.particlesANothingRadioButton.clicked.connect(this,
         "updateVisualisation()");
     mainWindowUi.particlesARadioButton.clicked.connect(this,
