@@ -771,7 +771,8 @@ public class CorsenQt extends QMainWindow {
 
     if (mainWindowUi.launchAnalysisPushButton.isEnabled()) {
 
-      if (this.models.getResult() == null)
+      if (this.models.getResult() == null
+          || this.models.getResult().getCuboidsMessengersParticles() == null)
         return;
 
       mainWindowUi.imageLabel.setPixmap(this.models.getPixmap(i, settings));
