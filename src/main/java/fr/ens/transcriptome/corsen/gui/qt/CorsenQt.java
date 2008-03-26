@@ -265,8 +265,9 @@ public class CorsenQt extends QMainWindow {
   private void openMessengers() {
 
     String fileName =
-        QFileDialog.getOpenFileName(this, "Set messengers file", this.lastDir,
-            new QFileDialog.Filter("Particles file (*"
+        QFileDialog.getOpenFileName(this, "Set "
+            + this.settings.getParticlesAName().toLowerCase() + " file",
+            this.lastDir, new QFileDialog.Filter("Particles file (*"
                 + Globals.EXTENSION_PARTICLES_FILE + ")"));
     if (fileName.length() != 0) {
       setMessengerPathLabelText(fileName);
@@ -283,7 +284,8 @@ public class CorsenQt extends QMainWindow {
   private void openMitos() {
 
     String fileName =
-        QFileDialog.getOpenFileName(this, "Set mitochondria file",
+        QFileDialog.getOpenFileName(this, "Set "
+            + this.settings.getParticlesBName().toLowerCase() + " file",
             this.lastDir, new QFileDialog.Filter("Particles file (*.par)"));
     if (fileName.length() != 0) {
       setMitoPathLabelText(fileName);
@@ -301,7 +303,7 @@ public class CorsenQt extends QMainWindow {
     QFileDialog dialog = new QFileDialog(this);
     dialog.setFileMode(FileMode.DirectoryOnly);
     dialog.setDirectory(this.lastDir);
-    dialog.setWindowTitle("Set particle directory");
+    dialog.setWindowTitle("Set particles directory");
 
     if (dialog.exec() == QDialog.DialogCode.Accepted.value()) {
 
