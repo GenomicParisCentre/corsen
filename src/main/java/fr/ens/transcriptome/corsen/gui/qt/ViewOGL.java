@@ -1,7 +1,6 @@
 package fr.ens.transcriptome.corsen.gui.qt;
 
 import java.awt.Color;
-import java.nio.FloatBuffer;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLContext;
@@ -13,10 +12,11 @@ import com.trolltech.qt.core.QPoint;
 import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.gui.QMouseEvent;
 import com.trolltech.qt.gui.QWheelEvent;
 import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.opengl.QGL;
+import com.trolltech.qt.opengl.QGLFormat;
 import com.trolltech.qt.opengl.QGLWidget;
 
 import fr.ens.transcriptome.corsen.Settings;
@@ -40,10 +40,6 @@ public class ViewOGL extends QGLWidget {
 
   private boolean remakeObject = true;
   private int gllist = 0;
-
-  private Color backgroundColor = Color.black;
-
-  // private QColor trolltechPurple = QColor.fromCmykF(0.39, 0.39, 0.0, 0.0);
 
   private int xRot = 0;
 
@@ -225,13 +221,13 @@ public class ViewOGL extends QGLWidget {
   // Open GL methods
   //
 
-  private void clearGL() {
-
-    Color color = this.backgroundColor;
-
-    qglClearColor(new QColor(color.getRed(), color.getGreen(), color.getRed(),
-        color.getAlpha()));
-  }
+  // private void clearGL() {
+  //
+  // Color color = this.backgroundColor;
+  //
+  // qglClearColor(new QColor(color.getRed(), color.getGreen(), color.getRed(),
+  // color.getAlpha()));
+  // }
 
   public void initializeGL() {
 
@@ -244,117 +240,50 @@ public class ViewOGL extends QGLWidget {
     this.glu = new GLU();
     this.glut = new GLUT();
 
-    // glu.gluPerspective(40.0,1.5,50.0,100.0);
-    // glu.gluLookAt(-100, 100, 100, 100, 100, 25, 0, 1, 0);
+    float[] l0pos = {0, 2, -1};
+    float[] l0dif = {.3f, .3f, .8f};
+    float[] l1pos = {2, 2, 2};
+    float[] l1dif = {.5f, .5f, .5f};
 
-    // qglClearColor(trolltechPurple.dark());
+    gl.glEnable(GL.GL_DEPTH_TEST);
 
-    /*
-     * gl.glClearColor( 0.0f, 0.0f, 0.0f, 1.0f ); gl.glEnable(GL.GL_DEPTH_TEST);
-     * gl.glEnable(GL.GL_CULL_FACE); gl.glShadeModel(GL.GL_FLAT);
-     * gl.glDisable(GL.GL_NORMALIZE); gl.glEnable(GL.GL_COLOR_MATERIAL);
-     * gl.glEnable(GL.GL_LIGHTING); gl. glEnable(GL.GL_LIGHT0); gl.glLightfv(
-     * GL.GL_LIGHT0, GL.GL_AMBIENT, FloatBuffer.wrap(new float[] {.3f, .3f, .3f,
-     * .3f}) ); gl.glLightfv( GL.GL_LIGHT0, GL.GL_DIFFUSE, FloatBuffer.wrap(new
-     * float[] {.8f, .8f, .8f, .8f}) ); gl.glLightfv( GL.GL_LIGHT0,
-     * GL.GL_SPECULAR, FloatBuffer.wrap(new float[] {1, 1, 1, 1}) );
-     */
-
-    FloatBuffer mat_specular = FloatBuffer.wrap(new float[] {1, 1, 1, 1});
-    FloatBuffer mat_shininess = FloatBuffer.wrap(new float[] {50});
-
-    FloatBuffer white_light = FloatBuffer.wrap(new float[] {1, 1, 1, 1});
-    FloatBuffer lmodel_ambient =
-        FloatBuffer.wrap(new float[] {0.9f, 0.9f, 0.9f, 1.0f});
-
-    // FloatBuffer light_ambient = FloatBuffer.wrap(new float[] {.9f, .9f, .9f,
-    // 1});
-    FloatBuffer light_ambient =
-        FloatBuffer.wrap(new float[] {.3f, .3f, .3f, 3f});
-    FloatBuffer light_diffuse = FloatBuffer.wrap(new float[] {1, 1, 1, 1});
-    FloatBuffer light_specular = FloatBuffer.wrap(new float[] {1, 1, 1, 1});
-    FloatBuffer light_position0 = FloatBuffer.wrap(new float[] {1, 0, 0, 0});
-    FloatBuffer light_position1 = FloatBuffer.wrap(new float[] {0, 1, 0, 0});
-    FloatBuffer light_position2 = FloatBuffer.wrap(new float[] {0, 0, 1, 0});
-
-    gl.glClearColor(0, 0, 0, 0);
-    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, mat_specular);
-    gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, mat_shininess);
-    gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_position0);
-    gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, white_light);
-    gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, white_light);
-
-    gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, light_ambient);
-    gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, light_diffuse);
-    gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, light_specular);
-    gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_position0);
-
-    gl.glLightf(GL.GL_LIGHT0, GL.GL_LINEAR_ATTENUATION, 1.0f);
-    gl.glLightf(GL.GL_LIGHT0, GL.GL_CONSTANT_ATTENUATION, 2.0f);
-
-    gl.glLightfv(GL.GL_LIGHT1, GL.GL_POSITION, light_position1);
-    gl.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, white_light);
-    gl.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, white_light);
-
-    gl.glLightfv(GL.GL_LIGHT1, GL.GL_AMBIENT, light_ambient);
-    gl.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, light_diffuse);
-    gl.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, light_specular);
-    gl.glLightfv(GL.GL_LIGHT1, GL.GL_POSITION, light_position1);
-
-    gl.glLightf(GL.GL_LIGHT1, GL.GL_LINEAR_ATTENUATION, 1.0f);
-    gl.glLightf(GL.GL_LIGHT1, GL.GL_CONSTANT_ATTENUATION, 2.0f);
-
-    gl.glLightfv(GL.GL_LIGHT2, GL.GL_POSITION, light_position2);
-    gl.glLightfv(GL.GL_LIGHT2, GL.GL_DIFFUSE, white_light);
-    gl.glLightfv(GL.GL_LIGHT2, GL.GL_SPECULAR, white_light);
-
-    gl.glLightfv(GL.GL_LIGHT2, GL.GL_AMBIENT, light_ambient);
-    gl.glLightfv(GL.GL_LIGHT2, GL.GL_DIFFUSE, light_diffuse);
-    gl.glLightfv(GL.GL_LIGHT2, GL.GL_SPECULAR, light_specular);
-    gl.glLightfv(GL.GL_LIGHT2, GL.GL_POSITION, light_position2);
-
-    gl.glLightf(GL.GL_LIGHT2, GL.GL_LINEAR_ATTENUATION, 1.0f);
-    gl.glLightf(GL.GL_LIGHT2, GL.GL_CONSTANT_ATTENUATION, 2.0f);
-
-    gl.glLightModelfv(GL.GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
-
+    gl.glShadeModel(GL.GL_SMOOTH);
+    gl.glLightModeli(GL.GL_LIGHT_MODEL_LOCAL_VIEWER, GL.GL_TRUE);
     gl.glEnable(GL.GL_LIGHTING);
     gl.glEnable(GL.GL_LIGHT0);
     gl.glEnable(GL.GL_LIGHT1);
-    gl.glEnable(GL.GL_LIGHT2);
+    gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, l0dif, 0);
+    gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, l0dif, 0);
+    gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, l1pos, 0);
+    gl.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, l1dif, 0);
+    gl.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, l1dif, 0);
+    gl.glLightfv(GL.GL_LIGHT1, GL.GL_POSITION, l1pos, 0);
+
+    // gl.setSwapInterval(1);
+
+    float pos0[] = {5.0f, 5.0f, 10.0f, 0.0f};
+    float pos1[] = {-5.0f, 5.0f, -10.0f, 0.0f};
+    // float red[] = {0.8f, 0.1f, 0.0f, 1.0f};
+    // float green[] = {0.0f, 0.8f, 0.2f, 1.0f};
+    // float blue[] = {0.2f, 0.2f, 1.0f, 1.0f};
+
+    gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos0, 0);
+    gl.glLightfv(GL.GL_LIGHT1, GL.GL_POSITION, pos1, 0);
+
+    // gl.glEnable(GL.GL_CULL_FACE);
+    gl.glEnable(GL.GL_LIGHTING);
+    // gl.glEnable(GL.GL_LIGHT0);
+    gl.glEnable(GL.GL_LIGHT1);
+
+    this.gl.glMatrixMode(GL.GL_PROJECTION);
+    gl.glEnable(GL.GL_NORMALIZE);
     gl.glEnable(GL.GL_DEPTH_TEST);
 
+    long start = System.currentTimeMillis();
     make3DObject();
+    long end = System.currentTimeMillis();
+    System.out.println((end - start) + " ms.");
 
-    // this.gl.glShadeModel(GL.GL_FLAT);
-    // this.gl.glEnable(GL.GL_DEPTH_TEST);
-
-    // this.gl.glEnable(GL.GL_CULL_FACE);
-
-    // Lights parameters
-
-    /*
-     * this.gl.glShadeModel(GL.GL_SMOOTH);
-     * this.gl.glLightModeli(GL.GL_LIGHT_MODEL_LOCAL_VIEWER, GL.GL_TRUE);
-     * this.gl.glEnable(GL.GL_LIGHTING); this.gl.glEnable(GL.GL_LIGHT0);
-     * FloatBuffer l0dif = FloatBuffer.wrap(new float[] {0.3f,0.3f,0.8f});
-     * FloatBuffer l0pos = FloatBuffer.wrap(new float[] {0f,0f,0f}); FloatBuffer
-     * l1dif = FloatBuffer.wrap(new float[] {0.5f,0.5f,0.5f}); FloatBuffer mSpec =
-     * FloatBuffer.wrap(new float[] {0.5f,0.5f,0.5f});
-     */
-
-    // this.gl.glEnable(GL.GL_LIGHT1);
-    // this.gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION, l0dif);
-    /*
-     * this.gl.glLightfv(GL.GL_LIGHT0,GL.GL_DIFFUSE, l0dif);
-     * this.gl.glLightfv(GL.GL_LIGHT0,GL.GL_SPECULAR, l0dif);
-     * this.gl.glLightfv(GL.GL_LIGHT1,GL.GL_DIFFUSE, l1dif);
-     * this.gl.glLightfv(GL.GL_LIGHT1,GL.GL_SPECULAR, l1dif);
-     */
-
-    // Materials
-    // this.gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, mSpec);
-    // this.gl.glMaterialf(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, 50);
   }
 
   public void resizeGL(int width, int height) {
@@ -492,7 +421,19 @@ public class ViewOGL extends QGLWidget {
 
     this.gl.glNewList(list, GL.GL_COMPILE);
 
-    CorsenJOGL cjogl = new CorsenJOGL(this.gl, this);
+    if (false) {
+      float red[] = {0.8f, 0.1f, 0.0f, 1.0f};
+      gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, red, 0);
+      this.glut.glutSolidTeapot(10f);
+
+      this.gl.glEndList();
+
+      this.gllist = list;
+
+      return;
+    }
+
+    CorsenGL cgl = new CorsenGL(this.gl, this);
 
     // point(0f, 0f, 0f, 0.01f);
 
@@ -504,14 +445,13 @@ public class ViewOGL extends QGLWidget {
      * this.settings.getColorBackground();
      */
 
-    clearGL();
-
+    // clearGL();
     final CorsenResult r = getResult();
     final Settings s = this.settings;
 
     if (r != null) {
 
-      this.gl.glColor3d(100, 0, 100);
+      // this.gl.glColor3d(100, 0, 100);
 
       if (r.getMessengersParticles() != null) {
 
@@ -521,19 +461,16 @@ public class ViewOGL extends QGLWidget {
             * pars.getZSlices() * pars.getPixelDepth() / 2);
         // this.gl.glLoadIdentity();
 
-        cjogl.drawLegend(r.getMessengersParticles().getUnitOfLength());
-
       }
 
       if (r.getMessengersParticles() != null && !isDrawNoMessengers()) {
 
         if (!isDrawMessengersCuboids())
-          cjogl.drawParticles(r.getMessengersParticles(), s
-              .getColorParticlesA(), isDrawBaryCenter(), s
-              .getColorBaryCenters(), s
-              .isVisualisationParticlesAInDifferentsColor());
+          cgl.drawParticles(r.getMessengersParticles(), s.getColorParticlesA(),
+              isDrawBaryCenter(), s.getColorBaryCenters(), s
+                  .isVisualisationParticlesAInDifferentsColor());
         else {
-          cjogl.drawParticles(r.getCuboidsMessengersParticles(), s
+          cgl.drawParticles(r.getCuboidsMessengersParticles(), s
               .getColorParticlesA(), isDrawBaryCenter(), s
               .getColorBaryCenters(), s
               .isVisualisationParticlesAInDifferentsColor());
@@ -543,24 +480,29 @@ public class ViewOGL extends QGLWidget {
       if (r.getMitosParticles() != null && !isDrawNoMitos()) {
 
         if (!isDrawMitosCuboids())
-          cjogl.drawParticles(r.getMitosParticles(), s.getColorParticlesB(),
+          cgl.drawParticles(r.getMitosParticles(), s.getColorParticlesB(),
               false, null, s.isVisualisationParticlesBInDifferentsColor());
         else
-          cjogl.drawParticles(r.getCuboidsMitosParticles(), s
+          cgl.drawParticles(r.getCuboidsMitosParticles(), s
               .getColorParticlesB(), false, null, s
               .isVisualisationParticlesBInDifferentsColor());
       }
 
       if (isDrawDistances() && r.getMinDistances() != null)
-        cjogl.drawDistances(r.getMinDistances(), s.getColorDistances(), s
+        cgl.drawDistances(r.getMinDistances(), s.getColorDistances(), s
             .isVisualizationShowNegativeDistances());
 
       // 
       // cjogl.drawParticles(this.mitoParticles, Color.RED, true, Color.BLUE);
     } else {
-      cjogl.drawLegend("");
+      // cjogl.drawLegend("");
 
     }
+
+    if (r != null && r.getMessengersParticles() != null)
+      cgl.drawLegend(r.getMessengersParticles().getUnitOfLength());
+    else
+      cgl.drawLegend(null);
 
     /*
      * this.gl.glLoadIdentity(); Particles3D pars = r.getMessengersParticles();
@@ -605,6 +547,9 @@ public class ViewOGL extends QGLWidget {
    * QtDesigner.
    */
   public ViewOGL(final QWidget widget) {
+
+    super(new QGLFormat(new QGL.FormatOptions(QGL.FormatOption.DoubleBuffer,
+        QGL.FormatOption.DepthBuffer, QGL.FormatOption.DirectRendering)));
 
   }
 
