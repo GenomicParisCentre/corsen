@@ -1,6 +1,7 @@
 package fr.ens.transcriptome.corsen.gui.qt;
 
 import java.awt.Color;
+import java.io.IOException;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLContext;
@@ -22,6 +23,7 @@ import com.trolltech.qt.opengl.QGLWidget;
 import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.model.Particles3D;
+import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
 
 public class ViewOGL extends QGLWidget {
 
@@ -37,6 +39,8 @@ public class ViewOGL extends QGLWidget {
   private boolean drawMitosCuboids;
   private boolean drawBaryCenter;
   private boolean drawDistances;
+
+  private String legend;
 
   private boolean remakeObject = true;
   private int gllist = 0;
@@ -214,6 +218,7 @@ public class ViewOGL extends QGLWidget {
     setResult(null);
     // this.remakeObject = true;
     setRemakeObject(true);
+    this.legend = null;
     repaint();
   }
 
@@ -281,9 +286,30 @@ public class ViewOGL extends QGLWidget {
 
     long start = System.currentTimeMillis();
     make3DObject();
+    drawLegend();
     long end = System.currentTimeMillis();
     System.out.println((end - start) + " ms.");
 
+  }
+
+  /**
+   * Draw the legend
+   */
+  public void drawLegend() {
+
+    if (this.legend == null) {
+
+      final CorsenResult r = getResult();
+      if (r == null || r.getMessengersParticles() == null)
+        this.legend = "";
+      else {
+        String unit = r.getMessengersParticles().getUnitOfLength();
+
+        this.legend = "Scale: 10 " + unit;
+      }
+    }
+
+    this.renderText(5, 15, this.legend);
   }
 
   public void resizeGL(int width, int height) {
@@ -311,6 +337,8 @@ public class ViewOGL extends QGLWidget {
 
     if (isRemakeObject())
       make3DObject();
+
+    drawLegend();
 
     this.gl.glMatrixMode(GL.GL_MODELVIEW);
 
@@ -499,10 +527,7 @@ public class ViewOGL extends QGLWidget {
 
     }
 
-    if (r != null && r.getMessengersParticles() != null)
-      cgl.drawLegend(r.getMessengersParticles().getUnitOfLength());
-    else
-      cgl.drawLegend(null);
+    cgl.drawAxis();
 
     /*
      * this.gl.glLoadIdentity(); Particles3D pars = r.getMessengersParticles();
@@ -515,7 +540,6 @@ public class ViewOGL extends QGLWidget {
     this.gl.glEndList();
 
     this.gllist = list;
-
   }
 
   private int normalizeAngle(int angle) {

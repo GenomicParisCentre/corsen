@@ -68,9 +68,7 @@ public class CorsenGL {
    * @param unit Unit of the legend
    * @throws IOException
    */
-  public void drawLegend(final String unit) {
-
-    // final Writer out = this.out;
+  public void drawAxis() {
 
     Point3D o = new SimplePoint3DImpl(0, 0, 0);
     Point3D x = new SimplePoint3DImpl(10, 0, 0);
@@ -80,18 +78,9 @@ public class CorsenGL {
     drawLine3D(o, x, COLOR_WHITE);
     drawLine3D(o, y, COLOR_WHITE);
     drawLine3D(o, z, COLOR_WHITE);
-
-    String text = "10 " + unit;
-
-    if (unit != null)
-      text3D(new SimplePoint3DImpl(-1, -1, -1), text, COLOR_WHITE);
-
-    /*
-     * out.write("text3d(x=-1,y=-1,z=-1,text=\"" + text + "\",color=\"" +
-     * COLOR_WHITE + "\")\n");
-     */
-
   }
+
+
 
   /**
    * Write the lines of distances.
@@ -296,11 +285,12 @@ public class CorsenGL {
   }
 
   public void text3D(Point3D p, String text, Color c) {
-  
+
     this.gl.glPushMatrix();
-    this.gl.glColor4f(c.getRed() / 255.0f,
-        c.getGreen() / 255.0f, c.getBlue() / 255.0f, 1.0f);
-    this.widgetGL.renderText(p.getX(), p.getY(), p.getZ(), text);
+    this.gl.glColor4f(c.getRed() / 255.0f, c.getGreen() / 255.0f,
+        c.getBlue() / 255.0f, 1.0f);
+    // this.widgetGL.renderText(p.getX(), p.getY(), p.getZ(), text);
+    this.widgetGL.renderText(5, 15, text);
     this.gl.glPopMatrix();
   }
 
@@ -592,8 +582,8 @@ public class CorsenGL {
     }
   }
 
-  private void drawSurfaceParticle3DWithMarchingCube(final Particle3D particle,
-      final Color c) {
+  private void drawSurfaceParticle3DWithMarchingCubes(
+      final Particle3D particle, final Color c) {
 
     if (particle == null || c == null)
       return;
@@ -641,15 +631,17 @@ public class CorsenGL {
 
   public void drawSurfaceParticle3D(final Particle3D particle, final Color color) {
 
+    if (true)
+      drawSurfaceParticle3DWithMarchingCubes(particle, color);
+    else
+      drawSurfaceParticle3DWithCubes(particle, color);
+  }
+
+  public void drawSurfaceParticle3DWithCubes(final Particle3D particle,
+      final Color color) {
+
     if (particle == null || color == null)
       return;
-
-    if (true) {
-      System.out.println("mc...");
-
-      drawSurfaceParticle3DWithMarchingCube(particle, color);
-      return;
-    }
 
     final BitMapParticle3D bpar = particle.getBitMapParticle();
     AbstractListPoint3D points = particle.getInnerPoints();
@@ -664,12 +656,12 @@ public class CorsenGL {
         final int y = bpar.getYBitmapCoordinate(p.getY());
         final int z = bpar.getZBitmapCoordinate(p.getZ());
 
-        final boolean face1 = bpar.isParticlePoint(x, y, z - 1);
-        final boolean face2 = bpar.isParticlePoint(x, y, z + 1);
-        final boolean face3 = bpar.isParticlePoint(x + 1, y, z);
-        final boolean face4 = bpar.isParticlePoint(x - 1, y, z);
-        final boolean face5 = bpar.isParticlePoint(x, y + 1, z);
-        final boolean face6 = bpar.isParticlePoint(x, y - 1, z);
+        // final boolean face1 = bpar.isParticlePoint(x, y, z - 1);
+        // final boolean face2 = bpar.isParticlePoint(x, y, z + 1);
+        // final boolean face3 = bpar.isParticlePoint(x + 1, y, z);
+        // final boolean face4 = bpar.isParticlePoint(x - 1, y, z);
+        // final boolean face5 = bpar.isParticlePoint(x, y + 1, z);
+        // final boolean face6 = bpar.isParticlePoint(x, y - 1, z);
 
         if (!bpar.isParticlePoint(x, y, z - 1))
           makeObjectSquare(x, y, z, 0, 0, 1, 0, color, alpha);
