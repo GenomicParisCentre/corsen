@@ -30,15 +30,23 @@ import javax.vecmath.Point3f;
 
 import fr.ens.transcriptome.corsen.model.Particle3D;
 
-public class DrawMarchingCubes {
+/**
+ * This class draw render the surface of particles 3D using the marching cude
+ * algorithm.
+ * @author Laurent Jourdren
+ */
+public final class DrawMarchingCubes {
 
-  private GL gl;
-
-  public void showParticle3D(Particle3D particle) {
+  /**
+   * Draw a particle3D.
+   * @param gl GL instance
+   * @param particle Particle to draw
+   */
+  public static final void showParticle3D(final GL gl, final Particle3D particle) {
 
     final List<Point3f> triangles = MCCube.getTriangles(particle);
 
-    this.gl.glBegin(GL.GL_TRIANGLES);
+    gl.glBegin(GL.GL_TRIANGLES);
 
     for (Iterator<Point3f> iter = triangles.iterator(); iter.hasNext();) {
 
@@ -48,15 +56,15 @@ public class DrawMarchingCubes {
 
       final Point3f n = CalculateVectorNormal(p1, p2, p3);
 
-      this.gl.glNormal3f(n.x, n.y, n.z);
-      this.gl.glVertex3f(p1.x, p1.y, p1.z);
-      this.gl.glNormal3f(n.x, n.y, n.z);
-      this.gl.glVertex3f(p2.x, p2.y, p2.z);
-      this.gl.glNormal3f(n.x, n.y, n.z);
-      this.gl.glVertex3f(p3.x, p3.y, p3.z);
+      gl.glNormal3f(n.x, n.y, n.z);
+      gl.glVertex3f(p1.x, p1.y, p1.z);
+      gl.glNormal3f(n.x, n.y, n.z);
+      gl.glVertex3f(p2.x, p2.y, p2.z);
+      gl.glNormal3f(n.x, n.y, n.z);
+      gl.glVertex3f(p3.x, p3.y, p3.z);
     }
 
-    this.gl.glEnd();
+    gl.glEnd();
   }
 
   private static final Point3f CalculateVectorNormal(Point3f fVert1,
@@ -77,11 +85,6 @@ public class DrawMarchingCubes {
     result.z = Px * Qy - Py * Qx;
 
     return result;
-  }
-
-  public DrawMarchingCubes(GL gl) {
-
-    this.gl = gl;
   }
 
 }
