@@ -49,7 +49,7 @@ public final class Globals {
   public static final boolean IS_JAR = isJar();
 
   public static final int THREAD_NUMBER_DEFAULT = -1;
-  //public static final int THREAD_NUMBER_DEFAULT = 0;
+  // public static final int THREAD_NUMBER_DEFAULT = 0;
 
   public static final boolean DEBUG = true;
   public static final boolean DEBUG_HOME_DIR = IS_JAR ? false : true;
@@ -66,7 +66,7 @@ public final class Globals {
   public static final String WEBSITE_URL = getWebSiteURL();
   public static final String HANDBOOK_URL = WEBSITE_URL + "/handbook.html";
   public static final String REPORT_BUG_URL =
-      "mailto:jourdren@biologie.ens.fr?subject=Corsen Report Bug&body=Report here the CorsenSwing bug";
+      "mailto:jourdren@biologie.ens.fr?subject=Corsen Report Bug&body=Report here the Corsen bug";
 
   public static enum GUI {
     CLI, SWING, QT, FAKE
