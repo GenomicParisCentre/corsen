@@ -111,7 +111,7 @@ public final class Particle3DUtil {
   private static void addSurfacePoint(final Particle3DBuilder builder,
       final double x, final double y, final double z) {
 
-    builder.addSurfacePoint((float) x, (float) y, (float) z);
+    builder.addSurfacePoint((float) x, (float) y, (float) z, 0);
   }
 
   private static void fillCuboids(final Particle3D particle,

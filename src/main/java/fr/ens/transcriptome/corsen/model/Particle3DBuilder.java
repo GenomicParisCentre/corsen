@@ -62,7 +62,7 @@ public class Particle3DBuilder {
 
     for (int i = 0; i < n; i++) {
       final Point2D pt = particle.getSurfacePoint(i);
-      addSurfacePoint(pt.getX(), pt.getY(), slice * pixelDepth);
+      addSurfacePoint(pt.getX(), pt.getY(), slice * pixelDepth, pt.getI());
     }
 
     n = particle.innerPointsCount();
@@ -170,13 +170,14 @@ public class Particle3DBuilder {
     this.intensity += p.getI();
   }
 
-  public void addSurfacePoint(final float x, final float y, final float z) {
+  public void addSurfacePoint(final float x, final float y, final float z,
+      final int intensity) {
 
     init();
 
     final AbstractListPoint3D surfacePoints =
         this.particle.getModifiableSurfacePoints();
-    surfacePoints.add(x, y, z, 0);
+    surfacePoints.add(x, y, z, intensity);
   }
 
   /**
@@ -239,7 +240,7 @@ public class Particle3DBuilder {
 
     if (st.hasMoreElements())
       this.intensity = Long.parseLong(st.nextToken());
-    
+
     if (st.hasMoreElements())
       this.density = Double.parseDouble(st.nextToken());
 
@@ -358,12 +359,12 @@ public class Particle3DBuilder {
    * @param comment Comment about the particle
    */
   public void setComment(final String comment) {
-    
+
     init();
-    
-    this.particle.setComment(comment);    
+
+    this.particle.setComment(comment);
   }
-  
+
   private void init() {
 
     if (this.particle != null)
