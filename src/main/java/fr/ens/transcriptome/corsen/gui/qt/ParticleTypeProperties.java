@@ -9,7 +9,7 @@
  *      http://www.gnu.org/copyleft/lesser.html
  *
  * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
+ * of the ï¿½cole Normale Supï¿½rieure and the individual authors.
  * These should be listed in @author doc comments.
  *
  * For more information on the Nividic project and its aims,
@@ -59,9 +59,8 @@ public class ParticleTypeProperties {
   public void configureDialog() {
     // Make the dialog.
 
-    System.out.println("coucou");
-
-    final Ui_ParticleTypePropertiesDialog dialogUi = new Ui_ParticleTypePropertiesDialog();
+    final Ui_ParticleTypePropertiesDialog dialogUi =
+        new Ui_ParticleTypePropertiesDialog();
     QDialog dialog = new QDialog(this.mainWindow);
     dialogUi.setupUi(dialog);
 
