@@ -28,8 +28,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.script.Bindings;
+import javax.script.Compilable;
+import javax.script.CompiledScript;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import org.apache.commons.math.stat.descriptive.moment.Mean;
 import org.apache.commons.math.stat.descriptive.rank.Median;
+
+import fr.ens.transcriptome.corsen.model.Particle3D;
 
 /**
  * This class handle last corsen results.
@@ -46,6 +56,8 @@ public class CorsenHistoryResults {
 
   private double[] data;
   private StatType statType = StatType.MEDIAN;
+
+  private CompiledScript script;
 
   public enum StatType {
 
@@ -82,7 +94,7 @@ public class CorsenHistoryResults {
 
       return null;
     }
-    
+
     //
     // Constructor
     //
@@ -196,6 +208,15 @@ public class CorsenHistoryResults {
       return this.customMinDistance;
     }
 
+    /**
+     * Set the custom value
+     * @param customValue Value to set
+     */
+    private void setCustom(double customValue) {
+
+      this.customMinDistance = customValue;
+    }
+
     private Entry(final File fileA, final File fileB, final CorsenResult cr) {
 
       // final double dist = cr.getMinAnalyser().getMedian();
@@ -208,7 +229,6 @@ public class CorsenHistoryResults {
       this.meanMinDistance = da.getMean();
       this.minMinDistance = da.getMin();
       this.maxMinDistance = da.getMax();
-      // this.customMinDistance = da.getCustom();
     }
 
   }
@@ -249,6 +269,7 @@ public class CorsenHistoryResults {
       this.keys.remove(key);
 
     final Entry e = new Entry(fileA, fileB, cr);
+    e.setCustom(calcCustomValue(cr));
 
     this.entries.put(key, e);
     this.keys.add(key);
@@ -366,6 +387,78 @@ public class CorsenHistoryResults {
   public double getMeanOfMedianMinDistances() {
 
     return new Mean().evaluate(getDistances());
+  }
+
+  /**
+   * Set the custom expression
+   * @param expression The expression to set
+   * @return true if the expression is correct
+   */
+  public boolean setCustomExpression(final String expression) {
+
+    this.script = null;
+
+    if (expression == null || "".equals(expression.trim()))
+      return true;
+
+    ScriptEngine engine = new ScriptEngineManager().getEngineByName("js");
+
+    Compilable compilable = (Compilable) engine;
+
+    try {
+
+      final CompiledScript script = compilable.compile(expression);
+      this.script = script;
+
+    } catch (ScriptException e) {
+
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Calc the custom value.
+   * @param cr CorsenResults
+   * @return the custom value
+   */
+  private double calcCustomValue(final CorsenResult cr) {
+
+    if (this.script == null)
+      return Double.NaN;
+
+    Map<Particle3D, Distance> in = cr.getMinDistances();
+
+    long inCount = 0;
+    long outCount = 0;
+
+    for (Map.Entry<Particle3D, Distance> e : in.entrySet()) {
+
+      final Particle3D particle = e.getKey();
+      final long intensity = particle.getIntensity();
+      final Distance distance = e.getValue();
+
+      inCount += intensity;
+
+      final Bindings b =
+          this.script.getEngine().getBindings(ScriptContext.ENGINE_SCOPE);
+
+      b.put("i", intensity);
+      b.put("d", distance.getDistance());
+
+      try {
+
+        Object o = this.script.eval();
+
+        if (o instanceof Boolean && ((Boolean) o) == true)
+          outCount += intensity;
+
+      } catch (ScriptException e1) {
+      }
+    }
+
+    return (double) outCount / (double) inCount;
   }
 
   //
