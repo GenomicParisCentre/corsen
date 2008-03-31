@@ -404,7 +404,12 @@ public class DataModelQt {
         switch (type) {
 
         case CUSTOM:
-          return e.getCustomMinDistance();
+
+          double val = e.getCustomMinDistance();
+          if (Double.isInfinite(val) || Double.isNaN(val))
+            return val;
+
+          return String.format("%.3f%%", val*100);
 
         case MIN:
           return e.getMinMinDistance();
@@ -453,7 +458,7 @@ public class DataModelQt {
         return "File B";
 
       case 3:
-        return "Median minimal distance";
+        return "Minimal distance";
 
       default:
         return null;
