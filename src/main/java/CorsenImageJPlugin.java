@@ -386,7 +386,7 @@ public class CorsenImageJPlugin implements PlugInFilter {
 
           String newName;
 
-          int index = fi.fileName.indexOf(".");
+          int index = fi.fileName.lastIndexOf(".");
           if (index == -1)
             newName = fi.fileName;
           else
