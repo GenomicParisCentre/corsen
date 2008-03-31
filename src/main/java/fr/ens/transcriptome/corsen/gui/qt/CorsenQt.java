@@ -768,6 +768,7 @@ public class CorsenQt extends QMainWindow {
 
     final int i = ((Integer) o).intValue();
     mainWindowUi.resultTableView.setModel(this.models.getModel(i));
+    mainWindowUi.resultTableView.setSortingEnabled(true);
 
     if (mainWindowUi.launchAnalysisPushButton.isEnabled()) {
 

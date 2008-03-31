@@ -481,7 +481,7 @@
           <property name="orientation" >
            <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
           </property>
-          <widget class="QTableView" name="resultTableView" >
+          <widget class="ResultTableView" name="resultTableView" >
            <property name="toolTip" >
             <string>Result table</string>
            </property>
