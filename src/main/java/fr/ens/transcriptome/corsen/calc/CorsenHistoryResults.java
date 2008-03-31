@@ -45,6 +45,59 @@ public class CorsenHistoryResults {
   private static int count = 0;
 
   private double[] data;
+  private StatType statType = StatType.MEDIAN;
+
+  public enum StatType {
+
+    MEDIAN("median"), MEAN("mean"), MIN("min"), MAX("max"), CUSTOM("custom");
+
+    private String description;
+
+    /**
+     * Get the description of the type of stat.
+     * @return the description of the stat
+     */
+    public String toString() {
+
+      return this.description;
+    }
+
+    /**
+     * Get a Stat type from this description.
+     * @param description description of the type
+     * @return a StatType
+     */
+    public static StatType getTypeFromDescription(String description) {
+
+      if (description == null)
+        return null;
+
+      StatType[] types = StatType.values();
+
+      for (int i = 0; i < types.length; i++) {
+
+        if (description.equals(types[i].toString()))
+          return types[i];
+      }
+
+      return null;
+    }
+    
+    //
+    // Constructor
+    //
+
+    /**
+     * Private constructor.
+     * @param description The description of the stat
+     */
+    private StatType(final String description) {
+
+      this.description = description;
+
+    }
+
+  };
 
   /**
    * Define an entry of the last corsen results.
@@ -57,6 +110,10 @@ public class CorsenHistoryResults {
     private File fileB;
     private File resultsPath;
     private double medianMinDistance;
+    private double meanMinDistance;
+    private double minMinDistance;
+    private double maxMinDistance;
+    private double customMinDistance;
 
     /**
      * Get the id of the entry.
@@ -95,7 +152,7 @@ public class CorsenHistoryResults {
     }
 
     /**
-     * Get median of the median distances.
+     * Get median of the min distances.
      * @return the median of the median distances.
      */
     public double getMedianMinDistance() {
@@ -103,15 +160,75 @@ public class CorsenHistoryResults {
       return this.medianMinDistance;
     }
 
-    private Entry(final File fileA, final File fileB, final File resultsPath,
-        final double medianMinDistance) {
+    /**
+     * Get mean of the min distances.
+     * @return the mean of the min distances.
+     */
+    public double getMeanMinDistance() {
+
+      return this.meanMinDistance;
+    }
+
+    /**
+     * Get the min of the min distances.
+     * @return the min of the min distances.
+     */
+    public double getMinMinDistance() {
+
+      return this.minMinDistance;
+    }
+
+    /**
+     * Get the max of the min distances.
+     * @return the max of the min distances.
+     */
+    public double getMaxMinDistance() {
+
+      return this.maxMinDistance;
+    }
+
+    /**
+     * Get custom min distances.
+     * @return the custom min distances.
+     */
+    public double getCustomMinDistance() {
+
+      return this.customMinDistance;
+    }
+
+    private Entry(final File fileA, final File fileB, final CorsenResult cr) {
+
+      // final double dist = cr.getMinAnalyser().getMedian();
+      final DistanceAnalyser da = cr.getMinAnalyser();
 
       this.fileA = fileA;
       this.fileB = fileB;
-      this.resultsPath = resultsPath;
-      this.medianMinDistance = medianMinDistance;
+      this.resultsPath = cr.getResultsPath();
+      this.medianMinDistance = da.getMedian();
+      this.meanMinDistance = da.getMean();
+      this.minMinDistance = da.getMin();
+      this.maxMinDistance = da.getMax();
+      // this.customMinDistance = da.getCustom();
     }
 
+  }
+
+  /**
+   * Get the stat type.
+   * @return The stat type
+   */
+  public StatType getStatType() {
+
+    return statType;
+  }
+
+  /**
+   * Set the statType
+   * @param statType StatType to set
+   */
+  public void setStatType(final StatType statType) {
+
+    this.statType = statType;
   }
 
   /**
@@ -131,9 +248,7 @@ public class CorsenHistoryResults {
     if (this.entries.containsKey(key))
       this.keys.remove(key);
 
-    final double dist = cr.getMinAnalyser().getMedian();
-
-    final Entry e = new Entry(fileA, fileB, cr.getResultsPath(), dist);
+    final Entry e = new Entry(fileA, fileB, cr);
 
     this.entries.put(key, e);
     this.keys.add(key);
@@ -198,8 +313,37 @@ public class CorsenHistoryResults {
     final double[] data = new double[size()];
 
     int count = 0;
-    for (Map.Entry<String, Entry> e : this.entries.entrySet())
-      data[count++] = e.getValue().getMedianMinDistance();
+    for (Map.Entry<String, Entry> e : this.entries.entrySet()) {
+
+      final double value;
+
+      switch (this.statType) {
+
+      case MEAN:
+        value = e.getValue().getMeanMinDistance();
+        break;
+
+      case MIN:
+        value = e.getValue().getMinMinDistance();
+        break;
+
+      case MAX:
+        value = e.getValue().getMaxMinDistance();
+        break;
+
+      case CUSTOM:
+        value = e.getValue().getCustomMinDistance();
+        break;
+
+      case MEDIAN:
+      default:
+        value = e.getValue().getMedianMinDistance();
+        break;
+
+      }
+
+      data[count++] = value;
+    }
 
     this.data = data;
 

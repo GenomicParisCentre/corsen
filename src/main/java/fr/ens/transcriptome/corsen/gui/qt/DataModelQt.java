@@ -370,6 +370,9 @@ public class DataModelQt {
     private CorsenHistoryResults results =
         CorsenHistoryResults.getCorsenHistoryResults();
 
+    private CorsenHistoryResults.StatType type =
+        CorsenHistoryResults.StatType.values()[0];
+
     @Override
     public int columnCount(QModelIndex arg0) {
 
@@ -398,7 +401,25 @@ public class DataModelQt {
         return e.getFileB().getName();
 
       case 3:
-        return e.getMedianMinDistance();
+        switch (type) {
+
+        case CUSTOM:
+          return e.getCustomMinDistance();
+
+        case MIN:
+          return e.getMinMinDistance();
+
+        case MAX:
+          return e.getMaxMinDistance();
+
+        case MEAN:
+          return e.getMeanMinDistance();
+
+        case MEDIAN:
+        default:
+          return e.getMedianMinDistance();
+
+        }
 
       default:
         break;
@@ -492,6 +513,15 @@ public class DataModelQt {
         sb.append(" cell).");
 
       return sb.toString();
+    }
+
+    /**
+     * Change the statistical type view
+     * @param name the name of the type
+     */
+    public void setType(final String name) {
+
+      this.type = CorsenHistoryResults.StatType.getTypeFromDescription(name);
     }
 
     public void update() {

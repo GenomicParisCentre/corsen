@@ -782,6 +782,52 @@
        </attribute>
        <layout class="QVBoxLayout" >
         <item>
+         <layout class="QHBoxLayout" >
+          <property name="rightMargin" >
+           <number>0</number>
+          </property>
+          <property name="leftMargin" >
+           <number>0</number>
+          </property>
+          <property name="topMargin" >
+           <number>0</number>
+          </property>
+          <property name="bottomMargin" >
+           <number>0</number>
+          </property>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3" >
+            <property name="text" >
+             <string>Statistic to display: </string>
+            </property>
+            <property name="buddy" >
+             <cstring>historyStatComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="historyStatComboBox" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <widget class="QSplitter" name="splitter_2" >
           <property name="orientation" >
            <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
@@ -995,7 +1041,6 @@
     <addaction name="action_Report_Bug" />
     <addaction name="separator" />
     <addaction name="actionAbout_Corsen" />
-    <!--addaction name="actionAbout_QtJambi" /-->
    </widget>
    <widget class="QMenu" name="menu_File" >
     <property name="title" >
@@ -1064,11 +1109,6 @@
     <string>&amp;About Corsen</string>
    </property>
   </action>
-  <!--action name="actionAbout_QtJambi" >
-   <property name="text" >
-    <string>About &amp;QtJambi</string>
-   </property>
-  </action-->
   <action name="actionSave_settings" >
    <property name="text" >
     <string>&amp;Save settings</string>

@@ -785,6 +785,18 @@ public class CorsenQt extends QMainWindow {
     mainWindowUi.historyTableView.setAlternatingRowColors(true);
   }
 
+  @SuppressWarnings("unused")
+  private void historyViewChanged(Object o) {
+
+    int i = (Integer) o;
+    String val = CorsenHistoryResults.StatType.values()[i].toString();
+
+    final HistoryDataModel historyModel = DataModelQt.getHistoryModel();
+    historyModel.setType(val);
+
+    historyModel.update();
+  }
+
   public void closeEvent(QCloseEvent event) {
 
     QApplication.exit();
@@ -997,6 +1009,46 @@ public class CorsenQt extends QMainWindow {
 
   }
 
+  private void initView3DTab() {
+
+    mainWindowUi.launch3DViewPushButton.clicked.connect(this, "launch3DView()");
+
+    mainWindowUi.updateViewPushButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.updateViewPushButton.setHidden(true);
+    mainWindowUi.particlesANothingRadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.particlesARadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.particlesACuboidsRadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.particlesBNothingRadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.particlesBRadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.particlesBCuboidsRadioButton.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.showBarycentersCheckBox.clicked.connect(this,
+        "updateVisualisation()");
+    mainWindowUi.showDistancesCheckBox.clicked.connect(this,
+        "updateVisualisation()");
+  }
+
+  private void initHistoryTab() {
+
+    mainWindowUi.historyClearPushButton.clicked.connect(this,
+        "clearHistoryResults()");
+    mainWindowUi.historySaveResultsPushButton.clicked.connect(this,
+        "saveHistoryResults()");
+
+    for (CorsenHistoryResults.StatType t : CorsenHistoryResults.StatType
+        .values())
+      mainWindowUi.historyStatComboBox.addItem(t.toString());
+
+    mainWindowUi.historyStatComboBox.currentIndexChanged.connect(this,
+        "historyViewChanged(Object)");
+  }
+
   private void setWidgetTexts() {
 
     final String particlesAName = this.settings.getParticlesAName();
@@ -1123,40 +1175,18 @@ public class CorsenQt extends QMainWindow {
         "openDirectory()");
     mainWindowUi.action_Start_analysis.triggered.connect(this,
         "launchAnalysis()");
-
     mainWindowUi.launchAnalysisPushButton.clicked.connect(this,
         "launchAnalysis()");
-    mainWindowUi.launch3DViewPushButton.clicked.connect(this, "launch3DView()");
+
     mainWindowUi.action_Quit.triggered.connect(this, "quit()");
 
-    mainWindowUi.updateViewPushButton.clicked.connect(this,
-        "updateVisualisation()");
-    mainWindowUi.updateViewPushButton.setHidden(true);
-    mainWindowUi.particlesANothingRadioButton.clicked.connect(this,
-        "updateVisualisation()");
-    mainWindowUi.particlesARadioButton.clicked.connect(this,
-        "updateVisualisation()");
-    mainWindowUi.particlesACuboidsRadioButton.clicked.connect(this,
-        "updateVisualisation()");
-    mainWindowUi.particlesBNothingRadioButton.clicked.connect(this,
-        "updateVisualisation()");
-    mainWindowUi.particlesBRadioButton.clicked.connect(this,
-        "updateVisualisation()");
-    mainWindowUi.particlesBCuboidsRadioButton.clicked.connect(this,
-        "updateVisualisation()");
-    mainWindowUi.showBarycentersCheckBox.clicked.connect(this,
-        "updateVisualisation()");
-    mainWindowUi.showDistancesCheckBox.clicked.connect(this,
-        "updateVisualisation()");
-    mainWindowUi.historyClearPushButton.clicked.connect(this,
-        "clearHistoryResults()");
-    mainWindowUi.historySaveResultsPushButton.clicked.connect(this,
-        "saveHistoryResults()");
     mainWindowUi.action_Copy.triggered.connect(this, "copy()");
 
     setWidgetTexts();
 
     initResultTab();
+    initView3DTab();
+    initHistoryTab();
 
     setWindowIcon(new QIcon("classpath:corsen-logo.png"));
 
