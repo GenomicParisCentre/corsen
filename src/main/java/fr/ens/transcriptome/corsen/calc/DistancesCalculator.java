@@ -245,6 +245,7 @@ public class DistancesCalculator {
   public void loadParticles() throws IOException {
 
     final CorsenResult result = this.result;
+    final String unit = result.getSettings().getUnit();
 
     // Read messengers
     sendEvent(ProgressEventType.START_READ_MESSENGERS_EVENT);
@@ -254,7 +255,6 @@ public class DistancesCalculator {
     // Transform coordinates of messengers
     sendEvent(ProgressEventType.START_CHANGE_MESSENGERS_COORDINATES_EVENT);
     changeFactors(particlesA);
-    result.setParticlesA(particlesA);
 
     // Read mitos
     sendEvent(ProgressEventType.START_READ_MITOS_EVENT);
@@ -264,6 +264,14 @@ public class DistancesCalculator {
     // Transform coordinates of messengers
     sendEvent(ProgressEventType.START_CHANGE_MITOS_COORDINATES_EVENT);
     changeFactors(particlesB);
+
+    // Change unit if necessary
+    if (unit != null && !"".equals(unit)) {
+      particlesA.setUnitOfLength(unit);
+      particlesB.setUnitOfLength(unit);
+    }
+
+    result.setParticlesA(particlesA);
     result.setParticlesB(particlesB);
   }
 
