@@ -796,6 +796,7 @@ public class CorsenQt extends QMainWindow {
     historyModel.setType(val);
 
     historyModel.update();
+    mainWindowUi.HistoryResultlabel.setText(historyModel.getResultMessage());
   }
 
   public void closeEvent(QCloseEvent event) {

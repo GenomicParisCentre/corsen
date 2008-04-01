@@ -24,6 +24,7 @@ package fr.ens.transcriptome.corsen.calc;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,8 +55,8 @@ public class CorsenHistoryResults {
 
   private static int count = 0;
 
-  private double[] data;
-  private StatType statType = StatType.MEDIAN;
+  private Map<StatType, double[]> data = new HashMap<StatType, double[]>();
+  private StatType statType = CorsenHistoryResults.StatType.values()[0];
 
   private CompiledScript script;
 
@@ -274,7 +275,7 @@ public class CorsenHistoryResults {
     this.entries.put(key, e);
     this.keys.add(key);
 
-    this.data = null;
+    this.data.clear();
   }
 
   /**
@@ -284,7 +285,7 @@ public class CorsenHistoryResults {
 
     this.entries.clear();
     this.keys.clear();
-    this.data = null;
+    this.data.clear();
   }
 
   /**
@@ -307,7 +308,7 @@ public class CorsenHistoryResults {
     this.entries.remove(key);
     this.keys.remove(index);
 
-    this.data = null;
+    this.data.clear();
   }
 
   /**
@@ -328,8 +329,8 @@ public class CorsenHistoryResults {
    */
   public double[] getDistances() {
 
-    if (data != null)
-      return this.data;
+    if (data.containsKey(this.statType))
+      return this.data.get(this.statType);
 
     final double[] data = new double[size()];
 
@@ -366,7 +367,7 @@ public class CorsenHistoryResults {
       data[count++] = value;
     }
 
-    this.data = data;
+    this.data.put(this.statType, data);
 
     return data;
   }

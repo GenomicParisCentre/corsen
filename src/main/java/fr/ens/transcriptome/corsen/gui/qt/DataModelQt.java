@@ -370,9 +370,6 @@ public class DataModelQt {
     private CorsenHistoryResults results =
         CorsenHistoryResults.getCorsenHistoryResults();
 
-    private CorsenHistoryResults.StatType type =
-        CorsenHistoryResults.StatType.values()[0];
-
     @Override
     public int columnCount(QModelIndex arg0) {
 
@@ -401,7 +398,7 @@ public class DataModelQt {
         return e.getFileB().getName();
 
       case 3:
-        switch (type) {
+        switch (results.getStatType()) {
 
         case CUSTOM:
 
@@ -409,7 +406,7 @@ public class DataModelQt {
           if (Double.isInfinite(val) || Double.isNaN(val))
             return val;
 
-          return String.format("%.3f%%", val*100);
+          return String.format("%.3f%%", val * 100);
 
         case MIN:
           return e.getMinMinDistance();
@@ -526,7 +523,8 @@ public class DataModelQt {
      */
     public void setType(final String name) {
 
-      this.type = CorsenHistoryResults.StatType.getTypeFromDescription(name);
+      results.setStatType(CorsenHistoryResults.StatType
+          .getTypeFromDescription(name));
     }
 
     public void update() {
