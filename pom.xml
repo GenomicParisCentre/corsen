@@ -6,7 +6,7 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.34</version>
+	<version>0.35</version>
 	<name>Corsen</name>
 	<description>
 		A tool to calc distance between mitochondria and RNA

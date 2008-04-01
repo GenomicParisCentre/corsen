@@ -38,6 +38,42 @@
 	</properties>
 	<body>
 
+		<release version="0.35" date="2008-04-01">
+			<action dev="jourdren" type="update">
+				3D Renderer use Marching cubes
+			</action>
+			<action dev="jourdren" type="fix">
+				QPixMap are now created in GUI thread
+			</action>
+			<action dev="jourdren" type="update">
+				Divers netoyage de code
+			</action>
+			<action dev="jourdren" type="fix">
+				Utilise dans le plugin Corsen de dernier point d'un nom
+				de fichier pour avoir le nom de base
+			</action>
+			<action dev="jourdren" type="update">
+				Les tables de l'onglet "Results" sont maintenant
+				triables
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de différentes statistiques (dont une
+				personnalisable) dans la vue historique
+			</action>
+		</release>
+
+		<release version="0.34" date="2008-02-21">
+
+			<action dev="jourdren" type="add">
+				Ajout d'un mode de calcul des distances utilisant les
+				barycentres des particules sans découpage en cuboides.
+			</action>
+			<action dev="jourdren" type="fix">
+				Bogue dans l'historique des résultats
+			</action>
+
+		</release>
+
 		<release version="0.33" date="2008-02-14">
 
 			<action dev="jourdren" type="fix">
