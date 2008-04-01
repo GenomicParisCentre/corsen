@@ -31,6 +31,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Properties;
 
+import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
 import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 /**
@@ -108,6 +109,8 @@ public final class Settings {
       "histogram.results.classes";
   private static final String HISTOGRAM_HISTORY_NB_CLASSES_KEY =
       "histogram.history.classes";
+  private static final String CUSTOM_HISTORY_EXPRESSION_KEY =
+      "history.custom.expression";
 
   private static final String CLEAR_HISTORY_WHEN_NEW_CALC =
       "main.clear.history.new.calc";
@@ -599,6 +602,15 @@ public final class Settings {
   }
 
   /**
+   * Get the custom history expression.
+   * @return the custom history expression
+   */
+  public String getCustomHistoryExpression() {
+
+    return this.properties.getProperty(CUSTOM_HISTORY_EXPRESSION_KEY, "");
+  }
+
+  /**
    * Test if the history must be cleared when launching a new batch.
    * @return true if the history must be cleared when launching a new batch
    */
@@ -1055,6 +1067,15 @@ public final class Settings {
         .toString(classes));
   }
 
+  /**
+   * Get the custom history expression.
+   * @param expression the custom history expression
+   */
+  public void setCustomHistoryExpression(final String expression) {
+
+    this.properties.setProperty(CUSTOM_HISTORY_EXPRESSION_KEY, expression);
+  }
+
   public void setClearHistoryWhenLaunchNewCalc(final boolean value) {
 
     this.properties.setProperty(CLEAR_HISTORY_WHEN_NEW_CALC, Boolean
@@ -1166,6 +1187,10 @@ public final class Settings {
 
     this.properties.load(fis);
     fis.close();
+
+    if (!CorsenHistoryResults.getCorsenHistoryResults().setCustomExpression(
+        getCustomHistoryExpression()))
+      setCustomHistoryExpression("");
   }
 
   /**

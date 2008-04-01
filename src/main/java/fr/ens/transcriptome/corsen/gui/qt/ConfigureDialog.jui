@@ -7,7 +7,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
+    <width>500</width>
     <height>621</height>
    </rect>
   </property>
@@ -238,251 +238,361 @@
       <attribute name="title" >
        <string>&amp;Computation</string>
       </attribute>
-      <widget class="QWidget" name="" >
-       <property name="geometry" >
-        <rect>
-         <x>9</x>
-         <y>7</y>
-         <width>399</width>
-         <height>500</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" >
-        <property name="rightMargin" >
-         <number>0</number>
-        </property>
-        <property name="leftMargin" >
-         <number>0</number>
-        </property>
-        <property name="topMargin" >
-         <number>0</number>
-        </property>
-        <property name="bottomMargin" >
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QGroupBox" name="groupBox_6" >
-          <property name="title" >
-           <string>Distance computation threads</string>
-          </property>
-          <layout class="QGridLayout" >
-           <item row="2" column="3" >
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" >
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="2" column="0" >
-            <widget class="QRadioButton" name="customThreadRadioButton" >
-             <property name="text" >
-              <string>Custom</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" >
-            <widget class="QRadioButton" name="automaticThreadRadioButton" >
-             <property name="text" >
-              <string>Automatic</string>
-             </property>
-             <property name="checked" >
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" >
-            <widget class="QRadioButton" name="noThreadRadioButton" >
-             <property name="text" >
-              <string>No threads</string>
-             </property>
-             <property name="checked" >
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1" >
-            <widget class="QLabel" name="label_19" >
-             <property name="text" >
-              <string>Value:</string>
-             </property>
-             <property name="buddy" >
-              <cstring>customThreadSpinBox</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2" >
-            <widget class="QSpinBox" name="customThreadSpinBox" >
-             <property name="minimum" >
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="groupBox_3" >
-          <property name="title" >
-           <string>Output files</string>
-          </property>
-          <layout class="QVBoxLayout" >
-           <item>
-            <layout class="QGridLayout" >
-             <property name="rightMargin" >
-              <number>0</number>
-             </property>
-             <property name="leftMargin" >
-              <number>0</number>
-             </property>
-             <property name="topMargin" >
-              <number>0</number>
-             </property>
-             <property name="bottomMargin" >
-              <number>0</number>
-             </property>
-             <item row="0" column="0" >
-              <widget class="QCheckBox" name="dataFileCheckBox" >
-               <property name="text" >
-                <string>&amp;Distance data (.data)</string>
-               </property>
-               <property name="shortcut" >
-                <string/>
-               </property>
-               <property name="checkable" >
-                <bool>true</bool>
-               </property>
-               <property name="checked" >
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="1" colspan="2" >
-              <widget class="QCheckBox" name="mitosCheckBox" >
-               <property name="text" >
-                <string>Particles B</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0" >
-              <widget class="QCheckBox" name="fullResultCheckBox" >
-               <property name="text" >
-                <string>Full &amp;results</string>
-               </property>
-               <property name="checked" >
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0" >
-              <widget class="QCheckBox" name="visualizationCheckBox" >
-               <property name="text" >
-                <string>3d &amp;visualization</string>
-               </property>
-               <property name="checked" >
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1" >
-              <widget class="QCheckBox" name="messengersCheckBox" >
-               <property name="text" >
-                <string>Particles A</string>
-               </property>
-               <property name="checked" >
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="2" >
-              <spacer>
-               <property name="orientation" >
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" >
-                <size>
-                 <width>21</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="8" column="1" >
-              <widget class="QCheckBox" name="mitosCuboidsCheckBox" >
-               <property name="text" >
-                <string>Particles B cuboid&amp;s</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0" >
-              <widget class="QCheckBox" name="ivFileCheckBox" >
-               <property name="text" >
-                <string>&amp;Intensity and volumes (.iv)</string>
-               </property>
-               <property name="checked" >
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1" >
-              <widget class="QCheckBox" name="messengersCuboidsCheckBox" >
-               <property name="text" >
-                <string>Particles A cu&amp;boids</string>
-               </property>
-               <property name="checked" >
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="1" >
-              <widget class="QCheckBox" name="distancesCheckBox" >
-               <property name="text" >
-                <string>Dista&amp;nces</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0" >
-              <widget class="QCheckBox" name="resultCheckBox" >
-               <property name="text" >
-                <string>Results</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="clearHistoryCheckBox" >
-          <property name="focusPolicy" >
-           <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-          </property>
-          <property name="text" >
-           <string>Clear history results when launching a batch</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>399</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
+      <layout class="QVBoxLayout" >
+       <item>
+        <layout class="QVBoxLayout" >
+         <property name="rightMargin" >
+          <number>0</number>
+         </property>
+         <property name="leftMargin" >
+          <number>0</number>
+         </property>
+         <property name="topMargin" >
+          <number>0</number>
+         </property>
+         <property name="bottomMargin" >
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QGroupBox" name="groupBox_6" >
+           <property name="title" >
+            <string>Distance computation threads</string>
+           </property>
+           <layout class="QGridLayout" >
+            <item row="2" column="3" >
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="2" column="0" >
+             <widget class="QRadioButton" name="customThreadRadioButton" >
+              <property name="text" >
+               <string>Custom</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" >
+             <widget class="QRadioButton" name="automaticThreadRadioButton" >
+              <property name="text" >
+               <string>Automatic</string>
+              </property>
+              <property name="checked" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" >
+             <widget class="QRadioButton" name="noThreadRadioButton" >
+              <property name="text" >
+               <string>No threads</string>
+              </property>
+              <property name="checked" >
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" >
+             <widget class="QLabel" name="label_19" >
+              <property name="text" >
+               <string>Value:</string>
+              </property>
+              <property name="buddy" >
+               <cstring>customThreadSpinBox</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2" >
+             <widget class="QSpinBox" name="customThreadSpinBox" >
+              <property name="minimum" >
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_3" >
+           <property name="title" >
+            <string>Output files</string>
+           </property>
+           <layout class="QVBoxLayout" >
+            <item>
+             <layout class="QGridLayout" >
+              <property name="rightMargin" >
+               <number>0</number>
+              </property>
+              <property name="leftMargin" >
+               <number>0</number>
+              </property>
+              <property name="topMargin" >
+               <number>0</number>
+              </property>
+              <property name="bottomMargin" >
+               <number>0</number>
+              </property>
+              <item row="0" column="0" >
+               <widget class="QCheckBox" name="dataFileCheckBox" >
+                <property name="text" >
+                 <string>&amp;Distance data (.data)</string>
+                </property>
+                <property name="shortcut" >
+                 <string/>
+                </property>
+                <property name="checkable" >
+                 <bool>true</bool>
+                </property>
+                <property name="checked" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1" colspan="2" >
+               <widget class="QCheckBox" name="mitosCheckBox" >
+                <property name="text" >
+                 <string>Particles B</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0" >
+               <widget class="QCheckBox" name="fullResultCheckBox" >
+                <property name="text" >
+                 <string>Full &amp;results</string>
+                </property>
+                <property name="checked" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0" >
+               <widget class="QCheckBox" name="visualizationCheckBox" >
+                <property name="text" >
+                 <string>3d &amp;visualization</string>
+                </property>
+                <property name="checked" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1" >
+               <widget class="QCheckBox" name="messengersCheckBox" >
+                <property name="text" >
+                 <string>Particles A</string>
+                </property>
+                <property name="checked" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="2" >
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>21</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="8" column="1" >
+               <widget class="QCheckBox" name="mitosCuboidsCheckBox" >
+                <property name="text" >
+                 <string>Particles B cuboid&amp;s</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" >
+               <widget class="QCheckBox" name="ivFileCheckBox" >
+                <property name="text" >
+                 <string>&amp;Intensity and volumes (.iv)</string>
+                </property>
+                <property name="checked" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1" >
+               <widget class="QCheckBox" name="messengersCuboidsCheckBox" >
+                <property name="text" >
+                 <string>Particles A cu&amp;boids</string>
+                </property>
+                <property name="checked" >
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1" >
+               <widget class="QCheckBox" name="distancesCheckBox" >
+                <property name="text" >
+                 <string>Dista&amp;nces</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0" >
+               <widget class="QCheckBox" name="resultCheckBox" >
+                <property name="text" >
+                 <string>Results</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="clearHistoryCheckBox" >
+           <property name="focusPolicy" >
+            <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+           </property>
+           <property name="text" >
+            <string>Clear history results when launching a batch</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>399</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_4" >
+      <attribute name="title" >
+       <string>&amp;Results</string>
+      </attribute>
+      <layout class="QVBoxLayout" >
+       <item>
+        <widget class="QGroupBox" name="resultsHistogramGroupBox" >
+         <property name="title" >
+          <string>Results Histograms</string>
+         </property>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLabel" name="label_21" >
+            <property name="text" >
+             <string>Classes number:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="histoResultClassesNumberSpinBox" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
+            </property>
+            <property name="minimum" >
+             <number>1</number>
+            </property>
+            <property name="maximum" >
+             <number>9999</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2" >
+         <property name="title" >
+          <string>History Table</string>
+         </property>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLabel" name="label_22" >
+            <property name="toolTip" >
+             <string>Variables :&lt;ul>&lt;li>&lt;b>i&lt;/b> for intensity&lt;/li>&lt;li>&lt;b>d&lt;/b> for distance.&lt;/li>&lt;/ul></string>
+            </property>
+            <property name="text" >
+             <string>Custom statistical expression:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="customExpressionLineEdit" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="historyHistogramGroupBox" >
+         <property name="title" >
+          <string>History histogram</string>
+         </property>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLabel" name="label_20" >
+            <property name="text" >
+             <string>Classes number:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="histoHistoryClassesNumberSpinBox" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
+            </property>
+            <property name="minimum" >
+             <number>1</number>
+            </property>
+            <property name="maximum" >
+             <number>9999</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab_2" >
       <attribute name="title" >
@@ -697,116 +807,6 @@
              </size>
             </property>
            </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" >
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_4" >
-      <attribute name="title" >
-       <string>&amp;Graphics</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
-       <item>
-        <widget class="QGroupBox" name="resultsHistogramGroupBox" >
-         <property name="title" >
-          <string>Results Histograms</string>
-         </property>
-         <layout class="QVBoxLayout" >
-          <item>
-           <layout class="QHBoxLayout" >
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label_21" >
-              <property name="text" >
-               <string>Classes number:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="histoResultClassesNumberSpinBox" >
-              <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
-              </property>
-              <property name="minimum" >
-               <number>1</number>
-              </property>
-              <property name="maximum" >
-               <number>9999</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="historyHistogramGroupBox" >
-         <property name="title" >
-          <string>History histogram</string>
-         </property>
-         <layout class="QVBoxLayout" >
-          <item>
-           <layout class="QHBoxLayout" >
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label_20" >
-              <property name="text" >
-               <string>Classes number:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="histoHistoryClassesNumberSpinBox" >
-              <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
-              </property>
-              <property name="minimum" >
-               <number>1</number>
-              </property>
-              <property name="maximum" >
-               <number>9999</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </item>
          </layout>
         </widget>

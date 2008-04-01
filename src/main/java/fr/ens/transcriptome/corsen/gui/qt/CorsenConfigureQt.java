@@ -8,9 +8,12 @@ import com.trolltech.qt.gui.QColor;
 import com.trolltech.qt.gui.QColorDialog;
 import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QPixmap;
 
+import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.Settings;
+import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
 import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 /*
@@ -327,6 +330,7 @@ public class CorsenConfigureQt {
         .getHistogramResultsNumberClasses());
     dialogUi.histoHistoryClassesNumberSpinBox.setValue(s
         .getHistogramHistoryNumberClasses());
+    dialogUi.customExpressionLineEdit.setText(s.getCustomHistoryExpression());
 
     // Validation
 
@@ -435,6 +439,14 @@ public class CorsenConfigureQt {
         s.setHistogramHistoryNumberClasses(histoHistoryClassesNumber);
         this.mainWindow.redrawHistoryGraph();
       }
+
+      String customExpression = dialogUi.customExpressionLineEdit.text();
+      if (!CorsenHistoryResults.getCorsenHistoryResults().setCustomExpression(
+          customExpression))
+        QMessageBox.warning(this.mainWindow, Globals.APP_NAME,
+            "Warning: Your custom expression is not valid.");
+      else
+        s.setCustomHistoryExpression(customExpression);
 
     }
 
