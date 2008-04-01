@@ -776,7 +776,8 @@ public class CorsenQt extends QMainWindow {
           || this.models.getResult().getCuboidsMessengersParticles() == null)
         return;
 
-      mainWindowUi.imageLabel.setPixmap(this.models.getPixmap(i, settings));
+      mainWindowUi.imageLabel.setPixmap(this.models
+          .getResultPixmap(i, settings));
 
     } else
       mainWindowUi.imageLabel
@@ -793,10 +794,20 @@ public class CorsenQt extends QMainWindow {
     String val = CorsenHistoryResults.StatType.values()[i].toString();
 
     final HistoryDataModel historyModel = DataModelQt.getHistoryModel();
-    historyModel.setType(val);
 
-    historyModel.update();
-    mainWindowUi.HistoryResultlabel.setText(historyModel.getResultMessage());
+    if (!val.equals(CorsenHistoryResults.getCorsenHistoryResults()
+        .getStatType().toString())) {
+      
+      historyModel.setType(val);
+
+      historyModel.update();
+      mainWindowUi.HistoryResultlabel.setText(historyModel.getResultMessage());
+
+      mainWindowUi.historyBoxplotLabel.setPixmap(historyModel
+          .getBoxplot(this.settings));
+      mainWindowUi.historyHistogramLabel.setPixmap(historyModel.getHisto(
+          this.settings.getHistogramHistoryNumberClasses(), this.settings));
+    }
   }
 
   public void closeEvent(QCloseEvent event) {

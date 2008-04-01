@@ -358,4 +358,29 @@ public final class Util {
     return shortPath(new File(filename), maxLen);
   }
 
+  /**
+   * Remove NaN from an array of double
+   * @param array Array to use
+   * @return a new array of double
+   */
+  public static final double[] removeNaN(final double[] array) {
+
+    if (array == null)
+      return null;
+
+    double[] tmp = new double[array.length];
+
+    int c = 0;
+
+    for (int i = 0; i < array.length; i++)
+      if (!Double.isNaN(array[i]))
+        tmp[c++] = array[i];
+
+    double[] result = new double[c];
+
+    System.arraycopy(tmp, 0, result, 0, c);
+
+    return result;
+  }
+
 }

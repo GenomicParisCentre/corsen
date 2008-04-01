@@ -51,6 +51,7 @@ import fr.ens.transcriptome.corsen.calc.DistanceAnalyser;
 import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults.Entry;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
+import fr.ens.transcriptome.corsen.util.Util;
 
 public class DataModelQt {
 
@@ -466,8 +467,8 @@ public class DataModelQt {
     public QPixmap getBoxplot(final Settings settings) {
 
       final QImage img =
-          new ResultGraphs().createBoxPlot(this.results.getDistances(),
-              settings.getUnit());
+          new ResultGraphs().createBoxPlot(Util.removeNaN(this.results
+              .getDistances()), settings.getUnit());
 
       if (img == null)
         return null;
@@ -478,8 +479,9 @@ public class DataModelQt {
     public QPixmap getHisto(final int classes, final Settings settings) {
 
       final QImage img =
-          new ResultGraphs().createDistanceDistributionImage(this.results
-              .getDistances(), classes, settings.getUnit());
+          new ResultGraphs().createDistanceDistributionImage(Util
+              .removeNaN(this.results.getDistances()), classes, settings
+              .getUnit());
 
       if (img == null)
         return null;
@@ -747,7 +749,7 @@ public class DataModelQt {
 
   }
 
-  public QPixmap getPixmap(final int index, final Settings settings) {
+  public QPixmap getResultPixmap(final int index, final Settings settings) {
 
     final QPixmap result;
 
