@@ -259,7 +259,7 @@ public class ResultGraphs {
         ChartFactory.createHistogram("Distribution of minimal distances",
         // title
             "Distance" + unitLegend(unit), // domain axis label
-            "Intensity", // range axis label
+            "Cell number", // range axis label
             histogramdataset, // data
 
             PlotOrientation.VERTICAL, // orientation
