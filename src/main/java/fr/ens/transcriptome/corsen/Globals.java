@@ -91,6 +91,8 @@ public final class Globals {
   public static final String LICENCE_TXT =
       "This program is developed under the GNU General Public Licence version 2 or later.";
 
+  private static final String COPYRIGHT_DATE = "2006-2008";
+
   public static final String ABOUT_TXT =
       Globals.APP_NAME
           + " version "
@@ -108,8 +110,8 @@ public final class Globals {
           + "  Mathilde Garcia(**) <garcia@biologie.ens.fr> Project leader, R programming, ImageJ scripting, testing.\n\n"
           + "(*)  Plate-forme transcriptome, École Normale Supérieure\n"
           + "(**) Laboratoire de Génétique Moléculaire, École Normale Supérieure\n\n"
-          + "Copyright 2006-2007 École Normale Supérieure.\n" + LICENCE_TXT
-          + "\n";
+          + "Copyright " + COPYRIGHT_DATE + " École Normale Supérieure.\n"
+          + LICENCE_TXT + "\n";
 
   public static final String ABOUT_HTML =
       "<p><b>"
@@ -131,8 +133,8 @@ public final class Globals {
           + "<li><a href=\"mailto:garcia@biologie.ens.fr?subject=CorsenSwing\">Mathilde Garcia</a><br/>"
           + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de Génétique Moléculaire, École Normale Supérieure</a>"
           + "<br/>Project leader, R programming, ImageJ scripting, testing.</li></ul>"
-          + "<p>Copyright 2006-2007 École Normale Supérieure.<br/>"
-          + LICENCE_TXT + "</p>";
+          + "<p>Copyright " + COPYRIGHT_DATE
+          + " École Normale Supérieure.<br/>" + LICENCE_TXT + "</p>";
 
   private static String getVersion() {
 
