@@ -788,7 +788,7 @@ public class CorsenQt extends QMainWindow {
   }
 
   @SuppressWarnings("unused")
-  private void historyViewChanged(Object o) {
+  private void resultsHistoryViewChanged(Object o) {
 
     int i = (Integer) o;
     String val = CorsenHistoryResults.StatType.values()[i].toString();
@@ -797,16 +797,18 @@ public class CorsenQt extends QMainWindow {
 
     if (!val.equals(CorsenHistoryResults.getCorsenHistoryResults()
         .getStatType().toString())) {
-      
+
       historyModel.setType(val);
 
       historyModel.update();
       mainWindowUi.HistoryResultlabel.setText(historyModel.getResultMessage());
 
-      mainWindowUi.historyBoxplotLabel.setPixmap(historyModel
-          .getBoxplot(this.settings));
-      mainWindowUi.historyHistogramLabel.setPixmap(historyModel.getHisto(
-          this.settings.getHistogramHistoryNumberClasses(), this.settings));
+      if (mainWindowUi.launchAnalysisPushButton.isEnabled()) {
+        mainWindowUi.historyBoxplotLabel.setPixmap(historyModel
+            .getBoxplot(this.settings));
+        mainWindowUi.historyHistogramLabel.setPixmap(historyModel.getHisto(
+            this.settings.getHistogramHistoryNumberClasses(), this.settings));
+      }
     }
   }
 
@@ -1059,7 +1061,7 @@ public class CorsenQt extends QMainWindow {
       mainWindowUi.historyStatComboBox.addItem(t.toString());
 
     mainWindowUi.historyStatComboBox.currentIndexChanged.connect(this,
-        "historyViewChanged(Object)");
+        "resultsHistoryViewChanged(Object)");
   }
 
   private void setWidgetTexts() {
