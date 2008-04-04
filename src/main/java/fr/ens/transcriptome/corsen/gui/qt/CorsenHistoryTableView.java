@@ -68,29 +68,28 @@ public class CorsenHistoryTableView extends QTableView {
     this.sorter = new QSortFilterProxyModel() {
 
       @Override
-      protected boolean lessThan(QModelIndex a, QModelIndex b) {
+      protected boolean lessThan(final QModelIndex a, final QModelIndex b) {
 
         if (a == null || b == null)
           return false;
 
-        final int size = CorsenHistoryResults.getCorsenHistoryResults().size();
+        final int size = model.rowCount();
 
         if (a.row() >= size || b.row() >= size)
           return false;
 
-        Object oa = a.data();
+        final Object oa = a.data();
 
         if (oa instanceof Number) {
 
-          Number na = (Number) oa;
-          Number nb = (Number) b.data();
+          final Number na = (Number) oa;
+          final Number nb = (Number) b.data();
 
-          return na.doubleValue() > nb.doubleValue();
+          return na.doubleValue() < nb.doubleValue();
         }
 
-        return oa.toString().compareTo(b.data().toString()) > 0;
+        return oa.toString().compareTo(b.data().toString()) < 0;
       }
-
     };
 
     this.sorter.setSourceModel(model);

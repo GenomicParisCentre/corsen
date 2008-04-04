@@ -26,9 +26,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.trolltech.qt.core.QAbstractItemModel;
@@ -371,6 +374,9 @@ public class DataModelQt {
     private CorsenHistoryResults results =
         CorsenHistoryResults.getCorsenHistoryResults();
 
+    private static final DecimalFormat percentFormat =
+        new DecimalFormat("00.000%", new DecimalFormatSymbols(Locale.UK));
+
     @Override
     public int columnCount(QModelIndex arg0) {
 
@@ -407,7 +413,7 @@ public class DataModelQt {
           if (Double.isInfinite(val) || Double.isNaN(val))
             return val;
 
-          return String.format("%.3f%%", val * 100);
+          return percentFormat.format(val);
 
         case MIN:
           return e.getMinMinDistance();
@@ -456,7 +462,14 @@ public class DataModelQt {
         return "File B";
 
       case 3:
-        return "Minimal distance";
+
+        switch (results.getStatType()) {
+
+        case CUSTOM:
+          return "Percent of particles";
+        default:
+          return "Minimal distance";
+        }
 
       default:
         return null;
