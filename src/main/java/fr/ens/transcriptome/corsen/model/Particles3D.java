@@ -569,6 +569,34 @@ public class Particles3D {
     writer.close();
   }
 
+  /**
+   * Filter the particles3D
+   * @param filter filter to use
+   * @return a new Particle3D object with filtered Particle3D or null if the
+   *         filter is null
+   */
+  public Particles3D filter(final Particles3DFilter filter) {
+
+    if (filter == null)
+      return null;
+
+    final Particles3D result = new Particles3D(this);
+
+    final List<Particle3D> particles = getParticles();
+    final ArrayList<Particle3D> filteredParticles =
+        new ArrayList<Particle3D>(particles.size());
+
+    for (Particle3D p : particles)
+      if (filter.accept(p))
+        filteredParticles.add(p);
+
+    filteredParticles.trimToSize();
+
+    result.setParticles(filteredParticles);
+
+    return result;
+  }
+
   public String toString() {
 
     return "Particles=" + this.particles;
