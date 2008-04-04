@@ -270,9 +270,13 @@ public class DistancesCalculator {
       particlesA.setUnitOfLength(unit);
       particlesB.setUnitOfLength(unit);
     }
+	
+	// Apply filters
+    sendEvent(ProgressEventType.START_FILTER_MESSENGERS_EVENT);
+    result.setParticlesA(particlesA.filter(result.getParticlesAFilter()));
 
-    result.setParticlesA(particlesA);
-    result.setParticlesB(particlesB);
+    sendEvent(ProgressEventType.START_FILTER_MITOS_EVENT);
+    result.setParticlesB(particlesB.filter(result.getParticlesBFilter()));
   }
 
   private Thread preprocessExecution(final DistanceProcessor processor,

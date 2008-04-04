@@ -9,6 +9,8 @@ public class ProgressEvent {
     START_CHANGE_MESSENGERS_COORDINATES_EVENT(
         "Transform particles A coordinates"),
     START_CHANGE_MITOS_COORDINATES_EVENT("Transform particles B coordinates"),
+    START_FILTER_MESSENGERS_EVENT("Filter particles A"),
+    START_FILTER_MITOS_EVENT("Filter particles B"),
     START_CALC_MESSENGERS_CUBOIDS_EVENT("Calc particles A cuboids"),
     START_CALC_MITOS_CUBOIDS_EVENT("Calc particles B cuboids"),
     START_CALC_MIN_DISTANCES_EVENT("Calc distances"), START_DISTANCES_ANALYSIS(
@@ -21,9 +23,11 @@ public class ProgressEvent {
     START_WRITE_RESULT_EVENT("Write results"), START_WRITE_FULLRESULT_EVENT(
         "Write full results"), START_WRITE_RPLOT_MESSENGERS_EVENT(
         "Write particles B R plot file"), START_WRITE_RPLOT_MITOS_EVENT(
-        "Write particles A R plot file"), START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT(
+        "Write particles A R plot file"),
+    START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT(
         "Write particles A cuboids R plot file"),
-    START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT("Write particles B cuboids R plot file"),
+    START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT(
+        "Write particles B cuboids R plot file"),
     START_WRITE_RPLOT_DISTANCES_EVENT("Write distances R plot file"),
     PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT(""),
     PROGRESS_CALC_MITOS_CUBOIDS_EVENT(""), PROGRESS_CALC_DISTANCES_EVENT(""),

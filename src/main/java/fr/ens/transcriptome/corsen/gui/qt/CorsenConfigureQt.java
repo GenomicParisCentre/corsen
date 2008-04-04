@@ -15,6 +15,7 @@ import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
 import fr.ens.transcriptome.corsen.calc.ParticleType;
+import fr.ens.transcriptome.corsen.model.JavascriptParticles3DFilter;
 
 /*
  *                      Nividic development code
@@ -208,6 +209,7 @@ public class CorsenConfigureQt {
     dialogUi.particleATypeComboBox.setCurrentIndex(s.getParticlesAType()
         .ordinal());
     dialogUi.particleABatchPrefixLineEdit.setText(s.getParticlesABatchPrefix());
+    dialogUi.particleAFilterLineEdit.setText(s.getParticlesAFilterExpression());
     dialogUi.particleAPropertiesPushButton.clicked.connect(o,
         "dialogParticleAProperties()");
 
@@ -215,6 +217,7 @@ public class CorsenConfigureQt {
     dialogUi.particleBTypeComboBox.setCurrentIndex(s.getParticlesBType()
         .ordinal());
     dialogUi.particleBBatchPrefixLineEdit.setText(s.getParticlesBBatchPrefix());
+    dialogUi.particleBFilterLineEdit.setText(s.getParticlesBFilterExpression());
     dialogUi.particleBPropertiesPushButton.clicked.connect(o,
         "dialogParticleBProperties()");
 
@@ -447,6 +450,20 @@ public class CorsenConfigureQt {
             "Warning: Your custom expression is not valid.");
       else
         s.setCustomHistoryExpression(customExpression);
+
+      String particleAFilter = dialogUi.particleAFilterLineEdit.text();
+      if (JavascriptParticles3DFilter.createFilter(particleAFilter) != null)
+        s.setParticlesAFilterExpression(particleAFilter);
+      else
+        QMessageBox.warning(this.mainWindow, Globals.APP_NAME,
+            "Warning: Your filter for particles A is not valid.");
+
+      String particleBFilter = dialogUi.particleBFilterLineEdit.text();
+      if (JavascriptParticles3DFilter.createFilter(particleBFilter) != null)
+        s.setParticlesBFilterExpression(particleBFilter);
+      else
+        QMessageBox.warning(this.mainWindow, Globals.APP_NAME,
+            "Warning: Your filter for particles B is not valid.");
 
     }
 

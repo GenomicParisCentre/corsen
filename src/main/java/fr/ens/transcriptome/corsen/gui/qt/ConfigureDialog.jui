@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>621</height>
+    <width>561</width>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -30,9 +30,33 @@
          <property name="title" >
           <string>Particles A</string>
          </property>
-         <layout class="QVBoxLayout" >
-          <item>
-           <layout class="QGridLayout" >
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_12" >
+            <property name="text" >
+             <string>Name:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QLineEdit" name="particleANameLineEdit" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_11" >
+            <property name="text" >
+             <string>Type:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>particleATypeComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <layout class="QHBoxLayout" >
             <property name="rightMargin" >
              <number>0</number>
             </property>
@@ -45,47 +69,52 @@
             <property name="bottomMargin" >
              <number>0</number>
             </property>
-            <item row="2" column="1" colspan="2" >
-             <widget class="QLineEdit" name="particleABatchPrefixLineEdit" />
-            </item>
-            <item row="1" column="1" >
-             <widget class="QComboBox" name="particleATypeComboBox" />
-            </item>
-            <item row="1" column="0" >
-             <widget class="QLabel" name="label_11" >
-              <property name="text" >
-               <string>Type:</string>
-              </property>
-              <property name="buddy" >
-               <cstring>particleATypeComboBox</cstring>
+            <item>
+             <widget class="QComboBox" name="particleATypeComboBox" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
               </property>
              </widget>
             </item>
-            <item row="0" column="0" >
-             <widget class="QLabel" name="label_12" >
-              <property name="text" >
-               <string>Name:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0" >
-             <widget class="QLabel" name="label_13" >
-              <property name="text" >
-               <string>Batch prefix:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2" >
+            <item>
              <widget class="QPushButton" name="particleAPropertiesPushButton" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
               <property name="text" >
                <string>Properties</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1" colspan="2" >
-             <widget class="QLineEdit" name="particleANameLineEdit" />
-            </item>
            </layout>
+          </item>
+          <item row="2" column="0" >
+           <widget class="QLabel" name="label_13" >
+            <property name="text" >
+             <string>Batch prefix:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" >
+           <widget class="QLineEdit" name="particleABatchPrefixLineEdit" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" >
+           <widget class="QLabel" name="label_23" >
+            <property name="text" >
+             <string>Filter:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" >
+           <widget class="QLineEdit" name="particleAFilterLineEdit" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -95,9 +124,33 @@
          <property name="title" >
           <string>Particles B</string>
          </property>
-         <layout class="QVBoxLayout" >
-          <item>
-           <layout class="QGridLayout" >
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_17" >
+            <property name="text" >
+             <string>Name:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QLineEdit" name="particleBNameLineEdit" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_14" >
+            <property name="text" >
+             <string>Type:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>particleBTypeComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <layout class="QHBoxLayout" >
             <property name="rightMargin" >
              <number>0</number>
             </property>
@@ -110,47 +163,52 @@
             <property name="bottomMargin" >
              <number>0</number>
             </property>
-            <item row="2" column="1" colspan="2" >
-             <widget class="QLineEdit" name="particleBBatchPrefixLineEdit" />
-            </item>
-            <item row="1" column="1" >
-             <widget class="QComboBox" name="particleBTypeComboBox" />
-            </item>
-            <item row="1" column="0" >
-             <widget class="QLabel" name="label_14" >
-              <property name="text" >
-               <string>Type:</string>
-              </property>
-              <property name="buddy" >
-               <cstring>particleBTypeComboBox</cstring>
+            <item>
+             <widget class="QComboBox" name="particleBTypeComboBox" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
               </property>
              </widget>
             </item>
-            <item row="0" column="0" >
-             <widget class="QLabel" name="label_17" >
-              <property name="text" >
-               <string>Name:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0" >
-             <widget class="QLabel" name="label_18" >
-              <property name="text" >
-               <string>Batch prefix:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2" >
+            <item>
              <widget class="QPushButton" name="particleBPropertiesPushButton" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
               <property name="text" >
                <string>Properties</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1" colspan="2" >
-             <widget class="QLineEdit" name="particleBNameLineEdit" />
-            </item>
            </layout>
+          </item>
+          <item row="2" column="0" >
+           <widget class="QLabel" name="label_18" >
+            <property name="text" >
+             <string>Batch prefix:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" >
+           <widget class="QLineEdit" name="particleBBatchPrefixLineEdit" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" >
+           <widget class="QLabel" name="label_24" >
+            <property name="text" >
+             <string>Filter:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" >
+           <widget class="QLineEdit" name="particleBFilterLineEdit" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -176,7 +234,11 @@
              <number>0</number>
             </property>
             <item row="0" column="1" >
-             <widget class="QLineEdit" name="zFactorLineEdit" />
+             <widget class="QLineEdit" name="zFactorLineEdit" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
+             </widget>
             </item>
             <item row="0" column="0" >
              <widget class="QLabel" name="label" >
@@ -189,7 +251,11 @@
              </widget>
             </item>
             <item row="2" column="1" >
-             <widget class="QLineEdit" name="unitLineEdit" />
+             <widget class="QLineEdit" name="unitLineEdit" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
+             </widget>
             </item>
             <item row="2" column="0" >
              <widget class="QLabel" name="label_3" >
@@ -212,7 +278,11 @@
              </widget>
             </item>
             <item row="1" column="1" >
-             <widget class="QLineEdit" name="factorLineEdit" />
+             <widget class="QLineEdit" name="factorLineEdit" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -226,8 +296,8 @@
          </property>
          <property name="sizeHint" >
           <size>
-           <width>329</width>
-           <height>61</height>
+           <width>20</width>
+           <height>40</height>
           </size>
          </property>
         </spacer>
@@ -274,6 +344,9 @@
             </item>
             <item row="2" column="0" >
              <widget class="QRadioButton" name="customThreadRadioButton" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
               <property name="text" >
                <string>Custom</string>
               </property>
@@ -281,6 +354,9 @@
             </item>
             <item row="1" column="0" >
              <widget class="QRadioButton" name="automaticThreadRadioButton" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
               <property name="text" >
                <string>Automatic</string>
               </property>
@@ -291,6 +367,9 @@
             </item>
             <item row="0" column="0" >
              <widget class="QRadioButton" name="noThreadRadioButton" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
               <property name="text" >
                <string>No threads</string>
               </property>
@@ -301,6 +380,9 @@
             </item>
             <item row="2" column="1" >
              <widget class="QLabel" name="label_19" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+              </property>
               <property name="text" >
                <string>Value:</string>
               </property>
@@ -311,6 +393,9 @@
             </item>
             <item row="2" column="2" >
              <widget class="QSpinBox" name="customThreadSpinBox" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
               <property name="minimum" >
                <number>1</number>
               </property>
@@ -341,6 +426,9 @@
               </property>
               <item row="0" column="0" >
                <widget class="QCheckBox" name="dataFileCheckBox" >
+                <property name="focusPolicy" >
+                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                </property>
                 <property name="text" >
                  <string>&amp;Distance data (.data)</string>
                 </property>
@@ -357,6 +445,9 @@
               </item>
               <item row="7" column="1" colspan="2" >
                <widget class="QCheckBox" name="mitosCheckBox" >
+                <property name="focusPolicy" >
+                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                </property>
                 <property name="text" >
                  <string>Particles B</string>
                 </property>
@@ -364,6 +455,9 @@
               </item>
               <item row="3" column="0" >
                <widget class="QCheckBox" name="fullResultCheckBox" >
+                <property name="focusPolicy" >
+                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                </property>
                 <property name="text" >
                  <string>Full &amp;results</string>
                 </property>
@@ -374,6 +468,9 @@
               </item>
               <item row="4" column="0" >
                <widget class="QCheckBox" name="visualizationCheckBox" >
+                <property name="focusPolicy" >
+                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                </property>
                 <property name="text" >
                  <string>3d &amp;visualization</string>
                 </property>
@@ -384,6 +481,9 @@
               </item>
               <item row="5" column="1" >
                <widget class="QCheckBox" name="messengersCheckBox" >
+                <property name="focusPolicy" >
+                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                </property>
                 <property name="text" >
                  <string>Particles A</string>
                 </property>
@@ -407,6 +507,9 @@
               </item>
               <item row="8" column="1" >
                <widget class="QCheckBox" name="mitosCuboidsCheckBox" >
+                <property name="focusPolicy" >
+                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                </property>
                 <property name="text" >
                  <string>Particles B cuboid&amp;s</string>
                 </property>
@@ -414,6 +517,9 @@
               </item>
               <item row="1" column="0" >
                <widget class="QCheckBox" name="ivFileCheckBox" >
+                <property name="focusPolicy" >
+                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                </property>
                 <property name="text" >
                  <string>&amp;Intensity and volumes (.iv)</string>
                 </property>
@@ -424,6 +530,9 @@
               </item>
               <item row="6" column="1" >
                <widget class="QCheckBox" name="messengersCuboidsCheckBox" >
+                <property name="focusPolicy" >
+                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                </property>
                 <property name="text" >
                  <string>Particles A cu&amp;boids</string>
                 </property>
@@ -434,6 +543,9 @@
               </item>
               <item row="9" column="1" >
                <widget class="QCheckBox" name="distancesCheckBox" >
+                <property name="focusPolicy" >
+                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                </property>
                 <property name="text" >
                  <string>Dista&amp;nces</string>
                 </property>
@@ -441,6 +553,9 @@
               </item>
               <item row="2" column="0" >
                <widget class="QCheckBox" name="resultCheckBox" >
+                <property name="focusPolicy" >
+                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+                </property>
                 <property name="text" >
                  <string>Results</string>
                 </property>
@@ -505,7 +620,7 @@
              </sizepolicy>
             </property>
             <property name="focusPolicy" >
-             <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
             </property>
             <property name="minimum" >
              <number>1</number>
@@ -566,7 +681,7 @@
              </sizepolicy>
             </property>
             <property name="focusPolicy" >
-             <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
             </property>
             <property name="minimum" >
              <number>1</number>
@@ -601,6 +716,9 @@
       <layout class="QVBoxLayout" >
        <item>
         <widget class="QGroupBox" name="groupBox_4" >
+         <property name="focusPolicy" >
+          <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+         </property>
          <property name="title" >
           <string>General</string>
          </property>
@@ -621,26 +739,46 @@
             </property>
             <item row="6" column="0" colspan="2" >
              <widget class="QCheckBox" name="showParticlesBDifferentColorCcheckBox" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
               <property name="text" >
                <string>Show Particles B in differents colors</string>
               </property>
              </widget>
             </item>
             <item row="2" column="1" >
-             <widget class="QLineEdit" name="surfaceLineSizeLineEdit" />
+             <widget class="QLineEdit" name="surfaceLineSizeLineEdit" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
+             </widget>
             </item>
             <item row="3" column="1" >
-             <widget class="QLineEdit" name="distanceLineSizelineEdit" />
+             <widget class="QLineEdit" name="distanceLineSizelineEdit" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
+             </widget>
             </item>
             <item row="0" column="0" >
              <widget class="QLabel" name="label_5" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+              </property>
               <property name="text" >
                <string>Point Size</string>
+              </property>
+              <property name="buddy" >
+               <cstring>pointSizeLineEdit</cstring>
               </property>
              </widget>
             </item>
             <item row="5" column="0" colspan="2" >
              <widget class="QCheckBox" name="showParticlesADifferentColorCcheckBox" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
               <property name="text" >
                <string>Show Particles A in differents colors</string>
               </property>
@@ -648,6 +786,9 @@
             </item>
             <item row="4" column="0" colspan="2" >
              <widget class="QCheckBox" name="showDistancesNegativeCheckBox" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
               <property name="text" >
                <string>Show negative in a different color</string>
               </property>
@@ -655,23 +796,42 @@
             </item>
             <item row="3" column="0" >
              <widget class="QLabel" name="label_6" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+              </property>
               <property name="text" >
                <string>distance line size</string>
+              </property>
+              <property name="buddy" >
+               <cstring>distanceLineSizelineEdit</cstring>
               </property>
              </widget>
             </item>
             <item row="0" column="1" >
-             <widget class="QLineEdit" name="pointSizeLineEdit" />
+             <widget class="QLineEdit" name="pointSizeLineEdit" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
+             </widget>
             </item>
             <item row="2" column="0" >
              <widget class="QLabel" name="label_4" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+              </property>
               <property name="text" >
                <string>Surface line size</string>
+              </property>
+              <property name="buddy" >
+               <cstring>surfaceLineSizeLineEdit</cstring>
               </property>
              </widget>
             </item>
             <item row="1" column="0" >
              <widget class="QCheckBox" name="showSurfaceLinesCheckBox" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
               <property name="text" >
                <string>Show surface lines</string>
               </property>
@@ -684,54 +844,96 @@
        </item>
        <item>
         <widget class="QGroupBox" name="groupBox_5" >
+         <property name="focusPolicy" >
+          <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+         </property>
          <property name="title" >
           <string>Colors</string>
          </property>
          <layout class="QGridLayout" >
           <item row="0" column="0" >
            <widget class="QLabel" name="label_10" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+            </property>
             <property name="text" >
              <string>Messengers color:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>messengersColorPushButton</cstring>
             </property>
            </widget>
           </item>
           <item row="1" column="0" >
            <widget class="QLabel" name="label_9" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+            </property>
             <property name="text" >
              <string>Mitochondria color:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>mitosColorPushButton</cstring>
             </property>
            </widget>
           </item>
           <item row="2" column="0" >
            <widget class="QLabel" name="label_8" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+            </property>
             <property name="text" >
              <string>Barycenters color:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>barycentersColorPushButton</cstring>
             </property>
            </widget>
           </item>
           <item row="3" column="0" >
            <widget class="QLabel" name="label_7" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+            </property>
             <property name="text" >
              <string>Distances color:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>distancesColorPushButton</cstring>
             </property>
            </widget>
           </item>
           <item row="4" column="0" >
            <widget class="QLabel" name="label_15" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+            </property>
             <property name="text" >
              <string>Background color:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>backgroundColorPushButton</cstring>
             </property>
            </widget>
           </item>
           <item row="5" column="0" >
            <widget class="QLabel" name="label_16" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+            </property>
             <property name="text" >
              <string>Legend color:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>legendColorPushButton</cstring>
             </property>
            </widget>
           </item>
           <item row="5" column="1" >
            <widget class="QPushButton" name="legendColorPushButton" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
             <property name="text" >
              <string/>
             </property>
@@ -745,6 +947,9 @@
           </item>
           <item row="4" column="1" >
            <widget class="QPushButton" name="backgroundColorPushButton" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
             <property name="text" >
              <string/>
             </property>
@@ -758,6 +963,9 @@
           </item>
           <item row="3" column="1" >
            <widget class="QPushButton" name="distancesColorPushButton" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
             <property name="text" >
              <string/>
             </property>
@@ -771,6 +979,9 @@
           </item>
           <item row="2" column="1" >
            <widget class="QPushButton" name="barycentersColorPushButton" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
             <property name="text" >
              <string/>
             </property>
@@ -784,6 +995,9 @@
           </item>
           <item row="1" column="1" >
            <widget class="QPushButton" name="mitosColorPushButton" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
             <property name="text" >
              <string/>
             </property>
@@ -797,6 +1011,9 @@
           </item>
           <item row="0" column="1" >
            <widget class="QPushButton" name="messengersColorPushButton" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
             <property name="text" >
              <string/>
             </property>
@@ -919,39 +1136,50 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>particleANameLineEdit</tabstop>
+  <tabstop>particleATypeComboBox</tabstop>
+  <tabstop>particleAPropertiesPushButton</tabstop>
+  <tabstop>particleABatchPrefixLineEdit</tabstop>
+  <tabstop>particleAFilterLineEdit</tabstop>
+  <tabstop>particleBNameLineEdit</tabstop>
+  <tabstop>particleBTypeComboBox</tabstop>
+  <tabstop>particleBPropertiesPushButton</tabstop>
+  <tabstop>particleBBatchPrefixLineEdit</tabstop>
+  <tabstop>particleBFilterLineEdit</tabstop>
+  <tabstop>zFactorLineEdit</tabstop>
+  <tabstop>factorLineEdit</tabstop>
+  <tabstop>unitLineEdit</tabstop>
+  <tabstop>noThreadRadioButton</tabstop>
+  <tabstop>automaticThreadRadioButton</tabstop>
+  <tabstop>customThreadRadioButton</tabstop>
+  <tabstop>customThreadSpinBox</tabstop>
+  <tabstop>dataFileCheckBox</tabstop>
+  <tabstop>ivFileCheckBox</tabstop>
+  <tabstop>resultCheckBox</tabstop>
+  <tabstop>fullResultCheckBox</tabstop>
+  <tabstop>visualizationCheckBox</tabstop>
+  <tabstop>messengersCheckBox</tabstop>
+  <tabstop>messengersCuboidsCheckBox</tabstop>
+  <tabstop>mitosCheckBox</tabstop>
+  <tabstop>mitosCuboidsCheckBox</tabstop>
+  <tabstop>distancesCheckBox</tabstop>
+  <tabstop>clearHistoryCheckBox</tabstop>
+  <tabstop>histoResultClassesNumberSpinBox</tabstop>
+  <tabstop>customExpressionLineEdit</tabstop>
+  <tabstop>histoHistoryClassesNumberSpinBox</tabstop>
+  <tabstop>pointSizeLineEdit</tabstop>
+  <tabstop>showSurfaceLinesCheckBox</tabstop>
+  <tabstop>surfaceLineSizeLineEdit</tabstop>
+  <tabstop>distanceLineSizelineEdit</tabstop>
+  <tabstop>showDistancesNegativeCheckBox</tabstop>
+  <tabstop>showParticlesADifferentColorCcheckBox</tabstop>
+  <tabstop>showParticlesBDifferentColorCcheckBox</tabstop>
   <tabstop>messengersColorPushButton</tabstop>
   <tabstop>mitosColorPushButton</tabstop>
   <tabstop>barycentersColorPushButton</tabstop>
   <tabstop>distancesColorPushButton</tabstop>
   <tabstop>backgroundColorPushButton</tabstop>
   <tabstop>legendColorPushButton</tabstop>
-  <tabstop>okButton</tabstop>
-  <tabstop>cancelButton</tabstop>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>distancesCheckBox</tabstop>
-  <tabstop>mitosCuboidsCheckBox</tabstop>
-  <tabstop>noThreadRadioButton</tabstop>
-  <tabstop>fullResultCheckBox</tabstop>
-  <tabstop>particleANameLineEdit</tabstop>
-  <tabstop>ivFileCheckBox</tabstop>
-  <tabstop>particleBTypeComboBox</tabstop>
-  <tabstop>zFactorLineEdit</tabstop>
-  <tabstop>particleBPropertiesPushButton</tabstop>
-  <tabstop>particleBBatchPrefixLineEdit</tabstop>
-  <tabstop>particleBNameLineEdit</tabstop>
-  <tabstop>factorLineEdit</tabstop>
-  <tabstop>unitLineEdit</tabstop>
-  <tabstop>automaticThreadRadioButton</tabstop>
-  <tabstop>messengersCuboidsCheckBox</tabstop>
-  <tabstop>messengersCheckBox</tabstop>
-  <tabstop>mitosCheckBox</tabstop>
-  <tabstop>dataFileCheckBox</tabstop>
-  <tabstop>customThreadRadioButton</tabstop>
-  <tabstop>customThreadSpinBox</tabstop>
-  <tabstop>particleAPropertiesPushButton</tabstop>
-  <tabstop>particleATypeComboBox</tabstop>
-  <tabstop>visualizationCheckBox</tabstop>
-  <tabstop>particleABatchPrefixLineEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -962,8 +1190,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>337</x>
-     <y>610</y>
+     <x>466</x>
+     <y>634</y>
     </hint>
     <hint type="destinationlabel" >
      <x>96</x>
@@ -978,8 +1206,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>418</x>
-     <y>610</y>
+     <x>551</x>
+     <y>634</y>
     </hint>
     <hint type="destinationlabel" >
      <x>179</x>

@@ -10,6 +10,7 @@ import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.UpdateStatus;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
+import fr.ens.transcriptome.corsen.model.Particles3DFilter;
 
 /*
  *                      Nividic development code
@@ -50,6 +51,8 @@ public class CorsenResult {
   private Map<Particle3D, Distance> maxDistances;
   private DistanceAnalyser minAnalyser;
   private DistanceAnalyser maxAnalyser;
+  private Particles3DFilter particlesAFilter;
+  private Particles3DFilter particlesBFilter;
 
   //
   // Getters
@@ -175,6 +178,22 @@ public class CorsenResult {
     return minAnalyser;
   }
 
+  /**
+   * Get the Particles3DFilter for particlesA
+   * @return a Particles3DFilter
+   */
+  public Particles3DFilter getParticlesAFilter() {
+    return particlesAFilter;
+  }
+
+  /**
+   * Get the Particles3DFilter for particlesB
+   * @return a Particles3DFilter
+   */
+  public Particles3DFilter getParticlesBFilter() {
+    return particlesBFilter;
+  }
+
   //
   // Setters
   //
@@ -250,6 +269,22 @@ public class CorsenResult {
    */
   void setMinDistances(Map<Particle3D, Distance> minDistances) {
     this.minDistances = minDistances;
+  }
+
+  /**
+   * Set the Particles3DFilter for particles A
+   * @param particlesAFilter the filter to set
+   */
+  public void setParticlesAFilter(final Particles3DFilter particlesAFilter) {
+    this.particlesAFilter = particlesAFilter;
+  }
+
+  /**
+   * Set the Particles3DFilter for particles B
+   * @param particlesAFilter the filter to set
+   */
+  public void setParticlesBFilter(final Particles3DFilter particlesBFilter) {
+    this.particlesBFilter = particlesBFilter;
   }
 
   //

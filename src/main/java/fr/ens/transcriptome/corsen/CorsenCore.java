@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
+import fr.ens.transcriptome.corsen.model.JavascriptParticles3DFilter;
 
 public class CorsenCore implements Runnable {
 
@@ -238,6 +239,13 @@ public class CorsenCore implements Runnable {
     final CorsenResult result =
         new CorsenResult(particlesAFile, particlesBFile, resultFile, s,
             getUpdateStatus());
+
+    // Set Filters
+    result.setParticlesAFilter(JavascriptParticles3DFilter
+        .createFilter(settings.getParticlesAFilterExpression()));
+    result.setParticlesBFilter(JavascriptParticles3DFilter
+        .createFilter(settings.getParticlesBFilterExpression()));
+    
 
     // Create writer object
     final CorsenResultWriter writer = new CorsenResultWriter(result);

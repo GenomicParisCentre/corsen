@@ -46,23 +46,26 @@ public final class Settings {
   private static final String AUTO_CUBOID_SIZE_KEY = "main.autoCuboidSize";
   private static final String CUBOID_SIZE_KEY = "main.cuboidSize";
 
-  private static final String PARTICLES_A_NAME = "particles.a.name";
-  private static final String PARTICLES_A_TYPE = "particles.a.type";
-  private static final String PARTICLES_A_BATCH_PREFIX =
+  private static final String PARTICLES_A_NAME_KEY = "particles.a.name";
+  private static final String PARTICLES_A_TYPE_KEY = "particles.a.type";
+  private static final String PARTICLES_A_BATCH_PREFIX_KEY =
       "particles.a.batch.prefix";
-  private static final String PARTICLES_A_PROPERTIES =
-      "particles.a.properties.";
+  private static final String PARTICLES_A_PROPERTIES_KEY =
+      "particles.a.properties";
+  private static final String PARTICLES_A_FILTER_KEY = "particles.a.filter";
 
-  private static final String PARTICLES_B_NAME = "particles.b.name";
-  private static final String PARTICLES_B_TYPE = "particles.b.type";
-  private static final String PARTICLES_B_BATCH_PREFIX =
+  private static final String PARTICLES_B_NAME_KEY = "particles.b.name";
+  private static final String PARTICLES_B_TYPE_KEY = "particles.b.type";
+  private static final String PARTICLES_B_BATCH_PREFIX_KEY =
       "particles.b.batch.prefix";
-  private static final String PARTICLES_B_PROPERTIES = "particles.b.properties";
+  private static final String PARTICLES_B_PROPERTIES_KEY =
+      "particles.b.properties";
+  private static final String PARTICLES_B_FILTER_KEY = "particles.b.filter";
 
-  private static final String THREAD_NUMBER = "threads.number";
+  private static final String THREAD_NUMBER_KEY = "threads.number";
 
   private static final String SAVE_DATA_FILE_KEY = "save.dataFile";
-  private static final String SAVE_IV_FILE_SAVED = "save.IVFile";
+  private static final String SAVE_IV_FILE_SAVED_KEY = "save.IVFile";
   private static final String SAVE_3DFILES_KEY = "save.3dFiles";
   private static final String SAVE_PARTICLES_A_3DFILES_KEY =
       "save.3dFiles.particles.a";
@@ -112,7 +115,7 @@ public final class Settings {
   private static final String CUSTOM_HISTORY_EXPRESSION_KEY =
       "history.custom.expression";
 
-  private static final String CLEAR_HISTORY_WHEN_NEW_CALC =
+  private static final String CLEAR_HISTORY_WHEN_NEW_CALC_KEY =
       "main.clear.history.new.calc";
 
   private Properties properties = new Properties();
@@ -127,7 +130,7 @@ public final class Settings {
    */
   public boolean isSaveIVFile() {
 
-    String value = this.properties.getProperty(SAVE_IV_FILE_SAVED, "true");
+    String value = this.properties.getProperty(SAVE_IV_FILE_SAVED_KEY, "true");
 
     return Boolean.valueOf(value.trim());
   }
@@ -439,7 +442,7 @@ public final class Settings {
    */
   public String getParticlesAName() {
 
-    return this.properties.getProperty(PARTICLES_A_NAME, "Messengers");
+    return this.properties.getProperty(PARTICLES_A_NAME_KEY, "Messengers");
   }
 
   /**
@@ -449,7 +452,7 @@ public final class Settings {
   public ParticleType getParticlesAType() {
 
     String val =
-        this.properties.getProperty(PARTICLES_A_TYPE, ParticleType.TINY
+        this.properties.getProperty(PARTICLES_A_TYPE_KEY, ParticleType.TINY
             .toString());
 
     return ParticleType.getParticleType(val);
@@ -461,7 +464,17 @@ public final class Settings {
    */
   public String getParticlesABatchPrefix() {
 
-    return this.properties.getProperty(PARTICLES_A_BATCH_PREFIX, "messengers_");
+    return this.properties.getProperty(PARTICLES_A_BATCH_PREFIX_KEY,
+        "messengers_");
+  }
+
+  /**
+   * Get the expression filter for particles A.
+   * @return The expression filter for particles A
+   */
+  public String getParticlesAFilterExpression() {
+
+    return this.properties.getProperty(PARTICLES_A_FILTER_KEY, "");
   }
 
   /**
@@ -478,9 +491,9 @@ public final class Settings {
 
       String key = (String) it.next();
 
-      if (key.startsWith(PARTICLES_A_PROPERTIES))
-        result.setProperty(key.substring(PARTICLES_A_PROPERTIES.length(), key
-            .length()), this.properties.getProperty(key));
+      if (key.startsWith(PARTICLES_A_PROPERTIES_KEY))
+        result.setProperty(key.substring(PARTICLES_A_PROPERTIES_KEY.length(),
+            key.length()), this.properties.getProperty(key));
     }
 
     return result;
@@ -492,7 +505,7 @@ public final class Settings {
    */
   public String getParticlesBName() {
 
-    return this.properties.getProperty(PARTICLES_B_NAME, "Mitochondria");
+    return this.properties.getProperty(PARTICLES_B_NAME_KEY, "Mitochondria");
   }
 
   /**
@@ -502,7 +515,7 @@ public final class Settings {
   public ParticleType getParticlesBType() {
 
     return ParticleType.getParticleType(this.properties.getProperty(
-        PARTICLES_B_TYPE, ParticleType.HUGE.toString()));
+        PARTICLES_B_TYPE_KEY, ParticleType.HUGE.toString()));
   }
 
   /**
@@ -511,7 +524,16 @@ public final class Settings {
    */
   public String getParticlesBBatchPrefix() {
 
-    return this.properties.getProperty(PARTICLES_B_BATCH_PREFIX, "mitos_");
+    return this.properties.getProperty(PARTICLES_B_BATCH_PREFIX_KEY, "mitos_");
+  }
+
+  /**
+   * Get the expression filter for particles B.
+   * @return The expression filter for particles B
+   */
+  public String getParticlesBFilterExpression() {
+
+    return this.properties.getProperty(PARTICLES_B_FILTER_KEY, "");
   }
 
   /**
@@ -530,9 +552,9 @@ public final class Settings {
 
       String key = (String) it.next();
 
-      if (key.startsWith(PARTICLES_B_PROPERTIES))
-        result.setProperty(key.substring(PARTICLES_B_PROPERTIES.length(), key
-            .length()), this.properties.getProperty(key));
+      if (key.startsWith(PARTICLES_B_PROPERTIES_KEY))
+        result.setProperty(key.substring(PARTICLES_B_PROPERTIES_KEY.length(),
+            key.length()), this.properties.getProperty(key));
     }
 
     return result;
@@ -545,7 +567,7 @@ public final class Settings {
   public int getThreadNumber() {
 
     String value =
-        this.properties.getProperty(THREAD_NUMBER, ""
+        this.properties.getProperty(THREAD_NUMBER_KEY, ""
             + Globals.THREAD_NUMBER_DEFAULT);
 
     return Integer.parseInt(value.trim());
@@ -617,7 +639,7 @@ public final class Settings {
   public boolean isClearHistoryWhenLaunchingNewCalc() {
 
     String value =
-        this.properties.getProperty(CLEAR_HISTORY_WHEN_NEW_CALC, "false");
+        this.properties.getProperty(CLEAR_HISTORY_WHEN_NEW_CALC_KEY, "false");
 
     return Boolean.valueOf(value);
   }
@@ -632,7 +654,7 @@ public final class Settings {
    */
   public void setSaveIVFile(final boolean saveIVFile) {
 
-    this.properties.setProperty(SAVE_IV_FILE_SAVED, Boolean
+    this.properties.setProperty(SAVE_IV_FILE_SAVED_KEY, Boolean
         .toString(saveIVFile));
   }
 
@@ -924,7 +946,7 @@ public final class Settings {
    */
   public void setParticlesAName(final String name) {
 
-    this.properties.setProperty(PARTICLES_A_NAME, name);
+    this.properties.setProperty(PARTICLES_A_NAME_KEY, name);
   }
 
   /**
@@ -933,7 +955,7 @@ public final class Settings {
    */
   public void setParticlesAType(final ParticleType type) {
 
-    this.properties.setProperty(PARTICLES_A_TYPE, type.toString());
+    this.properties.setProperty(PARTICLES_A_TYPE_KEY, type.toString());
   }
 
   /**
@@ -942,7 +964,16 @@ public final class Settings {
    */
   public void setParticlesABatchPrefix(final String prefix) {
 
-    this.properties.setProperty(PARTICLES_A_BATCH_PREFIX, prefix);
+    this.properties.setProperty(PARTICLES_A_BATCH_PREFIX_KEY, prefix);
+  }
+
+  /**
+   * Set the expression for particles A filter.
+   * @param expression for filtering particles A
+   */
+  public void setParticlesAFilterExpression(final String expression) {
+
+    this.properties.setProperty(PARTICLES_A_FILTER_KEY, expression);
   }
 
   /**
@@ -960,7 +991,7 @@ public final class Settings {
 
       final String key = (String) it.next();
 
-      this.properties.setProperty(PARTICLES_A_PROPERTIES + key, properties
+      this.properties.setProperty(PARTICLES_A_PROPERTIES_KEY + key, properties
           .getProperty(key));
     }
   }
@@ -971,7 +1002,7 @@ public final class Settings {
    */
   public void setParticlesBName(final String name) {
 
-    this.properties.setProperty(PARTICLES_B_NAME, name);
+    this.properties.setProperty(PARTICLES_B_NAME_KEY, name);
   }
 
   /**
@@ -980,7 +1011,7 @@ public final class Settings {
    */
   public void setParticlesBType(final ParticleType type) {
 
-    this.properties.setProperty(PARTICLES_B_TYPE, type.toString());
+    this.properties.setProperty(PARTICLES_B_TYPE_KEY, type.toString());
   }
 
   /**
@@ -989,7 +1020,16 @@ public final class Settings {
    */
   public void setParticlesBBatchPrefix(final String prefix) {
 
-    this.properties.setProperty(PARTICLES_B_BATCH_PREFIX, prefix);
+    this.properties.setProperty(PARTICLES_B_BATCH_PREFIX_KEY, prefix);
+  }
+
+  /**
+   * Set the expression for particles B filter.
+   * @param expression for filtering particles B
+   */
+  public void setParticlesBFilterExpression(final String expression) {
+
+    this.properties.setProperty(PARTICLES_B_FILTER_KEY, expression);
   }
 
   /**
@@ -1007,7 +1047,7 @@ public final class Settings {
 
       final String key = (String) it.next();
 
-      this.properties.setProperty(PARTICLES_B_PROPERTIES + key, properties
+      this.properties.setProperty(PARTICLES_B_PROPERTIES_KEY + key, properties
           .getProperty(key));
     }
   }
@@ -1018,7 +1058,7 @@ public final class Settings {
    */
   public void setThreadNumber(final int threadNumber) {
 
-    this.properties.setProperty(THREAD_NUMBER, "" + threadNumber);
+    this.properties.setProperty(THREAD_NUMBER_KEY, "" + threadNumber);
   }
 
   /**
@@ -1078,7 +1118,7 @@ public final class Settings {
 
   public void setClearHistoryWhenLaunchNewCalc(final boolean value) {
 
-    this.properties.setProperty(CLEAR_HISTORY_WHEN_NEW_CALC, Boolean
+    this.properties.setProperty(CLEAR_HISTORY_WHEN_NEW_CALC_KEY, Boolean
         .toString(value));
   }
 

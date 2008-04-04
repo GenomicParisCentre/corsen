@@ -572,13 +572,13 @@ public class Particles3D {
   /**
    * Filter the particles3D
    * @param filter filter to use
-   * @return a new Particle3D object with filtered Particle3D or null if the
-   *         filter is null
+   * @return a new Particle3D object with filtered Particle3D or the current
+   *         object if the filter is null
    */
   public Particles3D filter(final Particles3DFilter filter) {
 
     if (filter == null)
-      return null;
+      return this;
 
     final Particles3D result = new Particles3D(this);
 
