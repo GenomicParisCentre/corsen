@@ -964,7 +964,7 @@ public class DataModelQt {
 
         final QImage img =
             new ResultGraphs().createScatterPlot(r.getCuboidsMitosParticles(),
-                r.getMitosParticles().getName() + " intensity/volume", settings
+                r.getMitosParticles().getName() + " cuboids intensity/volume", settings
                     .getUnit());
 
         if (img == null)

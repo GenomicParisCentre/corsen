@@ -592,6 +592,7 @@ public class Particles3D {
 
     filteredParticles.trimToSize();
 
+    result.setName(this.getName());
     result.setParticles(filteredParticles);
 
     return result;
