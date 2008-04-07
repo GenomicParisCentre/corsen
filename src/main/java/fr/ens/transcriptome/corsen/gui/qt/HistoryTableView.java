@@ -37,7 +37,7 @@ import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
  * This class extends a tableview to add contextual menu
  * @author Laurent Jourdren
  */
-public class CorsenHistoryTableView extends QTableView {
+public class HistoryTableView extends QTableView {
 
   private int lastRowIndex;
   private QSortFilterProxyModel sorter;
@@ -142,12 +142,12 @@ public class CorsenHistoryTableView extends QTableView {
   // Constructors
   //
 
-  public CorsenHistoryTableView() {
+  public HistoryTableView() {
 
     this(null);
   }
 
-  public CorsenHistoryTableView(final QWidget widget) {
+  public HistoryTableView(final QWidget widget) {
 
     super(widget);
   }
