@@ -192,7 +192,7 @@ public class CorsenResultWriter {
   }
 
   /**
-   * Write the intensities and volumes of messenger particles
+   * Write the intensities and volumes of mitos particles
    * @param os OutputStream
    * @throws IOException if an error occurs while write the stream
    */
@@ -200,6 +200,39 @@ public class CorsenResultWriter {
       throws IOException {
 
     writeIntensityVolume(os, getResult().getMitosParticles());
+  }
+
+  /**
+   * Write the intensities and volumes of mitos cuboids particles
+   * @param suffix Suffix to append
+   * @throws IOException if an error occurs while write the file
+   */
+  public void writeCuboidsMitosIntensityVolume(final File file,
+      final String suffix) throws IOException {
+
+    writeCuboidsMitosIntensityVolume(createFileWithSuffix(file, suffix));
+  }
+
+  /**
+   * Write the intensities and volumes of mitos cuboids particles
+   * @param file File to write
+   * @throws IOException if an error occurs while write the file
+   */
+  public void writeCuboidsMitosIntensityVolume(final File file)
+      throws IOException {
+
+    writeCuboidsMitosIntensityVolume(new FileOutputStream(file));
+  }
+
+  /**
+   * Write the intensities and volumes of mitos cuboids particles
+   * @param os OutputStream
+   * @throws IOException if an error occurs while write the stream
+   */
+  public void writeCuboidsMitosIntensityVolume(final OutputStream os)
+      throws IOException {
+
+    writeIntensityVolume(os, getResult().getCuboidsMitosParticles());
   }
 
   /**

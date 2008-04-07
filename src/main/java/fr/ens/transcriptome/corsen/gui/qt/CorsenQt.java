@@ -348,7 +348,7 @@ public class CorsenQt extends QMainWindow {
     if (fileName.length() != 0) {
 
       try {
-        this.models.saveViewl(modelView, fileName);
+        this.models.saveView(modelView, fileName);
       } catch (IOException e) {
         showError("An error occurs while writing result file.");
       }
@@ -677,7 +677,7 @@ public class CorsenQt extends QMainWindow {
 
     try {
       ByteArrayOutputStream os = new ByteArrayOutputStream();
-      this.models.saveViewl(index, os);
+      this.models.saveView(index, os);
 
       QApplication.clipboard().setText(new String(os.toByteArray()));
 

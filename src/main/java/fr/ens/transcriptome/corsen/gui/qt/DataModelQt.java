@@ -58,7 +58,7 @@ import fr.ens.transcriptome.corsen.util.Util;
 
 public class DataModelQt {
 
-  private static final int VIEWS_COUNT = 5;
+  private static final int VIEWS_COUNT = 6;
   private static final String DATA_SUMMARY_DESCRIPTION = "Data result summary";
   private static final String DATA_VIEW_DESCRIPTION = "Full data results";
   private static final String IV_MESSENGERS_DESCRIPTION =
@@ -67,6 +67,8 @@ public class DataModelQt {
       "Intensities and volumes of messengers cuboids";
   private static final String IV_MITO_DESCRIPTION =
       "Intensities and volumes of mitochondria ";
+  private static final String IV_MITO_CUBOIDS_DESCRIPTION =
+      "Intensities and volumes of mitochondria cuboids";
 
   private static HistoryDataModel historyModelSingleton =
       new HistoryDataModel();
@@ -617,6 +619,8 @@ public class DataModelQt {
       return IV_MESSENGERS_CUBOIDS_DESCRIPTION;
     case 4:
       return IV_MITO_DESCRIPTION;
+    case 5:
+      return IV_MITO_CUBOIDS_DESCRIPTION;
 
     default:
       return null;
@@ -659,6 +663,10 @@ public class DataModelQt {
       model = new IVModel(r.getMitosParticles());
       break;
 
+    case 5:
+      model = new IVModel(r.getCuboidsMitosParticles());
+      break;
+
     default:
       model = null;
     }
@@ -675,10 +683,10 @@ public class DataModelQt {
    * @param filename File to save
    * @throws IOException IOException if an error occurs while writing data
    */
-  public void saveViewl(final int index, final String filename)
+  public void saveView(final int index, final String filename)
       throws IOException {
 
-    saveViewl(index, new File(filename));
+    saveView(index, new File(filename));
   }
 
   /**
@@ -687,9 +695,9 @@ public class DataModelQt {
    * @param File File to save
    * @throws IOException IOException if an error occurs while writing data
    */
-  public void saveViewl(final int index, final File file) throws IOException {
+  public void saveView(final int index, final File file) throws IOException {
 
-    saveViewl(index, new FileOutputStream(file));
+    saveView(index, new FileOutputStream(file));
   }
 
   /**
@@ -698,7 +706,7 @@ public class DataModelQt {
    * @param os OutputStream to use
    * @throws IOException if an error occurs while writing data
    */
-  public void saveViewl(final int index, final OutputStream os)
+  public void saveView(final int index, final OutputStream os)
       throws IOException {
 
     final CorsenResult r = getResult();
@@ -730,10 +738,77 @@ public class DataModelQt {
       crw.writeMitosIntensityVolume(os);
       break;
 
+    case 5:
+      crw.writeCuboidsMitosIntensityVolume(os);
+      break;
+
     default:
       return;
     }
 
+  }
+
+  /**
+   * Save particles in a file
+   * @param index The index of the view
+   * @param filename output filename
+   * @throws IOException if an error occurs while writing data
+   */
+  public void saveParticlesView(final int index, final String filename)
+      throws IOException {
+
+    saveParticlesView(index, new File(filename));
+  }
+
+  /**
+   * Save particles in a file
+   * @param index The index of the view
+   * @param file the output file
+   * @throws IOException if an error occurs while writing data
+   */
+  public void saveParticlesView(final int index, final File file)
+      throws IOException {
+
+    saveParticlesView(index, new FileOutputStream(file));
+  }
+
+  /**
+   * Save particles in a file
+   * @param index The index of the view
+   * @param outputStream the output stream
+   * @throws IOException if an error occurs while writing data
+   */
+  public void saveParticlesView(final int index, final OutputStream outputStream)
+      throws IOException {
+
+    final CorsenResult r = getResult();
+
+    Particles3D particlesToSave;
+
+    switch (index) {
+
+    case 2:
+      particlesToSave = r.getMessengersParticles();
+      break;
+
+    case 3:
+      particlesToSave = r.getCuboidsMessengersParticles();
+      break;
+
+    case 4:
+      particlesToSave = r.getMitosParticles();
+      break;
+
+    case 5:
+      particlesToSave = r.getCuboidsMitosParticles();
+      break;
+
+    default:
+      particlesToSave = null;
+    }
+
+    if (particlesToSave != null)
+      particlesToSave.saveParticles(outputStream);
   }
 
   public String getSaveFileExtension(final int index) {
@@ -745,6 +820,7 @@ public class DataModelQt {
     case 2:
     case 3:
     case 4:
+    case 5:
       return Globals.EXTENSION_IV_FILE;
 
       // case 2:
@@ -873,6 +949,23 @@ public class DataModelQt {
             new ResultGraphs().createScatterPlot(r.getMitosParticles(), r
                 .getMitosParticles().getName()
                 + " intensity/volume", settings.getUnit());
+
+        if (img == null)
+          return null;
+        QApplication.processEvents();
+        cacheImage.put(4, img);
+      }
+
+      return this.cacheImage.get(4);
+
+    case 5:
+
+      if (!this.cacheImage.containsKey(5)) {
+
+        final QImage img =
+            new ResultGraphs().createScatterPlot(r.getCuboidsMitosParticles(),
+                r.getMitosParticles().getName() + " intensity/volume", settings
+                    .getUnit());
 
         if (img == null)
           return null;
