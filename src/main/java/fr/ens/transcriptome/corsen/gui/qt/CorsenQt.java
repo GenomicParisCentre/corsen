@@ -356,6 +356,25 @@ public class CorsenQt extends QMainWindow {
 
   }
 
+  @SuppressWarnings("unused")
+  private void saveParticlesFile() {
+
+    final int modelView = mainWindowUi.resultViewComboBox.currentIndex();
+
+    String fileName =
+        QFileDialog.getSaveFileName(this, "Save result", this.lastDir,
+            new QFileDialog.Filter("Result file (*.par)"));
+    if (fileName.length() != 0) {
+
+      try {
+        this.models.saveParticlesView(modelView, fileName);
+      } catch (IOException e) {
+        showError("An error occurs while writing result file.");
+      }
+    }
+
+  }
+
   /**
    * Set the result to the visualisation tabs
    */
@@ -592,10 +611,16 @@ public class CorsenQt extends QMainWindow {
     this.mainWindowUi.launch3DViewPushButton.setEnabled(value);
     this.mainWindowUi.updateViewPushButton.setEnabled(value);
     this.mainWindowUi.viewOGL.setRemakeObject(value);
-    if (value == true && this.models.getResult() != null)
+
+    if (value == true && this.models.getResult() != null) {
       this.mainWindowUi.saveResultPushButton.setEnabled(true);
-    else
+
+      if (this.mainWindowUi.resultViewComboBox.currentIndex() > 1)
+        this.mainWindowUi.saveParticlesPushButton.setEnabled(true);
+    } else {
       this.mainWindowUi.saveResultPushButton.setEnabled(false);
+      this.mainWindowUi.saveParticlesPushButton.setEnabled(false);
+    }
 
     this.resultViewChanged(Integer.valueOf(this.mainWindowUi.resultViewComboBox
         .currentIndex()));
@@ -738,6 +763,12 @@ public class CorsenQt extends QMainWindow {
       mainWindowUi.historyHistogramLabel.setPixmap(historyModel.getHisto(
           this.settings.getHistogramHistoryNumberClasses(), this.settings));
 
+      if (this.models.getResult() == null)
+        this.mainWindowUi.saveParticlesPushButton.setEnabled(false);
+      else
+        this.mainWindowUi.saveParticlesPushButton
+            .setEnabled(this.mainWindowUi.resultViewComboBox.currentIndex() > 1);
+
       this.refreshHistoryGraphics = true;
 
     } else {
@@ -756,6 +787,7 @@ public class CorsenQt extends QMainWindow {
           mainWindowUi.historyHistogramLabel.setPixmap(QPixmap.fromImage(QtUtil
               .toGrayscale(img)));
       }
+      this.mainWindowUi.saveParticlesPushButton.setEnabled(false);
     }
 
     mainWindowUi.HistoryResultlabel.setText(historyModel.getResultMessage());
@@ -1023,6 +1055,8 @@ public class CorsenQt extends QMainWindow {
     resultViewChanged(Integer.valueOf(0));
 
     mainWindowUi.saveResultPushButton.clicked.connect(this, "saveResultFile()");
+    mainWindowUi.saveParticlesPushButton.clicked.connect(this,
+        "saveParticlesFile()");
 
   }
 

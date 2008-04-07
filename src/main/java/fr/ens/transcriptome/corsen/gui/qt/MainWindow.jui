@@ -481,7 +481,7 @@
           <property name="orientation" >
            <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
           </property>
-          <widget class="ResultTableView" name="resultTableView" >
+          <widget class="ResultTableView" native="1" name="resultTableView" >
            <property name="toolTip" >
             <string>Result table</string>
            </property>
@@ -525,6 +525,16 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="saveParticlesPushButton" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+            <property name="text" >
+             <string>Save &amp;particles</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="saveResultPushButton" >
@@ -752,6 +762,16 @@
              </spacer>
             </item>
             <item>
+             <widget class="QPushButton" name="filterViewpushButton" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+              </property>
+              <property name="text" >
+               <string>Fil&amp;ter view</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="updateViewPushButton" >
               <property name="maximumSize" >
                <size>
@@ -847,7 +867,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="CorsenHistoryTableView" native="1" name="historyTableView" >
+             <widget class="HistoryTableView" native="1" name="historyTableView" >
               <property name="focusPolicy" >
                <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
               </property>
