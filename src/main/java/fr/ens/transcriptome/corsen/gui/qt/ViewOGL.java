@@ -1,7 +1,7 @@
 package fr.ens.transcriptome.corsen.gui.qt;
 
-import java.awt.Color;
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLContext;
@@ -22,8 +22,12 @@ import com.trolltech.qt.opengl.QGLWidget;
 
 import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
+import fr.ens.transcriptome.corsen.calc.Distance;
+import fr.ens.transcriptome.corsen.calc.JavascriptDistancesFilter;
+import fr.ens.transcriptome.corsen.calc.ShowedParticlesDistancesFilter;
+import fr.ens.transcriptome.corsen.model.JavascriptParticles3DFilter;
+import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
-import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
 
 public class ViewOGL extends QGLWidget {
 
@@ -491,34 +495,97 @@ public class ViewOGL extends QGLWidget {
 
       }
 
+      Particles3D particlesA = null;
+      Particles3D particlesB = null;
+
+      //
+      // Create filters
+      //
+
+      final JavascriptParticles3DFilter filterA =
+          JavascriptParticles3DFilter.createFilter(s
+              .getParticlesAViewFilterExpression());
+
+      final JavascriptParticles3DFilter filterB =
+          JavascriptParticles3DFilter.createFilter(s
+              .getParticlesBViewFilterExpression());
+
+      //
+      // Filters particles
+      //
+
       if (r.getMessengersParticles() != null && !isDrawNoMessengers()) {
 
-        if (!isDrawMessengersCuboids())
-          cgl.drawParticles(r.getMessengersParticles(), s.getColorParticlesA(),
-              isDrawBaryCenter(), s.getColorBaryCenters(), s
-                  .isVisualisationParticlesAInDifferentsColor());
-        else {
-          cgl.drawParticles(r.getCuboidsMessengersParticles(), s
-              .getColorParticlesA(), isDrawBaryCenter(), s
-              .getColorBaryCenters(), s
-              .isVisualisationParticlesAInDifferentsColor());
-        }
+        if (r.getCuboidsMessengersParticles() == null)
+          particlesA = r.getMessengersParticles().filter(filterA);
+        else
+          particlesA =
+              !isDrawMessengersCuboids() ? r.getCuboidsMessengersParticles()
+                  .filter(filterA) : r.getMessengersParticles().filter(filterA);
       }
 
       if (r.getMitosParticles() != null && !isDrawNoMitos()) {
 
-        if (!isDrawMitosCuboids())
-          cgl.drawParticles(r.getMitosParticles(), s.getColorParticlesB(),
-              false, null, s.isVisualisationParticlesBInDifferentsColor());
+        if (r.getCuboidsMitosParticles() == null)
+          particlesB = r.getMitosParticles().filter(filterB);
         else
-          cgl.drawParticles(r.getCuboidsMitosParticles(), s
-              .getColorParticlesB(), false, null, s
-              .isVisualisationParticlesBInDifferentsColor());
+          particlesB =
+              isDrawMitosCuboids() ? r.getCuboidsMitosParticles().filter(
+                  filterB) : r.getMitosParticles().filter(filterB);
       }
 
-      if (isDrawDistances() && r.getMinDistances() != null)
-        cgl.drawDistances(r.getMinDistances(), s.getColorDistances(), s
+      //
+      // Show particles
+      //
+
+      if (particlesA != null)
+        cgl.drawParticles(particlesA, s.getColorParticlesA(),
+            isDrawBaryCenter(), s.getColorBaryCenters(), s
+                .isVisualisationParticlesAInDifferentsColor());
+
+      if (particlesB != null)
+        cgl.drawParticles(particlesB, s.getColorParticlesB(), false, null, s
+            .isVisualisationParticlesBInDifferentsColor());
+
+      //
+      // Show distances
+      //
+
+      if (isDrawDistances() && r.getMinDistances() != null) {
+
+        Map<Particle3D, Distance> distancesToShow = null;
+
+        final JavascriptDistancesFilter jsdf =
+            s.isDistancesViewFilterEnabled() ? JavascriptDistancesFilter
+                .createFilter(s.getDistancesViewFilterExpression()) : null;
+
+        final ShowedParticlesDistancesFilter spf =
+            s.isFilterShowDistanceShowedParticles()
+                ? new ShowedParticlesDistancesFilter(r
+                    .getCuboidsMessengersParticles().filter(filterA), r
+                    .getCuboidsMitosParticles().filter(filterB)) : null;
+
+        distancesToShow = new HashMap<Particle3D, Distance>();
+
+        for (Map.Entry<Particle3D, Distance> e : r.getMinDistances().entrySet()) {
+
+          final Distance d = e.getValue();
+
+          boolean f1 = true;
+          if (jsdf != null)
+            f1 = jsdf.accept(d);
+
+          boolean f2 = true;
+          if (spf != null)
+            f2 = spf.accept(d);
+
+          if (f1 && f2)
+            distancesToShow.put(e.getKey(), d);
+        }
+
+        cgl.drawDistances(distancesToShow, s.getColorDistances(), s
             .isVisualizationShowNegativeDistances());
+      }
 
       // 
       // cjogl.drawParticles(this.mitoParticles, Color.RED, true, Color.BLUE);

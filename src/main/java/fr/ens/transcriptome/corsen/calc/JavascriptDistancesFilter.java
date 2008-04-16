@@ -20,7 +20,7 @@
  *
  */
 
-package fr.ens.transcriptome.corsen.model;
+package fr.ens.transcriptome.corsen.calc;
 
 import javax.script.Bindings;
 import javax.script.Compilable;
@@ -30,32 +30,31 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-
-public class JavascriptParticles3DFilter implements Particles3DFilter {
+/**
+ * This class implements a javascript filter for distances.
+ * @author Laurent Jourdren
+ */
+public class JavascriptDistancesFilter implements DistancesFilter {
 
   private CompiledScript script;
   private Bindings bindings;
 
   /**
-   * Test if a particle must be filtered.
-   * @param particle Particle3D to test
+   * Test if a distance must be filtered.
+   * @param distance Particle3D to test
    * @return true if the particle is accepted
    */
-  public boolean accept(final Particle3D particle) {
+  public boolean accept(final Distance distance) {
 
     if (this.script == null)
       return true;
 
-    if (particle == null)
+    if (distance == null)
       return false;
 
     final Bindings b = this.bindings;
 
-    b.put("area", particle.getArea());
-    b.put("density", particle.getDensity());
-    b.put("intensity", particle.getIntensity());
-    b.put("sphericity", particle.getSphericity());
-    b.put("volume", particle.getVolume());
+    b.put("distance", distance.getDistance());
 
     try {
 
@@ -101,9 +100,9 @@ public class JavascriptParticles3DFilter implements Particles3DFilter {
    * @param expression Javascript exception to set
    * @return the filter of null if the expression is mal formed
    */
-  public static JavascriptParticles3DFilter createFilter(final String expression) {
+  public static JavascriptDistancesFilter createFilter(final String expression) {
 
-    JavascriptParticles3DFilter result = new JavascriptParticles3DFilter();
+    JavascriptDistancesFilter result = new JavascriptDistancesFilter();
     if (result.setExpression(expression))
       return result;
 
@@ -114,6 +113,6 @@ public class JavascriptParticles3DFilter implements Particles3DFilter {
   // Constructor
   //
 
-  private JavascriptParticles3DFilter() {
+  private JavascriptDistancesFilter() {
   }
 }

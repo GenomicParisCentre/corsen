@@ -84,7 +84,8 @@ public class HugeParticles3D extends DistanceProcessor {
    * @return the distance between the point and the mito
    */
   private List<Distance> calcAllDistances(final Particle3D mito,
-      final Point3D point, boolean isNeg, List<Distance> result) {
+      final Point3D point, final Particle3D particleOfPoint, boolean isNeg,
+      List<Distance> result) {
 
     final AbstractListPoint3D listPoints = mito.getInnerPoints();
 
@@ -97,7 +98,7 @@ public class HugeParticles3D extends DistanceProcessor {
 
       final float d = p.distance(point);
 
-      result.add(new Distance(p, point, isNeg ? -d : d));
+      result.add(new Distance(p, point, particleOfPoint, mito, isNeg ? -d : d));
     }
 
     return result;
@@ -105,7 +106,7 @@ public class HugeParticles3D extends DistanceProcessor {
 
   @Override
   List<Distance> calcDistance(Particle3D particle, Point3D point,
-      List<Distance> result) {
+      final Particle3D particleOfPoint, List<Distance> result) {
 
     if (point == null)
       throw new NullPointerException("Point is null");
@@ -113,8 +114,8 @@ public class HugeParticles3D extends DistanceProcessor {
     if (particle == null)
       throw new NullPointerException("Particle is null");
 
-    return calcAllDistances(particle, point, particle.getBitMapParticle()
-        .isPointInParticle(point), result);
+    return calcAllDistances(particle, point, particleOfPoint, particle
+        .getBitMapParticle().isPointInParticle(point), result);
   }
 
   @Override

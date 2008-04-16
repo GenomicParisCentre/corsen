@@ -55,7 +55,8 @@ class UndefinedParticles3D extends DistanceProcessor {
     if (pars == null)
       return null;
 
-    Map<Particle3D, List<Particle3D>> result = new HashMap<Particle3D, List<Particle3D>>();
+    Map<Particle3D, List<Particle3D>> result =
+        new HashMap<Particle3D, List<Particle3D>>();
 
     int count = 0;
     final int countMax = pars.getParticles().size();
@@ -64,8 +65,8 @@ class UndefinedParticles3D extends DistanceProcessor {
       result.put(par, Collections.singletonList(par));
       count++;
 
-      final double p = (double) count / (double) countMax
-          * ProgressEvent.INDEX_IN_PHASE_MAX;
+      final double p =
+          (double) count / (double) countMax * ProgressEvent.INDEX_IN_PHASE_MAX;
       sendEvent(eventType, (int) p);
     }
 
@@ -74,7 +75,7 @@ class UndefinedParticles3D extends DistanceProcessor {
 
   @Override
   List<Distance> calcDistance(Particle3D particle, Point3D point,
-      List<Distance> result) {
+      final Particle3D particleOfPoint, List<Distance> result) {
 
     if (particle == null)
       throw new NullPointerException("Particle to test is null");
@@ -88,7 +89,8 @@ class UndefinedParticles3D extends DistanceProcessor {
       result.clear();
 
     for (Point3D p : particle.getInnerPoints())
-      result.add(new Distance(p, point, p.distance(point)));
+      result.add(new Distance(p, point, particleOfPoint, particle, p
+          .distance(point)));
 
     return result;
   }

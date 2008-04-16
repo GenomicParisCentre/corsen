@@ -158,4 +158,21 @@ public final class Distance implements Comparable<Distance> {
     this.distance = distance;
   }
 
+  /**
+   * Public constructor.
+   * @param particleA Messenger Particle
+   * @param particleB Mito particle
+   * @param pointA point of the particleA
+   * @param pointB point of the particleB
+   * @param distance Distance between the two points
+   */
+  public Distance(final Point3D pointA, final Point3D pointB,
+      final Particle3D particleA, final Particle3D particleB,
+      final float distance) {
+
+    this(pointA, pointB, distance);
+    setParticleA(particleA);
+    setParticleB(particleB);
+  }
+
 }

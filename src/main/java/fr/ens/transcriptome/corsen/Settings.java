@@ -108,6 +108,21 @@ public final class Settings {
   private static final String VISUALIZATION_COLOR_LEGEND_KEY =
       "visualization.color.legend";
 
+  private static final String VISUALIZATION_FILTER_PARTICLES_A_ENABLE_KEY =
+      "visualization.filter.a.enable";
+  private static final String VISUALIZATION_FILTER_PARTICLES_A_EXPRESSION_KEY =
+      "visualization.filter.a.expression";
+  private static final String VISUALIZATION_FILTER_PARTICLES_B_ENABLE_KEY =
+      "visualization.filter.b.enable";
+  private static final String VISUALIZATION_FILTER_PARTICLES_B_EXPRESSION_KEY =
+      "visualization.filter.b.expression";
+  private static final String VISUALIZATION_FILTER_DISTANCES_ENABLE_KEY =
+      "visualization.filter.distances.enable";
+  private static final String VISUALIZATION_FILTER_DISTANCES_EXPRESSION_KEY =
+      "visualization.filter.distances.expression";
+  private static final String VISUALIZATION_FILTER_SHOW_DISTANCES_SHOWED_PARTICLES_KEY =
+      "visualization.filter.show.distances";
+
   private static final String HISTOGRAM_RESULTS_NB_CLASSES_KEY =
       "histogram.results.classes";
   private static final String HISTOGRAM_HISTORY_NB_CLASSES_KEY =
@@ -644,6 +659,88 @@ public final class Settings {
     return Boolean.valueOf(value);
   }
 
+  /**
+   * Test if the filter view for particles A is enabled.
+   * @return true if the filter view for particles A is enabled
+   */
+  public boolean isParticlesAViewFilterEnabled() {
+
+    String value =
+        this.properties.getProperty(
+            VISUALIZATION_FILTER_PARTICLES_A_ENABLE_KEY, "false");
+
+    return Boolean.valueOf(value);
+  }
+
+  /**
+   * Get the expression of the filter for particles A.
+   * @return the filter expression
+   */
+  public String getParticlesAViewFilterExpression() {
+
+    return this.properties.getProperty(
+        VISUALIZATION_FILTER_PARTICLES_A_EXPRESSION_KEY, "");
+  }
+
+  /**
+   * Test if the filter view for particles B is enabled.
+   * @return true if the filter view for particles B is enabled
+   */
+  public boolean isParticlesBViewFilterEnabled() {
+
+    String value =
+        this.properties.getProperty(
+            VISUALIZATION_FILTER_PARTICLES_B_ENABLE_KEY, "false");
+
+    return Boolean.valueOf(value);
+  }
+
+  /**
+   * Get the expression of the filter for particles B.
+   * @return the filter expression
+   */
+  public String getParticlesBViewFilterExpression() {
+
+    return this.properties.getProperty(
+        VISUALIZATION_FILTER_PARTICLES_B_EXPRESSION_KEY, "");
+  }
+
+  /**
+   * Test if the filter view for distances is enabled.
+   * @return true if the filter view for distances is enabled
+   */
+  public boolean isDistancesViewFilterEnabled() {
+
+    String value =
+        this.properties.getProperty(VISUALIZATION_FILTER_DISTANCES_ENABLE_KEY,
+            "false");
+
+    return Boolean.valueOf(value);
+  }
+
+  /**
+   * Get the expression of the filter for distances.
+   * @return the filter expression
+   */
+  public String getDistancesViewFilterExpression() {
+
+    return this.properties.getProperty(
+        VISUALIZATION_FILTER_DISTANCES_EXPRESSION_KEY, "");
+  }
+
+  /**
+   * Test if only distances of showed particles must be showed.
+   * @return true if only distances of showed particles must be showed
+   */
+  public boolean isFilterShowDistanceShowedParticles() {
+
+    String value =
+        this.properties.getProperty(
+            VISUALIZATION_FILTER_SHOW_DISTANCES_SHOWED_PARTICLES_KEY, "false");
+
+    return Boolean.valueOf(value);
+  }
+
   //
   // Setters
   //
@@ -1120,6 +1217,73 @@ public final class Settings {
 
     this.properties.setProperty(CLEAR_HISTORY_WHEN_NEW_CALC_KEY, Boolean
         .toString(value));
+  }
+
+  /**
+   * Set if viewer particles A filter must be enable.
+   * @param value true if viewer particles A must be enable
+   */
+  public void setEnableParticlesAViewerFilter(final boolean value) {
+
+    this.properties.setProperty(VISUALIZATION_FILTER_PARTICLES_A_ENABLE_KEY,
+        Boolean.toString(value));
+  }
+
+  /**
+   * Set the expression for the filter of particles A viewer
+   * @param expression expression to set
+   */
+  public void setExpressionParticlesAViewerFilter(final String expression) {
+
+    this.properties.setProperty(
+        VISUALIZATION_FILTER_PARTICLES_A_EXPRESSION_KEY, expression);
+  }
+
+  /**
+   * Set if viewer particles B filter must be enable.
+   * @param value true if viewer particles A must be enable
+   */
+  public void setEnableParticlesBViewerFilter(final boolean value) {
+
+    this.properties.setProperty(VISUALIZATION_FILTER_PARTICLES_B_ENABLE_KEY,
+        Boolean.toString(value));
+  }
+
+  /**
+   * Set the expression for the filter of particles B viewer
+   * @param expression expression to set
+   */
+  public void setExpressionParticlesBViewerFilter(final String expression) {
+
+    this.properties.setProperty(
+        VISUALIZATION_FILTER_PARTICLES_B_EXPRESSION_KEY, expression);
+  }
+
+  /**
+   * Set if viewer distance filtermust be enable.
+   * @param value true if viewer particles A must be enable
+   */
+  public void setEnableDistancesViewerFilter(final boolean value) {
+
+    this.properties.setProperty(VISUALIZATION_FILTER_DISTANCES_ENABLE_KEY,
+        Boolean.toString(value));
+  }
+
+  /**
+   * Set the expression for the filter of distances viewer
+   * @param expression expression to set
+   */
+  public void setExpressionDistancesViewerFilter(final String expression) {
+
+    this.properties.setProperty(VISUALIZATION_FILTER_DISTANCES_EXPRESSION_KEY,
+        expression);
+  }
+
+  public void setFilterShowDistanceShowedParticles(final boolean value) {
+
+    this.properties.setProperty(
+        VISUALIZATION_FILTER_SHOW_DISTANCES_SHOWED_PARTICLES_KEY, Boolean
+            .toString(value));
   }
 
   //

@@ -152,9 +152,14 @@ public class CorsenGL {
     for (Particle3D par : particles.getParticles()) {
 
       if (randomColor) {
-        c = new Color(r, g, b);
+        
+        int id = par.getId();
+        c = new Color ((id %19) * 10, (id % 53)*4, (id %97)*2);
+        //c = new Color(r, g, b);
         drawParticle(par, c, barycentre, colorBaryCentre);
-
+        
+        
+        
         r += 5;
         g += 10;
         b += 15;

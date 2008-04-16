@@ -244,6 +244,12 @@ public class Particle3DBuilder {
     if (st.hasMoreElements())
       this.density = Double.parseDouble(st.nextToken());
 
+    this.area = -1;
+    this.volume =-1;
+    this.sphericity = -1;
+    this.intensity = -1;
+    this.density = -1;
+    
     final Set<String> existingPoints = new HashSet<String>();
 
     if (st.hasMoreElements()) {

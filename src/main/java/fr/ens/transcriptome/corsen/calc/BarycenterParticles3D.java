@@ -80,7 +80,7 @@ public class BarycenterParticles3D extends DistanceProcessor {
 
   @Override
   List<Distance> calcDistance(Particle3D particle, Point3D point,
-      List<Distance> result) {
+      final Particle3D particleOfPoint, List<Distance> result) {
 
     if (particle == null)
       throw new NullPointerException("Particle to test is null");
@@ -94,7 +94,8 @@ public class BarycenterParticles3D extends DistanceProcessor {
       result.clear();
 
     for (Point3D p : particle.getInnerPoints())
-      result.add(new Distance(p, point, p.distance(point)));
+      result.add(new Distance(p, point, particleOfPoint, particle, p
+          .distance(point)));
 
     return result;
   }

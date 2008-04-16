@@ -48,6 +48,7 @@ public class DistancesCalculator {
   private float coordinatesFactor = 1.0f;
 
   private AbstractListPoint3D listPointsAForThreads;
+  private Particle3D particleAForThreads;
   private int freeThreads;
   private boolean lastThreadCalc;
 
@@ -88,6 +89,7 @@ public class DistancesCalculator {
       final int threadsCount = this.threadsCount;
 
       AbstractListPoint3D listPointsA = null;
+      Particle3D particleA = null;
 
       while (this.keepRunning) {
 
@@ -98,6 +100,7 @@ public class DistancesCalculator {
           this.keepRunning = false;
 
         listPointsA = listPointsAForThreads;
+        particleA = particleAForThreads;
 
         // final List<Distance> distances = new LinkedList<Distance>();
         final List<Distance> distances = new MinMaxList<Distance>();
@@ -110,7 +113,7 @@ public class DistancesCalculator {
             continue;
 
           distances.addAll(this.threadProcessorB
-              .calcDistance(parB, listPointsA));
+              .calcDistance(parB, listPointsA, particleA));
 
           this.count++;
 
@@ -465,7 +468,7 @@ public class DistancesCalculator {
 
       for (Particle3D parB : listB) {
 
-        distances.addAll(this.processorB.calcDistance(parB, pointsA));
+        distances.addAll(this.processorB.calcDistance(parB, pointsA, parA));
 
         count++;
 
@@ -536,6 +539,7 @@ public class DistancesCalculator {
       synchronized (this) {
 
         this.freeThreads = 0;
+        this.particleAForThreads = parA;
         this.listPointsAForThreads =
             this.processorA.getPresentationPoints(parA.getInnerPoints());
 

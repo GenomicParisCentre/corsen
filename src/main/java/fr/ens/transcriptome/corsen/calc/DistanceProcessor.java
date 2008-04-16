@@ -114,7 +114,7 @@ public abstract class DistanceProcessor {
   }
 
   List<Distance> calcDistance(final Particle3D particle,
-      final AbstractListPoint3D points) {
+      final AbstractListPoint3D points, final Particle3D particleOfPoints) {
 
     if ((particle == null || points == null))
       return null;
@@ -124,7 +124,7 @@ public abstract class DistanceProcessor {
     List<Distance> resultForOnePoint = null;
     for (Point3D point : points)
       result.addAll(resultForOnePoint =
-          calcDistance(particle, point, resultForOnePoint));
+          calcDistance(particle, point, particleOfPoints, resultForOnePoint));
 
     return result;
   }
@@ -144,7 +144,8 @@ public abstract class DistanceProcessor {
   public abstract String getPreProcessorType();
 
   abstract List<Distance> calcDistance(final Particle3D particle,
-      final Point3D point, List<Distance> result);
+      final Point3D point, final Particle3D particleOfPoint,
+      final List<Distance> result);
 
   abstract AbstractListPoint3D getPresentationPoints(
       final AbstractListPoint3D points);

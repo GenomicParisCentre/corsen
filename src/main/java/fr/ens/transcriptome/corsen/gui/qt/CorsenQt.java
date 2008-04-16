@@ -744,6 +744,14 @@ public class CorsenQt extends QMainWindow {
     updateVisualisation();
   }
 
+  @SuppressWarnings("unused")
+  public void configureViewerFilters() {
+
+    FilterDialog fd = new FilterDialog(this, this.settings);
+    fd.show();
+    updateVisualisation();
+  }
+
   private void resultsHistoryChanged() {
 
     final HistoryDataModel historyModel = DataModelQt.getHistoryModel();
@@ -1083,6 +1091,8 @@ public class CorsenQt extends QMainWindow {
         "updateVisualisation()");
     mainWindowUi.showDistancesCheckBox.clicked.connect(this,
         "updateVisualisation()");
+    mainWindowUi.filterViewpushButton.clicked.connect(this,
+        "configureViewerFilters()");
   }
 
   private void initHistoryTab() {

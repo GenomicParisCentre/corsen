@@ -1037,6 +1037,7 @@ public final class Particle3D {
     this.area = -1;
     this.sphericity = -1;
     this.density = -1;
+    this.bitMapParticle =null;
   }
 
   //

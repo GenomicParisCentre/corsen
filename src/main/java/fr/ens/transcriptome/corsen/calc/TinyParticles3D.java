@@ -59,10 +59,11 @@ public class TinyParticles3D extends DistanceProcessor {
     if (particles == null)
       return null;
 
-    final Map<Particle3D, List<Particle3D>> mapCuboids = new HashMap<Particle3D, List<Particle3D>>();
+    final Map<Particle3D, List<Particle3D>> mapCuboids =
+        new HashMap<Particle3D, List<Particle3D>>();
 
-    final int countMax = Particle3DUtil.countInnerPointsInParticles(particles
-        .getParticles());
+    final int countMax =
+        Particle3DUtil.countInnerPointsInParticles(particles.getParticles());
     int count = 0;
 
     for (Particle3D messenger : particles.getParticles()) {
@@ -75,14 +76,14 @@ public class TinyParticles3D extends DistanceProcessor {
 
       len = len * Globals.CUBOID_SIZE_FACTOR;
 
-      List<Particle3D> cuboids = Particle3DUtil.createCuboidToArrayList(
-          messenger, len, len, len);
+      List<Particle3D> cuboids =
+          Particle3DUtil.createCuboidToArrayList(messenger, len, len, len);
 
       mapCuboids.put(messenger, cuboids);
 
       count += messenger.innerPointsCount();
-      final double p = (double) count / (double) countMax
-          * ProgressEvent.INDEX_IN_PHASE_MAX;
+      final double p =
+          (double) count / (double) countMax * ProgressEvent.INDEX_IN_PHASE_MAX;
       sendEvent(eventType, (int) p);
     }
 
@@ -99,7 +100,7 @@ public class TinyParticles3D extends DistanceProcessor {
 
   @Override
   List<Distance> calcDistance(Particle3D particle, Point3D point,
-      List<Distance> result) {
+      final Particle3D particleOfPoint, List<Distance> result) {
 
     if (particle == null)
       throw new NullPointerException("Particle to test is null");
@@ -115,7 +116,8 @@ public class TinyParticles3D extends DistanceProcessor {
       result.clear();
 
     for (Point3D p : list)
-      result.add(new Distance(p, point, p.distance(point)));
+      result.add(new Distance(p, point, particleOfPoint, particle, p
+          .distance(point)));
 
     return result;
   }
@@ -133,5 +135,5 @@ public class TinyParticles3D extends DistanceProcessor {
   protected void setProperties(final Properties properties) {
 
   }
-  
+
 }

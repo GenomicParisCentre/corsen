@@ -223,7 +223,8 @@ public class HugeParticles3DOld extends DistanceProcessor {
    * @return the distance between the point and the mito
    */
   private List<Distance> calcAllDistances(final Particle3D mito,
-      final Point3D point, boolean isNeg, List<Distance> result) {
+      final Point3D point, final Particle3D particleOfPoint, boolean isNeg,
+      List<Distance> result) {
 
     final AbstractListPoint3D listPoints = mito.getInnerPoints();
 
@@ -237,7 +238,8 @@ public class HugeParticles3DOld extends DistanceProcessor {
     for (final Point3D p : listPoints) {
 
       final float d = p.distance(point);
-      result.add(new Distance(p, point, (isNeg && d < radius) ? -d : d));
+      result.add(new Distance(p, point, particleOfPoint, mito,
+          (isNeg && d < radius) ? -d : d));
     }
 
     return result;
@@ -245,7 +247,7 @@ public class HugeParticles3DOld extends DistanceProcessor {
 
   @Override
   List<Distance> calcDistance(Particle3D particle, Point3D point,
-      List<Distance> result) {
+      final Particle3D particleOfPoint, List<Distance> result) {
 
     if (point == null)
       throw new NullPointerException("Point is null");
@@ -255,8 +257,9 @@ public class HugeParticles3DOld extends DistanceProcessor {
 
     Particles3D mitos = this.getSourceParticles();
 
-    return calcAllDistances(particle, point, isPointInMitoCache(mitos, point,
-        this.xlen, this.ylen, this.zlen), result);
+    return calcAllDistances(particle, point, particleOfPoint,
+        isPointInMitoCache(mitos, point, this.xlen, this.ylen, this.zlen),
+        result);
 
     // return calcAllDistances(particle, point, false);
 

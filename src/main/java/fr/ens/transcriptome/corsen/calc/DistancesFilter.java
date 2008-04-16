@@ -20,15 +20,15 @@
  *
  */
 
-package fr.ens.transcriptome.corsen.model;
-
+package fr.ens.transcriptome.corsen.calc;
 
 /**
- * This interface define a filter for particles 3d.
+ * This interface define a filter for distances.
  * @author Laurent Jourdren
  */
-public interface Particles3DFilter {
 
-  boolean accept(Particle3D particle);
+public interface DistancesFilter {
 
+  boolean accept(Distance distance);
+  
 }
