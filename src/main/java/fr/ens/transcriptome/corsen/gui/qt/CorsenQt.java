@@ -1054,8 +1054,8 @@ public class CorsenQt extends QMainWindow {
     int n = this.models.getViewCount();
 
     for (int i = 0; i < n; i++)
-      mainWindowUi.resultViewComboBox.addItem(
-          this.models.getViewDescription(i), Integer.valueOf(i));
+      mainWindowUi.resultViewComboBox.addItem(this.models.getViewDescription(i,
+          this.settings), Integer.valueOf(i));
 
     mainWindowUi.resultViewComboBox.currentIndexChanged.connect(this,
         "resultViewChanged(Object)");
@@ -1149,6 +1149,11 @@ public class CorsenQt extends QMainWindow {
 
     mui.historyTableView.setToolTip("Results history table");
     mui.historyTableView.setStatusTip("Results history table");
+
+    int n = this.models.getViewCount();
+    for (int i = 0; i < n; i++)
+      mainWindowUi.resultViewComboBox.setItemText(i, this.models
+          .getViewDescription(i, this.settings));
 
     mui.viewOGL.setToolTip("3D Visualisation");
     mui.viewOGL.setStatusTip("3D Visualisation");

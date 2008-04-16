@@ -629,6 +629,24 @@ public class DataModelQt {
   }
 
   /**
+   * Get the description of a view.
+   * @param index The index of the view
+   * @return the description of a view
+   */
+  public String getViewDescription(final int index, final Settings settings) {
+
+    String desc = getViewDescription(index);
+
+    if (desc == null)
+      return null;
+
+    desc = desc.replaceAll("messengers", settings.getParticlesAName());
+    desc = desc.replaceAll("mitochondria", settings.getParticlesBName());
+
+    return desc;
+  }
+
+  /**
    * Get the model of a view
    * @param index The index of the view
    * @return The model of the view
@@ -964,8 +982,8 @@ public class DataModelQt {
 
         final QImage img =
             new ResultGraphs().createScatterPlot(r.getCuboidsMitosParticles(),
-                r.getMitosParticles().getName() + " cuboids intensity/volume", settings
-                    .getUnit());
+                r.getMitosParticles().getName() + " cuboids intensity/volume",
+                settings.getUnit());
 
         if (img == null)
           return null;
