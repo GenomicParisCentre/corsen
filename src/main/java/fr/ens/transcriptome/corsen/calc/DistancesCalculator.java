@@ -112,8 +112,8 @@ public class DistancesCalculator {
           if (i++ % threadsCount != threadNumber)
             continue;
 
-          distances.addAll(this.threadProcessorB
-              .calcDistance(parB, listPointsA, particleA));
+          distances.addAll(this.threadProcessorB.calcDistance(parB,
+              listPointsA, particleA));
 
           this.count++;
 
@@ -273,8 +273,8 @@ public class DistancesCalculator {
       particlesA.setUnitOfLength(unit);
       particlesB.setUnitOfLength(unit);
     }
-	
-	// Apply filters
+
+    // Apply filters
     sendEvent(ProgressEventType.START_FILTER_MESSENGERS_EVENT);
     result.setParticlesA(particlesA.filter(result.getParticlesAFilter()));
 
@@ -459,30 +459,31 @@ public class DistancesCalculator {
     logger.info("Thread number for distance computation: 1");
     final long startCalcs = System.currentTimeMillis();
 
-    for (Particle3D parA : listA) {
+    if (calcsBeforeUpdateInfo != 0)
+      for (Particle3D parA : listA) {
 
-      final AbstractListPoint3D pointsA =
-          this.processorA.getPresentationPoints(parA.getInnerPoints());
-      // final List<Distance> distances = new LinkedList<Distance>();
-      final List<Distance> distances = new MinMaxList<Distance>();
+        final AbstractListPoint3D pointsA =
+            this.processorA.getPresentationPoints(parA.getInnerPoints());
+        // final List<Distance> distances = new LinkedList<Distance>();
+        final List<Distance> distances = new MinMaxList<Distance>();
 
-      for (Particle3D parB : listB) {
+        for (Particle3D parB : listB) {
 
-        distances.addAll(this.processorB.calcDistance(parB, pointsA, parA));
+          distances.addAll(this.processorB.calcDistance(parB, pointsA, parA));
 
-        count++;
+          count++;
 
-        if (count % calcsBeforeUpdateInfo == 0) {
+          if (count % calcsBeforeUpdateInfo == 0) {
 
-          sendEvent(
-              ProgressEventType.PROGRESS_CALC_DISTANCES_EVENT,
-              (int) (((double) count / (double) calcsToDoNumber) * ProgressEvent.INDEX_IN_PHASE_MAX));
+            sendEvent(
+                ProgressEventType.PROGRESS_CALC_DISTANCES_EVENT,
+                (int) (((double) count / (double) calcsToDoNumber) * ProgressEvent.INDEX_IN_PHASE_MAX));
+          }
         }
-      }
 
-      mins.put(parA, Collections.min(distances));
-      maxs.put(parA, Collections.max(distances));
-    }
+        mins.put(parA, Collections.min(distances));
+        maxs.put(parA, Collections.max(distances));
+      }
 
     logger.info("Calc "
         + count + " distances in " + (System.currentTimeMillis() - startCalcs)

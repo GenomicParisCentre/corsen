@@ -2,6 +2,7 @@ package fr.ens.transcriptome.corsen.gui.qt;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLContext;
@@ -31,6 +32,8 @@ import fr.ens.transcriptome.corsen.model.Particles3D;
 
 public class ViewOGL extends QGLWidget {
 
+  private static Logger logger = Logger.getLogger(ViewOGL.class.getName());
+  
   private GL gl;
   private GLU glu;
   private GLUT glut;
@@ -292,7 +295,7 @@ public class ViewOGL extends QGLWidget {
     make3DObject();
     drawLegend();
     long end = System.currentTimeMillis();
-    System.out.println((end - start) + " ms.");
+    logger.info("3D render in "+(end - start) + " ms.");
 
   }
 
@@ -392,8 +395,6 @@ public class ViewOGL extends QGLWidget {
       this.zoom = zoom;
     }
 
-    System.out.println(event.delta() + " zoom=" + this.zoom);
-
     QRect geo = this.geometry();
 
     resize(geo.width(), geo.height());
@@ -442,8 +443,6 @@ public class ViewOGL extends QGLWidget {
 
     if (this.gl == null)
       return;
-
-    System.out.println("make3DObject.");
 
     setRemakeObject(false);
 
@@ -542,6 +541,20 @@ public class ViewOGL extends QGLWidget {
         cgl.drawParticles(particlesA, s.getColorParticlesA(),
             isDrawBaryCenter(), s.getColorBaryCenters(), s
                 .isVisualisationParticlesAInDifferentsColor());
+
+      if (isDrawBaryCenter() && r.getMessengersParticles() != null) {
+
+        final Particles3D particlesBarycenter;
+        if (r.getCuboidsMessengersParticles() == null)
+          particlesBarycenter = r.getMessengersParticles().filter(filterA);
+        else
+          particlesBarycenter =
+              !isDrawMessengersCuboids() ? r.getCuboidsMessengersParticles()
+                  .filter(filterA) : r.getMessengersParticles().filter(filterA);
+
+        cgl.drawBarycenter(particlesBarycenter, s.getColorBaryCenters());
+
+      }
 
       if (particlesB != null)
         cgl.drawParticles(particlesB, s.getColorParticlesB(), false, null, s

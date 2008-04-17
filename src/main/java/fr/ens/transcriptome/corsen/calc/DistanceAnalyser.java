@@ -79,6 +79,11 @@ public class DistanceAnalyser {
   // Other methods
   //
 
+  public int count() {
+
+    return this.data.size();
+  }
+
   public double getMin() {
 
     if (!minCalcDone) {

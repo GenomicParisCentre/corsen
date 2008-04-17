@@ -189,6 +189,9 @@ public class ResultGraphs {
   private static final BoxAndWhiskerItem convertDistanceAnalyserToBoxAndWhiskerItem(
       final DistanceAnalyser da) {
 
+    if (da.count() == 0)
+      return null;
+
     // final BoxAndWhiskerItem result =
     // new BoxAndWhiskerItem(da.getMean(), da.getMedian(), da
     // .getFirstQuartile(), da.getThirdQuartile(), da.getMin(), da
@@ -387,9 +390,10 @@ public class ResultGraphs {
     DefaultBoxAndWhiskerCategoryDataset defaultboxandwhiskercategorydataset =
         new DefaultBoxAndWhiskerCategoryDataset();
 
-    defaultboxandwhiskercategorydataset.add(
-        convertDistanceAnalyserToBoxAndWhiskerItem(results.getMinAnalyser()),
-        "Distances", "Min");
+    if (results.getMinAnalyser().count() > 0)
+      defaultboxandwhiskercategorydataset.add(
+          convertDistanceAnalyserToBoxAndWhiskerItem(results.getMinAnalyser()),
+          "Distances", "Min");
 
     // defaultboxandwhiskercategorydataset.add(listMin, "Distances", "Min");
     // defaultboxandwhiskercategorydataset.add(listMax, "Distances", "Max");

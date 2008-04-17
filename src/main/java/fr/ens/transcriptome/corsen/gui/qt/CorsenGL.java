@@ -80,8 +80,6 @@ public class CorsenGL {
     drawLine3D(o, z, COLOR_WHITE);
   }
 
-
-
   /**
    * Write the lines of distances.
    * @param distances Distances to draw
@@ -131,9 +129,19 @@ public class CorsenGL {
 
     // drawPolygon3D(particle.getSurfacePoints(), getLowColor(color));
 
-    /*
-     * if (barycentre) drawPoint3D(particle.getBarycenter(), colorBaryCentre);
-     */
+//    if (barycentre)
+//      drawPoint3D(particle.getInnerPoints().getBarycenter(), colorBaryCentre,
+//          LEN);
+
+  }
+
+  public void drawBarycenter(final Particles3D particles, final Color color) {
+
+    if (particles == null)
+      return;
+
+    for (Particle3D p : particles.getParticles())
+      drawPoint3D(p.getInnerPoints().getBarycenter(), color, LEN/2);
   }
 
   public void drawParticles(final Particles3D particles, final Color color,
@@ -152,14 +160,12 @@ public class CorsenGL {
     for (Particle3D par : particles.getParticles()) {
 
       if (randomColor) {
-        
+
         int id = par.getId();
-        c = new Color ((id %19) * 10, (id % 53)*4, (id %97)*2);
-        //c = new Color(r, g, b);
+        c = new Color((id % 19) * 10, (id % 53) * 4, (id % 97) * 2);
+        // c = new Color(r, g, b);
         drawParticle(par, c, barycentre, colorBaryCentre);
-        
-        
-        
+
         r += 5;
         g += 10;
         b += 15;

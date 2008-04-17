@@ -28,8 +28,7 @@ import java.util.List;
 
 public class Stats {
 
-  public final static class DataDouble implements
-      Comparable<DataDouble> {
+  public final static class DataDouble implements Comparable<DataDouble> {
 
     public double value;
     public long intensity;
@@ -97,8 +96,7 @@ public class Stats {
     return result;
   }
 
-  private static double getVirtualValue(List<DataDouble> values,
-      int index) {
+  private static double getVirtualValue(List<DataDouble> values, int index) {
 
     for (DataDouble d : values)
 
@@ -108,8 +106,7 @@ public class Stats {
     return Double.NaN;
   }
 
-  public static double percentile(final List<DataDouble> values,
-      final double p) {
+  public static double percentile(final List<DataDouble> values, final double p) {
 
     if (values == null)
       throw new NullPointerException("values is null");
@@ -120,8 +117,7 @@ public class Stats {
     if (values.size() == 0)
       return Double.NaN;
 
-    final List<DataDouble> valuesCopy = new ArrayList<DataDouble>(
-        values);
+    final List<DataDouble> valuesCopy = new ArrayList<DataDouble>(values);
 
     Collections.sort(valuesCopy);
     final int length = getRealSize(valuesCopy);
@@ -156,14 +152,19 @@ public class Stats {
     if (values == null)
       throw new NullPointerException("values is null");
 
+    if (values.size() == 0)
+      return Double.NaN;
+
     DataDouble min = Collections.min(values);
 
-    double minVal =Double.MAX_VALUE;
-    for(DataDouble d : values) 
-      if (d.value<minVal) minVal=d.value;
-    
-    if (min.value!=minVal) System.err.println("not same!!");
-    
+    double minVal = Double.MAX_VALUE;
+    for (DataDouble d : values)
+      if (d.value < minVal)
+        minVal = d.value;
+
+    if (min.value != minVal)
+      System.err.println("not same!!");
+
     return min.value;
   }
 
@@ -203,6 +204,9 @@ public class Stats {
 
     if (values == null)
       throw new NullPointerException("values is null");
+
+    if (values.size() == 0)
+      return Double.NaN;
 
     DataDouble max = Collections.max(values);
 
