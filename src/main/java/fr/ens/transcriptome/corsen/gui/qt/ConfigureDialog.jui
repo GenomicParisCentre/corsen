@@ -371,7 +371,7 @@
                <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
               </property>
               <property name="text" >
-               <string>No threads</string>
+               <string>No threads (recommended)</string>
               </property>
               <property name="checked" >
                <bool>false</bool>
