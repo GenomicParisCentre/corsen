@@ -283,7 +283,8 @@ public class CorsenResultWriter {
 
     final Writer out = new OutputStreamWriter(os);
 
-    out.write("#Internal id\tArea\tVolume\tSphericity\tIntensity\tDensity\n");
+    out
+        .write("#Internal id\tArea\tVolume\tSphericity\tIntensity\tDensity\tMedian Circularity\n");
 
     for (Particle3D par : particles.getParticles()) {
 
@@ -298,7 +299,10 @@ public class CorsenResultWriter {
       out.write(Long.toString(par.getIntensity()));
       out.write("\t");
       out.write(Double.toString(par.getDensity()));
+      out.write("\t");
+      out.write(Double.toString(par.getMedianCircularity()));
       out.write("\n");
+
     }
 
     out.close();

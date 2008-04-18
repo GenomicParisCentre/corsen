@@ -500,6 +500,7 @@ public class CorsenImageJPlugin implements PlugInFilter {
     this.rt.setHeading(3, "Sphericity");
     this.rt.setHeading(4, "Intensity");
     this.rt.setHeading(5, "Density");
+    this.rt.setHeading(6, "Median circularity");
 
     int count = 0;
     for (Particle3D p : this.particles3DToSave) {
@@ -511,6 +512,7 @@ public class CorsenImageJPlugin implements PlugInFilter {
       this.rt.setValue(3, count, p.getSphericity());
       this.rt.setValue(4, count, p.getIntensity());
       this.rt.setValue(5, count, p.getDensity());
+      this.rt.setValue(6, count, p.getMedianCircularity());
 
       count++;
     }

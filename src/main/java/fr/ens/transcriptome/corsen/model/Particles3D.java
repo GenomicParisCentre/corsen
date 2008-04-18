@@ -20,7 +20,7 @@ import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 public class Particles3D {
 
-  private static final String PAR_FILE_VERSION = "1.3";
+  private static final String PAR_FILE_VERSION = "1.4";
 
   public static final String PAR_FILE_VERSION_KEY = "ParFileVersion";
   public static final String WIDTH_KEY = "Width";
@@ -344,7 +344,7 @@ public class Particles3D {
     final List<Particle3D> particles = new ArrayList<Particle3D>();
     final BufferedReader in = new BufferedReader(new InputStreamReader(is));
 
-    String parVersion = null;
+    int parVersion = -1;
 
     String line;
     boolean header = true;
@@ -358,7 +358,7 @@ public class Particles3D {
           if (line.startsWith("Name\t")) {
             header = false;
 
-            if (!PAR_FILE_VERSION.equals(parVersion))
+            if (parVersion < 3)
               throw new IOException("Can't read an old Par file format.");
 
             continue;
@@ -401,14 +401,16 @@ public class Particles3D {
               else if (IMAGEFILE_KEY.endsWith(key))
                 this.imageFilename = value.trim();
               else if (PAR_FILE_VERSION_KEY.endsWith(key))
-                parVersion = value;
+                parVersion =
+                    Integer
+                        .parseInt(value.substring(value.indexOf(".")+1).trim());
 
             }
           }
 
         } else
           particles.add(new Particle3DBuilder(pixelWidth, pixelHeight,
-              pixelDepth, line).getParticle());
+              pixelDepth, line, parVersion).getParticle());
 
       }
 
@@ -554,7 +556,8 @@ public class Particles3D {
         .write("\n" + Particles3D.MAX_THRESHOLD_KEY + "=" + this.maxThreshold);
 
     writer
-        .write("\nName\tCenter\tBarycenter\tArea\tVolume\tSphericity\tIntensity\tSurface points\tInner points\n");
+        .write("\nName\tCenter\tBarycenter\tArea\tVolume\tSphericity\tIntensity\t"
+            + "Density\tMedian Circularity\tSurface points\tInner points\n");
 
     if (this.particles != null)
       for (Particle3D p : this.particles) {

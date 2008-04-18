@@ -39,6 +39,7 @@ public final class Particle3D {
   private double area;
   private double sphericity;
   private double density;
+  private double medianCircularity;
   private boolean edgeParticle;
   private boolean pixelDimChange;
 
@@ -133,6 +134,17 @@ public final class Particle3D {
     if (this.area == -1)
       calcArea();
     return this.area;
+  }
+
+  /**
+   * Get the median circularity of the particle.
+   * @return The median circularity of the particle
+   */
+  public double getMedianCircularity() {
+
+    if (this.medianCircularity == -1)
+      calcMedianCircularity();
+    return this.medianCircularity;
   }
 
   /**
@@ -245,6 +257,18 @@ public final class Particle3D {
       calcArea();
     else
       this.area = area;
+  }
+
+  /**
+   * Set the median circularity of the particle
+   * @param medianCircularity median circularity of the particle
+   */
+  void setMedianCircularity(final double medianCircularity) {
+
+    if (medianCircularity == -1 || medianCircularity == 0)
+      calcMedianCircularity();
+    else
+      this.medianCircularity = medianCircularity;
   }
 
   /**
@@ -757,6 +781,8 @@ public final class Particle3D {
     sb.append('\t');
     sb.append(getDensity());
     sb.append('\t');
+    sb.append(getMedianCircularity());
+    sb.append('\t');
 
     int n = surfacePointsCount();
 
@@ -1007,6 +1033,17 @@ public final class Particle3D {
   }
 
   /**
+   * Calculate or recalculate the median circularity of the particle.
+   */
+  public void calcMedianCircularity() {
+
+    if (innerPoints.size() == 0)
+      this.medianCircularity = 0;
+    else
+      this.medianCircularity = getBitMapParticle().calcMedianCircularity();
+  }
+
+  /**
    * Calculate or recalculate the sphericty of the particle.
    */
   public void calcSphericity() {
@@ -1037,7 +1074,7 @@ public final class Particle3D {
     this.area = -1;
     this.sphericity = -1;
     this.density = -1;
-    this.bitMapParticle =null;
+    this.bitMapParticle = null;
   }
 
   //

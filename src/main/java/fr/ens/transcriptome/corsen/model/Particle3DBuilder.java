@@ -41,6 +41,7 @@ public class Particle3DBuilder {
   private double sphericity = -1;
   private long intensity = -1;
   private double density = -1;
+  private double medianCircularity = -1;
 
   /**
    * Add a particle 2D to the particle 3D.
@@ -211,7 +212,7 @@ public class Particle3DBuilder {
     surfacePoints.add(p);
   }
 
-  private void parse(final String s) {
+  private void parse(final String s, int formatVersion) {
 
     if (s == null)
       return;
@@ -244,12 +245,16 @@ public class Particle3DBuilder {
     if (st.hasMoreElements())
       this.density = Double.parseDouble(st.nextToken());
 
+    if (formatVersion == 4 && st.hasMoreElements())
+      this.medianCircularity = Double.parseDouble(st.nextToken());
+
     this.area = -1;
-    this.volume =-1;
+    this.volume = -1;
     this.sphericity = -1;
     this.intensity = -1;
     this.density = -1;
-    
+    this.medianCircularity = -1;
+
     final Set<String> existingPoints = new HashSet<String>();
 
     if (st.hasMoreElements()) {
@@ -401,6 +406,7 @@ public class Particle3DBuilder {
     result.setArea(this.area);
     result.setSphericity(this.sphericity);
     result.setDensity(this.density);
+    result.setMedianCircularity(this.medianCircularity);
     result.setEdgeParticle(this.edgeParticle);
 
     this.particle = null;
@@ -434,11 +440,11 @@ public class Particle3DBuilder {
    * @param s String to parse
    */
   public Particle3DBuilder(final float pixelWidth, final float pixelHeight,
-      final float pixelDepth, final String s) {
+      final float pixelDepth, final String s, final int formatVersion) {
 
     this(pixelWidth, pixelHeight, pixelDepth);
 
-    parse(s);
+    parse(s, formatVersion);
   }
 
 }

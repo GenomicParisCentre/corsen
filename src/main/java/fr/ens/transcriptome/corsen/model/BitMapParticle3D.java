@@ -22,6 +22,8 @@
 
 package fr.ens.transcriptome.corsen.model;
 
+import org.apache.commons.math.stat.descriptive.rank.Median;
+
 import fr.ens.transcriptome.corsen.util.MathUtil;
 
 /**
@@ -323,6 +325,54 @@ public final class BitMapParticle3D {
         }
 
     return surface;
+  }
+
+  /**
+   * Calc the median circularity of the particle.
+   * @return the median circularity of the particle
+   */
+  public double calcMedianCircularity() {
+
+    final int xLen = this.xLen;
+    final int yLen = this.yLen;
+    final int zLen = this.zLen;
+
+    final double pixelWidth = this.pixelWidth;
+    final double pixelHeight = this.pixelHeight;
+    final double squareArea = pixelWidth * pixelHeight;
+
+    final double[] circularities = new double[zLen];
+
+    for (int k = 0; k < zLen; k++) {
+
+      int count = 0;
+      double perimeter = 0;
+
+      for (int i = 0; i < xLen; i++)
+        for (int j = 0; j < yLen; j++) {
+
+          if (isParticleInnerPoint(i, j, k)) {
+
+            if (!isParticleInnerPoint(i - 1, j, k))
+              perimeter += pixelHeight;
+            if (!isParticleInnerPoint(i + 1, j, k))
+              perimeter += pixelHeight;
+            if (!isParticleInnerPoint(i, j - 1, k))
+              perimeter += pixelWidth;
+            if (!isParticleInnerPoint(i, j + 1, k))
+              perimeter += pixelWidth;
+
+            count++;
+          }
+        }
+
+      final double area = count * squareArea;
+      circularities[k] =
+          perimeter == 0.0 ? 0.0 : 4.0
+              * Math.PI * (area / (perimeter * perimeter));
+    }
+
+    return new Median().evaluate(circularities);
   }
 
   /**
