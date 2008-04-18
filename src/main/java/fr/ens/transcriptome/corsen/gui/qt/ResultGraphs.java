@@ -197,11 +197,17 @@ public class ResultGraphs {
     // .getFirstQuartile(), da.getThirdQuartile(), da.getMin(), da
     // .getMax(), da.getMin(), da.getMax(), new ArrayList());
 
+//     final BoxAndWhiskerItem result =
+//     new BoxAndWhiskerItem(da.getMean(), da.getMedian(), da
+//     .getFirstQuartile(), da.getThirdQuartile(),
+//     da.getMinRegularValue(), da.getMaxRegularValue(), da
+//     .getMinOutlier(), da.getMaxOutlier(), da.getOutliers());
+
     final BoxAndWhiskerItem result =
         new BoxAndWhiskerItem(da.getMean(), da.getMedian(), da
             .getFirstQuartile(), da.getThirdQuartile(),
-            da.getMinRegularValue(), da.getMaxRegularValue(), da
-                .getMinOutlier(), da.getMaxOutlier(), da.getOutliers());
+            da.getMinRegularValue(), da.getMaxRegularValue(), da.getMin(), da
+                .getMax(), new ArrayList());
 
     return result;
   }
