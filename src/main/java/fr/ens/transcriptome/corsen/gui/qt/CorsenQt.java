@@ -1222,7 +1222,7 @@ public class CorsenQt extends QMainWindow {
 
     setWindowTitle(Globals.getWindowsTitle());
 
-    // mainWindowUi.actionAbout_Corsen.triggered.connect(this, "about()");
+    mainWindowUi.actionAbout_Corsen.triggered.connect(this, "about()");
     // mainWindowUi.actionAbout_QtJambi.triggered.connect(QApplication.instance(),
     // "aboutQtJambi()");
 
