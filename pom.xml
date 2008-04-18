@@ -6,7 +6,7 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.35</version>
+	<version>0.36</version>
 	<name>Corsen</name>
 	<description>
 		A tool to calc distance between mitochondria and RNA
@@ -180,9 +180,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>jfree</groupId>
+			<groupId>fr.ens.transcriptome</groupId>
 			<artifactId>jfreechart</artifactId>
-			<version>1.0.8a</version>
+			<version>1.0.9-corsen</version>
 			<scope>compile</scope>
 		</dependency>
 	
@@ -449,7 +449,7 @@
 							<include>commons-cli:commons-cli</include>
 							<include>commons-math:commons-math</include>
 							<include>jfree:jcommon</include>
-							<include>jfree:jfreechart</include>
+							<include>fr.ens.transcriptome:jfreechart</include>
 							<include>java3d:vecmath</include>
 							<include>com.sun.phobos:jsr223-api</include>
 							<include>com.sun.phobos:phobos-rhino</include>

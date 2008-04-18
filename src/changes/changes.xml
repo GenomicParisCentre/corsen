@@ -38,6 +38,33 @@
 	</properties>
 	<body>
 
+		<release version="0.36" date="2008-04-18">
+			<action dev="jourdren" type="fix">
+				Utilise une version modifiée de Jfreechart qui ne montre pas les moyennes dans les boxplot.
+			</action>
+			<action dev="jourdren" type="fix">
+				Ne montre pas les outliers dans les boxplots.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de filtres dans la vue 3D.
+			</action>
+			<action dev="jourdren" type="add">
+				Possibilité de sauvegarde des particles 3D après filtrage.
+			</action>
+			<action dev="jourdren" type="add">
+				Visualisation des résultats pour les cuboids des mitos.
+			</action>
+			<action dev="jourdren" type="add">
+				Ajout de filtres sur les particles 3D lues.
+			</action>
+			<action dev="jourdren" type="update">
+				Les tables de l'onglet Result sont maintenant triables. 
+			</action>
+			<action dev="jourdren" type="fix">
+				Correction de la legende de l'histogramme de l'onglet "History".
+			</action>
+		</release>
+
 		<release version="0.35" date="2008-04-01">
 			<action dev="jourdren" type="update">
 				3D Renderer use Marching cubes
