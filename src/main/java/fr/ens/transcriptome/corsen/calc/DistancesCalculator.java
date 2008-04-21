@@ -36,8 +36,14 @@ import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
+import fr.ens.transcriptome.corsen.util.GuidedLoopHandler;
 import fr.ens.transcriptome.corsen.util.MinMaxList;
 
+/**
+ * This class implements the iterator over particles list to calc all the
+ * distances.
+ * @author Laurent Jourdren
+ */
 public class DistancesCalculator {
 
   private Logger logger = Logger.getLogger(DistancesCalculator.class.getName());
@@ -47,103 +53,103 @@ public class DistancesCalculator {
   private float zCoordinatesFactor = 1.0f;
   private float coordinatesFactor = 1.0f;
 
-  private AbstractListPoint3D listPointsAForThreads;
-  private Particle3D particleAForThreads;
-  private int freeThreads;
-  private boolean lastThreadCalc;
-
   private UpdateStatus updateStatus;
   private UncaughtExceptionHandler uceh;
   private CorsenResult result;
 
-  private final class CalcThread implements Runnable {
+  /**
+   * This class define the multithreaded version of the calcOneThread method.
+   * @author Laurent Jourdren
+   */
+  private final class CalcThread extends GuidedLoopHandler {
 
-    private int count = 0;
-
+    private DistanceProcessor currentProcessorB;
     private List<Particle3D> listB;
-    private List<Distance> distancesAllThreads;
+    private Particle3D currentParticleA;
+    private AbstractListPoint3D currentPointsA;
+    private List<Distance> distances;
 
-    private DistanceProcessor threadProcessorB;
-
-    private int threadNumber;
-    private int threadsCount;
-
-    volatile boolean keepRunning = true;
-    private DistancesCalculator dc;
-
-    public void pleaseStop() {
-
-      this.keepRunning = false;
+    CalcThread(int start, int end, int min, int threads) {
+      super(start, end, min, threads);
     }
 
-    public int getCount() {
+    /**
+     * The method that is multithreaded.
+     * @param start start index of the range
+     * @param end end index of the range
+     */
+    public void loopDoRange(final int start, final int end) {
 
-      return this.count;
-    }
+      final List<Distance> distances = new MinMaxList<Distance>();
 
-    public void run() {
+      for (int i = start; i < end; i++) {
 
-      final List<Particle3D> listB = this.listB;
-
-      final int threadNumber = this.threadNumber;
-      final int threadsCount = this.threadsCount;
-
-      AbstractListPoint3D listPointsA = null;
-      Particle3D particleA = null;
-
-      while (this.keepRunning) {
-
-        while (listPointsAForThreads == null)
-          Thread.yield();
-
-        if (lastThreadCalc)
-          this.keepRunning = false;
-
-        listPointsA = listPointsAForThreads;
-        particleA = particleAForThreads;
-
-        // final List<Distance> distances = new LinkedList<Distance>();
-        final List<Distance> distances = new MinMaxList<Distance>();
-
-        int i = 0;
-
-        for (Particle3D parB : listB) {
-
-          if (i++ % threadsCount != threadNumber)
-            continue;
-
-          distances.addAll(this.threadProcessorB.calcDistance(parB,
-              listPointsA, particleA));
-
-          this.count++;
-
-        }
-
-        synchronized (this.dc) {
-          this.distancesAllThreads.addAll(distances);
-          freeThreads++;
-        }
-
-        while (listPointsA == listPointsAForThreads && this.keepRunning)
-          Thread.yield();
+        Particle3D parB = this.listB.get(i);
+        distances.addAll(this.currentProcessorB.calcDistance(parB,
+            currentPointsA, currentParticleA));
       }
 
-      logger.info("fin thread (" + count + " calcs).");
+      synchronized (this.distances) {
+        this.distances.addAll(distances);
+      }
     }
 
-    public CalcThread(final DistanceProcessor processorB,
-        final List<Particle3D> listB, final List<Distance> distancesAllThreads,
-        final int threadNumber, final int threadsCount,
-        final DistancesCalculator dc) {
+    /**
+     * The multithreaded version of the calcOneThread method
+     * @param processorA processor for particles A
+     * @param processorB processor for particles B
+     * @param listA list of particles A
+     * @param listB list of particles B
+     * @param mins map of min distances
+     * @param maxs map of max distances
+     */
+    public void calc(final DistanceProcessor processorA,
+        final DistanceProcessor processorB, final List<Particle3D> listA,
+        final List<Particle3D> listB, Map<Particle3D, Distance> mins,
+        Map<Particle3D, Distance> maxs) {
 
-      this.threadProcessorB = processorB;
-
+      this.currentProcessorB = processorB;
       this.listB = listB;
-      this.distancesAllThreads = distancesAllThreads;
-      this.threadNumber = threadNumber;
-      this.threadsCount = threadsCount;
-      this.dc = dc;
+
+      int count = 0;
+      int lastShow = 0;
+      final int listBSize = listB.size();
+      final int calcsToDoNumber = listA.size() * listBSize;
+      final int calcsBeforeUpdateInfo = calcsToDoNumber / 100;
+
+      logger.info("Thread number for distance computation: " + this.numThreads);
+      final long startCalcs = System.currentTimeMillis();
+
+      if (calcsBeforeUpdateInfo != 0)
+        for (Particle3D parA : listA) {
+
+          this.currentParticleA = parA;
+          this.currentPointsA =
+              processorA.getPresentationPoints(parA.getInnerPoints());
+          this.distances = new MinMaxList<Distance>();
+
+          this.setRange(0, listBSize);
+          loopProcess();
+
+          count += listBSize;
+
+          if (count - lastShow >= calcsBeforeUpdateInfo) {
+
+            lastShow = count;
+            sendEvent(
+                ProgressEventType.PROGRESS_CALC_DISTANCES_EVENT,
+                (int) (((double) count / (double) calcsToDoNumber) * ProgressEvent.INDEX_IN_PHASE_MAX));
+          }
+
+          mins.put(parA, Collections.min(distances));
+          maxs.put(parA, Collections.max(distances));
+        }
+
+      logger.info("Calc "
+          + count + " distances in "
+          + (System.currentTimeMillis() - startCalcs) + " ms.");
     }
+
   }
 
   /**
@@ -405,7 +411,7 @@ public class DistancesCalculator {
   }
 
   /**
-   * Calc the distances
+   * Calc the distances.
    * @throws IOException
    */
   public void calc() throws IOException {
@@ -448,6 +454,13 @@ public class DistancesCalculator {
     CorsenHistoryResults.getCorsenHistoryResults().addResult(this.result);
   }
 
+  /**
+   * It is the method that iterate over particles list to do all calculations.
+   * @param listA list of particles A
+   * @param listB list of particles B
+   * @param mins map of min distances
+   * @param maxs map of max distances
+   */
   private void calcOneThread(final List<Particle3D> listA,
       final List<Particle3D> listB, Map<Particle3D, Distance> mins,
       Map<Particle3D, Distance> maxs) {
@@ -491,90 +504,20 @@ public class DistancesCalculator {
 
   }
 
+  /**
+   * It is the method that iterate over particles list to do all calculations
+   * (multithread version).
+   * @param listA list of particles A
+   * @param listB list of particles B
+   * @param mins map of min distances
+   * @param maxs map of max distances
+   */
   private void calcMultiThreads(final List<Particle3D> listA,
       final List<Particle3D> listB, Map<Particle3D, Distance> mins,
       Map<Particle3D, Distance> maxs, final int threadNumber) {
 
-    int count = 0;
-    int countBefore = 0;
-
-    final int calcsToDoNumber = listA.size() * listB.size();
-    final int calcsBeforeUpdateInfo = calcsToDoNumber / 100;
-
-    logger.info("Thread number for distance computation: " + threadNumber);
-
-    // final List<Distance> distancesAllThreads = Collections
-    // .synchronizedList(new LinkedList<Distance>());
-
-    final List<Distance> distancesAllThreads =
-        Collections.synchronizedList(new MinMaxList<Distance>());
-
-    final CalcThread[] calcthreads = new CalcThread[threadNumber];
-    final Thread[] threads = new Thread[threadNumber];
-
-    this.freeThreads = 0;
-    this.lastThreadCalc = false;
-    final long startCalcs = System.currentTimeMillis();
-
-    for (int i = 0; i < threadNumber; i++) {
-
-      final CalcThread ct =
-          new CalcThread(this.processorB, listB, distancesAllThreads, i,
-              threadNumber, this);
-      calcthreads[i] = ct;
-
-      threads[i] = this.updateStatus.newThread(ct);
-      threads[i].setName("Distance computation thread #" + i);
-
-      UpdateStatus ups = this.updateStatus.chain();
-      final UncaughtExceptionHandler uceh = getUncaughtExceptionHandler(ups);
-      ups.moveToThread(threads[i]);
-      threads[i].setUncaughtExceptionHandler(uceh);
-      threads[i].start();
-    }
-
-    final int n = listA.size();
-    int parCount = 0;
-    for (final Particle3D parA : listA) {
-
-      synchronized (this) {
-
-        this.freeThreads = 0;
-        this.particleAForThreads = parA;
-        this.listPointsAForThreads =
-            this.processorA.getPresentationPoints(parA.getInnerPoints());
-
-        parCount++;
-        if (parCount == n)
-          this.lastThreadCalc = true;
-
-        if (this.listPointsAForThreads == null)
-          logger.severe("listPointsAForThreads is null !!!");
-      }
-
-      while (this.freeThreads != threadNumber)
-        Thread.yield();
-
-      for (int i = 0; i < threadNumber; i++)
-        count += calcthreads[i].getCount();
-
-      mins.put(parA, Collections.min(distancesAllThreads));
-      maxs.put(parA, Collections.max(distancesAllThreads));
-      distancesAllThreads.clear();
-
-      if ((count - countBefore) > calcsBeforeUpdateInfo) {
-
-        countBefore = count;
-        sendEvent(
-            ProgressEventType.PROGRESS_CALC_DISTANCES_EVENT,
-            (int) (((double) count / (double) calcsToDoNumber) * ProgressEvent.INDEX_IN_PHASE_MAX));
-      }
-
-    }
-
-    logger.info("Calc "
-        + count + " distances in " + (System.currentTimeMillis() - startCalcs)
-        + " ms.");
+    new CalcThread(0, 0, 2, threadNumber).calc(processorA, processorB, listA,
+        listB, mins, maxs);
   }
 
   /**
