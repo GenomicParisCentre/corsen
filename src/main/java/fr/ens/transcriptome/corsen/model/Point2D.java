@@ -1,4 +1,27 @@
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Nividic mailing list, visit the home page
+ * at:
+ *
+ *      http://www.transcriptome.ens.fr/corsen
+ *
+ */
+
 package fr.ens.transcriptome.corsen.model;
+
 import java.util.StringTokenizer;
 
 /**
@@ -114,12 +137,13 @@ public abstract class Point2D {
    * @return true if the two have the same position
    */
   public boolean isSamePosition(final Point2D point) {
-    
-    if (point==null) return false;
-    
-    return this.getX()==point.getX() && this.getY()==point.getY();
+
+    if (point == null)
+      return false;
+
+    return this.getX() == point.getX() && this.getY() == point.getY();
   }
-  
+
   //
   // Constructor
   //

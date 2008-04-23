@@ -1,3 +1,24 @@
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Nividic mailing list, visit the home page
+ * at:
+ *
+ *      http://www.transcriptome.ens.fr/corsen
+ *
+ */
 package fr.ens.transcriptome.corsen.model;
 
 import java.util.Random;
@@ -7,28 +28,6 @@ import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SimplePoint3DImpl;
 import fr.ens.transcriptome.corsen.util.Util;
 import junit.framework.TestCase;
-
-/*
- *                      Nividic development code
- *
- * This code may be freely distributed and modified under the
- * terms of the GNU Lesser General Public Licence.  This should
- * be distributed with the code.  If you do not have a copy,
- * see:
- *
- *      http://www.gnu.org/copyleft/lesser.html
- *
- * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
- * These should be listed in @author doc comments.
- *
- * For more information on the Nividic project and its aims,
- * or to join the Nividic mailing list, visit the home page
- * at:
- *
- *      http://www.transcriptome.ens.fr/nividic
- *
- */
 
 public class ArrayListPoint3DTest extends TestCase {
 
@@ -224,8 +223,9 @@ public class ArrayListPoint3DTest extends TestCase {
       assertTrue(list.contains(p));
     }
 
-    Point3D p = new SimplePoint3DImpl(xs[xs.length - 1], ys[xs.length - 1],
-        zs[xs.length - 1], is[xs.length - 1]);
+    Point3D p =
+        new SimplePoint3DImpl(xs[xs.length - 1], ys[xs.length - 1],
+            zs[xs.length - 1], is[xs.length - 1]);
     assertFalse(list.contains(p));
 
   }
@@ -416,12 +416,15 @@ public class ArrayListPoint3DTest extends TestCase {
 
     for (int j = 0; j < 1000000; j++) {
 
-      float x = (float) (Math.ceil(random.nextFloat()
-          * Util.getStoredMaxValue(precision) * precision) / precision);
-      float y = (float) (Math.ceil(random.nextFloat()
-          * Util.getStoredMaxValue(precision) * precision) / precision);
-      float z = (float) (Math.ceil(random.nextFloat()
-          * Util.getStoredMaxValue(precision) * precision) / precision);
+      float x =
+          (float) (Math.ceil(random.nextFloat()
+              * Util.getStoredMaxValue(precision) * precision) / precision);
+      float y =
+          (float) (Math.ceil(random.nextFloat()
+              * Util.getStoredMaxValue(precision) * precision) / precision);
+      float z =
+          (float) (Math.ceil(random.nextFloat()
+              * Util.getStoredMaxValue(precision) * precision) / precision);
       int i = random.nextInt(Util.getStoredMaxValue());
 
       test(x, y, z, i, list, precision);

@@ -1,4 +1,27 @@
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Nividic mailing list, visit the home page
+ * at:
+ *
+ *      http://www.transcriptome.ens.fr/corsen
+ *
+ */
+
 package fr.ens.transcriptome.corsen;
+
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -118,8 +141,8 @@ public class RGL {
         .write("if (length( grep(\"package:rgl\",search()) )==0) { library(rgl) }\n\n");
 
     out
-        .write("rgl.bg(color=c(\"" + COLOR_BLACK
-            + "\"), fogtype=\"linear\" )\n");
+        .write("rgl.bg(color=c(\""
+            + COLOR_BLACK + "\"), fogtype=\"linear\" )\n");
 
     writeLegend(getUnit());
   }
@@ -144,8 +167,8 @@ public class RGL {
 
     String text = "10 " + unit;
 
-    out.write("text3d(x=-1,y=-1,z=-1,text=\"" + text + "\",color=\""
-        + COLOR_WHITE + "\")\n");
+    out.write("text3d(x=-1,y=-1,z=-1,text=\""
+        + text + "\",color=\"" + COLOR_WHITE + "\")\n");
 
   }
 
@@ -217,8 +240,8 @@ public class RGL {
 
     Random random = new Random(System.currentTimeMillis());
 
-    for (Particle3D par: particles) {
-    //for (int i = 0; i < particles.length; i++) {
+    for (Particle3D par : particles) {
+      // for (int i = 0; i < particles.length; i++) {
 
       out.write("#\n# Particle #");
       out.write("" + par.getId());
@@ -236,8 +259,9 @@ public class RGL {
 
       out
           .write("\nif (exists(\"corsen.unicolor\") && corsen.unicolor==F ) {\nplotColor <- \"#");
-      Color c = new Color(random.nextInt(255), random.nextInt(255), random
-          .nextInt(255));
+      Color c =
+          new Color(random.nextInt(255), random.nextInt(255), random
+              .nextInt(255));
 
       out.write(Integer.toHexString(c.getRGB()));
 

@@ -1,3 +1,25 @@
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Nividic mailing list, visit the home page
+ * at:
+ *
+ *      http://www.transcriptome.ens.fr/corsen
+ *
+ */
+
 package fr.ens.transcriptome.corsen.gui.qt;
 
 import java.util.HashMap;
@@ -33,7 +55,7 @@ import fr.ens.transcriptome.corsen.model.Particles3D;
 public class ViewOGL extends QGLWidget {
 
   private static Logger logger = Logger.getLogger(ViewOGL.class.getName());
-  
+
   private GL gl;
   private GLU glu;
   private GLUT glut;
@@ -295,7 +317,7 @@ public class ViewOGL extends QGLWidget {
     make3DObject();
     drawLegend();
     long end = System.currentTimeMillis();
-    logger.info("3D render in "+(end - start) + " ms.");
+    logger.info("3D render in " + (end - start) + " ms.");
 
   }
 

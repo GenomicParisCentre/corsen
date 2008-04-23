@@ -1,3 +1,24 @@
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Nividic mailing list, visit the home page
+ * at:
+ *
+ *      http://www.transcriptome.ens.fr/corsen
+ *
+ */
 package fr.ens.transcriptome.corsen.model;
 
 import java.util.Random;
@@ -7,28 +28,6 @@ import fr.ens.transcriptome.corsen.model.Point2D;
 import fr.ens.transcriptome.corsen.model.SimplePoint2DImpl;
 import fr.ens.transcriptome.corsen.util.Util;
 import junit.framework.TestCase;
-
-/*
- *                      Nividic development code
- *
- * This code may be freely distributed and modified under the
- * terms of the GNU Lesser General Public Licence.  This should
- * be distributed with the code.  If you do not have a copy,
- * see:
- *
- *      http://www.gnu.org/copyleft/lesser.html
- *
- * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
- * These should be listed in @author doc comments.
- *
- * For more information on the Nividic project and its aims,
- * or to join the Nividic mailing list, visit the home page
- * at:
- *
- *      http://www.transcriptome.ens.fr/nividic
- *
- */
 
 public class ArrayListPoint2DTest extends TestCase {
 
@@ -323,16 +322,16 @@ public class ArrayListPoint2DTest extends TestCase {
     ArrayListPackedPoint2D list = new ArrayListPackedPoint2D(2.0f, 0.3f);
 
     Random random = new Random(System.currentTimeMillis());
-    
-    list.add(1.0f,1.0f);
+
+    list.add(1.0f, 1.0f);
     Point2D p = list.get(0);
-    
+
     assertEquals(1.0f, p.getX());
     assertEquals(1.0f, p.getY());
-    
-    list.add(5.0f,33.0f);
+
+    list.add(5.0f, 33.0f);
     p = list.get(1);
-    
+
     assertEquals(5.0f, p.getX());
     assertEquals(33.0f, p.getY());
 

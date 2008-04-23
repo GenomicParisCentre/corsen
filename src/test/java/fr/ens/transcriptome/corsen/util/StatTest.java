@@ -1,4 +1,27 @@
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Nividic mailing list, visit the home page
+ * at:
+ *
+ *      http://www.transcriptome.ens.fr/corsen
+ *
+ */
+
 package fr.ens.transcriptome.corsen.util;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,28 +36,6 @@ import org.apache.commons.math.stat.descriptive.rank.Percentile;
 
 import fr.ens.transcriptome.corsen.util.Stats;
 import fr.ens.transcriptome.corsen.util.Stats.DataDouble;
-
-/*
- *                      Nividic development code
- *
- * This code may be freely distributed and modified under the
- * terms of the GNU Lesser General Public Licence.  This should
- * be distributed with the code.  If you do not have a copy,
- * see:
- *
- *      http://www.gnu.org/copyleft/lesser.html
- *
- * Copyright for this code is held jointly by the microarray platform
- * of the École Normale Supérieure and the individual authors.
- * These should be listed in @author doc comments.
- *
- * For more information on the Nividic project and its aims,
- * or to join the Nividic mailing list, visit the home page
- * at:
- *
- *      http://www.transcriptome.ens.fr/nividic
- *
- */
 
 public class StatTest extends TestCase {
 
@@ -66,8 +67,8 @@ public class StatTest extends TestCase {
 
     for (int i = 0; i < 100; i++) {
 
-      DataDouble dd = new DataDouble(random.nextDouble() * 1000, random
-          .nextInt(20));
+      DataDouble dd =
+          new DataDouble(random.nextDouble() * 1000, random.nextInt(20));
       list.add(dd);
 
     }

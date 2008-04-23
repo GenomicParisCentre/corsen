@@ -1,3 +1,25 @@
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Nividic mailing list, visit the home page
+ * at:
+ *
+ *      http://www.transcriptome.ens.fr/corsen
+ *
+ */
+
 package fr.ens.transcriptome.corsen.model;
 
 import java.util.AbstractList;
@@ -19,8 +41,9 @@ public abstract class AbstractListPoint3D extends AbstractList<Point3D> {
    * @param z Z coordinate of the point to add
    * @param i The intensity of the point to add
    */
-  public abstract void add(final float x, final float y, final float z, final int i);
-  
+  public abstract void add(final float x, final float y, final float z,
+      final int i);
+
   public abstract float getXAt(int index);
 
   public abstract float getYAt(int index);
@@ -28,19 +51,19 @@ public abstract class AbstractListPoint3D extends AbstractList<Point3D> {
   public abstract float getZAt(int index);
 
   public abstract int getIAt(int index);
-  
+
   /**
    * Apply a factor to all values of the x coordinates.
    * @param xFactor factor to apply
    */
   public abstract void applyXFactor(final float xFactor);
-  
+
   /**
    * Apply a factor to all values of the y coordinates.
    * @param yFactor factor to apply
    */
   public abstract void applyYFactor(final float yFactor);
-  
+
   /**
    * Apply a factor to all values of the z coordinates.
    * @param zFactor factor to apply
@@ -48,9 +71,9 @@ public abstract class AbstractListPoint3D extends AbstractList<Point3D> {
   public abstract void applyZFactor(final float zFactor);
 
   public abstract void ensureCapacity(int minCapacity);
-  
+
   public abstract void trimToSize();
-  
+
   //
   // Concrete methods
   //
@@ -115,8 +138,6 @@ public abstract class AbstractListPoint3D extends AbstractList<Point3D> {
    */
   public float getXMax() {
 
-    
-    
     final int n = size();
 
     if (n == 0)

@@ -1,4 +1,26 @@
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Nividic mailing list, visit the home page
+ * at:
+ *
+ *      http://www.transcriptome.ens.fr/corsen
+ *
+ */
 package fr.ens.transcriptome.corsen.model;
+
 /**
  * This class implements a basic implementation of Point3D. In this objects data
  * are stored inside the object.
@@ -127,13 +149,13 @@ public class SimplePoint3DImpl extends Point3D {
    */
   public SimplePoint3DImpl() {
   }
-  
+
   /**
    * Public constructor.
    * @param point Point
    */
   public SimplePoint3DImpl(final Point3D point) {
-    
+
     this(point.getX(), point.getY(), point.getZ(), point.getI());
   }
 

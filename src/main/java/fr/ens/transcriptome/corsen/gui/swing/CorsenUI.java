@@ -1,4 +1,27 @@
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Nividic mailing list, visit the home page
+ * at:
+ *
+ *      http://www.transcriptome.ens.fr/corsen
+ *
+ */
+
 package fr.ens.transcriptome.corsen.gui.swing;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -185,8 +208,8 @@ public class CorsenUI extends JFrame {
           if (result == JFileChooser.APPROVE_OPTION) {
             CorsenUI.this.dirFile = jfc.getSelectedFile();
             CorsenUI.this.dirLabel.setText(CorsenUI.this.dirFile.getName());
-            CorsenUI.this.currentDirectory = CorsenUI.this.dirFile
-                .getParentFile();
+            CorsenUI.this.currentDirectory =
+                CorsenUI.this.dirFile.getParentFile();
           }
 
         }
@@ -217,8 +240,8 @@ public class CorsenUI extends JFrame {
           if (result == JFileChooser.APPROVE_OPTION) {
             CorsenUI.this.arnFile = jfc.getSelectedFile();
             CorsenUI.this.arnLabel.setText(CorsenUI.this.arnFile.getName());
-            CorsenUI.this.currentDirectory = CorsenUI.this.arnFile
-                .getParentFile();
+            CorsenUI.this.currentDirectory =
+                CorsenUI.this.arnFile.getParentFile();
           }
 
         }
@@ -248,8 +271,8 @@ public class CorsenUI extends JFrame {
           if (result == JFileChooser.APPROVE_OPTION) {
             CorsenUI.this.mitoFile = jfc.getSelectedFile();
             CorsenUI.this.mitoLabel.setText(CorsenUI.this.mitoFile.getName());
-            CorsenUI.this.currentDirectory = CorsenUI.this.mitoFile
-                .getParentFile();
+            CorsenUI.this.currentDirectory =
+                CorsenUI.this.mitoFile.getParentFile();
           }
 
         }
