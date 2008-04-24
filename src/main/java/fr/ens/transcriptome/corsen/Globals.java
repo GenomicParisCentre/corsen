@@ -26,6 +26,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Globals constants of the application.
+ * @author Laurent Jourdren
+ */
 public final class Globals {
 
   private static Properties manifestProperties;
@@ -46,53 +50,80 @@ public final class Globals {
   /** The build date of the application. */
   public static final String APP_BUILD_DATE = getBuiltDate();
 
-  public static final boolean IS_JAR = isJar();
-
+  /** The number of threads to use for computation. */
   public static final int THREAD_NUMBER_DEFAULT = -1;
-  // public static final int THREAD_NUMBER_DEFAULT = 0;
 
-  public static final boolean DEBUG = true;
+  private static final boolean IS_JAR = isJar();
+
+  /** Use debug home dir. */
   public static final boolean DEBUG_HOME_DIR = IS_JAR ? false : true;
+  /** Show built version. */
   public static final boolean SHOW_BUILT = IS_JAR ? true : false;
 
+  /** Default Z coef value. */
   public static final float Z_COEF_DEFAULT = 2.96f;
+  /** Default cuboid size. */
   public static final float CUBOID_SIZE_FACTOR = 2.1f;
+  /** Default pixel size. */
   public static final float PIXEL_SIZE_DEFAULT = 1.0f;
 
+  /** Type of list of points to use. */
   public static final boolean LIST_POINT_PACKED_MODE = false;
 
   private static final String WEBSITE_URL_DEFAULT =
       "http://transcriptome.ens.fr/corsen";
+
+  /** Corsen Website url. */
   public static final String WEBSITE_URL = getWebSiteURL();
+  /** Corsen handbook url. */
   public static final String HANDBOOK_URL = WEBSITE_URL + "/handbook.html";
+  /** Corsen report bug url. */
   public static final String REPORT_BUG_URL =
       "mailto:jourdren@biologie.ens.fr?subject=Corsen Report Bug&body=Report here the Corsen bug";
 
+  /** Enum of available ui. */
   public static enum GUI {
-    CLI, SWING, QT, FAKE
+    /** Command line UI. */
+    CLI,
+    /** Swing GUI. */
+    SWING,
+    /** Qt GUI. */
+    QT,
+    /** Fake UI. */
+    FAKE
   };
 
+  /** Default ui to use. */
   public static final GUI DEFAULT_GUI = GUI.QT;
 
+  /** Par files extension. */
   public static final String EXTENSION_PARTICLES_FILE = ".par";
 
+  /** Iv files extension. */
   public static final String EXTENSION_IV_FILE = ".iv";
 
+  /** R files extension. */
   public static final String EXTENSION_RGL_FILE = ".R";
 
+  /** Distances files extension. */
   public static final String EXTENSION_DISTANCES_FILE = "_distances.R";
 
+  /** Data file extension. */
   public static final String EXTENSION_DATA_FILE = ".data";
 
+  /** Result file extension. */
   public static final String EXTENSION_RESULT_FILE = ".result";
 
+  /** Full result extension. */
   public static final String EXTENSION_FULL_RESULT_FILE = ".fullresult";
 
+  /** Licence text. */
   public static final String LICENCE_TXT =
       "This program is developed under the GNU General Public Licence version 2 or later.";
 
   private static final String COPYRIGHT_DATE = "2006-2008";
 
+  /** About string, plain text version. */
   public static final String ABOUT_TXT =
       Globals.APP_NAME
           + " version "
@@ -107,12 +138,14 @@ public final class Globals {
           + ".\n\n"
           + "Authors:\n"
           + "  Laurent Jourdren(*) <jourdren@biologie.ens.fr> Main developer, maintener.\n"
-          + "  Mathilde Garcia(**) <garcia@biologie.ens.fr> Project leader, R programming, ImageJ scripting, testing.\n\n"
+          + "  Mathilde Garcia(**) <garcia@biologie.ens.fr> Project leader,"
+          + " R programming, ImageJ scripting, testing.\n\n"
           + "(*)  Plate-forme transcriptome, École Normale Supérieure\n"
           + "(**) Laboratoire de Génétique Moléculaire, École Normale Supérieure\n\n"
           + "Copyright " + COPYRIGHT_DATE + " École Normale Supérieure.\n"
           + LICENCE_TXT + "\n";
 
+  /** About string, html version. */
   public static final String ABOUT_HTML =
       "<p><b>"
           + Globals.APP_NAME
@@ -127,11 +160,16 @@ public final class Globals {
           + APP_BUILD_DATE
           + ".<br/><br/>"
           + "<b>Authors</b>:"
-          + "<ul><li><a href=\"mailto:jourdren@biologie.ens.fr?subject=CorsenSwing\">Laurent Jourdren</a><br/>"
-          + "<a href=\"http://transcriptome.ens.fr\">Microarray platform, École Normale Supérieure</a>"
+          + "<ul><li><a href=\"mailto:jourdren@biologie.ens.fr?"
+          + "subject=CorsenSwing\">Laurent Jourdren</a><br/>"
+          + "<a href=\"http://transcriptome.ens.fr\">"
+          + "Microarray platform, École Normale Supérieure</a>"
           + "<br/>Main developer, maintener.</li><br/>"
-          + "<li><a href=\"mailto:garcia@biologie.ens.fr?subject=CorsenSwing\">Mathilde Garcia</a><br/>"
-          + "<a href=\"http://www.biologie.ens.fr/lgmgml\">Laboratoire de Génétique Moléculaire, École Normale Supérieure</a>"
+          + "<li><a href=\"mailto:garcia@biologie.ens.fr?"
+          + "subject=CorsenSwing\">Mathilde Garcia</a><br/>"
+          + "<a href=\"http://www.biologie.ens.fr/lgmgml\">"
+          + "Laboratoire de Génétique Moléculaire, "
+          + "École Normale Supérieure</a>"
           + "<br/>Project leader, R programming, ImageJ scripting, testing.</li></ul>"
           + "<p>Copyright " + COPYRIGHT_DATE
           + " École Normale Supérieure.<br/>" + LICENCE_TXT + "</p>";
@@ -166,7 +204,7 @@ public final class Globals {
     return s != null ? s : WEBSITE_URL_DEFAULT;
   }
 
-  private static final String getManifestProperty(final String propertyKey) {
+  private static String getManifestProperty(final String propertyKey) {
 
     if (propertyKey == null)
       return null;
@@ -176,7 +214,7 @@ public final class Globals {
     return manifestProperties.getProperty(propertyKey);
   }
 
-  private static final boolean isJar() {
+  private static boolean isJar() {
 
     return manifestProperties.size() != 0;
   }
@@ -185,7 +223,7 @@ public final class Globals {
    * Define the title of the the windows of the gui
    * @return the title of the windows
    */
-  public static final String getWindowsTitle() {
+  public static String getWindowsTitle() {
 
     StringBuffer sb = new StringBuffer();
     sb.append(APP_NAME);
@@ -220,6 +258,16 @@ public final class Globals {
       manifestProperties.load(is);
     } catch (IOException e) {
     }
+  }
+
+  //
+  // Constructor
+  //
+
+  /**
+   * Private constructor.
+   */
+  private Globals() {
   }
 
 }

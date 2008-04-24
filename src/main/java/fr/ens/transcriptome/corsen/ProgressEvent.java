@@ -22,8 +22,16 @@
 
 package fr.ens.transcriptome.corsen;
 
+/**
+ * This class define an event that is send to UpdateStatus interfaces.
+ * @author Laurent Jourdren
+ */
 public class ProgressEvent {
 
+  /**
+   * Define a enum for particles process phases.
+   * @author Laurent Jourdren
+   */
   public enum ProgressEventType {
 
     START_READ_MESSENGERS_EVENT("Read particles A PAR file"),
@@ -81,8 +89,10 @@ public class ProgressEvent {
     }
   }
 
+  /** The number of phase in a process. */
   public static final int PHASE_COUNT =
       ProgressEventType.START_WRITE_RPLOT_DISTANCES_EVENT.ordinal();
+  /** The number of indexes in a phase. */
   public static final int INDEX_IN_PHASE_MAX = 1000;
 
   private ProgressEventType type;
@@ -144,6 +154,10 @@ public class ProgressEvent {
   // Other methods
   //
 
+  /**
+   * Count the number of phases for a process.
+   * @return the number of phases for a process
+   */
   public static int countPhase(final Settings settings) {
 
     if (settings == null)
@@ -181,23 +195,47 @@ public class ProgressEvent {
   // Constructors
   //
 
+  /**
+   * Public constructor.
+   * @param type the phase of the event
+   */
   public ProgressEvent(final ProgressEventType type) {
     this.type = type;
   }
 
-  public ProgressEvent(final ProgressEventType type, final int value1) {
+  /**
+   * Public constructor.
+   * @param type the phase of the event
+   * @param intValue1 first integer argument of the event
+   */
+  public ProgressEvent(final ProgressEventType type, final int intValue1) {
 
     this(type);
-    this.intValue1 = value1;
+    this.intValue1 = intValue1;
   }
 
-  public ProgressEvent(final ProgressEventType type, final int value1,
-      final int value2) {
+  /**
+   * Public constructor.
+   * @param type the phase of the event
+   * @param intValue1 first integer argument of the event
+   * @param intValue2 second argument value of the event
+   */
+  public ProgressEvent(final ProgressEventType type, final int intValue1,
+      final int intValue2) {
 
-    this(type, value1);
-    this.intValue2 = value2;
+    this(type, intValue1);
+    this.intValue2 = intValue2;
   }
 
+  /**
+   * Public constructor.
+   * @param type the phase of the event
+   * @param intValue1 first integer argument of the event
+   * @param intValue2 second argument value of the event
+   * @param stringValue1 first string argument of the event
+   * @param stringValue2 second string argument of the event
+   * @param stringValue3 third string argument of the event
+   */
   public ProgressEvent(final ProgressEventType type, final int intValue1,
       final int intValue2, final String stringValue1,
       final String stringValue2, final String stringValue3) {

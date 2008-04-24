@@ -43,7 +43,12 @@ import fr.ens.transcriptome.corsen.gui.CorsenFakeGui;
 import fr.ens.transcriptome.corsen.gui.qt.CorsenQt;
 import fr.ens.transcriptome.corsen.gui.swing.CorsenSwing;
 
-public class Corsen {
+/**
+ * This class is the main class of Corsen. It launch the bootstrap is needed and
+ * then call the ui.
+ * @author Laurent Jourdren
+ */
+public final class Corsen {
 
   private static Logger logger = Logger.getLogger(Corsen.class.getName());
 
@@ -52,11 +57,19 @@ public class Corsen {
   private static String[] mainArgs;
   private static boolean confFile;
 
+  /**
+   * Get the instance of the settings of the application.
+   * @return the setting of the application
+   */
   public static Settings getSettings() {
 
     return settings;
   }
 
+  /**
+   * Test if the application is currently in batch mode.
+   * @return true if the application is in batch mode
+   */
   public static boolean isBatchMode() {
 
     return batchMode;
@@ -74,6 +87,11 @@ public class Corsen {
     }
   }
 
+  /**
+   * Main method.
+   * @param args command line arguments
+   * @throws IOException if an error occurs while executing Corsen
+   */
   public static void main(final String[] args) throws IOException {
 
     bootstrap();
@@ -114,7 +132,7 @@ public class Corsen {
 
   }
 
-  private static void loadSettings(String confFilename) {
+  private static void loadSettings(final String confFilename) {
 
     Settings s = new Settings();
     try {
@@ -353,6 +371,16 @@ public class Corsen {
     }
 
     settings = s;
+  }
+
+  //
+  // Constructor
+  //
+
+  /**
+   * Private constructor.
+   */
+  private Corsen() {
   }
 
 }

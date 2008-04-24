@@ -46,9 +46,16 @@ import com.sun.javaws.jnl.LaunchDesc;
 import com.sun.javaws.jnl.ResourcesDesc;
 import com.sun.jnlp.JNLPClassLoader;
 
-public class BootStrap {
+/**
+ * This class is used to launch an application build with QtJambi via Java Web
+ * Start on Mac OS X.
+ * @author Laurent Jourdren
+ */
+public final class BootStrap {
 
-  private static final String JAVA_PATH_MACOS = "/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Commands/java";
+  private static final String JAVA_PATH_MACOS =
+      "/System/Library/Frameworks/"
+          + "JavaVM.framework/Versions/CurrentJDK/Commands/java";
 
   private List<String> classpath = new ArrayList<String>();
   private String mainClass;
@@ -58,19 +65,18 @@ public class BootStrap {
   private long maxHeap;
   private long minHeap;
 
-  private static void save(File f, String s) {
+  private static void save(final File f, final String s) {
 
     try {
       Writer writer = new OutputStreamWriter(new FileOutputStream(f));
       writer.write(s);
       writer.close();
-    } catch (Exception e) {
-
+    } catch (IOException e) {
     }
 
   }
 
-  public void collectInfos(final JNLPClassLoader cl) {
+  private void collectInfos(final JNLPClassLoader cl) {
 
     final LaunchDesc ld = cl.getLaunchDesc();
 
@@ -101,8 +107,9 @@ public class BootStrap {
       String version = jd.getVersion();
 
       try {
-        DiskCacheEntry dce = DownloadProtocol.getResource(location, version,
-            DownloadProtocol.JAR_DOWNLOAD, true, null);
+        DiskCacheEntry dce =
+            DownloadProtocol.getResource(location, version,
+                DownloadProtocol.JAR_DOWNLOAD, true, null);
         this.classpath.add(dce.getFile().getAbsolutePath());
 
       } catch (JNLPException e) {
@@ -140,6 +147,9 @@ public class BootStrap {
     }
   }
 
+  /**
+   * Launch the bootstrap.
+   */
   public static void bootstrap() {
 
     final ClassLoader cl = BootStrap.class.getClassLoader();
@@ -152,8 +162,8 @@ public class BootStrap {
       BootStrap b = new BootStrap();
       b.collectInfos((JNLPClassLoader) cl);
       String cmd = b.createCommandLine();
-      save(new File(System.getProperty("user.home") + File.separator
-          + "javacmd.txt"), cmd);
+      save(new File(System.getProperty("user.home")
+          + File.separator + "javacmd.txt"), cmd);
       exec(cmd);
       System.exit(0);
     }

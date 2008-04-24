@@ -48,11 +48,11 @@ public class RGL {
   private Writer out;
   private String unit = "pixel";
 
-  public static final String COLOR_CYAN = "cyan";
-  public static final String COLOR_GREEN = "green";
-  public static final String COLOR_RED = "red";
-  public static final String COLOR_WHITE = "white";
-  public static final String COLOR_BLACK = "black";
+  private static final String COLOR_CYAN = "cyan";
+  private static final String COLOR_GREEN = "green";
+  private static final String COLOR_RED = "red";
+  private static final String COLOR_WHITE = "white";
+  private static final String COLOR_BLACK = "black";
 
   //
   // Getters
@@ -80,7 +80,7 @@ public class RGL {
 
   /**
    * Set the writer.
-   * @param out The out to set
+   * @param writer The writer to use
    */
   public void setWriter(final Writer writer) {
     this.out = writer;
@@ -111,7 +111,7 @@ public class RGL {
    * Set the unit
    * @param unit The unit to set
    */
-  public void setUnit(String unit) {
+  public void setUnit(final String unit) {
     if (unit != null)
       this.unit = unit;
   }
@@ -150,7 +150,7 @@ public class RGL {
   /**
    * Draw the legend
    * @param unit Unit of the legend
-   * @throws IOException
+   * @throws IOException if an error occurs while writing data
    */
   public void writeLegend(final String unit) throws IOException {
 
@@ -207,7 +207,6 @@ public class RGL {
 
   /**
    * Write R plot for an array of particle3D
-   * @param file Output file
    * @param particles particles to plot
    * @param color color of the plot
    * @param plotCenter true if center and barycenter must be plot
@@ -223,10 +222,10 @@ public class RGL {
 
   /**
    * Write R plot for an array of particle3D
-   * @param file Output file
    * @param particles particles to plot
    * @param color color of the plot
    * @param plotCenter true if center and barycenter must be plot
+   * @param minDistanceBetweenTwoPoints min distance between two points
    * @throws IOException if an error occurs while writing file
    */
   public void writeRPlots(final List<Particle3D> particles, final String color,
@@ -320,7 +319,8 @@ public class RGL {
         out.write("}\n\n");
 
         out
-            .write("if (!exists(\"corsen.barycenters\") || (exists(\"corsen.barycenters\") && corsen.barycenters==T)) {\n");
+            .write("if (!exists(\"corsen.barycenters\") ||"
+                + " (exists(\"corsen.barycenters\") && corsen.barycenters==T)) {\n");
 
         writePoint(par.getInnerPoints().getBarycenter(), 5, "blue");
 
@@ -334,7 +334,6 @@ public class RGL {
 
   /**
    * Generate R code to plot the inners points
-   * @param out Writer used to write data
    * @param sphere plot spheres
    * @param size Size of the points
    * @param colorName Name of the color of the points
@@ -590,7 +589,7 @@ public class RGL {
    * @param p1 first point
    * @param p2 second point
    * @param color color
-   * @throws IOException
+   * @throws IOException if an error occurs while writing data
    */
   public void writeLine(final Point3D p1, final Point3D p2, final String color)
       throws IOException {
@@ -664,7 +663,7 @@ public class RGL {
    * @param file File to write
    * @throws IOException if an error occurs while writing the header
    */
-  public RGL(String unit, final File file) throws IOException {
+  public RGL(final String unit, final File file) throws IOException {
 
     setFile(file);
     setUnit(unit);

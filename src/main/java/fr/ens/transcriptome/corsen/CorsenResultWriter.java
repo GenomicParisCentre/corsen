@@ -38,6 +38,10 @@ import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults.Entry;
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 
+/**
+ * This save results files.
+ * @author Laurent Jourdren
+ */
 public class CorsenResultWriter {
 
   private CorsenResult result;
@@ -70,7 +74,7 @@ public class CorsenResultWriter {
    * Set the update status
    * @param updateStatus The updateStatus to set
    */
-  public void setUpdateStatus(UpdateStatus updateStatus) {
+  public void setUpdateStatus(final UpdateStatus updateStatus) {
     this.updateStatus = updateStatus;
   }
 
@@ -84,7 +88,8 @@ public class CorsenResultWriter {
    * @param suffix Suffix of file to append
    * @throws IOException if an error occurs while write the file
    */
-  public void writeDataFile(final File file, String suffix) throws IOException {
+  public void writeDataFile(final File file, final String suffix)
+      throws IOException {
 
     writeDataFile(createFileWithSuffix(file, suffix));
   }
@@ -204,6 +209,7 @@ public class CorsenResultWriter {
 
   /**
    * Write the intensities and volumes of mitos cuboids particles
+   * @param file File to write
    * @param suffix Suffix to append
    * @throws IOException if an error occurs while write the file
    */
@@ -310,7 +316,8 @@ public class CorsenResultWriter {
 
   /**
    * Write the full result file
-   * @param os OutputStream
+   * @param file File to save
+   * @param suffix Suffix of the file
    * @throws IOException if an error occurs while writing the stream
    */
   public void writeFullResult(final File file, final String suffix)
@@ -321,7 +328,7 @@ public class CorsenResultWriter {
 
   /**
    * Write the full result file
-   * @param os OutputStream
+   * @param file File to save
    * @throws IOException if an error occurs while writing the stream
    */
   public void writeFullResult(final File file) throws IOException {
@@ -426,9 +433,7 @@ public class CorsenResultWriter {
 
   /**
    * Write data in full resut file
-   * @param messengers Messengers particles
-   * @param mitos Mitochondia particles
-   * @param out Writer
+   * @param os outpstream to use
    * @throws IOException if an error occurs while writing data
    */
   public void writeSummaryResultFile(final OutputStream os) throws IOException {
@@ -474,7 +479,7 @@ public class CorsenResultWriter {
 
   /**
    * Write the result file
-   * @param File File to write
+   * @param file File to write
    * @param suffix Suffix
    * @throws IOException if an error occurs while writing the stream
    */
@@ -486,7 +491,7 @@ public class CorsenResultWriter {
 
   /**
    * Write the result file
-   * @param File File to write
+   * @param file File to write
    * @throws IOException if an error occurs while writing the stream
    */
   public void writeResult(final File file) throws IOException {
@@ -509,10 +514,10 @@ public class CorsenResultWriter {
 
     StringBuffer sb = new StringBuffer();
     sb.append("#Particle A\tParticle B\t");
-    sb
-        .append("Mins min\tMins first quartile\tMins median\tMins mean\tMins median\tMins third quartile\tMins max\t");
-    sb
-        .append("Mins min\tMaxs first quartile\tMaxs median\tMaxs mean\tMaxs median\tMaxs third quartile\tMaxs max\n");
+    sb.append("Mins min\tMins first quartile\tMins median\tMins mean\t"
+        + "Mins median\tMins third quartile\tMins max\t");
+    sb.append("Mins min\tMaxs first quartile\tMaxs median\tMaxs mean\t"
+        + "Maxs median\tMaxs third quartile\tMaxs max\n");
 
     out.write(cr.getMessengersFile().getAbsolutePath());
     sb.append("\t");
@@ -553,7 +558,7 @@ public class CorsenResultWriter {
 
   /**
    * Write the history results file
-   * @param File File output file
+   * @param file file output file
    * @throws IOException if an error occurs while writing the stream
    */
   public static void writeHistoryResults(final File file) throws IOException {

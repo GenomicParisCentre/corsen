@@ -100,8 +100,11 @@ public class CorsenImageJPlugin implements PlugInFilter {
    * blank, is the argument specified for this plugin in IJ_Props.txt. 'imp' is
    * the currently active image. This method should return a flag word that
    * specifies the filters capabilities.
+   * @param arg argument for the plugin
+   * @param imp image to use
+   * @return the flags of the configuration
    */
-  public int setup(String arg, ImagePlus imp) {
+  public int setup(final String arg, final ImagePlus imp) {
 
     if (arg.equals("about")) {
       showAbout();
@@ -133,6 +136,7 @@ public class CorsenImageJPlugin implements PlugInFilter {
    * Filters use this method to process the image. If the SUPPORTS_STACKS flag
    * was set, it is called for each slice in a stack. ImageJ will lock the image
    * before calling this method and unlock it when the filter is finished.
+   * @param ip image processor to use
    */
   public void run(final ImageProcessor ip) {
 
@@ -224,7 +228,10 @@ public class CorsenImageJPlugin implements PlugInFilter {
     return true;
   }
 
-  /** Displays a modal options dialog. */
+  /**
+   * Displays a modal options dialog.
+   * @return true if the dialog is validated
+   */
   public boolean showDialog() {
 
     GenericDialog gd = new GenericDialog(Globals.getWindowsTitle());
@@ -421,7 +428,7 @@ public class CorsenImageJPlugin implements PlugInFilter {
 
     final FileFilter ff = new FileFilter() {
 
-      public boolean accept(File f) {
+      public boolean accept(final File f) {
         if (f.isDirectory()) {
           return true;
         }
@@ -521,11 +528,17 @@ public class CorsenImageJPlugin implements PlugInFilter {
 
   }
 
-  /** Called once when ImageJ quits. */
-  public static void savePreferences(Properties prefs) {
+  /**
+   * Called once when ImageJ quits.
+   * @param prefs the preferences to save
+   */
+  public static void savePreferencesl(final Properties prefs) {
     prefs.put(OPTIONS, Integer.toString(staticOptions));
   }
 
+  /**
+   * Save preferences.
+   */
   public void savePreferences() {
     Prefs.set(OPTIONS, Integer.toString(staticOptions));
   }

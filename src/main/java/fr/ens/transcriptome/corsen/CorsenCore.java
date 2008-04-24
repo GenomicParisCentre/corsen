@@ -37,6 +37,10 @@ import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
 import fr.ens.transcriptome.corsen.model.JavascriptParticles3DFilter;
 
+/**
+ * This class is called by ui when process cells.
+ * @author Laurent Jourdren
+ */
 public class CorsenCore implements Runnable {
 
   private static Logger logger = Logger.getLogger(CorsenCore.class.getName());
@@ -142,37 +146,12 @@ public class CorsenCore implements Runnable {
 
   /**
    * Set the settings.
-   * @param setting The setting to set
+   * @param settings The setting to set
    */
   public void setSettings(final Settings settings) {
 
     this.settings = settings;
   }
-
-  /**
-   * Set the size of pixel.
-   * @param pixelSize The size of a pixel
-   */
-  /*
-   * public void setPixelSize(final float pixelSize) { this.pixelSize =
-   * pixelSize; }
-   */
-
-  /**
-   * Set if the Z coordinate must be updated
-   * @param updateZ true if the Z coordinate must be updated
-   */
-  /*
-   * public void setUpdateZ(final boolean updateZ) { this.updateZ = updateZ; }
-   */
-
-  /**
-   * Set the coef of the update of the Z values.
-   * @param coef the coef of the update of the Z values
-   */
-  /*
-   * public void setZCoef(final float coef) { this.zCoef = coef; }
-   */
 
   /**
    * Set the directory of the files to read.
@@ -203,8 +182,8 @@ public class CorsenCore implements Runnable {
    * Set the result filename.
    * @param resultFile The resultFile to set
    */
-  public void setResultFile(final File resultFilename) {
-    this.resultFile = resultFilename;
+  public void setResultFile(final File resultFile) {
+    this.resultFile = resultFile;
   }
 
   /**
@@ -241,12 +220,14 @@ public class CorsenCore implements Runnable {
    * Process data for a cell
    * @param particlesBFile ImageJ Plugin result file for mitochondria
    * @param particlesAFile ImageJ Plugin result file for RNAm
-   * @param resultDir Result file directory
    * @param resultFile Result filename
+   * @param currentCell index of the current cell
+   * @param cellCount number of cell to process
    * @throws IOException if an error occurs while reading or writing data
    */
   private void doACell(final File particlesAFile, final File particlesBFile,
-      final File resultFile, int currentCell, int cellCount) throws IOException {
+      final File resultFile, final int currentCell, final int cellCount)
+      throws IOException {
 
     final Settings s = this.getSettings();
 
@@ -267,7 +248,6 @@ public class CorsenCore implements Runnable {
         .createFilter(settings.getParticlesAFilterExpression()));
     result.setParticlesBFilter(JavascriptParticles3DFilter
         .createFilter(settings.getParticlesBFilterExpression()));
-    
 
     // Create writer object
     final CorsenResultWriter writer = new CorsenResultWriter(result);
@@ -381,8 +361,8 @@ public class CorsenCore implements Runnable {
     sendEvent(ProgressEventType.END_CELL_EVENT);
   }
 
-  private static final InputFiles getInputFile(Map<String, InputFiles> map,
-      String filename, String prefix, String suffix) {
+  private static InputFiles getInputFile(final Map<String, InputFiles> map,
+      final String filename, final String prefix, final String suffix) {
 
     if (filename.startsWith(prefix) && filename.endsWith(suffix)) {
 

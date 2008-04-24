@@ -36,6 +36,7 @@ import fr.ens.transcriptome.corsen.calc.ParticleType;
 
 /**
  * This class defines settings of the application.
+ * @author Laurent Jourdren
  */
 public final class Settings {
 
@@ -871,7 +872,7 @@ public final class Settings {
 
   /**
    * Set the Z factor.
-   * @param factor The factor to set
+   * @param zFactor The factor to set
    */
   public void setZFactor(final String zFactor) {
 
@@ -886,7 +887,7 @@ public final class Settings {
 
   /**
    * Set the z factor.
-   * @param factor The zFactor to set
+   * @param zFactor The zFactor to set
    */
   public void setZFactor(final float zFactor) {
 
@@ -904,7 +905,7 @@ public final class Settings {
 
   /**
    * Set if results file must be saved.
-   * @param visualizationFiles The visualizationFiles to set
+   * @param saveResultFile true if the results file must be saved
    */
   public void setSaveResultFile(final boolean saveResultFile) {
 
@@ -914,7 +915,7 @@ public final class Settings {
 
   /**
    * Set if full results file must be saved.
-   * @param visualizationFiles The visualizationFiles to set
+   * @param saveFullResultFile true if the full results file must be saved
    */
   public void setSaveFullResultFile(final boolean saveFullResultFile) {
 
@@ -1213,6 +1214,11 @@ public final class Settings {
     this.properties.setProperty(CUSTOM_HISTORY_EXPRESSION_KEY, expression);
   }
 
+  /**
+   * Set if history results must be cleared when launching a new calc.
+   * @param value true if history results must be cleared when launching a new
+   *            calc.
+   */
   public void setClearHistoryWhenLaunchNewCalc(final boolean value) {
 
     this.properties.setProperty(CLEAR_HISTORY_WHEN_NEW_CALC_KEY, Boolean
@@ -1270,7 +1276,7 @@ public final class Settings {
   }
 
   /**
-   * Set the expression for the filter of distances viewer
+   * Set the expression for the filter of distances viewer.
    * @param expression expression to set
    */
   public void setExpressionDistancesViewerFilter(final String expression) {
@@ -1279,6 +1285,10 @@ public final class Settings {
         expression);
   }
 
+  /**
+   * Set if the showed distances must be filtered.
+   * @param value true if the showed distances must be filtered
+   */
   public void setFilterShowDistanceShowedParticles(final boolean value) {
 
     this.properties.setProperty(
@@ -1288,8 +1298,13 @@ public final class Settings {
 
   //
   // Other methods
-  // 
+  //
 
+  /**
+   * Parse a color string.
+   * @param s String to parse
+   * @return a Color object
+   */
   public Color colorFromString(final String s) {
 
     if (s == null)
@@ -1313,6 +1328,11 @@ public final class Settings {
     return new Color(r, g, b);
   }
 
+  /**
+   * Convert a Color object to a string.
+   * @param c Color to convert
+   * @return a color in a string format
+   */
   public String colorToString(final Color c) {
 
     if (c == null)
@@ -1323,6 +1343,10 @@ public final class Settings {
 
   }
 
+  /**
+   * Get the configuration file path.
+   * @return the configuration file path
+   */
   public static String getConfigurationFilePath() {
 
     final String os = System.getProperty("os.name");
@@ -1338,6 +1362,7 @@ public final class Settings {
 
   /**
    * Save CorsenSwing options
+   * @throws IOException if an error occurs while writing results
    */
   public void saveSettings() throws IOException {
 
@@ -1345,9 +1370,9 @@ public final class Settings {
   }
 
   /**
-   * Save CorsenSwing options
+   * Save Corsen options
    * @param file File to save.
-   * @throws IOException if an error occurs while writing the file
+   * @throws IOException if an error occurs while writing settings
    */
   public void saveSettings(final File file) throws IOException {
 
@@ -1361,6 +1386,7 @@ public final class Settings {
 
   /**
    * Load CorsenSwing options
+   * @throws IOException if an error occurs while reading settings
    */
   public void loadSettings() throws IOException {
 
@@ -1369,7 +1395,7 @@ public final class Settings {
 
   /**
    * Load CorsenSwing options
-   * @param file
+   * @param filename filename to save
    * @throws IOException if an error occurs while reading the file
    */
   public void loadSettings(final String filename) throws IOException {
@@ -1382,7 +1408,7 @@ public final class Settings {
 
   /**
    * Load CorsenSwing options
-   * @param file
+   * @param file file to save
    * @throws IOException if an error occurs while reading the file
    */
   public void loadSettings(final File file) throws IOException {

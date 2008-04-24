@@ -24,6 +24,10 @@ package fr.ens.transcriptome.corsen;
 
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 
+/**
+ * This interface define calls to show progress information to the user.
+ * @author Laurent Jourdren
+ */
 public interface UpdateStatus {
 
   /**
