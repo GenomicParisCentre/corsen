@@ -1,0 +1,23 @@
+Building Corsen from source
+---------------------------
+
+  Corsen requires maven 2.x to be built from source. Maven is project management from
+the Apache Software Foundation.
+
+  You can download it at the following URL:
+
+    http://maven.apache.org
+
+  After installing maven, you can :
+
+  * Compile Doelan: type 'mvn compile'
+  * Build binary distribution: type 'mvn install'
+  * Build the website: type 'mvn site'
+  * Clean the build directory (target): type 'mvn clean'
+  * Build clean binary distribution and website: type 'mvn clean site install'
+
+  You'll find the generated files in the 'target' directory.
+
+  You can download the latest version of Corsen on our website :
+
+    http://transcriptome.ens.fr/corsen
