@@ -111,7 +111,7 @@ public class CorsenGL {
    * @param colorBaryCentre Color of the barycenter
    */
   public void drawParticle(final Particle3D particle, final Color color,
-      final boolean barycentre, final Color colorBaryCentre) {
+      final boolean barycentre, final Color colorBaryCentre, final float alpha) {
 
     if (particle == null)
       return;
@@ -125,7 +125,7 @@ public class CorsenGL {
 
     // drawPoints3D(particle.getInnerPoints(), color, particle.getPixelDepth() /
     // 10);
-    drawSurfaceParticle3D(particle, color);
+    drawSurfaceParticle3D(particle, color, alpha);
 
     // drawPolygon3D(particle.getSurfacePoints(), getLowColor(color));
 
@@ -146,7 +146,7 @@ public class CorsenGL {
 
   public void drawParticles(final Particles3D particles, final Color color,
       final boolean barycentre, final Color colorBaryCentre,
-      final boolean randomColor) {
+      final boolean randomColor, final float alpha) {
 
     if (particles == null)
       return;
@@ -164,7 +164,7 @@ public class CorsenGL {
         int id = par.getId();
         c = new Color((id % 19) * 10, (id % 53) * 4, (id % 97) * 2);
         // c = new Color(r, g, b);
-        drawParticle(par, c, barycentre, colorBaryCentre);
+        drawParticle(par, c, barycentre, colorBaryCentre, alpha);
 
         r += 5;
         g += 10;
@@ -178,7 +178,7 @@ public class CorsenGL {
           b -= 255;
 
       } else
-        drawParticle(par, c, barycentre, colorBaryCentre);
+        drawParticle(par, c, barycentre, colorBaryCentre, alpha);
     }
 
   }
@@ -594,7 +594,7 @@ public class CorsenGL {
   }
 
   private void drawSurfaceParticle3DWithMarchingCubes(
-      final Particle3D particle, final Color c) {
+      final Particle3D particle, final Color c, final float alpha) {
 
     if (particle == null || c == null)
       return;
@@ -610,7 +610,7 @@ public class CorsenGL {
 
     gl.glPushMatrix();
 
-    final float alpha = .7f;
+    // final float alpha = .7f;
 
     this.gl.glEnable(GL.GL_BLEND);
     this.gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
@@ -640,10 +640,11 @@ public class CorsenGL {
 
   }
 
-  public void drawSurfaceParticle3D(final Particle3D particle, final Color color) {
+  public void drawSurfaceParticle3D(final Particle3D particle,
+      final Color color, final float alpha) {
 
     if (true)
-      drawSurfaceParticle3DWithMarchingCubes(particle, color);
+      drawSurfaceParticle3DWithMarchingCubes(particle, color, alpha);
     else
       drawSurfaceParticle3DWithCubes(particle, color);
   }

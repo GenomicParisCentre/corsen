@@ -724,7 +724,7 @@
          </property>
          <layout class="QVBoxLayout" >
           <item>
-           <layout class="QGridLayout" >
+           <layout class="QHBoxLayout" >
             <property name="rightMargin" >
              <number>0</number>
             </property>
@@ -737,107 +737,93 @@
             <property name="bottomMargin" >
              <number>0</number>
             </property>
-            <item row="6" column="0" colspan="2" >
-             <widget class="QCheckBox" name="showParticlesBDifferentColorCcheckBox" >
-              <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-              </property>
-              <property name="text" >
-               <string>Show Particles B in differents colors</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1" >
-             <widget class="QLineEdit" name="surfaceLineSizeLineEdit" >
-              <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1" >
-             <widget class="QLineEdit" name="distanceLineSizelineEdit" >
-              <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0" >
-             <widget class="QLabel" name="label_5" >
-              <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
-              </property>
-              <property name="text" >
-               <string>Point Size</string>
-              </property>
-              <property name="buddy" >
-               <cstring>pointSizeLineEdit</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="0" colspan="2" >
-             <widget class="QCheckBox" name="showParticlesADifferentColorCcheckBox" >
-              <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-              </property>
-              <property name="text" >
-               <string>Show Particles A in differents colors</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0" colspan="2" >
-             <widget class="QCheckBox" name="showDistancesNegativeCheckBox" >
-              <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-              </property>
-              <property name="text" >
-               <string>Show negative in a different color</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0" >
-             <widget class="QLabel" name="label_6" >
-              <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
-              </property>
-              <property name="text" >
-               <string>distance line size</string>
-              </property>
-              <property name="buddy" >
-               <cstring>distanceLineSizelineEdit</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1" >
-             <widget class="QLineEdit" name="pointSizeLineEdit" >
-              <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0" >
+            <item>
              <widget class="QLabel" name="label_4" >
               <property name="focusPolicy" >
                <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
               </property>
               <property name="text" >
-               <string>Surface line size</string>
-              </property>
-              <property name="buddy" >
-               <cstring>surfaceLineSizeLineEdit</cstring>
+               <string>Particles A transparency:</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0" >
-             <widget class="QCheckBox" name="showSurfaceLinesCheckBox" >
+            <item>
+             <widget class="QSpinBox" name="particlesATranscparencySpinBox" >
               <property name="focusPolicy" >
-               <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
               </property>
-              <property name="text" >
-               <string>Show surface lines</string>
+              <property name="suffix" >
+               <string> %</string>
               </property>
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" >
+            <property name="rightMargin" >
+             <number>0</number>
+            </property>
+            <property name="leftMargin" >
+             <number>0</number>
+            </property>
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <property name="bottomMargin" >
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_6" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
+              </property>
+              <property name="text" >
+               <string>Particles B transparency:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="particlesBTranscparencySpinBox" >
+              <property name="focusPolicy" >
+               <enum>com.trolltech.qt.core.Qt.FocusPolicy.WheelFocus</enum>
+              </property>
+              <property name="suffix" >
+               <string> %</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="showDistancesNegativeCheckBox" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+            <property name="text" >
+             <string>Show negative in a different color</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="showParticlesADifferentColorCcheckBox" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+            <property name="text" >
+             <string>Show Particles A in differents colors</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="showParticlesBDifferentColorCcheckBox" >
+            <property name="focusPolicy" >
+             <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
+            </property>
+            <property name="text" >
+             <string>Show Particles B in differents colors</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1035,8 +1021,8 @@
          </property>
          <property name="sizeHint" >
           <size>
-           <width>20</width>
-           <height>40</height>
+           <width>521</width>
+           <height>31</height>
           </size>
          </property>
         </spacer>
@@ -1167,10 +1153,6 @@
   <tabstop>histoResultClassesNumberSpinBox</tabstop>
   <tabstop>customExpressionLineEdit</tabstop>
   <tabstop>histoHistoryClassesNumberSpinBox</tabstop>
-  <tabstop>pointSizeLineEdit</tabstop>
-  <tabstop>showSurfaceLinesCheckBox</tabstop>
-  <tabstop>surfaceLineSizeLineEdit</tabstop>
-  <tabstop>distanceLineSizelineEdit</tabstop>
   <tabstop>showDistancesNegativeCheckBox</tabstop>
   <tabstop>showParticlesADifferentColorCcheckBox</tabstop>
   <tabstop>showParticlesBDifferentColorCcheckBox</tabstop>

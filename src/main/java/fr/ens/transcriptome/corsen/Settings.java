@@ -81,14 +81,10 @@ public final class Settings {
   private static final String SAVE_RESULTS_KEY = "save.results";
   private static final String SAVE_FULL_RESULTS_KEY = "save.fullResults";
 
-  private static final String VISUALIZATION_POINTS_SIZE_KEY =
-      "visualization.pointSize";
-  private static final String VISUALIZATION_SHOW_SURFACE_LINES_KEY =
-      "visualization.showSurfaceLines";
-  private static final String VISUALIZATION_SURFACE_LINE_SIZE_KEY =
-      "visualization.surfaceLinesSize";
-  private static final String VISUALIZATION_DISTANCES_LINES_SIZE_KEY =
-      "visualization.distanceLinesSize";
+  private static final String VISUALIZATION_PARTICLES_A_TRANSPARENCY_KEY =
+      "visualization.particlesATransparency";
+  private static final String VISUALIZATION_PARTICLES_B_TRANSPARENCY_KEY =
+      "visualization.particlesBTransparency";
   private static final String VISUALIZATION_SHOW_NEGATIVE_DISTANCES_KEY =
       "visualization.showNegativeDistances";
   private static final String VISUALIZATION_SHOW_PARTICLES_A_DIFFERENT_COLORS_KEY =
@@ -311,53 +307,29 @@ public final class Settings {
   }
 
   /**
-   * Get the size of the points in vizualisations.
-   * @return The size of the points
+   * Get the transparency percent for particles A.
+   * @return the transparency value for particles A
    */
-  public float getVisualizationPointsSize() {
+  public int getParticlesATransparency() {
 
     String value =
-        this.properties.getProperty(VISUALIZATION_POINTS_SIZE_KEY, "1.0");
+        this.properties.getProperty(VISUALIZATION_PARTICLES_A_TRANSPARENCY_KEY,
+            "0");
 
-    return Float.parseFloat(value.trim());
+    return Integer.parseInt(value);
   }
 
   /**
-   * Get the size of the lines in vizualisations.
-   * @return The size of the points
+   * Get the transparency percent for particles B.
+   * @return the transparency value for particles B
    */
-  public float getVisualizationSurfaceLinesSize() {
+  public int getParticlesBTransparency() {
 
     String value =
-        this.properties.getProperty(VISUALIZATION_SURFACE_LINE_SIZE_KEY, "1.0");
+        this.properties.getProperty(VISUALIZATION_PARTICLES_B_TRANSPARENCY_KEY,
+            "0");
 
-    return Float.parseFloat(value.trim());
-  }
-
-  /**
-   * Get the size of the distances lines in vizualisations.
-   * @return The size of the points
-   */
-  public float getVisualizationDistancesLinesSize() {
-
-    String value =
-        this.properties.getProperty(VISUALIZATION_DISTANCES_LINES_SIZE_KEY,
-            "1.0");
-
-    return Float.parseFloat(value.trim());
-  }
-
-  /**
-   * Test if surface lines must be show in visualizations.
-   * @return true if surface lines must be show in visualizations
-   */
-  public boolean isVisualizationShowSurfaceLines() {
-
-    String value =
-        this.properties.getProperty(VISUALIZATION_SHOW_SURFACE_LINES_KEY,
-            "true");
-
-    return Boolean.valueOf(value.trim());
+    return Integer.parseInt(value);
   }
 
   /**
@@ -924,44 +896,23 @@ public final class Settings {
   }
 
   /**
-   * Set the size of the points in vizualisations.
-   * @param size The size of the points
+   * Set the the transparency for particles A.
+   * @param transparency value of the transparency
    */
-  public void setVisualizationPointsSize(final float size) {
+  public void setParticlesATransparency(final int transparency) {
 
-    this.properties.setProperty(VISUALIZATION_POINTS_SIZE_KEY, Float
-        .toString(size));
+    this.properties.setProperty(VISUALIZATION_PARTICLES_A_TRANSPARENCY_KEY,
+        Integer.toString(transparency));
   }
 
   /**
-   * Set the size of the lines in vizualisations.
-   * @param size The size of the points
+   * Set the the transparency for particles B.
+   * @param transparency value of the transparency
    */
-  public void setVisualizationSurfaceLinesSize(final float size) {
+  public void setParticlesBTransparency(final int transparency) {
 
-    this.properties.setProperty(VISUALIZATION_SURFACE_LINE_SIZE_KEY, Float
-        .toString(size));
-  }
-
-  /**
-   * Set the size of the distances lines in vizualisations.
-   * @param size The size of the points
-   */
-  public void setVisualizationDistancesLinesSize(final float size) {
-
-    this.properties.setProperty(VISUALIZATION_DISTANCES_LINES_SIZE_KEY, Float
-        .toString(size));
-  }
-
-  /**
-   * Set if surface lines must be show in visualizations.
-   * @param value if surface lines must be show in visualizations
-   */
-  public void setVisualizationShowSurfaceLines(final boolean value) {
-
-    this.properties.setProperty(VISUALIZATION_SHOW_SURFACE_LINES_KEY, Boolean
-        .toString(value));
-
+    this.properties.setProperty(VISUALIZATION_PARTICLES_B_TRANSPARENCY_KEY,
+        Integer.toString(transparency));
   }
 
   /**

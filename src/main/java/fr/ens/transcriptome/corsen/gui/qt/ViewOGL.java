@@ -461,6 +461,11 @@ public class ViewOGL extends QGLWidget {
   //
   // Other methods
   //
+  private float transparencyToAlpha(final int transparency) {
+
+    return 1.0f - (transparency / 100.0f);
+  }
+
   private void make3DObject() {
 
     if (this.gl == null)
@@ -562,7 +567,8 @@ public class ViewOGL extends QGLWidget {
       if (particlesA != null)
         cgl.drawParticles(particlesA, s.getColorParticlesA(),
             isDrawBaryCenter(), s.getColorBaryCenters(), s
-                .isVisualisationParticlesAInDifferentsColor());
+                .isVisualisationParticlesAInDifferentsColor(),
+            transparencyToAlpha(s.getParticlesATransparency()));
 
       if (isDrawBaryCenter() && r.getMessengersParticles() != null) {
 
@@ -580,7 +586,8 @@ public class ViewOGL extends QGLWidget {
 
       if (particlesB != null)
         cgl.drawParticles(particlesB, s.getColorParticlesB(), false, null, s
-            .isVisualisationParticlesBInDifferentsColor());
+            .isVisualisationParticlesBInDifferentsColor(),
+            transparencyToAlpha(s.getParticlesBTransparency()));
 
       //
       // Show distances

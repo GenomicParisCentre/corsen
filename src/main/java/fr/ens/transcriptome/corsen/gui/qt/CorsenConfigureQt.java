@@ -89,14 +89,6 @@ public class CorsenConfigureQt {
           enable3DVisalisation();
       }
 
-      public void stateChangedVisualisationShowSurfaceLines(final int value) {
-
-        if (value == 0)
-          dialogUi.surfaceLineSizeLineEdit.setEnabled(false);
-        else
-          dialogUi.surfaceLineSizeLineEdit.setEnabled(true);
-      }
-
       public void changeMessengersColor() {
 
         QColor c =
@@ -290,19 +282,20 @@ public class CorsenConfigureQt {
     dialogUi.backgroundColorPushButton.clicked.connect(o,
         "changeBackgroundColor()");
     dialogUi.legendColorPushButton.clicked.connect(o, "changeLegendColor()");
-    dialogUi.showSurfaceLinesCheckBox.stateChanged.connect(o,
-        "stateChangedVisualisationShowSurfaceLines(int)");
 
-    dialogUi.showSurfaceLinesCheckBox.setChecked(false);
-    dialogUi.showSurfaceLinesCheckBox.setChecked(true);
+    // dialogUi.pointSizeLineEdit.setText("" + s.getVisualizationPointsSize());
+    // dialogUi.showSurfaceLinesCheckBox.setChecked(s
+    // .isVisualizationShowSurfaceLines());
+    // dialogUi.surfaceLineSizeLineEdit.setText(""
+    // + s.getVisualizationSurfaceLinesSize());
+    // dialogUi.distanceLineSizelineEdit.setText(""
+    // + s.getVisualizationDistancesLinesSize());
 
-    dialogUi.pointSizeLineEdit.setText("" + s.getVisualizationPointsSize());
-    dialogUi.showSurfaceLinesCheckBox.setChecked(s
-        .isVisualizationShowSurfaceLines());
-    dialogUi.surfaceLineSizeLineEdit.setText(""
-        + s.getVisualizationSurfaceLinesSize());
-    dialogUi.distanceLineSizelineEdit.setText(""
-        + s.getVisualizationDistancesLinesSize());
+    dialogUi.particlesATranscparencySpinBox.setValue(s
+        .getParticlesATransparency());
+    dialogUi.particlesBTranscparencySpinBox.setValue(s
+        .getParticlesBTransparency());
+
     dialogUi.showDistancesNegativeCheckBox.setChecked(s
         .isVisualizationShowNegativeDistances());
     dialogUi.showParticlesADifferentColorCcheckBox.setChecked(s
@@ -389,27 +382,6 @@ public class CorsenConfigureQt {
       s.setClearHistoryWhenLaunchNewCalc(dialogUi.clearHistoryCheckBox
           .isChecked());
 
-      try {
-        s.setVisualizationPointsSize(Float
-            .parseFloat(dialogUi.pointSizeLineEdit.text()));
-      } catch (NumberFormatException e) {
-      }
-
-      s.setVisualizationShowSurfaceLines(dialogUi.showSurfaceLinesCheckBox
-          .isChecked());
-
-      try {
-        s.setVisualizationSurfaceLinesSize(Float
-            .parseFloat(dialogUi.surfaceLineSizeLineEdit.text()));
-      } catch (NumberFormatException e) {
-      }
-
-      try {
-        s.setVisualizationDistancesLinesSize(Float
-            .parseFloat(dialogUi.distanceLineSizelineEdit.text()));
-      } catch (NumberFormatException e) {
-      }
-
       s
           .setVisualizationShowNegativeDistances(dialogUi.showDistancesNegativeCheckBox
               .isChecked());
@@ -420,6 +392,9 @@ public class CorsenConfigureQt {
           .setVisualisationParticlesBInDifferentsColors(dialogUi.showParticlesBDifferentColorCcheckBox
               .isChecked());
 
+      s.setParticlesATransparency(dialogUi.particlesATranscparencySpinBox.value());
+      s.setParticlesBTransparency(dialogUi.particlesBTranscparencySpinBox.value());
+      
       s.setColorParticlesA(qColorToColor(this.messengersColor));
       s.setColorParticlesB(qColorToColor(this.mitosColor));
       s.setColorBaryCenters(qColorToColor(this.baryCentersColor));
