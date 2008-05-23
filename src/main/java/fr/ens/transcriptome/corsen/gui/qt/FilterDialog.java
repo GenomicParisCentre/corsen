@@ -28,6 +28,7 @@ import com.trolltech.qt.gui.QMessageBox;
 
 import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.Settings;
+import fr.ens.transcriptome.corsen.calc.JavascriptDistancesFilter;
 import fr.ens.transcriptome.corsen.model.JavascriptParticles3DFilter;
 
 /**
@@ -171,7 +172,7 @@ public class FilterDialog {
       s.setEnableDistancesViewerFilter(dialogUi.distancesFilterCheckBox
           .isChecked());
       final String expD = dialogUi.distancesFilterlineEdit.text();
-      if (JavascriptParticles3DFilter.createFilter(expD) != null)
+      if (JavascriptDistancesFilter.createFilter(expD) != null)
         s.setExpressionDistancesViewerFilter(expD);
       else
         QMessageBox.warning(this.mainWindow, Globals.APP_NAME,

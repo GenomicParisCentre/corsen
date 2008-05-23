@@ -46,7 +46,7 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
  * This class handle last corsen results.
  * @author Laurent Jourdren
  */
-public class CorsenHistoryResults {
+public final class CorsenHistoryResults {
 
   private static CorsenHistoryResults singleton = new CorsenHistoryResults();
 

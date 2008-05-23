@@ -32,7 +32,9 @@ import java.util.Iterator;
 import java.util.Properties;
 
 import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
+import fr.ens.transcriptome.corsen.calc.JavascriptDistancesFilter;
 import fr.ens.transcriptome.corsen.calc.ParticleType;
+import fr.ens.transcriptome.corsen.model.JavascriptParticles3DFilter;
 
 /**
  * This class defines settings of the application.
@@ -1372,6 +1374,19 @@ public final class Settings {
     if (!CorsenHistoryResults.getCorsenHistoryResults().setCustomExpression(
         getCustomHistoryExpression()))
       setCustomHistoryExpression("");
+
+    if (JavascriptDistancesFilter
+        .createFilter(getDistancesViewFilterExpression()) == null)
+      setExpressionDistancesViewerFilter("");
+
+    if (JavascriptParticles3DFilter
+        .createFilter(getParticlesAFilterExpression()) == null)
+      setParticlesAFilterExpression("");
+
+    if (JavascriptParticles3DFilter
+        .createFilter(getParticlesBFilterExpression()) == null)
+      setParticlesBFilterExpression("");
+
   }
 
   /**
