@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	/*
+	*                  Corsen development code
+	*
+	* This code may be freely distributed and modified under the
+	* terms of the GNU General Public Licence version 2 or later. This
+	* should be distributed with the code. If you do not have a copy,
+	* see:
+	*
+	*      http://www.gnu.org/licenses/gpl-2.0.txt
+	*
+	* Copyright for this code is held jointly by the microarray platform
+	* of the École Normale Supérieure and the individual authors.
+	* These should be listed in @author doc comments.
+	*
+	* For more information on the Corsen project and its aims,
+	* or to join the Nividic mailing list, visit the home page
+	* at:
+	*
+	*      http://www.transcriptome.ens.fr/corsen
+	*
+	*/
+-->
+<document>
+
+	<properties>
+		<title>Installking Corsen</title>
+		<author email="jourdren@biologie.ens.fr">
+			Laurent Jourdren
+		</author>
+	</properties>
+	<body>
+
+		<section name="Image J for Corsen plugin">
+
+			<p>
+				The
+				<a href="corsen_plugin-@@@VERSION@@@.jar">
+					Corsen plugin for Image J
+				</a>
+				is available as jar file to put in imagej
+				<code>plugins</code>
+				directory.
+			</p>
+
+		</section>
+
+		<section name="Corsen application">
+
+			<p>
+				The
+				<a href="webstart/corsen.jnlp">Corsen application</a>
+				is available as a Java Web Start.
+			</p>
+
+			<p>
+				<b>Warning:</b>
+				Corsen works only with an Intel Macintosh and Mac Os
+				X.4. With this operating system, you must install jogl
+				to use the 3D view. This limitation is due to a
+				<a
+					href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=63306">
+					bug
+				</a>
+				in Apple Java implementation. Corsen contain a hack to
+				bypass this bug but force user to manually install JOGL.
+			</p>
+
+
+			<subsection name="How install JOGL on Mac OS X">
+
+				<ul>
+					<li>
+						Download the lastest version of JOGL for Mac Os
+						X (Corsen is tested with 1.1) on
+						<a href="https://jogl.dev.java.net/">
+							JOGL website
+						</a>
+						.
+					</li>
+					<li>Unzip the archive.</li>
+					<li>
+						Put the content of the
+						<code>lib</code>
+						folder to
+						<code>/Library/Java/Extensions</code>
+					</li>
+				</ul>
+
+			</subsection>
+
+		</section>
+
+	</body>
+
+</document>

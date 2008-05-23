@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	/*
+	*                  Corsen development code
+	*
+	* This code may be freely distributed and modified under the
+	* terms of the GNU General Public Licence version 2 or later. This
+	* should be distributed with the code. If you do not have a copy,
+	* see:
+	*
+	*      http://www.gnu.org/licenses/gpl-2.0.txt
+	*
+	* Copyright for this code is held jointly by the microarray platform
+	* of the École Normale Supérieure and the individual authors.
+	* These should be listed in @author doc comments.
+	*
+	* For more information on the Corsen project and its aims,
+	* or to join the Nividic mailing list, visit the home page
+	* at:
+	*
+	*      http://www.transcriptome.ens.fr/corsen
+	*
+	*/
+-->
+<document> 
+
+  <properties> 
+    <author email="jourdren@biologie.ens.fr">Laurent Jourdren</author> 
+  </properties> 
+
+
+
+  <body>
+  
+    <section name="Known Bugs for Corsen">
+  
+      <ul> 
+        <li>No bug at present time.</li>
+      </ul> 
+      
+    </section>
+
+    <section name="Submit a Corsen bug">
+
+      <!-- corsen-list?subject=Bug -->
+      <p>You can submit a bug by sending a sending a mail to the <a href="mailto:%63%6f%72%73%65%6e%2d%6c%69%73%74%40%62%69%6f%6c%6f%67%69%65%2e%65%6e%73%2e%66%72%3f%73%75%62%6a%65%63%74%3d%62%75%67">corsen list</a>.</p>
+
+    </section>
+
+  </body>
+  
+</document>

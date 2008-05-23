@@ -1,0 +1,36 @@
+												------
+              					Options des fonction de calc.R
+												------
+
+
+
+RGL options
+
+  The following table show options of RGL drawings.
+
+*-------------------------*------------------------------------------------------------------*
+| Parameter              |  Comment                                                                 |
+*-------------------------*-------------------------------------------------------------------*
+| corsen.shift             |	Décalage objets 3d pour l'affichage (default = 0.0)   |
+| corsen.points3d      | Utilise des points au lieu de sphères (default = T)          |
+| corsen.surfaces3d  |	Affiche les surfaces 3D (default = T)                         |
+| corsen.centers        |		Affiche les centres (default = F)                           |
+| corsen.barycenters |	 Affiche les barycentres (default = T)                        |
+| corsen.sizepoints	|  Taille des points (ou des spheres)                             |
+| corsen.unicolor  	|  Show each particle in a different color (default = F)          |
+*-------------------------*------------------------------------------------------------------*
+
+
+Options pour calc.R
+
+
+
+*  poolDistances function
+
+*----------------*----------------------*----------------------------------------------*
+| Parameter   |  Default value     |  Comment                                        |
+*----------------*----------------------*----------------------------------------------*
+|  plot             | F                         | Plot  histograms and boxplots          |
+| summary     | F                         | Show a summary                             |
+| nclass          | 50                       | Number of classes                           |
+*----------------*-----------------------*--------------------------------------------*

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	/*
+	*                  Corsen development code
+	*
+	* This code may be freely distributed and modified under the
+	* terms of the GNU General Public Licence version 2 or later. This
+	* should be distributed with the code. If you do not have a copy,
+	* see:
+	*
+	*      http://www.gnu.org/licenses/gpl-2.0.txt
+	*
+	* Copyright for this code is held jointly by the microarray platform
+	* of the École Normale Supérieure and the individual authors.
+	* These should be listed in @author doc comments.
+	*
+	* For more information on the Corsen project and its aims,
+	* or to join the Nividic mailing list, visit the home page
+	* at:
+	*
+	*      http://www.transcriptome.ens.fr/corsen
+	*
+	*/
+-->
+<document>
+
+	<properties>
+		<title>Download Corsen @@@VERSION@@@</title>
+		<author email="jourdren@biologie.ens.fr">
+			Laurent Jourdren
+		</author>
+	</properties>
+	<body>
+		<a name="installation" />
+		<section name="Download Corsen latest version">
+			<p>
+				There is two parts in Corsen :
+			</p>
+			<ul>
+				<li>The <a href="">ImageJ</a> plugin, available as a 
+					<a href="corsen_plugin-@@@VERSION@@@.jar">
+						<code>.zip</code>
+						archive
+					</a>
+					<span style="font-size: smaller">
+						(934 KiB)
+					</span>.<br/> You only have to put this archive in the 
+					ImageJ plugins folder and restart ImageJ to install it.
+				</li>
+				<li>The application, available only as a Java Web Start 
+				application.<br/> To install it, you need an internet 
+				connection and click on the 
+					<a
+						href="webstart/corsen.jnlp">
+						corsen jnlp link
+					</a> to launch the application.
+				</li>
+			</ul>
+			<p>
+				Corsen is distributed under the
+				<a href="license.html">General Public License version 2 and later</a>.
+			</p>
+			<a name="requirements" />
+			<subsection name="System Requirements">
+				<table>
+					<tr>
+						<th>Component</th>
+						<th>Comment</th>
+					</tr>
+					<tr>
+						<td>Java Runtime Environment</td>
+						<td>
+							5.0 or above.
+						</td>
+					</tr>
+					<tr>
+						<td>Memory</td>
+						<td>
+							No minimum requirement. The necessary amount
+							of memory needed by Corsen depends on size
+							of the inputs files (images and .par files). However 
+							we recommends 1GiB for standard analysis. 
+						</td>
+					</tr>
+					<tr>
+						<td>Disk Space</td>
+						<td>
+							No minimum requirement. Approximately 40 MiB
+							will be used by Corsen.
+						</td>
+					</tr>
+					<tr>
+						<td>Operating System</td>
+						<td>
+							No minimum requirement. Tested on Windows
+							XP, Debian testing and Mac OS X. Note that Corsen 
+							application under Mac OS X is unstable. 
+						</td>
+					</tr>
+				</table>
+			</subsection>
+		
+		
+			<subsection name="How install Corsen on Mac OS X">
+
+				<p>Corsen works only with an Intel Macintosh and Mac OS X.4 (Tiger). 
+				With this operating system, you must install manualy jogl to 
+				use the 3D view. This limitation is due to a  <a
+					href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=63306">
+					bug
+				</a>  in Apple 	Java implementation. Corsen contain a hack to 
+				bypass this bug but force user to manually install JOGL.</p>
+
+				<ul>
+					<li>
+						Download the lastest version of JOGL for Mac Os
+						X (Corsen is tested with 1.1) on
+						<a href="https://jogl.dev.java.net/">
+							JOGL website
+						</a>.
+					</li>
+					<li>Unzip the archive.</li>
+					<li>
+						Put the content of the
+						<code>lib</code>
+						folder to
+						<code>/Library/Java/Extensions</code>
+					</li>
+				</ul>
+		
+			<p><b>Warning</b>: No tests have been done under Mac OS X.5 
+			(Leopard) with Java 5.0 and Java 6.0.</p>
+			<br/>
+			<p>If Corsen application still too unstable for you on Mac OS X, you can 
+			install <a href="http://www.virtualbox.org/">Virtual box</a> or other 
+			virtualization software and a linux distribution such 
+			<a href="http://www.ubuntu.com">ubuntu</a>. We hope that next 
+			versions of Corsen will run perfectly under Mac OS X.</p>
+		
+			</subsection>
+		</section>
+		
+	</body>
+
+</document>
