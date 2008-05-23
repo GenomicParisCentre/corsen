@@ -486,7 +486,7 @@ public class CorsenGL {
   }
 
   private static final FloatBuffer no_mat =
-      FloatBuffer.wrap(new float[] {0, 0, 0, 1});
+      FloatBuffer.wrap(new float[] {0.06f, 0.06f, 0.06f, 1});
 
   private static final FloatBuffer no_shininess =
       FloatBuffer.wrap(new float[] {0});
