@@ -801,7 +801,7 @@
              <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
             </property>
             <property name="text" >
-             <string>Show negative in a different color</string>
+             <string>Show negatives distances in a different color</string>
             </property>
            </widget>
           </item>
