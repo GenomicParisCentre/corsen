@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for ImageJ -->
+<jnlp
+  spec="1.0+"
+  codebase="@@@WEBSITE@@@/webstart"
+  href="imagej.jnlp">
+  <information>
+    <title>ImageJ</title>
+    <vendor>NIH</vendor>
+    <homepage href="http://rsb.info.nih.gov/ij/"/>
+    <description>Image Processing in Java</description>
+    <description kind="short">A versatile and extensible Image Processing application written in Java</description>
+    <icon href="http://rsb.info.nih.gov/ij/images/microscope.gif"/>
+    <icon kind="splash" href="http://rsb.info.nih.gov/ij/images/microscope-icon.png"/>
+    <offline-allowed/>
+    <shortcut online="false">
+    	<desktop/>
+    	<menu submenu="ENS Microarray Platform"/>
+    </shortcut>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" initial-heap-size="32m" max-heap-size="192m" />

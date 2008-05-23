@@ -1,0 +1,13 @@
+
+    <extension name="qtjambi" href="http://hestia.ens.fr/jnlp/qtjambi.jnlp"/>
+    <extension name="jogl" href="http://download.java.net/media/jogl/builds/archive/jsr-231-webstart-current/jogl.jnlp"/>
+    
+    <!--extension name="jogl" href="http://download.java.net/media/jogl/builds/archive/jsr-231-1.0.0/jogl.jnlp"/-->
+    	    <!--property name="key1" value="toto"/-->
+  </resources>
+
+  <application-desc main-class="fr.ens.transcriptome.corsen.Corsen">
+        <!--argument></argument-->
+  </application-desc>
+
+</jnlp>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<jnlp
+  spec="1.0+"
+  codebase="@@@WEBSITE@@@/webstart"
+  href="corsen.jnlp">
+  <information>
+    <title>Corsen</title>
+    <vendor>ENS Microarray platform</vendor>
+    <homepage href="http://transcriptome.ens.fr"/>
+    <description>Corsen (full desc)</description>
+    <description kind="one-line">Corsen (one-line desc)</description>
+    <description kind="short">Corsen (short desc)</description>
+    <description kind="tooltip">Corsen</description>
+
+    <icon href="@@@WEBSITE@@@/images/corsen-logo.png"/>
+    <icon kind="shortcut" href="@@@WEBSITE@@@/images/corsen-icon.png"/>
+    <icon kind="splash" href="@@@WEBSITE@@@/images/corsen-splash.png"/>
+    <offline-allowed/>
+    <shortcut online="false">
+    	<desktop/>
+    	<menu submenu="ENS Microarray Platform"/>
+    </shortcut>
+  </information>
+
+  <security>
+      <all-permissions/>
+  </security>
+
+
+  <resources os="Windows">
+    <j2se version="1.5+"
+          href="http://java.sun.com/products/autodl/j2se"
+          initial-heap="64m"
+          max-heap-size="1024m"/>
+  </resources>
+
+  <resources os="Mac OS">
+    <j2se version="1.5+"
+          initial-heap="64m"
+          max-heap-size="1024m"
+          java-vm-args="-XstartOnFirstThread -Xdock:name='Corsen'"/>
+  </resources>
+
+  <resources os="Linux">
+    <j2se version="1.5+"
+          href="http://java.sun.com/products/autodl/j2se"
+          initial-heap="64m"
+         max-heap-size="1024m"
+          java-vm-args="-server"/>
+  </resources>
+
+  <resources>
+    <j2se version="1.5+"
+          href="http://java.sun.com/products/autodl/j2se"
+          initial-heap="64m"
+          max-heap-size="1024m"/>

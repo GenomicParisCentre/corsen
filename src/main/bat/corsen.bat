@@ -1,1 +1,1 @@
-java -classpath "..\..\ij.jar;commons-primitives-1.0.jar;." Corsen
+java -Djava.library.path="lib\win32" -cp ".\lib\commons-cli-1.0.jar;.\lib\win32\jogl.jar;.\lib\win32\qtjambi.jar;.\lib\win32\qtjambi-win32.jar;.\classes" fr.ens.transcriptome.corsen.Corsen %1 %2 %3 %4 %5 %6 %7 %8 %9
