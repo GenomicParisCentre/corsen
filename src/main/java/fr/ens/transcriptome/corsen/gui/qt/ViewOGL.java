@@ -546,7 +546,7 @@ public class ViewOGL extends QGLWidget {
           particlesA = r.getMessengersParticles().filter(filterA);
         else
           particlesA =
-              !isDrawMessengersCuboids() ? r.getCuboidsMessengersParticles()
+              isDrawMessengersCuboids() ? r.getCuboidsMessengersParticles()
                   .filter(filterA) : r.getMessengersParticles().filter(filterA);
       }
 
