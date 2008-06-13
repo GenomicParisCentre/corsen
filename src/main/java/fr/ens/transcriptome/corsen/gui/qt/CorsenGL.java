@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.glu.GLU;
@@ -153,33 +154,36 @@ public class CorsenGL {
 
     Color c = color;
 
-    int r = 0;
-    int g = 125;
-    int b = 255;
-
+    Random ran = new Random(0);
     for (Particle3D par : particles.getParticles()) {
 
-      if (randomColor) {
+      if (randomColor)
+        c = new Color(ran.nextInt(255), ran.nextInt(255), ran.nextInt(255));
 
-        int id = par.getId();
-        c = new Color((id % 19) * 10, (id % 53) * 4, (id % 97) * 2);
-        // c = new Color(r, g, b);
-        drawParticle(par, c, barycentre, colorBaryCentre, alpha);
-
-        r += 5;
-        g += 10;
-        b += 15;
-
-        if (r > 255)
-          r -= 255;
-        if (g > 255)
-          g -= 255;
-        if (b > 255)
-          b -= 255;
-
-      } else
-        drawParticle(par, c, barycentre, colorBaryCentre, alpha);
+      drawParticle(par, c, barycentre, colorBaryCentre, alpha);
     }
+
+  }
+
+  public void drawParticleBitmap(BitMapParticle3D bitmap, Color c) {
+
+    final int lenX = bitmap.getXLen();
+    final int lenY = bitmap.getYLen();
+    final int lenZ = bitmap.getZLen();
+
+    bitmap.getX0();
+
+    for (int i = 0; i < lenX; i++)
+      for (int j = 0; j < lenY; j++)
+        for (int k = 0; k < lenZ; k++)
+          if (bitmap.isParticleInnerPoint(i, j, k))
+            drawPoint3D(new SimplePoint3DImpl(i + bitmap.getX0(), j
+                + bitmap.getY0(), k + bitmap.getZ0()), c, 0.5f);
+          else
+
+          if (bitmap.isParticleSurfacePoint(i, j, k))
+            drawPoint3D(new SimplePoint3DImpl(i + bitmap.getX0(), j
+                + bitmap.getY0(), k + bitmap.getZ0()), c, 0.5f);
 
   }
 
