@@ -107,6 +107,8 @@ public final class Corsen {
     parseCommandLine(args);
 
     if (batchFile != null) {
+      if (!confFile)
+        loadSettings(null);
       batchMode = true;
       executeBatchFile();
       return;
