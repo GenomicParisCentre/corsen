@@ -22,7 +22,13 @@
 
 package fr.ens.transcriptome.corsen;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +48,7 @@ import fr.ens.transcriptome.corsen.gui.CLIGui;
 import fr.ens.transcriptome.corsen.gui.CorsenFakeGui;
 import fr.ens.transcriptome.corsen.gui.qt.CorsenQt;
 import fr.ens.transcriptome.corsen.gui.swing.CorsenSwing;
+import fr.ens.transcriptome.corsen.util.Util;
 
 /**
  * This class is the main class of Corsen. It launch the bootstrap is needed and
@@ -54,6 +61,7 @@ public final class Corsen {
 
   private static Settings settings;
   private static boolean batchMode;
+  private static String batchFile;
   private static String[] mainArgs;
   private static boolean confFile;
 
@@ -99,6 +107,12 @@ public final class Corsen {
     logger.setLevel(Level.OFF);
 
     parseCommandLine(args);
+
+    if (batchFile != null) {
+      batchMode = true;
+      executeBatchFile();
+      return;
+    }
 
     if (mainArgs != null && mainArgs.length == 3) {
 
@@ -183,16 +197,21 @@ public final class Corsen {
     Option licence =
         new Option("licence",
             "show information about the licence of this software");
+
+    Option batchFile =
+        OptionBuilder.withArgName("batchfile").hasArg().withDescription(
+            "batch file").create("batchFile");
+
     Option batch = new Option("batch", "batch mode");
 
     Option conf =
         OptionBuilder.withArgName("file").hasArg().withDescription(
             "configuration file").create("conf");
     Option typea =
-        OptionBuilder.withArgName("type").hasArg().withDescription(
+        OptionBuilder.withArgName("typea").hasArg().withDescription(
             "particle A type").create("typea");
     Option typeb =
-        OptionBuilder.withArgName("type").hasArg().withDescription(
+        OptionBuilder.withArgName("typeb").hasArg().withDescription(
             "particle B type").create("typeb");
     Option unit =
         OptionBuilder.withArgName("unit").hasArg().withDescription("unit")
@@ -230,6 +249,7 @@ public final class Corsen {
     options.addOption(about);
     options.addOption(licence);
     options.addOption(conf);
+    options.addOption(batchFile);
     options.addOption(batch);
     options.addOption(threads);
     options.addOption(typea);
@@ -352,6 +372,9 @@ public final class Corsen {
       if (line.hasOption("batch"))
         batchMode = true;
 
+      if (line.hasOption("batchFile"))
+        batchFile = line.getOptionValue("batchFile");
+
       mainArgs = line.getArgs();
 
       if (mainArgs.length > 0 && mainArgs.length != 3)
@@ -371,6 +394,61 @@ public final class Corsen {
     }
 
     settings = s;
+  }
+
+  /**
+   * Execute corsen CLI in batch mode with batch file
+   */
+  public static void executeBatchFile() {
+
+    final long startTime = System.currentTimeMillis();
+
+    final List<String[]> dirs = new ArrayList<String[]>();
+
+    boolean error = false;
+
+    try {
+      final FileReader fr = new FileReader(batchFile);
+
+      BufferedReader br = new BufferedReader(fr);
+      String line = null;
+
+      boolean first = true;
+
+      while ((line = br.readLine()) != null) {
+
+        if (first) {
+
+          first = false;
+          continue;
+        }
+
+        String[] fields = line.split("\t");
+        File dir = new File(fields[0]);
+
+        if (!dir.exists()) {
+
+          error = true;
+          System.err.println("Directory not found : " + dir.getAbsolutePath());
+        }
+
+        dirs.add(new String[] {fields[0], fields[1], fields[2]});
+
+      }
+    } catch (IOException e) {
+      System.err.println("Error while reading batch file: " + batchFile);
+    }
+
+    if (!error)
+      for (String[] fields : dirs)
+        CLIGui.main(new String[] {fields[1], fields[2], fields[0]});
+
+    final long endTime = System.currentTimeMillis();
+    final long totalTime = endTime - startTime;
+
+    System.out.println("Process all data in "
+        + Util.toTimeHumanReadable(totalTime) + " (" + totalTime + "ms).");
+
   }
 
   //
