@@ -37,6 +37,32 @@
 		</author>
 	</properties>
 	<body>
+	
+		<release version="0.37" date="2008-06-13">
+			<action dev="jourdren" type="fix">
+				Log levels now works.
+			</action>
+			<action dev="jourdren" type="add">
+				Multi batch mode (read a file with directories and prefixes to use).
+			</action>
+			<action dev="jourdren" type="fix">
+				Fix bug in inclusion test for huge particles.
+			</action>
+			<action dev="jourdren" type="update">
+				More random color for particles in 3D view.
+			</action>
+			<action dev="jourdren" type="update">
+				Particles are more shining in 3D view. Add parameters for 
+				transparency for particles A and B in Corsen Settings.
+			</action>
+			<action dev="jourdren" type="update">
+				Update documentation.
+			</action>
+			<action dev="jourdren" type="update">
+				Update multithread distance computation.
+			</action>
+		
+		</release>
 
 		<release version="0.36" date="2008-04-18">
 			<action dev="jourdren" type="fix">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-15" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -6,7 +6,7 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.36</version>
+	<version>0.37</version>
 	<name>Corsen</name>
 	<description>
 		A tool to calc distance between mitochondria and RNA
@@ -14,7 +14,7 @@
 	<url>http://hestia.ens.fr/corsen</url>
 
 	<organization>
-		<name>École Normale Supérieure Microarray platform</name>
+		<name>Ecole Normale Superieure Microarray platform</name>
 		<url>http://transcriptome.ens.fr/sgdb</url>
 	</organization>
 
@@ -25,13 +25,14 @@
 			<email>jourdren 0 biologie ens fr</email>
 			<url />
 			<organization>
-				École Normale Supérieure Microarray platform
+				Ecole Normale Superieure Microarray platform
 			</organization>
 			<organizationUrl>
 				http://transcriptome.ens.fr/sgdb
 			</organizationUrl>
 			<roles>
-				<role>Developer</role>
+				<role>Main developer</role>
+				<role>Maintener</role>
 			</roles>
 			<timezone>1</timezone>
 			<properties />
@@ -42,19 +43,39 @@
 			<email>mgarcia 0 biologie ens fr</email>
 			<url />
 			<organization>
-				École Normale Supérieure Laboratoire de Génétique
+				Ecole Normale Superieure Laboratoire de Génétique
 				Moléculaire
 			</organization>
 			<organizationUrl>
 				http://www.biologie.ens.fr/lgmgml
 			</organizationUrl>
 			<roles>
-				<role>Developer</role>
+				<role>Project leader</role>
+				<role>R programming</role>
+				<role>ImageJ scripting</role>
+				<role>Testing</role>
 			</roles>
 			<timezone>1</timezone>
 			<properties />
 		</developer>
 	</developers>
+
+	<contributors>
+		<contributor>
+			<name>Yann Saint Georges-Chaumet</name>
+			<!--<email></email>-->
+			<!--<email>see http://transcriptome.ens.fr/sgdb/presentation/people.php</email>-->
+      			<organization>
+				Ecole Normale Superieure Laboratoire de Génétique
+				Moléculaire
+			</organization>
+			<organisationUrl>http://www.biologie.ens.fr/lgmgml</organisationUrl>
+			<roles>
+				<role>Testing</role>
+			</roles>
+			<timezone>1</timezone>
+		</contributor>
+	</contributors>
 
 	<licenses>
 		<license>
@@ -64,6 +85,18 @@
 			<comments />
 		</license>
 	</licenses>
+
+	<mailingLists>
+		<mailingList>
+		<name>corsen-list</name>
+		<!--subscribe>mailto:corsen-list-subscribe@maillist.biologie.ens.fr</subscribe-->
+		<subscribe>mailto:%63%6f%72%73%65%6e%2d%6c%69%73%74%2d%73%75%62%73%63%72%69%62%65%40%6d%61%69%6c%6c%69%73%74%2e%62%69%6f%6c%6f%67%69%65%2e%65%6e%73%2e%66%72</subscribe>
+		<!--subscribe>mailto:corsen-list-unsubscribe@maillist.biologie.ens.fr</subscribe-->
+		<unsubscribe>mailto:%63%6f%72%73%65%6e%2d%6c%69%73%74%2d%75%6e%73%75%62%73%63%72%69%62%65%40%6d%61%69%6c%6c%69%73%74%2e%62%69%6f%6c%6f%67%69%65%2e%65%6e%73%2e%66%72</unsubscribe>
+		<archive>https://maillist.biologie.ens.fr/wws/arc/corsen-list</archive>
+		</mailingList>
+  </mailingLists>
+
 
 	<repositories>
 		<repository>
@@ -163,7 +196,8 @@
 		</dependency>
 		<dependency>
 			<groupId>jogl</groupId>
-			<artifactId>jogl-native-${os.name}-${os.arch}</artifactId>
+			<!--artifactId>jogl-native-${os.name}-${os.arch}</artifactId-->
+			<artifactId>jogl-native-Linux-i386</artifactId>
 			<version>1.1.0</version>
 		</dependency>
 		<dependency>
@@ -294,13 +328,15 @@
 						<configuration>
 							<tasks>
 								<echo>Qt Jambi</echo>
+								<property environment="env"/>
+								<echo>${env.JAMBI_HOME}</echo>
 								<mkdir
 									dir="${basedir}/target/generated-sources" />
 								<exec
-									executable="/usr/local/java/qtjambi/bin/juic">
-									<env key="PATH" value="/usr/local/java/qtjambi/bin"/>
-									<env key="LD_LIBRARY_PATH" value="/usr/local/java/qtjambi/lib"/>
-									<env key="DYLD_LIBRARY_PATH" value="/usr/local/java/qtjambi/lib"/>
+									executable="${JAMBI_HOME}/bin/juic">
+									<env key="PATH" value="${JAMBI_HOME}/bin"/>
+									<env key="LD_LIBRARY_PATH" value="${JAMBI_HOME}/lib"/>
+									<env key="DYLD_LIBRARY_PATH" value="${JAMBI_HOME}/lib"/>
 									<arg value="-cp" />
 									<arg
 										value="${basedir}/src/main/java" />
@@ -309,6 +345,41 @@
 										value="${basedir}/target/generated-sources" />
 								</exec>
 
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>package-sources</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<tar tarfile="${basedir}/target/${artifactId}-src-${version}.tar">
+									<!--tarfileset dir="${basedir}/src" mode="755" username="nobody" group="nobody" prefix="src/" /-->
+								
+									<tarfileset dir="${basedir}"  mode="755" username="nobody" group="nobody">
+										<include name="src/**"/>
+										<include name="pom.xml"/>
+										<include name="checkstyle.xml"/>
+										<include name="checkstyle-license.txt"/>
+										<include name="COMPILING.txt"/>
+										<include name="INSTALL.txt"/>
+										<include name="LICENSE.txt"/>
+									</tarfileset>
+								</tar>
+								<gzip zipfile="${basedir}/target/${artifactId}-src-${version}.tar.gz" 
+									src="${basedir}/target/${artifactId}-src-${version}.tar"/>
+								<bzip2 destfile="${basedir}/target/${artifactId}-src-${version}.tar.bz2" 
+									src="${basedir}/target/${artifactId}-src-${version}.tar"/>
+
+								<mkdir dir="${basedir}/target/zip"/>
+								<untar src="${basedir}/target/${artifactId}-src-${version}.tar" 
+									dest="${basedir}/target/zip"/>
+								<zip destfile="${basedir}/target/${artifactId}-src-${version}.zip" basedir="${basedir}/target/zip"/>
+								<delete dir="${basedir}/target/zip"/>
+								
 							</tasks>
 						</configuration>
 						<goals>
@@ -372,7 +443,6 @@
 									<replacetoken>jar href="ij</replacetoken>
 									<replacevalue>jar main="true" href="ij</replacevalue>
 								</replace-->
-								<echo message="totot" />
 								<replace dir="${basedir}/target/site" value="${pom.url}">
 									<include name="**/*.jnlp"/>
 									<include name="**/*.html"/>
@@ -385,6 +455,12 @@
 								</replace>
 								<copy file="${basedir}/target/corsen-${pom.version}.jar" 
 									tofile="${basedir}/target/site/corsen_plugin-${pom.version}.jar"/>
+								<copy file="${basedir}/target/corsen-src-${pom.version}.zip" 
+									tofile="${basedir}/target/site/corsen-src-${pom.version}.zip"/>
+								<copy file="${basedir}/target/corsen-src-${pom.version}.tar.gz" 
+									tofile="${basedir}/target/site/corsen-src-${pom.version}.tar.gz"/>
+								<copy file="${basedir}/target/corsen-src-${pom.version}.tar.bz2" 
+									tofile="${basedir}/target/site/corsen-src-${pom.version}.tar.bz2"/>
 							</tasks>
 						</configuration>
 						<goals>
@@ -534,7 +610,18 @@
 
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>aggregate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<extensions>
 			<extension>
