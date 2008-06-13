@@ -32,14 +32,18 @@ import fr.ens.transcriptome.corsen.UpdateStatus;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.util.Util;
 
-public class CLIGui {
+/**
+ * This class define a Command line interface for Corsen.
+ * @author Laurent Jourdren
+ */
+public final class CLIGui {
 
   private static final class CLIUpdateStatus implements UpdateStatus {
 
     private long timeStartCells;
     private long timeStartCell;
 
-    public void endProcess(CorsenResult result) {
+    public void endProcess(final CorsenResult result) {
 
       long timeToDoACell = System.currentTimeMillis() - this.timeStartCell;
       System.out.println(result.getMinAnalyser());
@@ -48,17 +52,18 @@ public class CLIGui {
           + "ms).");
     }
 
-    public void showError(String msg) {
+    public void showError(final String msg) {
+
       System.err.println(msg);
       System.exit(1);
     }
 
-    public void showMessage(String msg) {
+    public void showMessage(final String msg) {
+    
       // TODO Auto-generated method stub
-
     }
 
-    public void updateStatus(ProgressEvent e) {
+    public void updateStatus(final ProgressEvent e) {
 
       switch (e.getType()) {
 
@@ -82,6 +87,8 @@ public class CLIGui {
 
         break;
 
+      default:
+        break;
       }
 
     }
@@ -90,7 +97,7 @@ public class CLIGui {
      * Move to a thread. Needed by Qt.
      * @param thread Thread to move
      */
-    public void moveToThread(Thread thread) {
+    public void moveToThread(final Thread thread) {
     }
 
     /**
@@ -115,9 +122,10 @@ public class CLIGui {
   }
 
   /**
-   * @param args
+   * Main method
+   * @param args arguments
    */
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     // TODO Auto-generated method stub
 
     final Settings s = Corsen.getSettings();
@@ -141,8 +149,19 @@ public class CLIGui {
       cc.setResultFile(new File(args[2]));
     }
 
-    new Thread(cc).start();
+    final Thread t = new Thread(cc);
+    t.start();
 
+    while (t.isAlive())
+      Thread.yield();
+
+  }
+
+  //
+  // Constructor
+  //
+
+  private CLIGui() {
   }
 
 }
