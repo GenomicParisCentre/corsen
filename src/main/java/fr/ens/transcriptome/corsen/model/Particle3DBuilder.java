@@ -389,6 +389,15 @@ public class Particle3DBuilder {
   }
 
   /**
+   * Set the bitmap particle.
+   * @param bitmapParticle Bitmap particle to set
+   */
+  public void setBitMapParticle(final BitMapParticle3D bitmapParticle) {
+
+    this.particle.setBitMapParticle(bitmapParticle);
+  }
+
+  /**
    * Get the final particle. After calling this method, a new particle will be
    * created.
    * @return The final particle.

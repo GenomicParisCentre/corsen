@@ -326,6 +326,15 @@ public final class Particle3D {
     this.edgeParticle = edgeParticle;
   }
 
+  /**
+   * Set the bitmap particle.
+   * @param bitmapParticle BitMapParticle to set
+   */
+  void setBitMapParticle(final BitMapParticle3D bitmapParticle) {
+
+    this.bitMapParticle = bitmapParticle;
+  }
+
   //
   // Other methods
   //

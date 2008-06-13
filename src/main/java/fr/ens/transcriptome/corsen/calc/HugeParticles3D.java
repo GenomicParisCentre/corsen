@@ -23,6 +23,7 @@
 package fr.ens.transcriptome.corsen.calc;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import java.util.Properties;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 
@@ -65,8 +67,15 @@ public class HugeParticles3D extends DistanceProcessor {
 
     for (Particle3D mito : mitoParticles.getParticles()) {
 
+      Particle3DBuilder builder = new Particle3DBuilder(xlen, ylen, zlen);
+      for (Point3D p : mito.getSurfacePoints()) {
+
+        builder.addInnerPoint(p);
+        builder.addSurfacePoint(p);
+      }
+      builder.setBitMapParticle(mito.getBitMapParticle());
       final List<Particle3D> cuboids =
-          CuboidUtil.defineCuboids(mito, xlen, ylen, zlen);
+          Collections.singletonList(builder.getParticle());
 
       final double p = (double) ++i / (double) n * 1000.0;
       sendEvent(eventType, (int) p);
