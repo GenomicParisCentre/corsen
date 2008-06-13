@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.UpdateStatus;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
@@ -46,7 +47,7 @@ import fr.ens.transcriptome.corsen.util.MinMaxList;
  */
 public class DistancesCalculator {
 
-  private Logger logger = Logger.getLogger(DistancesCalculator.class.getName());
+  private Logger logger = Logger.getLogger(Globals.APP_NAME);
   private DistanceProcessor processorA;
   private DistanceProcessor processorB;
 

@@ -27,9 +27,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
@@ -57,7 +55,7 @@ import fr.ens.transcriptome.corsen.util.Util;
  */
 public final class Corsen {
 
-  private static Logger logger = Logger.getLogger(Corsen.class.getName());
+  private static Logger logger = Logger.getLogger(Globals.APP_NAME);
 
   private static Settings settings;
   private static boolean batchMode;
@@ -104,7 +102,7 @@ public final class Corsen {
 
     bootstrap();
 
-    logger.setLevel(Level.OFF);
+    logger.setLevel(Globals.LOG_LEVEL);
 
     parseCommandLine(args);
 

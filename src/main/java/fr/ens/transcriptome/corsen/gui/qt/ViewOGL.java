@@ -43,6 +43,7 @@ import com.trolltech.qt.opengl.QGL;
 import com.trolltech.qt.opengl.QGLFormat;
 import com.trolltech.qt.opengl.QGLWidget;
 
+import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.Settings;
 import fr.ens.transcriptome.corsen.calc.CorsenResult;
 import fr.ens.transcriptome.corsen.calc.Distance;
@@ -54,7 +55,7 @@ import fr.ens.transcriptome.corsen.model.Particles3D;
 
 public class ViewOGL extends QGLWidget {
 
-  private static Logger logger = Logger.getLogger(ViewOGL.class.getName());
+  private static Logger logger = Logger.getLogger(Globals.APP_NAME);
 
   private GL gl;
   private GLU glu;

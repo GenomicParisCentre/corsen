@@ -67,7 +67,7 @@ import fr.ens.transcriptome.corsen.util.Util;
 // TODO When alt-f4 -> System.exit(0)
 public class CorsenQt extends QMainWindow {
 
-  private static Logger logger = Logger.getLogger(CorsenQt.class.getName());
+  private static Logger logger = Logger.getLogger(Globals.APP_NAME);
 
   private static final int PATH_STRING_MAX_LEN = 50;
 

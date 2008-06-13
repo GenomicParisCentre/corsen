@@ -43,7 +43,7 @@ import fr.ens.transcriptome.corsen.model.JavascriptParticles3DFilter;
  */
 public class CorsenCore implements Runnable {
 
-  private static Logger logger = Logger.getLogger(CorsenCore.class.getName());
+  private static Logger logger = Logger.getLogger(Globals.APP_NAME);
   private UpdateStatus updateStatus;
 
   private Settings settings = new Settings();

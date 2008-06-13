@@ -25,6 +25,7 @@ package fr.ens.transcriptome.corsen;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
 
 /**
  * Globals constants of the application.
@@ -49,6 +50,9 @@ public final class Globals {
 
   /** The build date of the application. */
   public static final String APP_BUILD_DATE = getBuiltDate();
+
+  /** The log level of the application. */
+  public static final Level LOG_LEVEL = Level.OFF;
 
   /** The number of threads to use for computation. */
   public static final int THREAD_NUMBER_DEFAULT = -1;
