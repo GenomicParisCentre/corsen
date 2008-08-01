@@ -25,6 +25,7 @@ package fr.ens.transcriptome.corsen;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -425,11 +426,43 @@ public final class Corsen {
 
         String[] fields = line.split("\t");
         File dir = new File(fields[0]);
+        final String prefixA = fields[1];
+        final String prefixB = fields[2];
 
         if (!dir.exists()) {
 
           error = true;
           System.err.println("Directory not found : " + dir.getAbsolutePath());
+        } else {
+
+          File[] filesA = dir.listFiles(new FilenameFilter() {
+
+            public boolean accept(File dir, String name) {
+
+              return name.startsWith(prefixA);
+            }
+          });
+
+          File[] filesB = dir.listFiles(new FilenameFilter() {
+
+            public boolean accept(File dir, String name) {
+
+              return name.startsWith(prefixB);
+            }
+          });
+
+          if (filesA == null || filesA.length == 0) {
+            System.err.println("Prefix a: "
+                + prefixA + " in directory " + dir.getAbsolutePath());
+            error = true;
+          }
+
+          if (filesB == null || filesB.length == 0) {
+            System.err.println("Prefix b: "
+                + prefixB + " in directory " + dir.getAbsolutePath());
+            error = true;
+          }
+
         }
 
         dirs.add(new String[] {fields[0], fields[1], fields[2]});

@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import fr.ens.transcriptome.corsen.calc.CorsenHistoryResults;
 import fr.ens.transcriptome.corsen.calc.JavascriptDistancesFilter;
@@ -41,6 +42,8 @@ import fr.ens.transcriptome.corsen.model.JavascriptParticles3DFilter;
  * @author Laurent Jourdren
  */
 public final class Settings {
+
+  private static Logger logger = Logger.getLogger(Globals.APP_NAME);
 
   private static final String ZFACTOR_KEY = "main.zFactor";
   private static final String FACTOR_KEY = "main.factor";
@@ -1307,7 +1310,7 @@ public final class Settings {
 
     if (os.toLowerCase().startsWith("windows"))
       return home
-          + File.separator + "Application DataDouble"
+          + File.separator + "Application Data" + File.separator
           + Globals.APP_NAME_LOWER_CASE + ".conf";
 
     return home + File.separator + "." + Globals.APP_NAME_LOWER_CASE;
@@ -1366,6 +1369,7 @@ public final class Settings {
    */
   public void loadSettings(final File file) throws IOException {
 
+    logger.info("Load configuration file: " + file.getAbsolutePath());
     FileInputStream fis = new FileInputStream(file);
 
     this.properties.load(fis);
