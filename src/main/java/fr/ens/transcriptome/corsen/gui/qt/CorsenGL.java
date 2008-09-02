@@ -126,7 +126,16 @@ public class CorsenGL {
 
     // drawPoints3D(particle.getInnerPoints(), color, particle.getPixelDepth() /
     // 10);
-    drawSurfaceParticle3D(particle, color, alpha);
+
+    // drawPoints3D(particle.getSurfacePoints(), color, particle.getPixelDepth()
+    // /
+    // 10);
+
+    if (true)
+      drawSurfaceParticle3D(particle, color, alpha);
+    else
+      for (Point3D p : particle.getSurfacePoints())
+        drawPoint3D(p, color, 1);
 
     // drawPolygon3D(particle.getSurfacePoints(), getLowColor(color));
 
