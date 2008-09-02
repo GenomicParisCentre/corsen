@@ -468,12 +468,14 @@ public class DistancesCalculator {
 
     int count = 0;
     final int calcsToDoNumber = listA.size() * listB.size();
-    final int calcsBeforeUpdateInfo = calcsToDoNumber / 100;
+
+    final int calcsBeforeUpdateInfo =
+        calcsToDoNumber < 100 ? calcsToDoNumber : calcsToDoNumber / 100;
 
     logger.info("Thread number for distance computation: 1");
     final long startCalcs = System.currentTimeMillis();
 
-    if (calcsBeforeUpdateInfo != 0)
+    if (calcsToDoNumber != 0)
       for (Particle3D parA : listA) {
 
         final AbstractListPoint3D pointsA =
