@@ -609,6 +609,21 @@ public final class BitMapParticle3D {
 
   }
 
+  /**
+   * Create a list of points which are on the surface of the particle.
+   * @return a list of points.
+   */
+  public AbstractListPoint3D getSurfacePoints() {
+
+    ArrayListPoint3D result = new ArrayListPoint3D();
+
+    for (Point3D p : this.particle.getInnerPoints())
+      if (isParticleSurfacePoint(p))
+        result.add(p);
+
+    return result;
+  }
+
   //
   // Constructors
   //
