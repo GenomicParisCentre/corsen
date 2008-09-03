@@ -25,6 +25,7 @@ package fr.ens.transcriptome.corsen.model;
 import org.apache.commons.math.stat.descriptive.rank.Median;
 
 import fr.ens.transcriptome.corsen.util.MathUtil;
+import fr.ens.transcriptome.corsen.util.Stats;
 
 /**
  * This class define a Particle3D without using vector coordinates.
@@ -372,7 +373,8 @@ public final class BitMapParticle3D {
               * Math.PI * (area / (perimeter * perimeter));
     }
 
-    return new Median().evaluate(circularities);
+    // return new Median().evaluate(circularities);
+    return Stats.median(circularities);
   }
 
   /**
