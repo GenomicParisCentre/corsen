@@ -68,9 +68,6 @@ public class HugeParticles3D extends DistanceProcessor {
 
     for (Particle3D mito : mitoParticles.getParticles()) {
 
-      System.out.println("mito size: "
-          + mito.innerPointsCount() + "\t" + mito.surfacePointsCount());
-
       Particle3DBuilder builder = new Particle3DBuilder(xlen, ylen, zlen);
 
       final BitMapParticle3D bitmap = mito.getBitMapParticle();
@@ -87,9 +84,6 @@ public class HugeParticles3D extends DistanceProcessor {
 
       final double p = (double) ++i / (double) n * 1000.0;
       sendEvent(eventType, (int) p);
-
-      System.out.println("mito cuboid size: "
-          + cuboids.size() + "\t" + cuboids.get(0).innerPointsCount());
 
       mapCuboids.put(mito, cuboids);
     }
@@ -108,29 +102,19 @@ public class HugeParticles3D extends DistanceProcessor {
       List<Distance> result) {
 
     final AbstractListPoint3D listPoints = mito.getInnerPoints();
-    System.out.println(mito.getId()
-        + "\t" + mito.innerPointsCount() + "\t" + listPoints.size());
 
     if (result == null)
       result = new ArrayList<Distance>(listPoints.size());
     else
       result.clear();
 
-    System.out.print("p=" + point);
-    float min = Float.MAX_VALUE;
-    Point3D minPoint = null;
-    int count = 0;
-
     for (final Point3D p : listPoints) {
-      count++;
+
       final float d = p.distance(point);
-      min = Math.min(min, d);
-      if (min == d)
-        minPoint = p;
 
       result.add(new Distance(p, point, particleOfPoint, mito, isNeg ? -d : d));
     }
-    System.out.println("\td=" + min + "\t" + minPoint + "\t" + count);
+
     return result;
   }
 
