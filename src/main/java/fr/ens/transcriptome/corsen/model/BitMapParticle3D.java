@@ -22,8 +22,6 @@
 
 package fr.ens.transcriptome.corsen.model;
 
-import org.apache.commons.math.stat.descriptive.rank.Median;
-
 import fr.ens.transcriptome.corsen.util.MathUtil;
 import fr.ens.transcriptome.corsen.util.Stats;
 
@@ -126,8 +124,8 @@ public final class BitMapParticle3D {
 
   public int getYBitmapCoordinate(final float y) {
 
-    return (int) Math.floor(MathUtil.roundValue((y / this.pixelHeight)
-        - this.y0));
+    return (int) Math.floor(MathUtil.
+        roundValue((y / this.pixelHeight) - this.y0));
   }
 
   public int getZBitmapCoordinate(final float z) {
