@@ -318,6 +318,12 @@ public class CorsenImageJPlugin implements PlugInFilter {
 
     for (Particle3D p : this.particles3DToSave) {
 
+      final boolean optionExcludeOnEdge =
+          (options & EXCLUDE_EDGE_PARTICLES) != 0;
+
+      if (optionExcludeOnEdge && p.isEdgeParticle())
+        continue;
+
       CorsenImageJUtil.addParticle3DtoStack(stack, p, new Color(r, g, b));
 
       r += 5;
