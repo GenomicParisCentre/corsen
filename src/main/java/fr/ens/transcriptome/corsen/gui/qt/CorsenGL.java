@@ -640,8 +640,8 @@ public class CorsenGL {
 
     BitMapParticle3D bitmap = particle.getBitMapParticle();
 
-    gl.glTranslatef(bitmap.getX0(), bitmap.getY0(), bitmap.getZ0()
-        * particle.getPixelDepth());
+    gl.glTranslatef(bitmap.getX0() * particle.getPixelWidth(), bitmap.getY0()
+        * particle.getPixelHeight(), bitmap.getZ0() * particle.getPixelDepth());
 
     DrawMarchingCubes.showParticle3D(this.gl, particle);
 

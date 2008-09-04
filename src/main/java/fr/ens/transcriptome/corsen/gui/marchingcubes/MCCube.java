@@ -177,16 +177,15 @@ public final class MCCube {
           new MCCube(x, y, z).getTriangles(tri);
 
     // convert pixel coordinates
-    float pwidth = particle.getPixelWidth();
-    float pheight = particle.getPixelHeight();
-    float pdepth = particle.getPixelDepth();
-
+    final float pwidth = bitmap.getPixelWidth();
+    final float pheight = bitmap.getPixelHeight();
+    final float pdepth = bitmap.getPixelDepth();
+    
     List<Point3f> ret = new ArrayList<Point3f>(tri.size());
     for (int i = 0; i < tri.size(); i++) {
 
       final Point3f p = tri.get(i);
-      ret.add(new Point3f(Math.round(p.x * pwidth), Math.round(p.y * pheight),
-          Math.round(p.z * pdepth)));
+       ret.add(new Point3f(p.x * pwidth, p.y * pheight, p.z * pdepth));
     }
 
     return ret;
