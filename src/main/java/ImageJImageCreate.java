@@ -80,21 +80,21 @@ public class ImageJImageCreate {
 
     ImageStack is = new ImageStack(50, 50);
 
-    for (int k = 0; k < (50/step)+1; k++) {
+    for (int k = 0; k < (50 / step) + 1; k++) {
 
       ImageProcessor ip = new ShortProcessor(50, 50);
 
       boolean draw = true;
 
-      if (k == 25/step)
+      if (k == 25 / step)
         for (int i = 1; i < 50; i = i + step)
-          if ( (i-1) % (6/step) ==0) {
+          if ((i - 1) % (6 / step) == 0) {
             ip.set(i, 25, 100);
             draw = false;
           } else
             draw = true;
 
-      is.addSlice("" + k/step, ip);
+      is.addSlice("" + k / step, ip);
     }
 
     ImagePlus ipl = new ImagePlus("cube", is);
@@ -106,15 +106,15 @@ public class ImageJImageCreate {
 
     ImageStack is = new ImageStack(50, 50);
 
-    int count =0;
-    
-    for (int k = 0; k < ((50+1)/step)+1; k++) {
+    int count = 0;
+
+    for (int k = 0; k < ((50 + 1) / step) + 1; k++) {
 
       ImageProcessor ip = new ShortProcessor(50, 50);
 
-      if ((k - 1) %  (6/step) == 0) {
+      if ((k - 1) % (6 / step) == 0) {
         ip.set(25, 25, 100);
-        System.out.println((++count)+  " k="+k+"\t"+(k*step));
+        System.out.println((++count) + " k=" + k + "\t" + (k * step));
       }
 
       is.addSlice("" + k, ip);
@@ -124,18 +124,18 @@ public class ImageJImageCreate {
 
     return ipl;
   }
-  
+
   public static ImagePlus createCubeImage2(final int step) {
 
     ImageStack is = new ImageStack(50, 50);
 
     int count = 0;
-    
-    for (int k = 0; k < 50/step; k++) {
+
+    for (int k = 0; k < 50 / step; k++) {
 
       ImageProcessor ip = new ShortProcessor(50, 50);
 
-      if (k > 12/step && k <= 36/step +1)
+      if (k > 12 / step && k <= 36 / step + 1)
         for (int i = 13; i < 38; i++)
           for (int j = 13; j < 38; j++) {
             ip.set(i, j, 100);
@@ -145,7 +145,7 @@ public class ImageJImageCreate {
       is.addSlice("" + k, ip);
     }
 
-    System.out.println("create a cube with "+count+" blocks.");
+    System.out.println("create a cube with " + count + " blocks.");
     ImagePlus ipl = new ImagePlus("cube", is);
 
     return ipl;
@@ -180,11 +180,9 @@ public class ImageJImageCreate {
     return pars;
   }
 
-  public static final void main(final String[] args)
-      throws FileNotFoundException, IOException {
+  private static void createFiles(final int step) throws FileNotFoundException,
+      IOException {
 
-    final int step = 3;
-    
     ImagePlus cube = createCubeImage2(step);
     ImagePlus hori = createHoriPoints2(step);
     ImagePlus vert = createVertPoints2(step);
@@ -198,12 +196,19 @@ public class ImageJImageCreate {
     Particles3D vertParticles = convertToParticles(vert, 1, 1, 1);
 
     cubeParticles.saveParticles(new FileOutputStream(new File(
-        "/home/jourdren/Desktop/cube2.par")));
+        "/home/jourdren/Desktop/bug/cube" + step + ".par")));
     horiParticles.saveParticles(new FileOutputStream(new File(
-        "/home/jourdren/Desktop/hori2.par")));
+        "/home/jourdren/Desktop/bug/hori" + step + ".par")));
     vertParticles.saveParticles(new FileOutputStream(new File(
-    "/home/jourdren/Desktop/vert2.par")));
+        "/home/jourdren/Desktop/bug/vert" + step + ".par")));
 
+  }
+
+  public static final void main(final String[] args)
+      throws FileNotFoundException, IOException {
+
+    createFiles(1);
+    createFiles(2);
   }
 
 }
