@@ -37,13 +37,52 @@
 		</author>
 	</properties>
 	<body>
-	
+
+		<release version="0.38" date="2008-09-05">
+
+			<action dev="jourdren" type="update">
+				Change the localisation of Corsen plugin in ImageJ
+				Plugin (now in Plugins>Analysis>Corsen Plugin).
+			</action>
+			<action dev="jourdren" type="add">
+				Add new par test files and generator of test files.
+			</action>
+			<action dev="jourdren" type="fix">
+				In Corsen plugin, "Show Particles 3D" don't show edge
+				particles when exclude on edge in enable.
+			</action>
+			<action dev="jourdren" type="fix">
+				Scale issue when coordinate factor is set.
+			</action>
+			<action dev="jourdren" type="fix">
+				Use an internal version of Jakata Math median algorithm,
+				otherwise ImageJ nean Jakarta Math jar.
+			</action>
+			<action dev="jourdren" type="fix">
+				Use in HugeParticle a list of surface points found by
+				BitMapParticles3D.
+			</action>
+			<action dev="jourdren" type="fix">
+				Corsen calc distances even when the number of
+				computation is very low.
+			</action>
+			<action dev="jourdren" type="fix">
+				Test if prefix in directory exists (command line batch
+				mode from a file).
+			</action>
+			<action dev="jourdren" type="fix">
+				Load configuration file in command line batch mode.
+			</action>
+
+		</release>
+
 		<release version="0.37" date="2008-06-13">
 			<action dev="jourdren" type="fix">
 				Log levels now works.
 			</action>
 			<action dev="jourdren" type="add">
-				Multi batch mode (read a file with directories and prefixes to use).
+				Multi batch mode (read a file with directories and
+				prefixes to use).
 			</action>
 			<action dev="jourdren" type="fix">
 				Fix bug in inclusion test for huge particles.
@@ -52,8 +91,9 @@
 				More random color for particles in 3D view.
 			</action>
 			<action dev="jourdren" type="update">
-				Particles are more shining in 3D view. Add parameters for 
-				transparency for particles A and B in Corsen Settings.
+				Particles are more shining in 3D view. Add parameters
+				for transparency for particles A and B in Corsen
+				Settings.
 			</action>
 			<action dev="jourdren" type="update">
 				Update documentation.
@@ -61,12 +101,13 @@
 			<action dev="jourdren" type="update">
 				Update multithread distance computation.
 			</action>
-		
+
 		</release>
 
 		<release version="0.36" date="2008-04-18">
 			<action dev="jourdren" type="fix">
-				Use a modified JFreechart version to not show medians in boxplots.
+				Use a modified JFreechart version to not show medians in
+				boxplots.
 			</action>
 			<action dev="jourdren" type="fix">
 				Don't show outliers in boxplots.
@@ -84,39 +125,39 @@
 				Add filters on read particles.
 			</action>
 			<action dev="jourdren" type="update">
-				Tables of Results tab can be sorted. 
+				Tables of Results tab can be sorted.
 			</action>
 			<action dev="jourdren" type="fix">
 				Fix legend in histogram in History tab.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.36" date="2008-04-18">
 			<action dev="jourdren" type="fix">
-				Utilise une version modifiée de Jfreechart qui ne montre pas les moyennes dans les boxplot.
+			Utilise une version modifiée de Jfreechart qui ne montre pas les moyennes dans les boxplot.
 			</action>
 			<action dev="jourdren" type="fix">
-				Ne montre pas les outliers dans les boxplots.
+			Ne montre pas les outliers dans les boxplots.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de filtres dans la vue 3D.
+			Ajout de filtres dans la vue 3D.
 			</action>
 			<action dev="jourdren" type="add">
-				Possibilité de sauvegarde des particles 3D après filtrage.
+			Possibilité de sauvegarde des particles 3D après filtrage.
 			</action>
 			<action dev="jourdren" type="add">
-				Visualisation des résultats pour les cuboids des mitos.
+			Visualisation des résultats pour les cuboids des mitos.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de filtres sur les particles 3D lues.
+			Ajout de filtres sur les particles 3D lues.
 			</action>
 			<action dev="jourdren" type="update">
-				Les tables de l'onglet Result sont maintenant triables. 
+			Les tables de l'onglet Result sont maintenant triables. 
 			</action>
 			<action dev="jourdren" type="fix">
-				Correction de la legende de l'histogramme de l'onglet "History".
+			Correction de la legende de l'histogramme de l'onglet "History".
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.35" date="2008-04-01">
 			<action dev="jourdren" type="update">
@@ -129,8 +170,8 @@
 				More code cleaning.
 			</action>
 			<action dev="jourdren" type="fix">
-				Use the last point of a filename to get the basename of the
-				file.
+				Use the last point of a filename to get the basename of
+				the file.
 			</action>
 			<action dev="jourdren" type="update">
 				Tables in Results tab can be sorted.
@@ -139,30 +180,30 @@
 				Add some stats (with a custom one) in History tab.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.35" date="2008-04-01">
 			<action dev="jourdren" type="update">
-				3D Renderer use Marching cubes
+			3D Renderer use Marching cubes
 			</action>
 			<action dev="jourdren" type="fix">
-				QPixMap are now created in GUI thread
+			QPixMap are now created in GUI thread
 			</action>
 			<action dev="jourdren" type="update">
-				Divers netoyage de code
+			Divers netoyage de code
 			</action>
 			<action dev="jourdren" type="fix">
-				Utilise dans le plugin Corsen de dernier point d'un nom
-				de fichier pour avoir le nom de base
+			Utilise dans le plugin Corsen de dernier point d'un nom
+			de fichier pour avoir le nom de base
 			</action>
 			<action dev="jourdren" type="update">
-				Les tables de l'onglet "Results" sont maintenant
-				triables
+			Les tables de l'onglet "Results" sont maintenant
+			triables
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de différentes statistiques (dont une
-				personnalisable) dans la vue historique
+			Ajout de différentes statistiques (dont une
+			personnalisable) dans la vue historique
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.34" date="2008-02-21">
 
@@ -175,36 +216,36 @@
 			</action>
 
 		</release>
-		
+
 		<!-- release version="0.34" date="2008-02-21">
 			<action dev="jourdren" type="add">
-				Add a new calculation mode that use barycenter of particles 
-				without computation of cuboids.
+			Add a new calculation mode that use barycenter of particles 
+			without computation of cuboids.
 			</action>
 			<action dev="jourdren" type="fix">
-				Bogue dans l'historique des résultats
+			Bogue dans l'historique des résultats
 			</action>
-
-		</release-->
+			
+			</release-->
 
 		<release version="0.33" date="2008-02-14">
 
 			<action dev="jourdren" type="fix">
-				Use stats of minimal distances for the boxplot. Avoid useless
-				computation.
+				Use stats of minimal distances for the boxplot. Avoid
+				useless computation.
 			</action>
 
 		</release>
-		
+
 		<!-- release version="0.33" date="2008-02-14">
-
+			
 			<action dev="jourdren" type="fix">
-				Utilise les statistiques des distances minimales pour
-				l'affichage du boxplot des distances minimales. Evite
-				les recalculs inutiles.
+			Utilise les statistiques des distances minimales pour
+			l'affichage du boxplot des distances minimales. Evite
+			les recalculs inutiles.
 			</action>
-
-		</release-->
+			
+			</release-->
 
 		<release version="0.32" date="2008-02-13">
 
@@ -213,11 +254,11 @@
 			</action>
 
 			<action dev="jourdren" type="fix">
-				Add units in graphics legends. 
+				Add units in graphics legends.
 			</action>
 
 			<action dev="jourdren" type="update">
-				The number of Histogram classes is now 25. 
+				The number of Histogram classes is now 25.
 			</action>
 
 			<action dev="jourdren" type="fix">
@@ -241,62 +282,64 @@
 			</action>
 
 		</release>
-		
+
 		<!-- release version="0.32" date="2008-02-13">
-
+			
 			<action dev="jourdren" type="fix">
-				Nombreux autres correction de bogues mineurs.
+			Nombreux autres correction de bogues mineurs.
 			</action>
-
+			
 			<action dev="jourdren" type="fix">
-				Ajout des unités dans les légendes des graphiques
+			Ajout des unités dans les légendes des graphiques
 			</action>
-
+			
 			<action dev="jourdren" type="update">
-				Le nombre de classes des histogrammes est maintenant de
-				25.
+			Le nombre de classes des histogrammes est maintenant de
+			25.
 			</action>
-
+			
 			<action dev="jourdren" type="fix">
-				Bogue dans le calcul de l'aire.
+			Bogue dans le calcul de l'aire.
 			</action>
-
+			
 			<action dev="jourdren" type="add">
-				Ajout de la moyenne des medianes dans les résultats de
-				l'historique.
+			Ajout de la moyenne des medianes dans les résultats de
+			l'historique.
 			</action>
-
+			
 			<action dev="jourdren" type="update">
-				Ajout de la transparence aux graphiques.
+			Ajout de la transparence aux graphiques.
 			</action>
-
+			
 			<action dev="jourdren" type="update">
-				Utilisation de d'un QSplitter pour séparer les Tables
-				des graphiques
+			Utilisation de d'un QSplitter pour séparer les Tables
+			des graphiques
 			</action>
-
+			
 			<action dev="jourdren" type="update">
-				Nombreux correction de bogues et optimisations detectées
-				avec findbugs.
+			Nombreux correction de bogues et optimisations detectées
+			avec findbugs.
 			</action>
+			
+			</release-->
 
-		</release-->
-		
-		
+
 
 		<release version="0.31" date="2008-02-08">
 
 			<action dev="jourdren" type="fix">
-				The locale of the application is now English/United Kingdom.
+				The locale of the application is now English/United
+				Kingdom.
 			</action>
 
 			<action dev="jourdren" type="fix">
-				The creation of graphics is now in a different thread to avoid 
-				freezing the application.
+				The creation of graphics is now in a different thread to
+				avoid freezing the application.
 			</action>
 
 			<action dev="jourdren" type="add">
-				The number of classes for histograms can be set in settings.
+				The number of classes for histograms can be set in
+				settings.
 			</action>
 
 			<action dev="jourdren" type="fix">
@@ -304,7 +347,8 @@
 			</action>
 
 			<action dev="jourdren" type="add">
-				The calculation time is now showed in the log for each cell.
+				The calculation time is now showed in the log for each
+				cell.
 			</action>
 
 			<action dev="jourdren" type="fix">
@@ -312,7 +356,8 @@
 			</action>
 
 			<action dev="jourdren" type="fix">
-				GUI not showed whole file path to avoid large windows for GUI.
+				GUI not showed whole file path to avoid large windows
+				for GUI.
 			</action>
 
 			<action dev="jourdren" type="add">
@@ -333,65 +378,65 @@
 
 
 		</release>
-		
-		
+
+
 		<!-- release version="0.31" date="2008-02-08">
-
+			
 			<action dev="jourdren" type="fix">
-				La locale de l'application est désormais
-				Anglais/Royaume-Uni.
+			La locale de l'application est désormais
+			Anglais/Royaume-Uni.
 			</action>
-
+			
 			<action dev="jourdren" type="fix">
-				La créations des graphique se fait maintenant dans un
-				thread différent pour éviter de bloquer l'application.
+			La créations des graphique se fait maintenant dans un
+			thread différent pour éviter de bloquer l'application.
 			</action>
-
+			
 			<action dev="jourdren" type="add">
-				Le nombre de classes des histogrammes peut être défini
-				par l'utilisateur.
+			Le nombre de classes des histogrammes peut être défini
+			par l'utilisateur.
 			</action>
-
+			
 			<action dev="jourdren" type="fix">
-				Les histogrames ne sont plus actualisé lors des calculs.
+			Les histogrames ne sont plus actualisé lors des calculs.
 			</action>
-
+			
 			<action dev="jourdren" type="add">
-				Le temps de calcul pour toutes les cellules est affiché
-				dans le log.
+			Le temps de calcul pour toutes les cellules est affiché
+			dans le log.
 			</action>
-
+			
 			<action dev="jourdren" type="fix">
-				La vue 3D n'est plus calculée qu'une seule fois.
+			La vue 3D n'est plus calculée qu'une seule fois.
 			</action>
-
+			
 			<action dev="jourdren" type="fix">
-				Les chemins des fichiers ne sont plus affiché en entier
-				dans les boites d'informations pour éviter de trop
-				agrandir la fenetre de l'application.
+			Les chemins des fichiers ne sont plus affiché en entier
+			dans les boites d'informations pour éviter de trop
+			agrandir la fenetre de l'application.
 			</action>
-
+			
 			<action dev="jourdren" type="add">
-				On relancer un calcul à partir de l'onglet historique.
+			On relancer un calcul à partir de l'onglet historique.
 			</action>
-
+			
 			<action dev="jourdren" type="add">
-				Ajout d'un onglet gardant, l'historique des calculs. Cet
-				onglet contient également un histograme et un boxplot.
+			Ajout d'un onglet gardant, l'historique des calculs. Cet
+			onglet contient également un histograme et un boxplot.
 			</action>
-
+			
 			<action dev="jourdren" type="update">
-				Ajout de la transparence à la visualisation 3D.
+			Ajout de la transparence à la visualisation 3D.
 			</action>
-
+			
 			<action dev="jourdren" type="fix">
-				Bogue dans apply() pour changer les coordonnées des
-				pixels.
+			Bogue dans apply() pour changer les coordonnées des
+			pixels.
 			</action>
+			
+			
+			</release-->
 
-
-		</release-->
-		
 
 		<release version="0.30" date="2008-01-16">
 
@@ -405,10 +450,12 @@
 				Results tab is now functional.
 			</action>
 			<action dev="jourdren" type="fix">
-				The particle type is now the particle type select in the settings.
+				The particle type is now the particle type select in the
+				settings.
 			</action>
 			<action dev="jourdren" type="add">
-				Add internal identifiers and comments of particles in data files.
+				Add internal identifiers and comments of particles in
+				data files.
 			</action>
 			<action dev="jourdren" type="update">
 				Rewriting of processor for huge particles.
@@ -417,40 +464,41 @@
 				Add graphics in Results tab.
 			</action>
 		</release>
-		
-		<!-- release version="0.30" date="2008-01-16">
 
+		<!-- release version="0.30" date="2008-01-16">
+			
 			<action dev="jourdren" type="fix">
-				Qt fuite en multi-thread.
+			Qt fuite en multi-thread.
 			</action>
 			<action dev="jourdren" type="fix">
-				Comparaison dans des distances négatives
+			Comparaison dans des distances négatives
 			</action>
 			<action dev="jourdren" type="update">
-				L'onglet result est de nouveau fonctionnel
+			L'onglet result est de nouveau fonctionnel
 			</action>
 			<action dev="jourdren" type="fix">
-				Le type de particule utilisé est bien celui défini dans
-				les paramètres
+			Le type de particule utilisé est bien celui défini dans
+			les paramètres
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout des identifiants internes et des commentaire des
-				particules dans les fichiers data
+			Ajout des identifiants internes et des commentaire des
+			particules dans les fichiers data
 			</action>
 			<action dev="jourdren" type="update">
-				Réécriture du processor pour les grosses particules
+			Réécriture du processor pour les grosses particules
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de graphique dans l'onglet résultat
+			Ajout de graphique dans l'onglet résultat
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.29" date="2007-12-05">
 			<action dev="jourdren" type="fix">
 				Bug in basename of ".data" files with batch mode.
 			</action>
 			<action dev="jourdren" type="update">
-				The basename of ".iv" et ".R" now use the name of the particle in Corsen settings.
+				The basename of ".iv" et ".R" now use the name of the
+				particle in Corsen settings.
 			</action>
 			<action dev="jourdren" type="fix">
 				Calc area, volume and intensities of cuboids.
@@ -462,8 +510,9 @@
 				32 bits images are not allowed in Corsen Plugin.
 			</action>
 			<action dev="jourdren" type="update">
-				Add density in ".par" files. The ".par" file format is now 1.3.
-				Corsen can't read previous version of the file format.  
+				Add density in ".par" files. The ".par" file format is
+				now 1.3. Corsen can't read previous version of the file
+				format.
 			</action>
 			<action dev="jourdren" type="update">
 				Show sphericity in summary in the Corsen plugin.
@@ -478,42 +527,42 @@
 
 		<!-- release version="0.29" date="2007-12-05">
 			<action dev="jourdren" type="fix">
-				Bogue dans le nom des fichiers ".data" dans le
-				traitement en lots de fichiers ".par".
+			Bogue dans le nom des fichiers ".data" dans le
+			traitement en lots de fichiers ".par".
 			</action>
 			<action dev="jourdren" type="update">
-				Le nom des fichiers ".iv" et ".R" tient maintenant
-				compte du nom de la particule entrée dans les paramètres
-				de corsen.
+			Le nom des fichiers ".iv" et ".R" tient maintenant
+			compte du nom de la particule entrée dans les paramètres
+			de corsen.
 			</action>
 			<action dev="jourdren" type="fix">
-				Calcule l'aire, le volume et l'intensité des cuboides.
+			Calcule l'aire, le volume et l'intensité des cuboides.
 			</action>
 			<action dev="jourdren" type="update">
-				Ajoute l'aire, la sphericité et la densité au fichiers
-				".iv".
+			Ajoute l'aire, la sphericité et la densité au fichiers
+			".iv".
 			</action>
 			<action dev="jourdren" type="update">
-				Les images 32 bits ne sont plus autorisées dans le
-				plugin corsen.
+			Les images 32 bits ne sont plus autorisées dans le
+			plugin corsen.
 			</action>
 			<action dev="jourdren" type="update">
-				Ajout de la densité dans les fichiers ".par". Le format
-				des fichiers ".par" passe maintenant à la version 1.3.
-				Corsen ne peut lire les version précédente de ce format
-				de fichier.
+			Ajout de la densité dans les fichiers ".par". Le format
+			des fichiers ".par" passe maintenant à la version 1.3.
+			Corsen ne peut lire les version précédente de ce format
+			de fichier.
 			</action>
 			<action dev="jourdren" type="update">
-				Affiche la sphércité dans le résumé du Plugin Corsen.
+			Affiche la sphércité dans le résumé du Plugin Corsen.
 			</action>
 			<action dev="jourdren" type="fix">
-				Corsen ne gele plus en mode multi-thread.
+			Corsen ne gele plus en mode multi-thread.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout d'un menu à propos de Corsen pour le plugin Corsen
-				dans Image J
+			Ajout d'un menu à propos de Corsen pour le plugin Corsen
+			dans Image J
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.28" date="2007-11-26">
 			<action dev="jourdren" type="update">
@@ -532,23 +581,23 @@
 
 		<!-- release version="0.28" date="2007-11-26">
 			<action dev="jourdren" type="update">
-				Nouveau plugin ImageJ écrit "from scratch".
+			Nouveau plugin ImageJ écrit "from scratch".
 			</action>
 			<action dev="jourdren" type="add">
-				L'utilisateur a le choix du type de backend pour le
-				stockage des données (compressé ou non).
+			L'utilisateur a le choix du type de backend pour le
+			stockage des données (compressé ou non).
 			</action>
 			<action dev="jourdren" type="add">
-				Les particules touchant les bords de l'image peuvent
-				être supprimées.
+			Les particules touchant les bords de l'image peuvent
+			être supprimées.
 			</action>
 			<action dev="jourdren" type="fix">
-				Bug d'affichage des coupes 3D dans le plugin si
-				pixelWidth et consors sont différents de 1.
+			Bug d'affichage des coupes 3D dans le plugin si
+			pixelWidth et consors sont différents de 1.
 			</action>
-		</release-->
-		
-		
+			</release-->
+
+
 
 		<release version="0.27" date="2007-11-21">
 			<action dev="jourdren" type="fix">
@@ -559,89 +608,90 @@
 				Scales coefficients from settings are now used.
 			</action>
 			<action dev="jourdren" type="add">
-				New ".par" file format (uncompatible with the previous version
-				of the format). Add volume and area.
+				New ".par" file format (uncompatible with the previous
+				version of the format). Add volume and area.
 			</action>
 			<action dev="jourdren" type="update">
-				"Show Particles 3D" use only one stack, and object are in 
-				differents colors.
+				"Show Particles 3D" use only one stack, and object are
+				in differents colors.
 			</action>
 			<action dev="jourdren" type="update">
-				Change the package of Particles3D. Segmentation 3D is now in a
-				standalone class.
+				Change the package of Particles3D. Segmentation 3D is
+				now in a standalone class.
 			</action>
 			<action dev="jourdren" type="fix">
 				Fix ".iv" file format.
 			</action>
 			<action dev="jourdren" type="update">
-				The ImageJ plugin is now called "Corsen Plugin" in ImageJ.
+				The ImageJ plugin is now called "Corsen Plugin" in
+				ImageJ.
 			</action>
 			<action dev="jourdren" type="add">
 				New class for Particles3D binarisation.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.27" date="2007-11-21">
 			<action dev="jourdren" type="fix">
-				Correction de bogue dans la reconstruction des objets
-				3D.
+			Correction de bogue dans la reconstruction des objets
+			3D.
 			</action>
 			<action dev="jourdren" type="fix">
-				Les coeficients de correction des coordonnées sont
-				maintenant pris en compte.
+			Les coeficients de correction des coordonnées sont
+			maintenant pris en compte.
 			</action>
 			<action dev="jourdren" type="add">
-				Nouveau format de fichier par (incompatible avec le
-				précedent) ajoutant l'aire et le volume de la particule.
+			Nouveau format de fichier par (incompatible avec le
+			précedent) ajoutant l'aire et le volume de la particule.
 			</action>
 			<action dev="jourdren" type="update">
-				"Show Particles 3D" utilise maintenant un seul stack et
-				des objets de couleur différentes.
+			"Show Particles 3D" utilise maintenant un seul stack et
+			des objets de couleur différentes.
 			</action>
 			<action dev="jourdren" type="update">
-				Changement de Package pour Particles3D. La partie
-				segmentation 3D est maintenant dans une classe à part
-				pour plus de maintenabilité.
+			Changement de Package pour Particles3D. La partie
+			segmentation 3D est maintenant dans une classe à part
+			pour plus de maintenabilité.
 			</action>
 			<action dev="jourdren" type="fix">
-				Correction du format de fichier iv.
+			Correction du format de fichier iv.
 			</action>
 			<action dev="jourdren" type="update">
-				Le plugin ImageJ est maintenant appelé "Corsen Plugin"
-				dans ImageJ.
+			Le plugin ImageJ est maintenant appelé "Corsen Plugin"
+			dans ImageJ.
 			</action>
 			<action dev="jourdren" type="add">
-				Nouvelle class pour binairiser les Particles3D.
+			Nouvelle class pour binairiser les Particles3D.
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.26" date="2007-11-12">
 			<action dev="jourdren" type="fix">
-				Fix, Get good pixel for intensities. 
+				Fix, Get good pixel for intensities.
 			</action>
 			<action dev="jourdren" type="update">
-				The code for saving particles 3D in now outside the plugin 
-				ImageJ.
+				The code for saving particles 3D in now outside the
+				plugin ImageJ.
 			</action>
 			<action dev="jourdren" type="fix">
 				Plus d'exception, si l'image à analyser dans le plugin
 				ImageJ n'a pas de fichier associé.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.26" date="2007-11-12">
 			<action dev="jourdren" type="fix">
-				Prend les bon pixels pour les intensités.
+			Prend les bon pixels pour les intensités.
 			</action>
 			<action dev="jourdren" type="update">
-				Le code pour la sauvegarde de Particles3D n'est
-				maintenant plus dans le plugin ImageJ.
+			Le code pour la sauvegarde de Particles3D n'est
+			maintenant plus dans le plugin ImageJ.
 			</action>
 			<action dev="jourdren" type="fix">
-				Plus d'exception, si l'image à analyser dans le plugin
-				ImageJ n'a pas de fichier associé.
+			Plus d'exception, si l'image à analyser dans le plugin
+			ImageJ n'a pas de fichier associé.
 			</action>
-		</release-->
+			</release-->
 
 
 		<release version="0.25" date="2007-11-09">
@@ -649,27 +699,28 @@
 				Use Qt Jambi 4.3.2_01 for GUI.
 			</action>
 			<action dev="jourdren" type="fix">
-				Fix the search of the Corsen version by the ImageJ plugin.
+				Fix the search of the Corsen version by the ImageJ
+				plugin.
 			</action>
 			<action dev="jourdren" type="add">
 				The ImageJ plugin is now package as a jar archive.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.25" date="2007-11-09">
 			<action dev="jourdren" type="update">
-				L'interface graphique utilise maintenant QtJambi
-				4.3.2_01.
+			L'interface graphique utilise maintenant QtJambi
+			4.3.2_01.
 			</action>
 			<action dev="jourdren" type="fix">
-				Correction de bogues dans la determination de la version
-				de Corsen par le plugin ImageJ.
+			Correction de bogues dans la determination de la version
+			de Corsen par le plugin ImageJ.
 			</action>
 			<action dev="jourdren" type="add">
-				Le plugin ImageJ est maintenant empaqueté sous forme
-				d'une archive jar.
+			Le plugin ImageJ est maintenant empaqueté sous forme
+			d'une archive jar.
 			</action>
-		</release-->
+			</release-->
 
 
 		<release version="0.24" date="2007-04-15">
@@ -680,42 +731,44 @@
 				Use maven to build Java Web Start version of Corsen.
 			</action>
 			<action dev="jourdren" type="add">
-				The version (and others informations) of Corsen is now stored in Corsen jar.
-				This informations are update when building the executable.
+				The version (and others informations) of Corsen is now
+				stored in Corsen jar. This informations are update when
+				building the executable.
 			</action>
 			<action dev="jourdren" type="fix">
-				Fix a critical bug in Corsen (due to changes in Corsen 0.23).
+				Fix a critical bug in Corsen (due to changes in Corsen
+				0.23).
 			</action>
 
 		</release>
-		
+
 		<!-- release version="0.24" date="2007-04-15">
 			<action dev="jourdren" type="update">
-				L'interface graphique utilise maintenant QtJambi 1.0.
+			L'interface graphique utilise maintenant QtJambi 1.0.
 			</action>
 			<action dev="jourdren" type="add">
-				Passage a Maven 2. Le système de construction
-				automatique des executables et du site web est
-				fonctionnel.
+			Passage a Maven 2. Le système de construction
+			automatique des executables et du site web est
+			fonctionnel.
 			</action>
 			<action dev="jourdren" type="add">
-				Le système de construction permet de créer
-				automatiquement des Java Web Application pour Corsen et
-				Image J. Dans la version Webstart d'ImageJ généré, le
-				plugin Corsen est automatiquement intégré.
+			Le système de construction permet de créer
+			automatiquement des Java Web Application pour Corsen et
+			Image J. Dans la version Webstart d'ImageJ généré, le
+			plugin Corsen est automatiquement intégré.
 			</action>
 			<action dev="jourdren" type="add">
-				La version (et divers autres informations) de Corsen est
-				maintenant stockée dans l'archive jar de Corsen. Ces
-				informations sont automatiquement misent à jours lors de
-				la construction des executables.
+			La version (et divers autres informations) de Corsen est
+			maintenant stockée dans l'archive jar de Corsen. Ces
+			informations sont automatiquement misent à jours lors de
+			la construction des executables.
 			</action>
 			<action dev="jourdren" type="fix">
-				Correction d'un bogue critique dans le plugin imagej
-				suite à la réorganisation de la version 0.23.
+			Correction d'un bogue critique dans le plugin imagej
+			suite à la réorganisation de la version 0.23.
 			</action>
-
-		</release-->
+			
+			</release-->
 
 
 		<release version="0.23" date="2007-01-04">
@@ -736,34 +789,35 @@
 			</action>
 
 		</release>
-		
+
 		<!-- release version="0.23" date="2007-01-04">
 			<action dev="jourdren" type="update">
-				L'interface graphique utilise maintenant QtJambi 1.0
-				beta.
+			L'interface graphique utilise maintenant QtJambi 1.0
+			beta.
 			</action>
 			<action dev="jourdren" type="fix">
-				Ajout d'un système de calcul des distances multithread.
+			Ajout d'un système de calcul des distances multithread.
 			</action>
 			<action dev="jourdren" type="update">
-				Nombreuses réorganisations internes et de l'interface
-				graphique.
+			Nombreuses réorganisations internes et de l'interface
+			graphique.
 			</action>
 			<action dev="jourdren" type="update">
-				Mise à jour de la visualisation 3D.
+			Mise à jour de la visualisation 3D.
 			</action>
 			<action dev="jourdren" type="add">
-				Corsen est maintenant utilisable en ligne de commande.
+			Corsen est maintenant utilisable en ligne de commande.
 			</action>
-
-		</release-->
+			
+			</release-->
 
 		<release version="0.22" date="2006-12-14">
 			<action dev="jourdren" type="add">
 				Works under Mac OS X.
 			</action>
 			<action dev="jourdren" type="add">
-				User can select for each particle the type of distance calculator.
+				User can select for each particle the type of distance
+				calculator.
 			</action>
 			<action dev="jourdren" type="update">
 				Now use Java 5.
@@ -772,28 +826,29 @@
 				Add unit tests for calc distances between particles.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.22" date="2006-12-14">
 			<action dev="jourdren" type="add">
-				Fonctionne sur Mac OS X.
+			Fonctionne sur Mac OS X.
 			</action>
 			<action dev="jourdren" type="add">
-				Il est désormais possible de choisir pour chaque
-				particule, le type de calculateur de distances.
+			Il est désormais possible de choisir pour chaque
+			particule, le type de calculateur de distances.
 			</action>
 			<action dev="jourdren" type="update">
-				Utilise maintenant les fonctionnalités de la version 5
-				du langage Java.
+			Utilise maintenant les fonctionnalités de la version 5
+			du langage Java.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de tests (et des fichiers de tests) pour le calcul
-				des distances entre particules.
+			Ajout de tests (et des fichiers de tests) pour le calcul
+			des distances entre particules.
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.21" date="2006-10-22">
 			<action dev="jourdren" type="add">
-				New interface created with Qt Jambi. Corsen can use several differents GUI.
+				New interface created with Qt Jambi. Corsen can use
+				several differents GUI.
 			</action>
 			<action dev="jourdren" type="add">
 				Add a class to handle settings.
@@ -802,21 +857,21 @@
 				Update the precision of internal storage of points.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.21" date="2006-10-22">
 			<action dev="jourdren" type="add">
-				Nouvelle interface Graphique réalisée avec QtJambi.
-				Réorganisation interne pour pouvoir supporter plusieurs
-				interface graphique différentes.
+			Nouvelle interface Graphique réalisée avec QtJambi.
+			Réorganisation interne pour pouvoir supporter plusieurs
+			interface graphique différentes.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout d'une classe pour la gestion des paramètres.
+			Ajout d'une classe pour la gestion des paramètres.
 			</action>
 			<action dev="jourdren" type="update">
-				Amélioration de la précision du stockage interne des
-				données.
+			Amélioration de la précision du stockage interne des
+			données.
 			</action>
-		</release-->
+			</release-->
 
 
 		<release version="0.20" date="2006-10-25">
@@ -836,63 +891,65 @@
 
 		<!-- release version="0.20" date="2006-10-25">
 			<action dev="jourdren" type="add">
-				Visualisation sous forme de tableaux des résultats.
+			Visualisation sous forme de tableaux des résultats.
 			</action>
 			<action dev="jourdren" type="add">
-				Visualisation 3D des particules.
+			Visualisation 3D des particules.
 			</action>
 			<action dev="jourdren" type="fix">
-				Calcule maintenant le volume et l'intensité des cuboids.
-				Les cuboids ont maintenant un nom compréhensible.
+			Calcule maintenant le volume et l'intensité des cuboids.
+			Les cuboids ont maintenant un nom compréhensible.
 			</action>
 			<action dev="jourdren" type="fix">
-				Corrige les erreurs dans le fichier de sortie ".data".
+			Corrige les erreurs dans le fichier de sortie ".data".
 			</action>
-		</release-->
-		
+			</release-->
+
 
 
 		<release version="0.19" date="2006-10-25">
 			<action dev="jourdren" type="update">
-				Use internal points of Particles2D to test the intersection of 2 Particles2D. 
-				This methods is far much fine. 
+				Use internal points of Particles2D to test the
+				intersection of 2 Particles2D. This methods is far much
+				fine.
 			</action>
 			<action dev="jourdren" type="add">
-				New option in R ("corsen.unicolor") to show particles in differents colors.
+				New option in R ("corsen.unicolor") to show particles in
+				differents colors.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.19" date="2006-10-25">
 			<action dev="jourdren" type="update">
-				Utilise les points internes des Particles2D pour tester
-				l'intersection de 2 Particles2D. Cette methode est bien
-				plus précise et évite de nombreuses erreurs.
+			Utilise les points internes des Particles2D pour tester
+			l'intersection de 2 Particles2D. Cette methode est bien
+			plus précise et évite de nombreuses erreurs.
 			</action>
 			<action dev="jourdren" type="add">
-				Nouvelle option dans R ("corsen.unicolor") pour
-				visualiser les particules dans des couleurs différentes.
+			Nouvelle option dans R ("corsen.unicolor") pour
+			visualiser les particules dans des couleurs différentes.
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.18" date="2006-10-24">
 			<action dev="jourdren" type="update">
-				To remove a cuboid, all neighbours must be full. 
+				To remove a cuboid, all neighbours must be full.
 			</action>
 			<action dev="jourdren" type="update">
-				New faster algorithm for creation of cuboids. 
+				New faster algorithm for creation of cuboids.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.18" date="2006-10-24">
 			<action dev="jourdren" type="update">
-				Pour qu'un cuboid mitochondrial soit supprimé, il faut
-				que ses plus proches voisin soient pleins.
+			Pour qu'un cuboid mitochondrial soit supprimé, il faut
+			que ses plus proches voisin soient pleins.
 			</action>
 			<action dev="jourdren" type="update">
-				Nouvel alhorithme bien plus rapide pour la création des
-				cuboids.
+			Nouvel alhorithme bien plus rapide pour la création des
+			cuboids.
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.17" date="2006-09-15">
 			<action dev="jourdren" type="update">
@@ -908,41 +965,43 @@
 				Autochoose the size of the cuboids.
 			</action>
 			<action dev="jourdren" type="update">
-				Set the background of the 3D visualization in black. Add fog.
+				Set the background of the 3D visualization in black. Add
+				fog.
 			</action>
 		</release>
-		
-		
+
+
 		<!-- release version="0.17" date="2006-09-15">
 			<action dev="jourdren" type="update">
-				Mise à jour documentation fonctions calc.R.
+			Mise à jour documentation fonctions calc.R.
 			</action>
 			<action dev="jourdren" type="update">
-				Les informations sur le déroullement de Corsen sont
-				maintenant correctes.
+			Les informations sur le déroullement de Corsen sont
+			maintenant correctes.
 			</action>
 			<action dev="jourdren" type="fix">
-				Correction du bogue de lecture des fichiers ".par".
+			Correction du bogue de lecture des fichiers ".par".
 			</action>
 			<action dev="jourdren" type="add">
-				Choix automatique de la taille des cuboids.
+			Choix automatique de la taille des cuboids.
 			</action>
 			<action dev="jourdren" type="update">
-				Fixe le fond des représentation 3D en noir, ajout d'un
-				brouillard.
+			Fixe le fond des représentation 3D en noir, ajout d'un
+			brouillard.
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.16" date="2006-09-13">
 			<action dev="jourdren" type="update">
 				Optimize computation.
 			</action>
 			<action dev="jourdren" type="update">
-				Change the format of ".par" files. Older files still usable.
+				Change the format of ".par" files. Older files still
+				usable.
 			</action>
 			<action dev="jourdren" type="add">
-				Add a header and a column of maximal distances in the result 
-				file.
+				Add a header and a column of maximal distances in the
+				result file.
 			</action>
 			<action dev="jourdren" type="add">
 				Add a scale in RGL visualization.
@@ -954,185 +1013,190 @@
 				Update distance calculation.
 			</action>
 			<action dev="jourdren" type="add">
-				Add new results files : ".iv" files that contains intensities 
-				and volumes of mito, RNA and cuboids.
+				Add new results files : ".iv" files that contains
+				intensities and volumes of mito, RNA and cuboids.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.16" date="2006-09-13">
 			<action dev="jourdren" type="update">
-				Optimisation des calculs.
+			Optimisation des calculs.
 			</action>
 			<action dev="jourdren" type="update">
-				Changement du format des fichiers .par. Les fichiers
-				utilisant l'ancien format reste utilisables.
+			Changement du format des fichiers .par. Les fichiers
+			utilisant l'ancien format reste utilisables.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout dans le fichier de resultats d'un entete et d'une
-				colonne des distances maximales.
+			Ajout dans le fichier de resultats d'un entete et d'une
+			colonne des distances maximales.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout d'une échelle dans les représentations RGL.
+			Ajout d'une échelle dans les représentations RGL.
 			</action>
 			<action dev="jourdren" type="update">
-				Deplacement du générateur de code RGL dans une unique
-				classe.
+			Deplacement du générateur de code RGL dans une unique
+			classe.
 			</action>
 			<action dev="jourdren" type="add">
-				Mise en place d'une methode de calcul des distances
-				correcte.
+			Mise en place d'une methode de calcul des distances
+			correcte.
 			</action>
 			<action dev="jourdren" type="add">
-				Creation de nouveau fichiers (.iv) contenant les
-				intensités et les volumes des mitos, messagers et
-				cuboids.
+			Creation de nouveau fichiers (.iv) contenant les
+			intensités et les volumes des mitos, messagers et
+			cuboids.
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.15" date="2006-06-20">
 			<action dev="jourdren" type="add">
 				Add middle points in 3D visualization.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.15" date="2006-06-20">
 			<action dev="jourdren" type="add">
-				Insertion de points intermediaires pour l'affichage 3d.
+			Insertion de points intermediaires pour l'affichage 3d.
 			</action>
-		</release-->
+			</release-->
 
 
 		<release version="0.14" date="2006-06-16">
 			<action dev="jourdren" type="add">
-				New method to test if a barycenter of a RNA is in a mito when 
-				distances &lt; 1.
+				New method to test if a barycenter of a RNA is in a mito
+				when distances &lt; 1.
 			</action>
 			<action dev="jourdren" type="fix">
 				Fix nClass bug in "calc.R".
 			</action>
 			<action dev="jourdren" type="add">
-				The size of the points in 3D visualization can be modified.
+				The size of the points in 3D visualization can be
+				modified.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.14" date="2006-06-16">
 			<action dev="jourdren" type="add">
-				Nouvelle methode pour tester si un barycentre d'arn
-				appartient à une mito pour des distances inférieure à 1.
+			Nouvelle methode pour tester si un barycentre d'arn
+			appartient à une mito pour des distances inférieure à 1.
 			</action>
 			<action dev="jourdren" type="fix">
-				Correction bogue nClass dans calc.R
+			Correction bogue nClass dans calc.R
 			</action>
 			<action dev="jourdren" type="add">
-				La taille des points sur la représentation 3D est
-				modifiable
+			La taille des points sur la représentation 3D est
+			modifiable
 			</action>
 			<action dev="jourdren" type="add">
-				Le décallage de l'affichage fonctionne aussi pour les
-				surfaces 3D.
+			Le décallage de l'affichage fonctionne aussi pour les
+			surfaces 3D.
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.13" date="2006-06-15">
 			<action dev="jourdren" type="add">
-				Autoloading of RGL when execute R script for show particles in 3D.
+				Autoloading of RGL when execute R script for show
+				particles in 3D.
 			</action>
 			<action dev="jourdren" type="add">
-				Add a variable in R script to disable surfaces and barycenter 
-				in 3D visualization.
+				Add a variable in R script to disable surfaces and
+				barycenter in 3D visualization.
 			</action>
 			<action dev="jourdren" type="update">
-				Optimize the speed of the search of duplicated points when 
-				reading ".par" files.
+				Optimize the speed of the search of duplicated points
+				when reading ".par" files.
 			</action>
 			<action dev="jourdren" type="add">
 				Option for replace points by spheres.
 			</action>
 			<action dev="jourdren" type="add">
-				The number of classes can be set in parameter in "calc.R".
+				The number of classes can be set in parameter in
+				"calc.R".
 			</action>
 			<action dev="jourdren" type="update">
 				Included RNA in mito have negative distances.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.13" date="2006-06-15">
 			<action dev="jourdren" type="add">
-				Chargement automatique de rgl lors de l'execution des
-				scripts R d'affichage des particles 3D.
+			Chargement automatique de rgl lors de l'execution des
+			scripts R d'affichage des particles 3D.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de variable pour désactiver l'affichage des
-				surfaces et des centres et barycentres.
+			Ajout de variable pour désactiver l'affichage des
+			surfaces et des centres et barycentres.
 			</action>
 			<action dev="jourdren" type="update">
-				Optimisation de la vitesse de vérification de points
-				doublon lors de la lecture des fichiers .par
+			Optimisation de la vitesse de vérification de points
+			doublon lors de la lecture des fichiers .par
 			</action>
 			<action dev="jourdren" type="add">
-				Option pour remplacer les points par des spheres.
+			Option pour remplacer les points par des spheres.
 			</action>
 			<action dev="jourdren" type="add">
-				Le nombre de classes peut être passé en parametre dans
-				calc.R.
+			Le nombre de classes peut être passé en parametre dans
+			calc.R.
 			</action>
 			<action dev="jourdren" type="update">
-				Les distances de messagers inclus dans les mitos sont
-				négatives.
+			Les distances de messagers inclus dans les mitos sont
+			négatives.
 			</action>
 			<action dev="jourdren" type="add">
-				On peut spécifier un décalage des objets 3d pour les
-				representation des particles 3D
+			On peut spécifier un décalage des objets 3d pour les
+			representation des particles 3D
 			</action>
-		</release-->
+			</release-->
 
 
 		<release version="0.12" date="2006-06-14">
 			<action dev="jourdren" type="fix">
-				Fix a bug in 3D segmentation: intersection tests was doing 
-				with bad particles 2D in the first segmentations.
+				Fix a bug in 3D segmentation: intersection tests was
+				doing with bad particles 2D in the first segmentations.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.12" date="2006-06-14">
 			<action dev="jourdren" type="fix">
-				Correction d'un bogue lors de la segmentation. Les tests
-				d'intersections n'était pas effectués entre les bonnes
-				particules 2D lors des premieres segmentations.
+			Correction d'un bogue lors de la segmentation. Les tests
+			d'intersections n'était pas effectués entre les bonnes
+			particules 2D lors des premieres segmentations.
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.11" date="2006-06-13">
 			<action dev="jourdren" type="fix">
-				Fix bug in computation of distances between RNA and mito.
+				Fix bug in computation of distances between RNA and
+				mito.
 			</action>
 			<action dev="jourdren" type="fix">
-				Remove duplicated points in Particles3D. 
+				Remove duplicated points in Particles3D.
 			</action>
 			<action dev="jourdren" type="add">
 				Add a setting to fix the size of a pixel.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.11" date="2006-06-13">
 			<action dev="jourdren" type="fix">
-				Correction du bogue concernant le calcul des distances
-				entre les messagers et les mitochondries.
+			Correction du bogue concernant le calcul des distances
+			entre les messagers et les mitochondries.
 			</action>
 			<action dev="jourdren" type="fix">
-				Suppression des points qui font doublons dans les
-				particules (uniquement dans le programme de calcul des
-				distances).
+			Suppression des points qui font doublons dans les
+			particules (uniquement dans le programme de calcul des
+			distances).
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout d'une zone de texte pour fixer la taille d'un
-				pixel
+			Ajout d'une zone de texte pour fixer la taille d'un
+			pixel
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.10" date="2006-06-13">
 			<action dev="jourdren" type="fix">
-				Fix the bog that removing Particles3D when adding to itself.
+				Fix the bog that removing Particles3D when adding to
+				itself.
 			</action>
 			<action dev="jourdren" type="add">
 				Show in 2D, segmented Particles 3D.
@@ -1141,20 +1205,20 @@
 				Windows Look and Feel under Windows (don't work).
 			</action>
 		</release>
-		
+
 		<!-- release version="0.10" date="2006-06-13">
 			<action dev="jourdren" type="fix">
-				Correction du bogue supprimant des particles 3D lors
-				d'une tentative d'ajout à elle même.
+			Correction du bogue supprimant des particles 3D lors
+			d'une tentative d'ajout à elle même.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de la possiblité d'affiche en 2D les particles 3D
-				segmentées
+			Ajout de la possiblité d'affiche en 2D les particles 3D
+			segmentées
 			</action>
 			<action dev="jourdren" type="add">
-				Windows Look and Feel under Windows (don't work).
+			Windows Look and Feel under Windows (don't work).
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.9" date="2006-05-18">
 			<action dev="jourdren" type="add">
@@ -1164,17 +1228,17 @@
 				Optimize computation of cuboids. Now very very fast.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.9" date="2006-05-18">
 			<action dev="jourdren" type="add">
-				Ajout des seuils utilisés dans les fichiers ".par".
+			Ajout des seuils utilisés dans les fichiers ".par".
 			</action>
 			<action dev="jourdren" type="update">
-				Optimisation de la création des cuboids. Maintenant
-				beaucoup beaucoup plus rapide.
+			Optimisation de la création des cuboids. Maintenant
+			beaucoup beaucoup plus rapide.
 			</action>
-		</release-->
-		
+			</release-->
+
 
 		<release version="0.8" date="2006-05-12">
 			<action dev="jourdren" type="fix">
@@ -1184,56 +1248,57 @@
 				Optimize computation of cuboids.
 			</action>
 			<action dev="jourdren" type="update">
-				Reorder the task : R graph are created after reading 
-				of ".par" files and computation of cuboids.
+				Reorder the task : R graph are created after reading of
+				".par" files and computation of cuboids.
 			</action>
 			<action dev="jourdren" type="add">
-				Add new methods in Particles3D to write R code immediately 
-				in a file to save memory.
+				Add new methods in Particles3D to write R code
+				immediately in a file to save memory.
 			</action>
 			<action dev="jourdren" type="add">
-				Show an error message when the directory or the files to 
+				Show an error message when the directory or the files to
 				handle doesn't exists.
 			</action>
 			<action dev="jourdren" type="add">
-				Add a progress bar to show the progress of the computation.
+				Add a progress bar to show the progress of the
+				computation.
 			</action>
 			<action dev="jourdren" type="add">
 				Refresh the GUI while computation.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.8" date="2006-05-12">
 			<action dev="jourdren" type="fix">
-				Correction du bogue d'ouverture des fichiers.
+			Correction du bogue d'ouverture des fichiers.
 			</action>
 			<action dev="jourdren" type="update">
-				Optimisation du calcul des cuboids.
+			Optimisation du calcul des cuboids.
 			</action>
 			<action dev="jourdren" type="update">
-				Réorganisation de l'ordre des taches (les graphiques R
-				sont crées juste après lecture des fichiers ".par" (et
-				calcul des cuboids).
+			Réorganisation de l'ordre des taches (les graphiques R
+			sont crées juste après lecture des fichiers ".par" (et
+			calcul des cuboids).
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de nouvelles méthodes dans Particle3D Afin
-				d'écrire la sortie des graphiques R directement dans un
-				fichiers afin d'économiser de la mémoire vive.
+			Ajout de nouvelles méthodes dans Particle3D Afin
+			d'écrire la sortie des graphiques R directement dans un
+			fichiers afin d'économiser de la mémoire vive.
 			</action>
 			<action dev="jourdren" type="add">
-				Affiche un message d'erreur quand le repertoire à
-				traiter n'existe pas ou qu'aucun fichier à traiter
-				n'existe
+			Affiche un message d'erreur quand le repertoire à
+			traiter n'existe pas ou qu'aucun fichier à traiter
+			n'existe
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout d'une barre de statut avec progression en
-				pourcentage pour le calcul des cuboids
+			Ajout d'une barre de statut avec progression en
+			pourcentage pour le calcul des cuboids
 			</action>
 			<action dev="jourdren" type="add">
-				L'interface est maintenant rafraichie lors des
-				traitements.
+			L'interface est maintenant rafraichie lors des
+			traitements.
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.7" date="2006-05-11">
 			<action dev="jourdren" type="update">
@@ -1243,98 +1308,101 @@
 				The extension of output file of the plugin is ".par".
 			</action>
 			<action dev="jourdren" type="add">
-				The ".par" file contains information about the name and 
+				The ".par" file contains information about the name and
 				the last modified date of the original image.
 			</action>
 			<action dev="jourdren" type="add">
-				Add the name and the version of application in the ".par" file.
+				Add the name and the version of application in the
+				".par" file.
 			</action>
 			<action dev="jourdren" type="update">
 				Remove debug printings.
 			</action>
 		</release>
-		
-		
+
+
 		<!-- release version="0.7" date="2006-05-11">
 			<action dev="jourdren" type="update">
-				Nouveau nom pour Distance : Corsen
+			Nouveau nom pour Distance : Corsen
 			</action>
 			action>
 			<action dev="jourdren" type="update">
-				Le fichier de sortie du plugin imageJ se termine par
-				l'extension ".par"
+			Le fichier de sortie du plugin imageJ se termine par
+			l'extension ".par"
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout dans le fichier de sortie d'imageJ des information
-				sur le nom et la date de dernière modification de
-				l'image initiale.
+			Ajout dans le fichier de sortie d'imageJ des information
+			sur le nom et la date de dernière modification de
+			l'image initiale.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout dans le fichier de sortie d'ImageJ du nom et de la
-				version du programme
+			Ajout dans le fichier de sortie d'ImageJ du nom et de la
+			version du programme
 			</action>
 			<action dev="jourdren" type="update">
-				Supression de la sortie de deboguage.
+			Supression de la sortie de deboguage.
 			</action>
-		</release-->
+			</release-->
 
 		<release version="0.6" date="2006-05-05">
 			<action dev="jourdren" type="update">
 				Particles with null intensity are not saved.
 			</action>
 			<action dev="jourdren" type="add">
-				The size of the cuboids can now be defined in the settings.
+				The size of the cuboids can now be defined in the
+				settings.
 			</action>
 			<action dev="jourdren" type="add">
 				The Z scale can be changed.
 			</action>
 			<action dev="jourdren" type="add">
-				The extension of the image file is not contain in the output 
-				file of the plugin.
+				The extension of the image file is not contain in the
+				output file of the plugin.
 			</action>
 			<action dev="jourdren" type="add">
 				Add another graph in R.
 			</action>
 			<action dev="jourdren" type="add">
-				Graph and summaries are now optional.
-				Les graphiques et les résumés sont optionnels.
+				Graph and summaries are now optional. Les graphiques et
+				les résumés sont optionnels.
 			</action>
 			<action dev="jourdren" type="add">
 				R script is now commented.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.6" date="2006-05-05">
 			<action dev="jourdren" type="update">
-				Les particules dont l'intensitée est nulle ne sont plus
-				enregistrées.
+			Les particules dont l'intensitée est nulle ne sont plus
+			enregistrées.
 			</action>
 			<action dev="jourdren" type="add">
-				La taille des cubes est paramétrable dans Distance.
+			La taille des cubes est paramétrable dans Distance.
 			</action>
 			<action dev="jourdren" type="add">
-				Le rapport des distances en Z est modifiable dans
-				distance
+			Le rapport des distances en Z est modifiable dans
+			distance
 			</action>
 			<action dev="jourdren" type="add">
-				L'extension du fichier de l'image n'apparait plus dans
-				le nom du fichier en sortie du plugin ImageJ.
+			L'extension du fichier de l'image n'apparait plus dans
+			le nom du fichier en sortie du plugin ImageJ.
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de graphique supplémentaire dans R.
+			Ajout de graphique supplémentaire dans R.
 			</action>
 			<action dev="jourdren" type="add">
-				Les graphiques et les résumés sont optionnels.
+			Les graphiques et les résumés sont optionnels.
 			</action>
 			<action dev="jourdren" type="add">
-				Le script R est commenté.
+			Le script R est commenté.
 			</action>
-		</release-->
+			</release-->
 
 
 		<release version="0.5" date="2006-05-04">
 			<action dev="jourdren" type="add">
-				Add a R script to analyse the outputs of Distances applications.
+				Add a R script to analyse the outputs of Distances
+				applications.
 			</action>
 			<action dev="jourdren" type="add">
 				Only one R file to generate each type of particles.
@@ -1346,53 +1414,54 @@
 				Use ".result" for the complete result file.
 			</action>
 			<action dev="jourdren" type="add">
-				In Distance application, a directory can be selected to run the
-				application in batch mode.
+				In Distance application, a directory can be selected to
+				run the application in batch mode.
 			</action>
 			<action dev="jourdren" type="add">
 				In ImageJ plugin the dialogbox in now optional.
 			</action>
 		</release>
-		
+
 		<!-- release version="0.5" date="2006-05-04">
 			<action dev="jourdren" type="add">
-				Script R pour analyser automatiquement les sorties de
-				Distance
+			Script R pour analyser automatiquement les sorties de
+			Distance
 			</action>
 			<action dev="jourdren" type="add">
-				Un seul fichier (.R) est générer pour chaque type de
-				particule
+			Un seul fichier (.R) est générer pour chaque type de
+			particule
 			</action>
 			<action dev="jourdren" type="add">
-				L'extension ".data" est utilisé pour les données à
-				analyser ultérieurement dans R
+			L'extension ".data" est utilisé pour les données à
+			analyser ultérieurement dans R
 			</action>
 			<action dev="jourdren" type="add">
-				L'extension ".result" pour le fichier de résultat
-				complet
+			L'extension ".result" pour le fichier de résultat
+			complet
 			</action>
 			<action dev="jourdren" type="add">
-				Dans Distance, on peut maintenant spécifier un
-				répertoire. Tous les fichiers répondant à un certain
-				motif seront analysés.
+			Dans Distance, on peut maintenant spécifier un
+			répertoire. Tous les fichiers répondant à un certain
+			motif seront analysés.
 			</action>
 			<action dev="jourdren" type="add">
-				Dans le plugin, la boite de confirmation de sauvegarde
-				est maintenant optionnelle
+			Dans le plugin, la boite de confirmation de sauvegarde
+			est maintenant optionnelle
 			</action>
-		</release-->
+			</release-->
 
 
 		<release version="0.4">
 			<action dev="jourdren" type="add">
-				Particles3D object contains all objects points with intensities.
+				Particles3D object contains all objects points with
+				intensities.
 			</action>
 			<action dev="jourdren" type="update">
 				Opimize memory for storing points.
 			</action>
 			<action dev="jourdren" type="add">
-				Automaticaly generation of outputs filenames (with parameters 
-				in settings of the algorithm).
+				Automaticaly generation of outputs filenames (with
+				parameters in settings of the algorithm).
 			</action>
 			<action dev="jourdren" type="add">
 				Add computation of barycenters.
@@ -1407,47 +1476,47 @@
 				Generate R source code to visualize 3D objects with RGl.
 			</action>
 		</release>
-		
-		
+
+
 		<!-- release version="0.4">
 			<action dev="jourdren" type="add">
-				Les objets particle 3D contienent tous les points de
-				l'objet avec leurs intensités.
+			Les objets particle 3D contienent tous les points de
+			l'objet avec leurs intensités.
 			</action>
 			<action dev="jourdren" type="update">
-				Gestion plus efficace de la mémoire pour le stockage des
-				points
+			Gestion plus efficace de la mémoire pour le stockage des
+			points
 			</action>
 			<action dev="jourdren" type="add">
-				Generation automatique du nom de fichier de résultats
-				(avec option dans les parametres de l'algorithme)
+			Generation automatique du nom de fichier de résultats
+			(avec option dans les parametres de l'algorithme)
 			</action>
 			<action dev="jourdren" type="add">
-				Calcul du barycentre des particle3D
+			Calcul du barycentre des particle3D
 			</action>
 			<action dev="jourdren" type="add">
-				Calcul des barycentre des cuboids
+			Calcul des barycentre des cuboids
 			</action>
 			<action dev="jourdren" type="add">
-				calcul des distances entre les cubes composant les ARN
+			calcul des distances entre les cubes composant les ARN
 			</action>
 			<action dev="jourdren" type="add">
-				Calcul des barycentre des cuboids
+			Calcul des barycentre des cuboids
 			</action>
 			<action dev="jourdren" type="add">
-				calcul des distances entre les cubes composant les ARN
+			calcul des distances entre les cubes composant les ARN
 			</action>
 			<action dev="jourdren" type="add">
-				Generation automatique de fichiers source R pour
-				visualiser les amats de points
+			Generation automatique de fichiers source R pour
+			visualiser les amats de points
 			</action>
-		</release-->
+			</release-->
 
 
 
-		
 
-		
+
+
 
 		<release version="0.3">
 			<action dev="jourdren" type="add">
@@ -1469,22 +1538,22 @@
 
 		<!-- release version="0.3">
 			<action dev="jourdren" type="add">
-				Test de l'inclusion des ARN dans les mito
+			Test de l'inclusion des ARN dans les mito
 			</action>
 			<action dev="jourdren" type="add">
-				Ajout de la distance minimale pour chaque ARN
+			Ajout de la distance minimale pour chaque ARN
 			</action>
 			<action dev="jourdren" type="add">
-				Sauve le répertoire courant dans l'application Distance
+			Sauve le répertoire courant dans l'application Distance
 			</action>
 			<action dev="jourdren" type="add">
-				Fait la somme des intensités pour chaque objet
+			Fait la somme des intensités pour chaque objet
 			</action>
 			<action dev="jourdren" type="add">
-				Utilise les algorirthme d'Image-J pour le calcul des
-				aires
+			Utilise les algorirthme d'Image-J pour le calcul des
+			aires
 			</action>
-		</release-->
+			</release-->
 
 
 		<release version="0.2">
@@ -1492,29 +1561,30 @@
 				Add a GUI for distance computation.
 			</action>
 			<action dev="jourdren" type="add">
-				Use ImageJ global parameters to calc distances (e.g. 1px=0.1mm).
+				Use ImageJ global parameters to calc distances (e.g.
+				1px=0.1mm).
 			</action>
 		</release>
-		
+
 		<!-- release version="0.2">
 			<action dev="jourdren" type="add">
-				Ajout d'une interface graphique pour le calcul des
-				distances
+			Ajout d'une interface graphique pour le calcul des
+			distances
 			</action>
 			<action dev="jourdren" type="add">
-				Utilise les parametres globaux d'image-J pour calculer
-				les distances (1px=0.1mm par ex.)
+			Utilise les parametres globaux d'image-J pour calculer
+			les distances (1px=0.1mm par ex.)
 			</action>
-		</release-->
-		
+			</release-->
+
 
 		<release version="0.1" date="" desc="Initial release">
 			<action dev="jourdren" type="add">Initial import.</action>
 		</release>
-		
+
 		<!--  release version="0.1" date="" desc="Initial release">
 			<action dev="jourdren" type="add">Version initiale.</action>
-		</release-->
+			</release-->
 
 	</body>
 </document>

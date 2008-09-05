@@ -6,7 +6,7 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.37</version>
+	<version>0.38</version>
 	<name>Corsen</name>
 	<description>
 		A tool to calc distance between mitochondria and RNA
@@ -43,8 +43,8 @@
 			<email>mgarcia 0 biologie ens fr</email>
 			<url />
 			<organization>
-				Ecole Normale Superieure Laboratoire de Génétique
-				Moléculaire
+				Ecole Normale Superieure Laboratoire de Gï¿½nï¿½tique
+				Molï¿½culaire
 			</organization>
 			<organizationUrl>
 				http://www.biologie.ens.fr/lgmgml
@@ -66,8 +66,8 @@
 			<!--<email></email>-->
 			<!--<email>see http://transcriptome.ens.fr/sgdb/presentation/people.php</email>-->
       			<organization>
-				Ecole Normale Superieure Laboratoire de Génétique
-				Moléculaire
+				Ecole Normale Superieure Laboratoire de Gï¿½nï¿½tique
+				Molï¿½culaire
 			</organization>
 			<organisationUrl>http://www.biologie.ens.fr/lgmgml</organisationUrl>
 			<roles>
@@ -578,7 +578,7 @@
 							ENS Microarray Platform Bioinformatic Team
 						</dnameCn>
 						<dnameOu>Microarray Platform</dnameOu>
-						<dnameO>École Normale Supérieure</dnameO>
+						<dnameO>ï¿½cole Normale Supï¿½rieure</dnameO>
 						<dnameL>Paris</dnameL>
 						<dnameSt>Ile de France</dnameSt>
 						<dnameC>fr</dnameC>
