@@ -241,7 +241,7 @@ public final class Particle3D {
    * Set the type of the particle.
    * @param type The particle type to set
    */
-  public void setType(ParticleType type) {
+  public void setType(final ParticleType type) {
     this.type = type;
   }
 
@@ -564,6 +564,11 @@ public final class Particle3D {
     return p1.distance(p2);
   }
 
+  /**
+   * Get the surface points of a slice of the particle
+   * @param particle input particle
+   * @return a map of float and Particle2D
+   */
   public static final Map<Float, Particle2D> getSurfacePointSlices(
       final Particle3D particle) {
 
@@ -839,10 +844,18 @@ public final class Particle3D {
     return sb.toString();
   }
 
+  /**
+   * Get the inners points of the the particles.
+   * @return a list of Point3D
+   */
   public AbstractListPoint3D getInnerPoints() {
     return this.unmodifiableInnerPoints;
   }
 
+  /**
+   * Get the surface points of the the particles.
+   * @return a list of Point3D
+   */
   public AbstractListPoint3D getSurfacePoints() {
     return this.unmodifiableSurfacePoints;
   }
@@ -1114,6 +1127,8 @@ public final class Particle3D {
 
   /**
    * Public constructor
+   * @param pixelWidth the pixel width
+   * @param pixelHeight the pixel height
    * @param pixelDepth The voxel Depth
    */
   public Particle3D(final float pixelWidth, final float pixelHeight,

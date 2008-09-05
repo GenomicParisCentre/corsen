@@ -33,66 +33,29 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ImageJImageCreate {
+/**
+ * This class create test particles.
+ * @author Laurent Jourdren
+ */
+public final class ImageJImageCreate {
 
-  public static ImagePlus createCubeImage(boolean third) {
+  private static final int LEN = 50;
+  private static final int INTENSITY = 100;
+  private static final int MIN_THRESHOLD = 1;
+  private static final int MAX_THRESHOLD = 2000;
 
-    ImageStack is = new ImageStack(41, 41);
+  private static ImagePlus createHoriPoints2(final int step) {
 
-    for (int k = 0; k < 41; k++) {
+    ImageStack is = new ImageStack(LEN, LEN);
 
-      ImageProcessor ip = new ShortProcessor(41, 41);
+    for (int k = 0; k < (LEN / step) + 1; k++) {
 
-      if (k >= 10 && k <= 31)
-        for (int i = 10; i < 31; i++)
-          for (int j = 10; j < 31; j++)
-            ip.set(i, j, 100);
-
-      is.addSlice("" + k, ip);
-    }
-
-    ImagePlus ipl = new ImagePlus("cube", is);
-
-    return ipl;
-  }
-
-  public static ImagePlus createHoriPoints() {
-
-    ImageStack is = new ImageStack(41, 41);
-
-    for (int k = 0; k < 41; k++) {
-
-      ImageProcessor ip = new ShortProcessor(41, 41);
-
-      if (k == 20)
-        for (int i = 0; i < 41; i = i + 2)
-          ip.set(i, 20, 100);
-
-      is.addSlice("" + k, ip);
-    }
-
-    ImagePlus ipl = new ImagePlus("cube", is);
-
-    return ipl;
-  }
-
-  public static ImagePlus createHoriPoints2(final int step) {
-
-    ImageStack is = new ImageStack(50, 50);
-
-    for (int k = 0; k < (50 / step) + 1; k++) {
-
-      ImageProcessor ip = new ShortProcessor(50, 50);
-
-      boolean draw = true;
+      ImageProcessor ip = new ShortProcessor(LEN, LEN);
 
       if (k == 25 / step)
         for (int i = 1; i < 50; i = i + step)
-          if ((i - 1) % (6 / step) == 0) {
-            ip.set(i, 25, 100);
-            draw = false;
-          } else
-            draw = true;
+          if ((i - 1) % (6 / step) == 0)
+            ip.set(i, 25, INTENSITY);
 
       is.addSlice("" + k / step, ip);
     }
@@ -102,20 +65,16 @@ public class ImageJImageCreate {
     return ipl;
   }
 
-  public static ImagePlus createVertPoints2(final int step) {
+  private static ImagePlus createVertPoints2(final int step) {
 
-    ImageStack is = new ImageStack(50, 50);
+    ImageStack is = new ImageStack(LEN, LEN);
 
-    int count = 0;
+    for (int k = 0; k < ((LEN + 1) / step) + 1; k++) {
 
-    for (int k = 0; k < ((50 + 1) / step) + 1; k++) {
+      ImageProcessor ip = new ShortProcessor(LEN, LEN);
 
-      ImageProcessor ip = new ShortProcessor(50, 50);
-
-      if ((k - 1) % (6 / step) == 0) {
-        ip.set(25, 25, 100);
-        System.out.println((++count) + " k=" + k + "\t" + (k * step));
-      }
+      if ((k - 1) % (6 / step) == 0)
+        ip.set(25, 25, INTENSITY);
 
       is.addSlice("" + k, ip);
     }
@@ -125,20 +84,20 @@ public class ImageJImageCreate {
     return ipl;
   }
 
-  public static ImagePlus createCubeImage2(final int step) {
+  private static ImagePlus createCubeImage2(final int step) {
 
-    ImageStack is = new ImageStack(50, 50);
+    ImageStack is = new ImageStack(LEN, LEN);
 
     int count = 0;
 
-    for (int k = 0; k < 50 / step; k++) {
+    for (int k = 0; k < LEN / step; k++) {
 
-      ImageProcessor ip = new ShortProcessor(50, 50);
+      ImageProcessor ip = new ShortProcessor(LEN, LEN);
 
       if (k > 12 / step && k <= 36 / step + 1)
         for (int i = 13; i < 38; i++)
           for (int j = 13; j < 38; j++) {
-            ip.set(i, j, 100);
+            ip.set(i, j, INTENSITY);
             count++;
           }
 
@@ -151,7 +110,7 @@ public class ImageJImageCreate {
     return ipl;
   }
 
-  public static Particles3D convertToParticles(final ImagePlus ip,
+  private static Particles3D convertToParticles(final ImagePlus ip,
       float pixelWidth, final float pixelHeight, final float pixelDepth) {
 
     if (ip == null)
@@ -168,7 +127,8 @@ public class ImageJImageCreate {
 
       final ImageProcessor ipr = is.getProcessor(i + 1);
 
-      ipr.setThreshold(1, 2000, ImageProcessor.NO_LUT_UPDATE);
+      ipr.setThreshold(MIN_THRESHOLD, MAX_THRESHOLD,
+          ImageProcessor.NO_LUT_UPDATE);
 
       seg3DRunner.addParticles2DForSegmentation3D(s2Dr.getParticles2D(ipr), i,
           pixelDepth, ip.getTitle());
@@ -187,25 +147,45 @@ public class ImageJImageCreate {
     ImagePlus hori = createHoriPoints2(step);
     ImagePlus vert = createVertPoints2(step);
 
-    cube.getProcessor().setThreshold(1, 2000, ImageProcessor.NO_LUT_UPDATE);
-    hori.getProcessor().setThreshold(1, 2000, ImageProcessor.NO_LUT_UPDATE);
-    vert.getProcessor().setThreshold(1, 2000, ImageProcessor.NO_LUT_UPDATE);
+    cube.getProcessor().setThreshold(MIN_THRESHOLD, MAX_THRESHOLD,
+        ImageProcessor.NO_LUT_UPDATE);
+    hori.getProcessor().setThreshold(MIN_THRESHOLD, MAX_THRESHOLD,
+        ImageProcessor.NO_LUT_UPDATE);
+    vert.getProcessor().setThreshold(MIN_THRESHOLD, MAX_THRESHOLD,
+        ImageProcessor.NO_LUT_UPDATE);
 
     Particles3D cubeParticles = convertToParticles(cube, 1, 1, 1);
     Particles3D horiParticles = convertToParticles(hori, 1, 1, 1);
     Particles3D vertParticles = convertToParticles(vert, 1, 1, 1);
 
-    cubeParticles.saveParticles(new FileOutputStream(new File(
-        "/home/jourdren/Desktop/bug/cube" + step + ".par")));
-    horiParticles.saveParticles(new FileOutputStream(new File(
-        "/home/jourdren/Desktop/bug/hori" + step + ".par")));
-    vertParticles.saveParticles(new FileOutputStream(new File(
-        "/home/jourdren/Desktop/bug/vert" + step + ".par")));
+    cubeParticles.saveParticles(new FileOutputStream(new File("cube"
+        + step + ".par")));
+    horiParticles.saveParticles(new FileOutputStream(new File("hori"
+        + step + ".par")));
+    vertParticles.saveParticles(new FileOutputStream(new File("vert"
+        + step + ".par")));
 
   }
 
-  public static final void main(final String[] args)
-      throws FileNotFoundException, IOException {
+  //
+  // Constructor
+  //
+
+  private ImageJImageCreate() {
+  }
+
+  //
+  // Main method
+  //
+
+  /**
+   * Main method.
+   * @param args command line arguments
+   * @exception FileNotFoundException if can create output files
+   * @exception IOException if can create output files
+   */
+  public static void main(final String[] args) throws FileNotFoundException,
+      IOException {
 
     createFiles(1);
     createFiles(2);

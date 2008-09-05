@@ -337,8 +337,8 @@ public class DistancesCalculator {
 
     final long start = System.currentTimeMillis();
 
-    final Particles3D particlesA = this.result.getMessengersParticles();
-    final Particles3D particlesB = this.result.getMitosParticles();
+    final Particles3D particlesA = this.result.getParticlesA();
+    final Particles3D particlesB = this.result.getParticlesB();
 
     if (particlesA == null || particlesB == null)
       return false;

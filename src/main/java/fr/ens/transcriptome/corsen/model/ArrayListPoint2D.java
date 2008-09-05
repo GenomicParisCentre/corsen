@@ -24,6 +24,10 @@ package fr.ens.transcriptome.corsen.model;
 
 import java.util.ArrayList;
 
+/**
+ * This class define an implementation of AbstractListPoint2D using ArrayLists.
+ * @author Laurent Jourdren
+ */
 public class ArrayListPoint2D extends AbstractListPoint2D {
 
   private final ArrayList<Float> xValues = new ArrayList<Float>();
@@ -48,7 +52,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
      * Get the X coordinate of the point.
      * @return the X coordinate of the point
      */
-    public final float getX() {
+    public float getX() {
 
       return this.listPoints.xValues.get(this.index);
     }
@@ -57,7 +61,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
      * Get the Y coordinate of the point.
      * @return the Y coordinate of the point
      */
-    public final float getY() {
+    public float getY() {
 
       return this.listPoints.yValues.get(this.index);
     }
@@ -66,7 +70,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
      * Get the intensity of the point.
      * @return the intensity of the point
      */
-    public final int getI() {
+    public int getI() {
 
       return this.listPoints.iValues.get(this.index);
     }
@@ -79,7 +83,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
      * Set the value for the X coordinate.
      * @param x The value for the X coordinate
      */
-    public final void setX(final float x) {
+    public void setX(final float x) {
 
       this.listPoints.xValues.set(this.index, x);
     }
@@ -88,7 +92,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
      * Set the value for the Y coordinate.
      * @param y The value for the Y coordinate
      */
-    public final void setY(final float y) {
+    public void setY(final float y) {
 
       this.listPoints.yValues.set(this.index, y);
     }
@@ -97,7 +101,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
      * Set the value for the intensity of the point.
      * @param i The value of the intensity of the point
      */
-    public final void setI(final int i) {
+    public void setI(final int i) {
 
       this.listPoints.iValues.set(this.index, i);
     }
@@ -169,7 +173,8 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
   }
 
   /**
-   * Add a point to the list
+   * Set a point to the list
+   * @param index the position of the point
    * @param x X coordinate of the point to add
    * @param y Y coordinate of the point to add
    * @param i The intensity of the point to add
@@ -185,6 +190,7 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
   /**
    * Add a point to the list.
    * @param p The point to add
+   * @return true if can add the point
    */
   public boolean add(final Point2D p) {
 
@@ -199,7 +205,6 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
    * @param index where add the new point
    * @param x X coordinate of the point to add
    * @param y Y coordinate of the point to add
-   * @param z Z coordinate of the point to add
    * @param i The intensity of the point to add
    */
   public final void add(final int index, final float x, final float y,
@@ -232,10 +237,12 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
   }
 
   /**
-   * Add a point to the list.
+   * Set a point to the list.
+   * @param index position of the point to set
    * @param p The point to add
+   * @return the old value of the point
    */
-  public final Point2D set(final int index, final Point2D p) {
+  public Point2D set(final int index, final Point2D p) {
 
     if (p == null)
       return null;
@@ -425,6 +432,9 @@ public class ArrayListPoint2D extends AbstractListPoint2D {
     return false;
   }
 
+  /**
+   * Clear all values of the list.
+   */
   public void clear() {
 
     this.xValues.clear();

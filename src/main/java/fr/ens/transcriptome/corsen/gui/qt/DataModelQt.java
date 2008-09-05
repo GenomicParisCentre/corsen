@@ -670,19 +670,19 @@ public class DataModelQt {
       break;
 
     case 2:
-      model = new IVModel(r.getMessengersParticles());
+      model = new IVModel(r.getParticlesA());
       break;
 
     case 3:
-      model = new IVModel(r.getCuboidsMessengersParticles());
+      model = new IVModel(r.getCuboidsParticlesA());
       break;
 
     case 4:
-      model = new IVModel(r.getMitosParticles());
+      model = new IVModel(r.getParticlesB());
       break;
 
     case 5:
-      model = new IVModel(r.getCuboidsMitosParticles());
+      model = new IVModel(r.getCuboidsParticlesB());
       break;
 
     default:
@@ -710,7 +710,7 @@ public class DataModelQt {
   /**
    * Save DataDouble of a view.
    * @param index The index of the view
-   * @param File File to save
+   * @param file File to save
    * @throws IOException IOException if an error occurs while writing data
    */
   public void saveView(final int index, final File file) throws IOException {
@@ -806,19 +806,19 @@ public class DataModelQt {
     switch (index) {
 
     case 2:
-      particlesToSave = r.getMessengersParticles();
+      particlesToSave = r.getParticlesA();
       break;
 
     case 3:
-      particlesToSave = r.getCuboidsMessengersParticles();
+      particlesToSave = r.getCuboidsParticlesA();
       break;
 
     case 4:
-      particlesToSave = r.getMitosParticles();
+      particlesToSave = r.getParticlesB();
       break;
 
     case 5:
-      particlesToSave = r.getCuboidsMitosParticles();
+      particlesToSave = r.getCuboidsParticlesB();
       break;
 
     default:
@@ -929,8 +929,8 @@ public class DataModelQt {
       if (!this.cacheImage.containsKey(2)) {
 
         final QImage img =
-            new ResultGraphs().createScatterPlot(r.getMessengersParticles(), r
-                .getMessengersParticles().getName()
+            new ResultGraphs().createScatterPlot(r.getParticlesA(), r
+                .getParticlesA().getName()
                 + " intensity/volume", settings.getUnit());
 
         if (img == null)
@@ -947,7 +947,7 @@ public class DataModelQt {
 
         final QImage img =
             new ResultGraphs().createScatterPlot(r
-                .getCuboidsMessengersParticles(), r.getMessengersParticles()
+                .getCuboidsParticlesA(), r.getParticlesA()
                 .getName()
                 + " cuboids intensity/volume", settings.getUnit());
 
@@ -964,8 +964,8 @@ public class DataModelQt {
       if (!this.cacheImage.containsKey(4)) {
 
         final QImage img =
-            new ResultGraphs().createScatterPlot(r.getMitosParticles(), r
-                .getMitosParticles().getName()
+            new ResultGraphs().createScatterPlot(r.getParticlesB(), r
+                .getParticlesB().getName()
                 + " intensity/volume", settings.getUnit());
 
         if (img == null)
@@ -981,8 +981,8 @@ public class DataModelQt {
       if (!this.cacheImage.containsKey(5)) {
 
         final QImage img =
-            new ResultGraphs().createScatterPlot(r.getCuboidsMitosParticles(),
-                r.getMitosParticles().getName() + " cuboids intensity/volume",
+            new ResultGraphs().createScatterPlot(r.getCuboidsParticlesB(),
+                r.getParticlesB().getName() + " cuboids intensity/volume",
                 settings.getUnit());
 
         if (img == null)

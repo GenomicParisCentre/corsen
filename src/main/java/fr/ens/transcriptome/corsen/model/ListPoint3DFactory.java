@@ -66,7 +66,7 @@ public final class ListPoint3DFactory {
    * Create a AbstractListPoint3D object.
    * @param xPrecision Precision for x values.
    * @param yPrecision Precision for y values.
-   * @param zPrecisionPrecision for z values.
+   * @param zPrecision Precision for z values.
    * @return a new AbstractListPoint3D object
    */
   public static AbstractListPoint3D createListPoint3D(final float xPrecision,
@@ -76,6 +76,16 @@ public final class ListPoint3DFactory {
       return new ArrayListPackedPoint3D(xPrecision, yPrecision, zPrecision);
 
     return new ArrayListPoint3D();
+  }
+
+  //
+  // Constructor
+  //
+
+  /**
+   * Private constructor.
+   */
+  private ListPoint3DFactory() {
   }
 
 }

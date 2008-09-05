@@ -388,22 +388,22 @@ public class CorsenQt extends QMainWindow {
     this.resultViewChanged(Integer.valueOf(this.mainWindowUi.resultViewComboBox
         .currentIndex()));
 
-    if (result == null || result.getCuboidsMessengersParticles() == null) {
+    if (result == null || result.getCuboidsParticlesA() == null) {
       mainWindowUi.particlesACuboidsRadioButton.setEnabled(false);
     } else
       mainWindowUi.particlesACuboidsRadioButton.setEnabled(true);
 
-    if (result == null || result.getMessengersParticles() == null) {
+    if (result == null || result.getParticlesA() == null) {
       mainWindowUi.particlesARadioButton.setEnabled(false);
     } else
       mainWindowUi.particlesARadioButton.setEnabled(true);
 
-    if (result == null || result.getCuboidsMitosParticles() == null) {
+    if (result == null || result.getCuboidsParticlesB() == null) {
       mainWindowUi.particlesBCuboidsRadioButton.setEnabled(false);
     } else
       mainWindowUi.particlesBCuboidsRadioButton.setEnabled(true);
 
-    if (result == null || result.getMitosParticles() == null) {
+    if (result == null || result.getParticlesB() == null) {
       mainWindowUi.particlesARadioButton.setEnabled(false);
     } else
       mainWindowUi.particlesARadioButton.setEnabled(true);
@@ -813,7 +813,7 @@ public class CorsenQt extends QMainWindow {
     if (mainWindowUi.launchAnalysisPushButton.isEnabled()) {
 
       if (this.models.getResult() == null
-          || this.models.getResult().getCuboidsMessengersParticles() == null)
+          || this.models.getResult().getCuboidsParticlesA() == null)
         return;
 
       mainWindowUi.imageLabel.setPixmap(this.models
@@ -1191,7 +1191,7 @@ public class CorsenQt extends QMainWindow {
 
   /**
    * Main method.
-   * @param application args
+   * @param args application arguments
    */
   public static void main(final String[] args) {
 

@@ -232,7 +232,7 @@ public class ViewOGL extends QGLWidget {
 
   /**
    * Set if particles can be drawed
-   * @param remakeObject The remakeObject to set
+   * @param okToDraw The remakeObject to set
    */
   public void setRemakeObject(boolean okToDraw) {
 
@@ -330,10 +330,10 @@ public class ViewOGL extends QGLWidget {
     if (this.legend == null) {
 
       final CorsenResult r = getResult();
-      if (r == null || r.getMessengersParticles() == null)
+      if (r == null || r.getParticlesA() == null)
         this.legend = "";
       else {
-        String unit = r.getMessengersParticles().getUnitOfLength();
+        String unit = r.getParticlesA().getUnitOfLength();
 
         this.legend = "Scale: 10 " + unit;
       }
@@ -512,9 +512,9 @@ public class ViewOGL extends QGLWidget {
 
       // this.gl.glColor3d(100, 0, 100);
 
-      if (r.getMessengersParticles() != null) {
+      if (r.getParticlesA() != null) {
 
-        final Particles3D pars = r.getMessengersParticles();
+        final Particles3D pars = r.getParticlesA();
         gl.glTranslated(-1 * pars.getWidth() * pars.getPixelWidth() / 2, -1
             * pars.getHeight() * pars.getPixelHeight() / 2, -1
             * pars.getZSlices() * pars.getPixelDepth() / 2);
@@ -541,24 +541,24 @@ public class ViewOGL extends QGLWidget {
       // Filters particles
       //
 
-      if (r.getMessengersParticles() != null && !isDrawNoMessengers()) {
+      if (r.getParticlesA() != null && !isDrawNoMessengers()) {
 
-        if (r.getCuboidsMessengersParticles() == null)
-          particlesA = r.getMessengersParticles().filter(filterA);
+        if (r.getCuboidsParticlesA() == null)
+          particlesA = r.getParticlesA().filter(filterA);
         else
           particlesA =
-              isDrawMessengersCuboids() ? r.getCuboidsMessengersParticles()
-                  .filter(filterA) : r.getMessengersParticles().filter(filterA);
+              isDrawMessengersCuboids() ? r.getCuboidsParticlesA()
+                  .filter(filterA) : r.getParticlesA().filter(filterA);
       }
 
-      if (r.getMitosParticles() != null && !isDrawNoMitos()) {
+      if (r.getParticlesB() != null && !isDrawNoMitos()) {
 
-        if (r.getCuboidsMitosParticles() == null)
-          particlesB = r.getMitosParticles().filter(filterB);
+        if (r.getCuboidsParticlesB() == null)
+          particlesB = r.getParticlesB().filter(filterB);
         else
           particlesB =
-              isDrawMitosCuboids() ? r.getCuboidsMitosParticles().filter(
-                  filterB) : r.getMitosParticles().filter(filterB);
+              isDrawMitosCuboids() ? r.getCuboidsParticlesB().filter(
+                  filterB) : r.getParticlesB().filter(filterB);
       }
 
       //
@@ -571,15 +571,15 @@ public class ViewOGL extends QGLWidget {
                 .isVisualisationParticlesAInDifferentsColor(),
             transparencyToAlpha(s.getParticlesATransparency()));
 
-      if (isDrawBaryCenter() && r.getMessengersParticles() != null) {
+      if (isDrawBaryCenter() && r.getParticlesA() != null) {
 
         final Particles3D particlesBarycenter;
-        if (r.getCuboidsMessengersParticles() == null)
-          particlesBarycenter = r.getMessengersParticles().filter(filterA);
+        if (r.getCuboidsParticlesA() == null)
+          particlesBarycenter = r.getParticlesA().filter(filterA);
         else
           particlesBarycenter =
-              !isDrawMessengersCuboids() ? r.getCuboidsMessengersParticles()
-                  .filter(filterA) : r.getMessengersParticles().filter(filterA);
+              !isDrawMessengersCuboids() ? r.getCuboidsParticlesA()
+                  .filter(filterA) : r.getParticlesA().filter(filterA);
 
         cgl.drawBarycenter(particlesBarycenter, s.getColorBaryCenters());
 
@@ -605,8 +605,8 @@ public class ViewOGL extends QGLWidget {
         final ShowedParticlesDistancesFilter spf =
             s.isFilterShowDistanceShowedParticles()
                 ? new ShowedParticlesDistancesFilter(r
-                    .getCuboidsMessengersParticles().filter(filterA), r
-                    .getCuboidsMitosParticles().filter(filterB)) : null;
+                    .getCuboidsParticlesA().filter(filterA), r
+                    .getCuboidsParticlesB().filter(filterB)) : null;
 
         distancesToShow = new HashMap<Particle3D, Distance>();
 

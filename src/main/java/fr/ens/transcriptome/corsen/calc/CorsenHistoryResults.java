@@ -80,7 +80,7 @@ public final class CorsenHistoryResults {
      * @param description description of the type
      * @return a StatType
      */
-    public static StatType getTypeFromDescription(String description) {
+    public static StatType getTypeFromDescription(final String description) {
 
       if (description == null)
         return null;
@@ -213,7 +213,7 @@ public final class CorsenHistoryResults {
      * Set the custom value
      * @param customValue Value to set
      */
-    private void setCustom(double customValue) {
+    private void setCustom(final double customValue) {
 
       this.customMinDistance = customValue;
     }
@@ -299,7 +299,7 @@ public final class CorsenHistoryResults {
 
   /**
    * Remove an entry
-   * @param id index of the element to get
+   * @param index index of the element to get
    */
   public void remove(final int index) {
 

@@ -94,7 +94,7 @@ public final class BitMapParticle3D {
 
   /**
    * Get xLen
-   * @return
+   * @return the xLen
    */
   public int getXLen() {
     return xLen;
@@ -102,7 +102,7 @@ public final class BitMapParticle3D {
 
   /**
    * Get yLen
-   * @return
+   * @return the yLen
    */
   public int getYLen() {
     return yLen;
@@ -110,24 +110,39 @@ public final class BitMapParticle3D {
 
   /**
    * Get zLen
-   * @return
+   * @return the zLen
    */
   public int getZLen() {
     return zLen;
   }
 
+  /**
+   * Convert a x float coordinate to a x bitmap coordinate
+   * @param x X float coordinate
+   * @return x bitmap coordinate
+   */
   public int getXBitmapCoordinate(final float x) {
 
     return (int) Math.floor(MathUtil
         .roundValue((x / this.pixelWidth) - this.x0));
   }
 
+  /**
+   * Convert a y float coordinate to a x bitmap coordinate
+   * @param y X float coordinate
+   * @return y bitmap coordinate
+   */
   public int getYBitmapCoordinate(final float y) {
 
-    return (int) Math.floor(MathUtil.
-        roundValue((y / this.pixelHeight) - this.y0));
+    return (int) Math.floor(MathUtil.roundValue((y / this.pixelHeight)
+        - this.y0));
   }
 
+  /**
+   * Convert a z float coordinate to a x bitmap coordinate
+   * @param z X float coordinate
+   * @return z bitmap coordinate
+   */
   public int getZBitmapCoordinate(final float z) {
 
     return (int) Math.floor(MathUtil
@@ -173,7 +188,7 @@ public final class BitMapParticle3D {
     return getBitMapValue(dx, dy, dz);
   }
 
-  private final byte getBitMapValue(final int x, final int y, final int z) {
+  private byte getBitMapValue(final int x, final int y, final int z) {
 
     if (x < 0
         || x >= this.xLen || y < 0 || y >= this.yLen || z < 0 || z >= this.zLen)
@@ -182,6 +197,13 @@ public final class BitMapParticle3D {
     return this.array[z][y][x];
   }
 
+  /**
+   * Get the intensity of an entry of the bitmap.
+   * @param x x float coordinate
+   * @param y y float coordinate
+   * @param z z float coordinate
+   * @return the intensity of the bitmap entry
+   */
   public int getBitMapIntensity(final float x, final float y, final float z) {
 
     final int dx = getXBitmapCoordinate(x);
@@ -191,7 +213,14 @@ public final class BitMapParticle3D {
     return getBitMapIntensity(dx, dy, dz);
   }
 
-  public final int getBitMapIntensity(final int x, final int y, final int z) {
+  /**
+   * Get the intensity of an entry of the bitmap.
+   * @param x x bitmap coordinate
+   * @param y y bitmap coordinate
+   * @param z z bitmap coordinate
+   * @return the intensity of the bitmap entry
+   */
+  public int getBitMapIntensity(final int x, final int y, final int z) {
 
     if (x < 0
         || x >= this.xLen || y < 0 || y >= this.yLen || z < 0 || z >= this.zLen)
@@ -206,7 +235,7 @@ public final class BitMapParticle3D {
   // return 0;
   //
   // if (this.array[z][y][x]!=0) System.out.println("val="+this.array[z][y][x]);
-  //    
+  //
   // return this.array[z][y][x];
   // }
 

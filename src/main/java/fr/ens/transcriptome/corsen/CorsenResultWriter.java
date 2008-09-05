@@ -171,7 +171,7 @@ public class CorsenResultWriter {
   public void writeCuboidsMessengersIntensityVolume(final OutputStream os)
       throws IOException {
 
-    writeIntensityVolume(os, getResult().getCuboidsMessengersParticles());
+    writeIntensityVolume(os, getResult().getCuboidsParticlesA());
   }
 
   /**
@@ -204,7 +204,7 @@ public class CorsenResultWriter {
   public void writeMitosIntensityVolume(final OutputStream os)
       throws IOException {
 
-    writeIntensityVolume(os, getResult().getMitosParticles());
+    writeIntensityVolume(os, getResult().getParticlesB());
   }
 
   /**
@@ -238,7 +238,7 @@ public class CorsenResultWriter {
   public void writeCuboidsMitosIntensityVolume(final OutputStream os)
       throws IOException {
 
-    writeIntensityVolume(os, getResult().getCuboidsMitosParticles());
+    writeIntensityVolume(os, getResult().getCuboidsParticlesB());
   }
 
   /**
@@ -272,7 +272,7 @@ public class CorsenResultWriter {
   public void writeMessengersIntensityVolume(final OutputStream os)
       throws IOException {
 
-    writeIntensityVolume(os, getResult().getMessengersParticles());
+    writeIntensityVolume(os, getResult().getParticlesA());
   }
 
   /**
@@ -343,8 +343,8 @@ public class CorsenResultWriter {
    */
   public void writeFullResult(final OutputStream os) throws IOException {
 
-    writeFullResultFile(getResult().getMessengersParticles(), getResult()
-        .getMessengersParticles(), os);
+    writeFullResultFile(getResult().getParticlesA(), getResult()
+        .getParticlesA(), os);
   }
 
   /**

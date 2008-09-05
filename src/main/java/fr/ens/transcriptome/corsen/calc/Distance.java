@@ -26,7 +26,9 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 
 /**
- * Note: this class has a natural ordering that is inconsistent with equals.
+ * This class define a distance. Note: this class has a natural ordering that is
+ * inconsistent with equals.
+ * @author Laurent Jourdren
  */
 public final class Distance implements Comparable<Distance> {
 
@@ -121,7 +123,12 @@ public final class Distance implements Comparable<Distance> {
   // Other methods
   //
 
-  public final int compareTo(final Distance distance) {
+  /**
+   * Compare two distances objects.
+   * @param distance distance to test
+   * @return an int
+   */
+  public int compareTo(final Distance distance) {
 
     final float f;
 
@@ -144,8 +151,6 @@ public final class Distance implements Comparable<Distance> {
 
   /**
    * Public constructor.
-   * @param particleA Messenger Particle
-   * @param particleB Mito particle
    * @param pointA point of the particleA
    * @param pointB point of the particleB
    * @param distance Distance between the two points

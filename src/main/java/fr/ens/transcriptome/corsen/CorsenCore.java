@@ -257,8 +257,8 @@ public class CorsenCore implements Runnable {
     dc.setZCoordinatesFactor(settings.getZFactor());
     dc.loadParticles();
 
-    result.getMessengersParticles().setType(settings.getParticlesAType());
-    result.getMitosParticles().setType(settings.getParticlesBType());
+    result.getParticlesA().setType(settings.getParticlesAType());
+    result.getParticlesB().setType(settings.getParticlesBType());
 
     dc.calc();
 
@@ -319,7 +319,7 @@ public class CorsenCore implements Runnable {
         new RGL(resultFile, "_"
             + this.settings.getParticlesAName().toLowerCase()
             + Globals.EXTENSION_RGL_FILE).writeRPlots(result
-            .getMessengersParticles(), "green", true);
+            .getParticlesA(), "green", true);
       }
 
       if (s.isSaveParticleB3dFile()) {
@@ -327,7 +327,7 @@ public class CorsenCore implements Runnable {
         new RGL(resultFile, "_"
             + this.settings.getParticlesBName().toLowerCase()
             + Globals.EXTENSION_RGL_FILE).writeRPlots(result
-            .getMitosParticles(), "red", false);
+            .getParticlesB(), "red", false);
       }
 
       if (s.isSaveParticlesACuboids3dFile()) {
@@ -335,7 +335,7 @@ public class CorsenCore implements Runnable {
         new RGL(null, resultFile, "_"
             + this.settings.getParticlesAName().toLowerCase() + "_cuboid"
             + Globals.EXTENSION_RGL_FILE).writeRPlots(result
-            .getCuboidsMessengersParticles(), "green", true);
+            .getCuboidsParticlesA(), "green", true);
       }
 
       if (s.isSaveParticlesBCuboids3dFile()) {
@@ -343,7 +343,7 @@ public class CorsenCore implements Runnable {
         new RGL(null, resultFile, "_"
             + this.settings.getParticlesBName().toLowerCase() + "_cuboid"
             + Globals.EXTENSION_RGL_FILE).writeRPlots(result
-            .getCuboidsMitosParticles(), "red", false);
+            .getCuboidsParticlesB(), "red", false);
       }
 
       if (s.isSaveDistances3dFile()) {

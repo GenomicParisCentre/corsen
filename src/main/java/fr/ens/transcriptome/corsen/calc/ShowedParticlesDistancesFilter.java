@@ -57,8 +57,7 @@ public class ShowedParticlesDistancesFilter implements DistancesFilter {
     return particlesA.contains(pA) && particlesB.contains(pB);
   }
 
-  private static final Set<Particle3D> convertParticles(
-      final Particles3D particles) {
+  private static Set<Particle3D> convertParticles(final Particles3D particles) {
 
     if (particles == null)
       return null;
@@ -77,7 +76,7 @@ public class ShowedParticlesDistancesFilter implements DistancesFilter {
   /**
    * Public constructor.
    * @param particlesA Set of Particles3D
-   * @param particlesA Set of Particles3D
+   * @param particlesB Set of Particles3D
    */
   public ShowedParticlesDistancesFilter(final Set<Particle3D> particlesA,
       final Set<Particle3D> particlesB) {
@@ -93,7 +92,7 @@ public class ShowedParticlesDistancesFilter implements DistancesFilter {
   /**
    * Public constructor.
    * @param particlesA Particles3D
-   * @param particlesA Particles3D
+   * @param particlesB Particles3D
    */
   public ShowedParticlesDistancesFilter(final Particles3D particlesA,
       final Particles3D particlesB) {

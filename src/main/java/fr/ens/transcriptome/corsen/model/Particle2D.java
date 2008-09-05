@@ -27,6 +27,10 @@ import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+/**
+ * This class define a Paricle 2D.
+ * @author Laurent Jourdren
+ */
 public final class Particle2D {
 
   private static int count;
@@ -51,7 +55,7 @@ public final class Particle2D {
    * Get the id of the particle.
    * @return The id of the particle
    */
-  public final int getId() {
+  public int getId() {
     return this.id;
   }
 
@@ -179,7 +183,7 @@ public final class Particle2D {
 
   /**
    * Add a surface point.
-   * @param x X coordinate of the point to add
+   * @param p the point to add
    */
   public void addSurfacePoint(final Point2D p) {
 
@@ -358,7 +362,7 @@ public final class Particle2D {
   /**
    * Find the nearests surface points of the particle from a another point.
    * @param p Point to Test
-   * @param d Maximal distance
+   * @param maxDistance Maximal distance
    * @return an array of the nearests points of the particle
    */
   public Point2D[] findNearestsSurfacePoints(final Point2D p,

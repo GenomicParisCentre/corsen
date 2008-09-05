@@ -34,15 +34,19 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Particles3DFilter;
 
+/**
+ * This class define the result class.
+ * @author Laurent Jourdren
+ */
 public class CorsenResult {
 
   private UpdateStatus updateStatus;
   private Settings settings;
-  private File messengersFile;
-  private File mitosFile;
+  private File particlesAFile;
+  private File particlesBFile;
   private File resultPath;
-  private InputStream messengersStream;
-  private InputStream mitosStream;
+  private InputStream particlesAStream;
+  private InputStream particlesBStream;
   private Particles3D particlesA;
   private Particles3D particlesB;
   private Particles3D particlesACuboids;
@@ -62,7 +66,7 @@ public class CorsenResult {
    * Get the particlesA cuboids particles.
    * @return Returns the particlesACuboids
    */
-  public Particles3D getCuboidsMessengersParticles() {
+  public Particles3D getCuboidsParticlesA() {
     return particlesACuboids;
   }
 
@@ -70,7 +74,7 @@ public class CorsenResult {
    * Get the particlesB cuboids.
    * @return Returns the particlesBCuboids
    */
-  public Particles3D getCuboidsMitosParticles() {
+  public Particles3D getCuboidsParticlesB() {
     return particlesBCuboids;
   }
 
@@ -86,7 +90,7 @@ public class CorsenResult {
    * Get the particlesA particles.
    * @return Returns the particlesA
    */
-  public Particles3D getMessengersParticles() {
+  public Particles3D getParticlesA() {
     return particlesA;
   }
 
@@ -99,10 +103,10 @@ public class CorsenResult {
   }
 
   /**
-   * Get the mito particles.
+   * Get the particles B.
    * @return Returns the particlesB
    */
-  public Particles3D getMitosParticles() {
+  public Particles3D getParticlesB() {
     return particlesB;
   }
 
@@ -119,7 +123,7 @@ public class CorsenResult {
    * @return Returns the messengersFile
    */
   public File getMessengersFile() {
-    return messengersFile;
+    return particlesAFile;
   }
 
   /**
@@ -127,7 +131,7 @@ public class CorsenResult {
    * @return Returns the mitosFile
    */
   public File getMitosFile() {
-    return mitosFile;
+    return particlesBFile;
   }
 
   /**
@@ -143,7 +147,7 @@ public class CorsenResult {
    * @return Returns the messengersFile
    */
   InputStream getMessengersStream() {
-    return messengersStream;
+    return particlesAStream;
   }
 
   /**
@@ -151,7 +155,7 @@ public class CorsenResult {
    * @return Returns the mitosFile
    */
   InputStream getMitosStream() {
-    return mitosStream;
+    return particlesBStream;
   }
 
   /**
@@ -199,24 +203,26 @@ public class CorsenResult {
   //
 
   /**
+   * Set the DistanceAnalyser for maximal.
    * @param maxAnalyser The maxAnalyser to set
    */
-  public void setMaxAnalyser(DistanceAnalyser maxAmalyser) {
-    this.maxAnalyser = maxAmalyser;
+  public void setMaxAnalyser(final DistanceAnalyser maxAnalyser) {
+    this.maxAnalyser = maxAnalyser;
   }
 
   /**
+   * Set the DistanceAnalyser for minimal.
    * @param minAnalyser The minAnalyser to set
    */
-  public void setMinAnalyser(DistanceAnalyser minAmalyser) {
-    this.minAnalyser = minAmalyser;
+  public void setMinAnalyser(final DistanceAnalyser minAnalyser) {
+    this.minAnalyser = minAnalyser;
   }
 
   /**
    * Set the particlesA particles.
    * @param particlesA The particlesA to set
    */
-  void setParticlesA(Particles3D particlesA) {
+  void setParticlesA(final Particles3D particlesA) {
     this.particlesA = particlesA;
   }
 
@@ -224,7 +230,7 @@ public class CorsenResult {
    * Set the particlesB particles.
    * @param particlesB The particlesB to set
    */
-  void setParticlesB(Particles3D particlesB) {
+  void setParticlesB(final Particles3D particlesB) {
     this.particlesB = particlesB;
   }
 
@@ -259,7 +265,7 @@ public class CorsenResult {
    * Set the maximal distances.
    * @param maxDistances The maxDistances to set
    */
-  void setMaxDistances(Map<Particle3D, Distance> maxDistances) {
+  void setMaxDistances(final Map<Particle3D, Distance> maxDistances) {
     this.maxDistances = maxDistances;
   }
 
@@ -267,7 +273,7 @@ public class CorsenResult {
    * Set the minimal distances.
    * @param minDistances The minDistances to set
    */
-  void setMinDistances(Map<Particle3D, Distance> minDistances) {
+  void setMinDistances(final Map<Particle3D, Distance> minDistances) {
     this.minDistances = minDistances;
   }
 
@@ -281,7 +287,7 @@ public class CorsenResult {
 
   /**
    * Set the Particles3DFilter for particles B
-   * @param particlesAFilter the filter to set
+   * @param particlesBFilter the filter to set
    */
   public void setParticlesBFilter(final Particles3DFilter particlesBFilter) {
     this.particlesBFilter = particlesBFilter;
@@ -295,8 +301,11 @@ public class CorsenResult {
    * Public constructor.
    * @param particlesBFile File of the particlesB particles
    * @param particlesAFile File of the particlesA particles
+   * @param resultsPath path for results files
+   * @param settings Setting of the computation
    * @param updateStatus The updateStatus
-   * @throws FileNotFoundException
+   * @throws FileNotFoundException if an error occurs while reading or writing
+   *             files
    */
   public CorsenResult(final File particlesAFile, final File particlesBFile,
       final File resultsPath, final Settings settings,
@@ -310,24 +319,28 @@ public class CorsenResult {
 
   /**
    * Public constructor.
-   * @param mitosFile File of the particlesB particles
-   * @param messengersFile File of the particlesA particles
+   * @param particlesAFile File of the particlesA
+   * @param particlesBFile File of the particlesB
+   * @param particlesAStream Stream of the particlesA
+   * @param particlesBStream Stream of the particlesB
+   * @param resultsPath path for results files
+   * @param settings Setting of the computation
    * @param updateStatus The updateStatus
    */
   public CorsenResult(final File particlesAFile, final File particlesBFile,
-      final InputStream messengersStream, final InputStream mitosStream,
+      final InputStream particlesAStream, final InputStream particlesBStream,
       final File resultsPath, final Settings settings,
       final UpdateStatus updateStatus) {
 
-    if (mitosStream == null)
-      throw new RuntimeException("Unable to find mito file");
-    if (messengersStream == null)
-      throw new RuntimeException("Unable to find messenger file");
+    if (particlesBStream == null)
+      throw new RuntimeException("Unable to find particles A file");
+    if (particlesAStream == null)
+      throw new RuntimeException("Unable to find particles B file");
 
-    this.mitosFile = particlesBFile;
-    this.messengersFile = particlesAFile;
-    this.mitosStream = mitosStream;
-    this.messengersStream = messengersStream;
+    this.particlesBFile = particlesBFile;
+    this.particlesAFile = particlesAFile;
+    this.particlesBStream = particlesBStream;
+    this.particlesAStream = particlesAStream;
     this.resultPath = resultsPath;
     this.settings = settings;
 

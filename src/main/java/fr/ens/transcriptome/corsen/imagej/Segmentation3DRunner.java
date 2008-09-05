@@ -197,7 +197,6 @@ public class Segmentation3DRunner {
 
   /**
    * Create the list of Particles 3D segmented.
-   * @param removeEdgeParticles true if edge particles must be removed
    * @return a list of Particle3D
    */
   public List<Particle3D> getParticlesToSave() {

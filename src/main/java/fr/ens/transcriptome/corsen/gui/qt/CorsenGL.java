@@ -66,8 +66,6 @@ public class CorsenGL {
 
   /**
    * Draw the legend
-   * @param unit Unit of the legend
-   * @throws IOException
    */
   public void drawAxis() {
 

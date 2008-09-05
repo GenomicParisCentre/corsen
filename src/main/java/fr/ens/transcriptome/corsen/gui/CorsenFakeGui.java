@@ -126,25 +126,25 @@ public class CorsenFakeGui {
     DistancesCalculator dc = new DistancesCalculator(result);
     dc.loadParticles();
 
-    result.getMessengersParticles().setType(ParticleType.TINY);
-    result.getMitosParticles().setType(ParticleType.HUGE);
+    result.getParticlesA().setType(ParticleType.TINY);
+    result.getParticlesB().setType(ParticleType.HUGE);
 
     System.out.println("Messengers inner: "
-        + result.getMessengersParticles().countParticlesInnerPoints()
+        + result.getParticlesA().countParticlesInnerPoints()
         + " points.");
     System.out.println("Messengers surface: "
-        + result.getMessengersParticles().countParticlesSurfacePoints()
+        + result.getParticlesA().countParticlesSurfacePoints()
         + " points.");
     System.out.println("Messengers image filename: "
-        + result.getMessengersParticles().getImageFilename());
+        + result.getParticlesA().getImageFilename());
     System.out.println("Mitos inner: "
-        + result.getMitosParticles().countParticlesInnerPoints() + " points.");
+        + result.getParticlesB().countParticlesInnerPoints() + " points.");
     System.out
         .println("Mitos surface: "
-            + result.getMitosParticles().countParticlesSurfacePoints()
+            + result.getParticlesB().countParticlesSurfacePoints()
             + " points.");
     System.out.println("Mitos image filename: "
-        + result.getMitosParticles().getImageFilename());
+        + result.getParticlesB().getImageFilename());
 
     long startTime = System.currentTimeMillis();
     dc.calc();

@@ -40,6 +40,10 @@ import java.util.List;
 import fr.ens.transcriptome.corsen.Globals;
 import fr.ens.transcriptome.corsen.calc.ParticleType;
 
+/**
+ * This class define a container for Particle3D.
+ * @author Laurent Jourdren
+ */
 public class Particles3D {
 
   private static final String PAR_FILE_VERSION = "1.4";
@@ -461,7 +465,7 @@ public class Particles3D {
    * @param particle Particle to update
    * @param zCoef Z Coef
    */
-  private void changeZCoord(final Particle3D particle, float zCoef) {
+  private void changeZCoord(final Particle3D particle, final float zCoef) {
 
     if (particle == null || zCoef == 1.0f)
       return;
@@ -486,7 +490,7 @@ public class Particles3D {
     this.pixelDepth *= coef;
   }
 
-  private void changeCoord(final Particle3D particle, float coef) {
+  private void changeCoord(final Particle3D particle, final float coef) {
 
     if (particle == null)
       return;
@@ -535,7 +539,7 @@ public class Particles3D {
    * @param outputStream Output stream to use
    * @throws IOException if an error occurs while writing the file
    */
-  public void saveParticles(OutputStream outputStream) throws IOException {
+  public void saveParticles(final OutputStream outputStream) throws IOException {
 
     Writer writer = new OutputStreamWriter(outputStream);
 
@@ -635,7 +639,7 @@ public class Particles3D {
   /**
    * Public constructor. Create a new particle with the dimension of another
    * object.
-   * @param Particle File to read to create object
+   * @param pars Particles3D with dimensions to use
    */
   public Particles3D(final Particles3D pars) {
 
@@ -655,7 +659,8 @@ public class Particles3D {
   /**
    * Public constructor. Create a new particle with the dimension of another
    * object.
-   * @param Particle File to read to create object
+   * @param pars Particles3D with dimensions to use
+   * @param particles array of Particle3D to add
    */
   public Particles3D(final Particles3D pars, final Particle3D[] particles) {
 
@@ -666,7 +671,8 @@ public class Particles3D {
   /**
    * Public constructor. Create a new particle with the dimension of another
    * object.
-   * @param Particle File to read to create object
+   * @param pars Particles3D with dimensions to use
+   * @param particles list of Particle3D to add
    */
   public Particles3D(final Particles3D pars, final List<Particle3D> particles) {
 
@@ -676,8 +682,8 @@ public class Particles3D {
 
   /**
    * Public constructor.
-   * @param file InputStream to read to create object
-   * @throws IOException
+   * @param is InputStream to read to create object
+   * @throws IOException if an error occurs while reading the input stream
    */
   public Particles3D(final InputStream is) throws IOException {
 
@@ -687,7 +693,7 @@ public class Particles3D {
   /**
    * Public constructor.
    * @param file File to read to create object
-   * @throws IOException
+   * @throws IOException if an error occurs while reading particles file
    */
   public Particles3D(final File file) throws IOException {
 

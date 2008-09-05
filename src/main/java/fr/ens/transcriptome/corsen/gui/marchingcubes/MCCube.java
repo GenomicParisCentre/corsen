@@ -33,8 +33,8 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
 /**
  * This class implements the marching cube algorithm. This code came from ImageJ
  * 3D Viewer by Benjamin Schmid
- * @see {@link http://132.187.25.13/home/?category=Download&page=Viewer3D}
- * @see {@link http://132.187.25.13/ImageJ/ImageJ_3D_Viewer.jar}
+ * http://132.187.25.13/home/?category=Download&page=Viewer3D 
+ * http://132.187.25.13/ImageJ/ImageJ_3D_Viewer.jar 
  * @author Benjamin Schmid
  * @author Laurent Jourdren
  */
