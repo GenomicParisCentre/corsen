@@ -52,7 +52,7 @@ public final class Globals {
   public static final String APP_BUILD_DATE = getBuiltDate();
 
   /** The log level of the application. */
-  public static final Level LOG_LEVEL = Level.OFF;
+  public static final Level LOG_LEVEL = Level.INFO;
 
   /** The number of threads to use for computation. */
   public static final int THREAD_NUMBER_DEFAULT = -1;
@@ -62,7 +62,7 @@ public final class Globals {
   /** Use debug home dir. */
   public static final boolean DEBUG_HOME_DIR = IS_JAR ? false : true;
   /** Show built version. */
-  public static final boolean SHOW_BUILT = IS_JAR ? true : false;
+  public static final boolean SHOW_BUILT = false; //IS_JAR ? true : false;
 
   /** Default Z coef value. */
   public static final float Z_COEF_DEFAULT = 2.96f;
@@ -125,7 +125,7 @@ public final class Globals {
   public static final String LICENCE_TXT =
       "This program is developed under the GNU General Public Licence version 2 or later.";
 
-  private static final String COPYRIGHT_DATE = "2006-2008";
+  private static final String COPYRIGHT_DATE = "2006-2009";
 
   /** About string, plain text version. */
   public static final String ABOUT_TXT =
@@ -142,7 +142,7 @@ public final class Globals {
           + ".\n\n"
           + "Authors:\n"
           + "  Laurent Jourdren(*) <jourdren@biologie.ens.fr> Main developer, maintener.\n"
-          + "  Mathilde Garcia(**) <garcia@biologie.ens.fr> Project leader,"
+          + "  Mathilde Garcia(**) <magarcia@biologie.ens.fr> Project leader,"
           + " R programming, ImageJ scripting, testing.\n\n"
           + "(*)  Plate-forme transcriptome, École Normale Supérieure\n"
           + "(**) Laboratoire de Génétique Moléculaire, École Normale Supérieure\n\n"
@@ -169,7 +169,7 @@ public final class Globals {
           + "<a href=\"http://transcriptome.ens.fr\">"
           + "Microarray platform, École Normale Supérieure</a>"
           + "<br/>Main developer, maintener.</li><br/>"
-          + "<li><a href=\"mailto:garcia@biologie.ens.fr?"
+          + "<li><a href=\"mailto:magarcia@biologie.ens.fr?"
           + "subject=CorsenSwing\">Mathilde Garcia</a><br/>"
           + "<a href=\"http://www.biologie.ens.fr/lgmgml\">"
           + "Laboratoire de Génétique Moléculaire, "
