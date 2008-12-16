@@ -1196,6 +1196,7 @@ public class CorsenQt extends QMainWindow {
   public static void main(final String[] args) {
 
     QApplication.initialize(args);
+    logger.info("Java version: " + System.getProperty("java.version"));
     logger.info("Qt version: " + QtInfo.versionString());
 
     // Set locales
