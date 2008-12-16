@@ -30,6 +30,7 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.util.Util;
 import ij.IJ;
+import ij.ImageJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.Prefs;
@@ -45,6 +46,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -79,6 +81,8 @@ public class CorsenImageJPlugin implements PlugInFilter {
 
   private static final int IMAGEJ_PLUGIN_BASE_FLAGS =
       DOES_8G + DOES_16 + NO_CHANGES + NO_UNDO + STACK_REQUIRED;
+
+  private static final int IMAGEJ_MINIMAL_VERSION = 39;
 
   private static final String OPTIONS = Globals.APP_NAME + ".options";
   private static int staticOptions = Prefs.getInt(OPTIONS, 0);
@@ -140,7 +144,7 @@ public class CorsenImageJPlugin implements PlugInFilter {
    */
   public void run(final ImageProcessor ip) {
 
-    if (cancel || !testThreshold(ip))
+    if (cancel || !testImageJVersion() || !testThreshold(ip))
       return;
 
     this.slice++;
@@ -207,6 +211,60 @@ public class CorsenImageJPlugin implements PlugInFilter {
       e.printStackTrace();
       JOptionPane.showMessageDialog(this.imp.getWindow(), e.getMessage());
     }
+  }
+
+  private boolean testImageJVersion() {
+
+    final String version = ImageJ.VERSION;
+
+    final String[] tab = version.split("\\.");
+    final String msg;
+
+    if (tab == null || tab.length != 2)
+      msg =
+          "Invalid ImageJ version.\n";
+    else {
+
+      final String ch = tab[1];
+      final int len = ch.length();
+
+      final int major = Integer.parseInt(tab[0]);
+      final int minor;
+
+      final char last = ch.charAt(len - 1);
+
+      if (Character.isLetter(last))
+        minor = Integer.parseInt(ch.substring(0, len - 2));
+      else
+        minor = Integer.parseInt(tab[1]);
+
+      if (major != 1)
+        msg = Globals.APP_NAME + " plugin work only with ImageJ 1.x.\n";
+      else if (minor != 41)
+        msg =
+            "The 1.41 version of ImageJ is buggy.\n"
+                + "Please upgrade your imageJ version (Help > Update ImageJ) \n"
+                + "or reinstall the last version from ImageJ website.\n";
+      else if (minor < IMAGEJ_MINIMAL_VERSION)
+        msg =
+            Globals.APP_NAME
+                + " plugin need a version of Image >= 1."
+                + IMAGEJ_MINIMAL_VERSION
+                + ".\n"
+                + "Please upgrade your imageJ version (Help > Update ImageJ) \n"
+                + "or reinstall the last version from ImageJ website.\n";
+      else
+        msg = null;
+    }
+
+    if (msg != null) {
+
+      this.cancel = true;
+      IJ.error(Globals.APP_NAME + " plugin", msg);
+      return false;
+    }
+
+    return true;
   }
 
   private boolean testThreshold(final ImageProcessor ip) {
