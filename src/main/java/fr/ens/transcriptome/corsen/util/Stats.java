@@ -37,9 +37,33 @@ public class Stats {
     public int virtualIndexMin;
     public int virtualIndexMax;
 
-    public final int compareTo(DataDouble d) {
+    public final boolean equals(final Object o) {
+
+      if (this == o)
+        return true;
+
+      if (o == null || !(o.getClass() == this.getClass()))
+        return false;
+
+      DataDouble dd = (DataDouble) o;
+
+      return dd.value == this.value;
+    }
+
+    public final int compareTo(final DataDouble d) {
 
       return Double.compare(value, d.value);
+    }
+
+    public final int hashCode() {
+
+      int result = HashCodeUtil.SEED;
+
+      result = HashCodeUtil.hash(result, value);
+      result = HashCodeUtil.hash(result, intensity);
+      result = HashCodeUtil.hash(result, virtualIndexMin);
+      result = HashCodeUtil.hash(result, virtualIndexMax);
+      return result;
     }
 
     public final boolean isVirtualIndex(int index) {
@@ -202,7 +226,7 @@ public class Stats {
     if (length == 1) {
       return values[begin]; // always return single value for n = 1
     }
-    double n = (double) length;
+    double n = length;
     double pos = p * (n + 1) / 100;
     double fpos = Math.floor(pos);
     int intPos = (int) fpos;

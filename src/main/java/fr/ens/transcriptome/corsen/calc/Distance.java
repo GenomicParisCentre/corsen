@@ -24,6 +24,7 @@ package fr.ens.transcriptome.corsen.calc;
 
 import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
+import fr.ens.transcriptome.corsen.util.HashCodeUtil;
 
 /**
  * This class define a distance. Note: this class has a natural ordering that is
@@ -124,6 +125,19 @@ public final class Distance implements Comparable<Distance> {
   //
 
   /**
+   * Test if two distance are equals.
+   * @param o Object to test
+   * @return true if the distances are equals
+   */
+  public boolean equals(final Object o) {
+
+    if (o == null || !(o instanceof Distance))
+      return false;
+
+    return ((Distance) o).distance == this.distance;
+  }
+
+  /**
    * Compare two distances objects.
    * @param distance distance to test
    * @return an int
@@ -145,6 +159,18 @@ public final class Distance implements Comparable<Distance> {
     return 0;
   }
 
+  public final int hashCode() {
+
+    int result = HashCodeUtil.SEED;
+
+    result = HashCodeUtil.hash(result, this.particleA);
+    result = HashCodeUtil.hash(result, this.particleB);
+    result = HashCodeUtil.hash(result, this.pointA);
+    result = HashCodeUtil.hash(result, this.pointB);
+    result = HashCodeUtil.hash(result, this.distance);
+    return result;
+  }
+  
   //
   // Constructor
   //
