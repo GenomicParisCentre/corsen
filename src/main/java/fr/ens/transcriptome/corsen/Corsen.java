@@ -468,6 +468,8 @@ public final class Corsen {
         dirs.add(new String[] {fields[0], fields[1], fields[2]});
 
       }
+      br.close();
+
     } catch (IOException e) {
       System.err.println("Error while reading batch file: " + batchFile);
     }
