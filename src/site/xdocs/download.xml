@@ -31,6 +31,7 @@
 		</author>
 	</properties>
 	<body>
+		<script src="http://java.com/js/deployJava.js"></script>
 		<a name="installation" />
 		<section name="Download Corsen latest version">
 			<p>
@@ -45,13 +46,12 @@
 					<span style="font-size: smaller">
 						(934 KiB)
 					</span>.<br/> You only have to put this archive in the 
-					ImageJ plugins folder and restart ImageJ to install it.
+					ImageJ <code>plugins</code> folder and restart ImageJ to install it.
 				</li>
 				<li>The application, available only as a Java Web Start 
 				application.<br/> To install it, you need an internet 
 				connection and click on the 
-					<a
-						href="webstart/corsen.jnlp">
+					<a href="javascript:if (!deployJava.isWebStartInstalled(&quot;1.5.0&quot;)) {if (deployJava.installLatestJRE()) {if (deployJava.launch(&quot;@@@WEBSITE@@@/webstart/corsen.jnlp&quot;)) {}}} else {if (deployJava.launch(&quot;@@@WEBSITE@@@/webstart/corsen.jnlp&quot;)) {}}" onMouseOver="window.status=''; return true;">
 						corsen jnlp link
 					</a> to launch the application.
 				</li>
@@ -97,6 +97,13 @@
 							application under Mac OS X is unstable. 
 						</td>
 					</tr>
+					<tr>
+                        <td>ImageJ version</td>
+                        <td>
+                            >= 1.39. Note that Image 1.40 is buggy for Corsen, 
+                            so the use of this version if forbidden.
+                        </td>
+                    </tr>
 				</table>
 			</subsection>
 		
@@ -135,9 +142,23 @@
 			install <a href="http://www.virtualbox.org/">Virtual box</a> or other 
 			virtualization software and a linux distribution such 
 			<a href="http://www.ubuntu.com">ubuntu</a>. We hope that next 
-			versions of Corsen will run perfectly under Mac OS X.</p>
+			versions of Corsen will run perfectly under Mac OS X. Ready to use 
+			Virtualbox images for Ubuntu (and other OS) are available on 
+			<a href="http://virtualbox.wordpress.com/images/">VirtualBox Images website</a>.</p>
 		
 			</subsection>
+			
+			<subsection name="Corsen application under Linux">
+			
+			<p>Corsen is only available for 32 bit Intel processor (i386) versions of linux. 
+			If you use OpenJDK/IcedTea version of the Java Runtime (see your distribution documentation 
+			to install it), the default Java Web Start on the main page may no work.</p>
+			
+			<p>Use this specific <a href="webstart/corsen.jnlp">Corsen application launch link</a>Corsen, 
+			to run Corsen (Don't use Sun script to check java version).</p>
+		
+			</subsection>
+			
 		</section>
 		
 	</body>

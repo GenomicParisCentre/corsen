@@ -32,7 +32,9 @@
 	</properties>
 
 	<body>
-
+		<link rel="alternate" type="application/rss+xml" title="Corsen updates" href="corsen.rss" />
+		<script src="http://java.com/js/deployJava.js"></script>
+		
 		<section name="Welcome to Corsen">
 
 			<div
@@ -52,12 +54,7 @@
 					<br/>
 				</p>
 				<p style="font-size: smaller">
-					<img valign="top"
-						src="http://maven.apache.org/images/folder-open.gif" border="0"
-						alt="" title="Launch Corsen" />
-					<a href="webstart/corsen.jnlp">Launch</a>
-					Corsen Application
-					<br />
+				<a href="javascript:if (!deployJava.isWebStartInstalled(&quot;1.5.0&quot;)) {if (deployJava.installLatestJRE()) {if (deployJava.launch(&quot;@@@WEBSITE@@@/webstart/corsen.jnlp&quot;)) {}}} else {if (deployJava.launch(&quot;@@@WEBSITE@@@/webstart/corsen.jnlp&quot;)) {}}" onMouseOver="window.status=''; return true;"><img src="http://java.sun.com/products/jfc/tsc/articles/swing2d/webstart.png" border="0" /></a> Corsen Application
 				</p>
 				<ul style="margin-top: 0; list-style-type: disc">
 					<li style="font-size: smaller">
@@ -106,5 +103,7 @@
 
 		</section>
 
+    <p><a href="./corsen.rss"><img src="images/feed-icon-14x14.png" 
+        alt="Syndicate the corsen updates" title="Corsen updates feed"/></a></p>
 	</body>
 </document>
