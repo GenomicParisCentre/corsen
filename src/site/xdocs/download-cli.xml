@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	/*
+	*                  Corsen development code
+	*
+	* This code may be freely distributed and modified under the
+	* terms of the GNU General Public Licence version 2 or later. This
+	* should be distributed with the code. If you do not have a copy,
+	* see:
+	*
+	*      http://www.gnu.org/licenses/gpl-2.0.txt
+	*
+	* Copyright for this code is held jointly by the microarray platform
+	* of the École Normale Supérieure and the individual authors.
+	* These should be listed in @author doc comments.
+	*
+	* For more information on the Corsen project and its aims,
+	* or to join the Nividic mailing list, visit the home page
+	* at:
+	*
+	*      http://www.transcriptome.ens.fr/corsen
+	*
+	*/
+-->
+<document>
+  <properties>
+    <title>Download Corsen @@@VERSION@@@ source</title>
+    <author email="jourdren@biologie.ens.fr">Laurent Jourdren</author>
+  </properties>
+  <body>
+    <section name="Corsen command line version">
+    	
+    	<p>Corsen is a free software and is distributed under the
+        <a href="license.html">General Public License</a>. You can download, 
+        compile and modify the source code of Corsen.
+      	</p>
+    
+    <subsection name="Download Corsen cli">
+      <p>
+        Corsen CLI version is distributed in several formats for your convenience.
+      </p>
+      <ul>
+         <li>
+          <a href="corsen-cli-@@@VERSION@@@.zip">
+            <code>.zip</code> archive
+          </a>
+          <span style="font-size: smaller">(5.3 MiB)</span>
+        </li>
+      
+        <li>
+          <a href="corsen-cli-@@@VERSION@@@.tar.gz">
+            <code>.tar.gz</code> archive
+          </a>
+          <span style="font-size: smaller">(5.2 MiB)</span>
+        </li>
+        <li>
+          <a href="corsen-cli-@@@VERSION@@@.tar.bz2">
+            <code>.tar.bz2</code> archive
+          </a>
+          <span style="font-size: smaller">(3.6 MiB)</span>
+        </li>
+        
+
+      </ul>
+      
+      
+      </subsection>
+      
+    </section>
+  </body>
+</document>
+
