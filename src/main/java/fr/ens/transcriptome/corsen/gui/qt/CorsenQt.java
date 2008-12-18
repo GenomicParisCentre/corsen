@@ -1254,8 +1254,13 @@ public class CorsenQt extends QMainWindow {
     initResultTab();
     initView3DTab();
     initHistoryTab();
+    
+    final String iconPath = "classpath:"
+      + (Globals.IS_JAR ? "" : "/files") + "/images/corsen-logo.png";
+    
+    logger.info("iconPath: "+iconPath);
 
-    setWindowIcon(new QIcon("classpath:corsen-logo.png"));
+    setWindowIcon(new QIcon(iconPath));
 
     endProcess(null);
     setStartEnable(true);

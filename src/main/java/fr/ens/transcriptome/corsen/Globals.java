@@ -57,7 +57,8 @@ public final class Globals {
   /** The number of threads to use for computation. */
   public static final int THREAD_NUMBER_DEFAULT = -1;
 
-  private static final boolean IS_JAR = isJar();
+  /** If the application is packaged in a jar file. */
+  public static final boolean IS_JAR = isJar();
 
   /** Use debug home dir. */
   public static final boolean DEBUG_HOME_DIR = IS_JAR ? false : true;
