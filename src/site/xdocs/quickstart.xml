@@ -32,151 +32,152 @@
     </properties>
 
     <body>
-      
+
+
+        <section name="Corsen plugin">
+        
+            <subsection name="installation">
+            
+            <p>To install the ImageJ plugin, go to the 
+            <a href="index.html">Corsen website main page</a> and download the 
+            plugin jar archive.</p>
+            
+            <center><img src="images/screenshot-6.png"/></center>
+            
+            <p>Then put this jar file in your ImageJ plugin folder 
+            (usualy <code>C:\Program Files\ImageJ\plugins</code> on Microsoft Windows).</p>
+            
+            
+            <center><img src="images/screenshot-0.png"/></center>
+             
+            </subsection>
+            
+            <subsection name="Analysis process">
+            
+            <p>Now, you can launch ImageJ. Open the image to analysis by Corsen
+            (You can find samples in the <a href="handbook.html#samples">samples 
+            section of the documentation</a>). Note that with Cosen, only image 
+            stacks are handled.</p> 
+            
+            <center><img src="images/screenshot-1.png"/></center>
+            
+            <p>Define a threshold on your image stack (<b>Image > Adjust > Threshold</b> 
+            menu or <b>Ctrl+Shift+T</b> shortcut).</p>
+            
+            <center><img src="images/screenshot-2.png"/></center>
+            
+            <p>You can now run The Corsen ImageJ plugin (<b>Plugins > Analyze > Corsen Plugin</b>).</p>
+            
+            <center><img src="images/screenshot-3.png"/></center>
+            
+            <p>The Corsen plugin setup menu will appear, check the option that you want. 
+            See the <a href="plugin.html">plugin documentation</a> for more information. 
+            Press <b>OK</b> to launch the analysis.</p>
+            
+            <center><img src="images/screenshot-4.png"/></center>
+            
+            <p>A Warning dialog, ask you to process all the images in the stack, answer <b>Yes</b>.</p>
+            <center><img src="images/screenshot-5.png"/></center>
+            
+            <p>According the checked options, a "Save as" dialog can appear at the end of the process. 
+            If everything ok, you will obtain a <b>".par"</b> file.</p>
+            
+            </subsection>
+            
+        </section>      
 
         <section name="Corsen application">
 
-
-            <subsection name="Launch a single computation">
+            <subsection name="Launch Corsen application">
             
-                <p>To execute the calculation of the distances, you
-                 must select input files using the menus <b>File</b> /
-                 <b>Open particles A</b> et <b>File</b> / <b>Open 
-                 particles B</b>.  Then you can launch the compution by 
-                 pressing the <b>Launch</b> button. A dialogbox will appear 
-                 to ask you the prefix of the outputs files. Once this step is 
-                 accomplished, the computation will run.</p>
-                 
-                 <p>While the computation, you can monitor the progress of 
-                 Corsen with the progress bar the log on the main tab.</p>
-                 <p>When the calculation is complete, the results, 3D View and 
-                 History tab will be updated.</p>
+                <p>The Corsen application is a Java Web Start application, 
+                so to launch it, you only have to click on the link (in orange) on the Corsen website.</p>
             
-            </subsection>
-            
-            <subsection name="3D visualisation only">
-            
-                <p>To only use the 3D visualisation functionality of Corsen, 
-                follow the same steps that if you want launch a single computation
-                but press on <b>3D View</b> instead of <b>Launch</b>.</p> 
-            
-            </subsection>
-            
-            <subsection name="Use Corsen in batch mode">
-            
-                <p>If you want to use Corsen on several images in the aim to do
-                statistical work, it will be more easier to use Corsen in batch 
-                mode. Before launching Corsen you must defined in the Particles 
-                tab of the settings of Corsen, the prefixes of the files to use 
-                (for each type of particles). Then select the directory of the file 
-                to analyse with menu <b>File</b> / <b>Open a directory</b>, and
-                press the <b>launch</b> button to run the computation.</p>
+                <center><img src="images/screenshot-6.png"/></center>
                 
-                <p>As for a single computation all the tabs will be update during the 
-                progress the calculation of data.</p>
-            
+                <p>After few seconds, the application will appear. During the first launch (and after each 
+                Corsen update), a message will ask you to validate the security certificates of the application.</p>
+                
+                <center><img src="images/screenshot-7.png"/></center>
+                
             </subsection>
-
-
-            <subsection name="The Results tab">
             
-            <p>The result tab contains informations about the last cell that
-            has been analyzed by Corsen. You can select type of information to
-            display with the combobox at top of the tab.</p>
+            <subsection name="Loading par files">
             
-            <table>
-                <tr>
-                    <th>Result to display</th>
-                    <th>Table description</th>
-                    <th>Plot description</th>
-                </tr>
-                <tr>
-                        <td>Data results summary</td>
-                        <td>Statistics informations (minimun, maximum, mean, 
-                        median, quartiles)  about minimum distances and 
-                        maximum distances.</td>
-                        <td>Boxplot of minimum distances</td>
-                </tr>
-                <tr>
-                        <td>Full data results</td>
-                        <td>For each cuboids of particles B, get the intensity, 
-                        minimal and maximal distances.</td>
-                        <td>Histogram of the distribution of minimal 
-                        distances. The number of classes of the histogram can 
-                        be set in Corsen settings</td>
-                </tr>
-                <tr>
-                        <td>Intensities and distances of particles B</td>
-                        <td>Show the intensity and volume for each particles 
-                        B</td>
-                        <td>Plot the distribution of intensity and volumes of 
-                        particles B</td>
-                </tr>
-                <tr>
-                        <td>Intensities and distances of cuboids of particles B</td>
-                        <td>Show the intensity and volume for each cuboids of 
-                        particles B</td>
-                        <td>Plot the distribution of intensity and volumes of 
-                        cuboids of particles B</td>
-                </tr>
-                <tr>
-                        <td>Intensities and distances of particles A</td>
-                        <td>Show the intensity and volume for each particles
-                        A</td>
-                        <td>Plot the distribution of intensity and volumes of 
-                        particles A</td>
-                </tr>
-                <tr>
-                        <td>Intensities and distances of cuboids of particles A</td>
-                        <td>Show the intensity and volume for each cuboids of 
-                        particles A</td>
-                        <td>Plot the distribution of intensity and volumes of 
-                        cuboids of particles A</td>
-                </tr>
-            </table>
             
-            <p>In this tab, Corsen allow you to save filtered particles (the 
-            filter can be set in the application settings) and result files. The type of 
-            particles to save or result to save is selected with the same 
-            combobox used to choose result table and graph to show.</p>
+            <p>First, select the first input file (<b>File > Open Particle A</b>).</p>
+            
+            <center><img src="images/screenshot-8.png"/></center>
+            
+            <p>Then select the second input file (<b>File > Open Particle B</b>).</p>
+            
+            <center><img src="images/screenshot-9.png"/></center>
+            
+            <p>At each time, the infomation box is updated :</p>
+            
+            <center><img src="images/screenshot-10.png"/></center>
+            
+            <p>Then launch the computation of the distances by pressing <b>Launch</b>.</p>
+            
+            <center><img src="images/screenshot-11.png"/></center>
+            
+            <p>A dialog box, will ask you for the name of the output files prefix.</p>
+            
+            <center><img src="images/screenshot-12.png"/></center>
+            
+            <p>While Corsen process data, a progress bar and a log inform you about the progress 
+            of the computation. At the end of the calculation a message indicate the process is terminated.</p> 
+            
+            <center><img src="images/screenshot-13.png"/></center>
             
             </subsection>
             
-            <subsection name="3D visualisation">
+            <subsection name="The result tab">
             
-                <p>In this tab, a 3D visualization of the last particles A and B 
-                analyzed is displayed. For each type of particles you can select 
-                the visualization mode :</p>
-            
-                <ul>
-                    <li>No visualization</li>
-                    <li>Standard visualization of the particles</li>
-                    <li>Preprocessed particles (cuboids)</li>
-                </ul>
-            
-                <p>In addition, two checkboxes allow to show minumum distances and 
-                the barycenter of particles. Unlike the input filtering, the filtering view in 
-                this tab will only have effects on the 3D visualization.</p>
+                <p>The result tab show information about the particles and the distances 
+                calculated by corsen for the last couple of particles.</p>
+                
+                 <center><img src="images/screenshot-14.png"/></center>
             
             </subsection>
             
-            <subsection name="The History tab">
+            <subsection name="The 3D visualization">
             
-            <p>The History tab summaries the results of all previous Corsen 
-            computation. The table show for each previous calculation, the 
-            inputs files and a result from Coren computation. The result (mean,
-            median, min, max) to show can be selected with the combobox.</p>
+                <p>The 3D visualization show the input particles and the distance in a 3D 
+                that allow allows a better understanding of the interactions between particles.</p>
             
-            <p>The list of result type to display, there is an item called "custom". 
-            The custom statistic represents the percent of distances that pass a test. 
-            The expression of the test is defined in Corsen settings.</p>
+                <center><img src="images/screenshot-15.png"/></center>
+                                    
+            </subsection>
+            
+            <subsection name="The history tab">
+            
+                <p>In the tab, all the previous computation of the distances between 
+                couples of particles is recorded. You can also get statistics on all the
+                 recorded results.</p>             
+            
+                <center><img src="images/screenshot-16.png"/></center>
+            
+            </subsection>
             
             
-            <p>The plots on the bottom of the tab show a boxplot and a 
-            distribution for the table values. The plots are drawn if there is
-            more than 2 values in the table. The table can be cleared by press
-            the clear button.</p>
-                        
+            
+             <subsection name="Process all the particles of a directory"> 
+             
+             <p>Run Corsen for many couples for particles, can be tedious, so you can run Corsen on a batch of files. 
+             To do that you must define the prefix for each type of particles in the setting:</p>
+             
+             <center><img src="images/screenshot-17.png"/></center>
+             
+             <p>Then select the directory to process (<b>File > Open a directory...</b>):</p>
+             
+            <center><img src="images/screenshot-18.png"/></center>
+            
+            <p>At last, launch the process as usual.</p>
+            
+            <center><img src="images/screenshot-11.png"/></center>
+            
+            
             </subsection>
 
         </section>

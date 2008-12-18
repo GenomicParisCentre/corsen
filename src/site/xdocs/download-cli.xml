@@ -24,16 +24,36 @@
 -->
 <document>
   <properties>
-    <title>Download Corsen @@@VERSION@@@ source</title>
+    <title>Download Corsen @@@VERSION@@@ command line version</title>
     <author email="jourdren@biologie.ens.fr">Laurent Jourdren</author>
   </properties>
   <body>
     <section name="Corsen command line version">
     	
-    	<p>Corsen is a free software and is distributed under the
-        <a href="license.html">General Public License</a>. You can download, 
-        compile and modify the source code of Corsen.
-      	</p>
+    	<p>The Corsen command line version is a version of corsen that only run in command line. To launch it under Windows type :</p>
+    	
+<source>
+C:\Corsen> corsen.bat batchfile.txt
+</source>
+
+<p>and the following command line under *nix :</p>
+
+<source>
+$ corsen.sh batchfile.txt
+</source>    	
+    
+    <subsection name="batch file format">
+
+    <p>The batch file must be a text file with tabular as separator, the first line of the file 
+    will be ignored. The following table show an example of a batch file.</p>
+    
+    <table>
+        <tr><th>Directory path</th><th>Particle A prefix</th><th>Particle B prefix</th></tr>
+        <tr><td>W:/microscopie/ImageJ/070411/G1</td><td>G1-lacz-(1_2_1_0)</td><td>G1-mito-(2_0_2_1)</td></tr>
+        <tr><td>W:/microscopie/ImageJ/070411/G24</td><td>G24-lacz-(1_2_1_0)</td><td>G24-mito-(2_0_2_1)</td></tr>
+    </table>
+    
+    </subsection>
     
     <subsection name="Download Corsen cli">
       <p>
