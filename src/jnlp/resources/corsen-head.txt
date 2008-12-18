@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <jnlp
-  spec="1.0+"
+  spec="1.5+"
   codebase="@@@WEBSITE@@@/webstart"
   href="corsen.jnlp">
   <information>
     <title>Corsen</title>
     <vendor>ENS Microarray platform</vendor>
     <homepage href="http://transcriptome.ens.fr"/>
-    <description>Corsen (full desc)</description>
-    <description kind="one-line">Corsen (one-line desc)</description>
-    <description kind="short">Corsen (short desc)</description>
+    <description>A new software dedicated to microcoped-based 3D distances measurements</description>
+    <description kind="one-line">A new software dedicated to microcoped-based 3D distances measurements</description>
+    <description kind="short">Corsen</description>
     <description kind="tooltip">Corsen</description>
 
     <icon href="@@@WEBSITE@@@/images/corsen-logo.png"/>
