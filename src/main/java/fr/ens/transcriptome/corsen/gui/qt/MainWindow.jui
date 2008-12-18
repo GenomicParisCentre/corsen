@@ -2,7 +2,7 @@
  <author>Laurent Jourdren</author>
  <comment>This is the main window of Corsen</comment>
  <class>CorsenMainWindow</class>
- <widget class="QMainWindow" name="CorsenMainWindow" >
+ <widget class="QMainWindow" name="Ui_CorsenMainWindow" >
   <property name="geometry" >
    <rect>
     <x>0</x>

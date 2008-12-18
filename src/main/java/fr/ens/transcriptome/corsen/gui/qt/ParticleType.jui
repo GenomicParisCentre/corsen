@@ -1,6 +1,6 @@
 <ui version="4.0" language="jambi" >
  <class>ParticleTypePropertiesDialog</class>
- <widget class="QDialog" name="ParticleTypePropertiesDialog" >
+ <widget class="QDialog" name="Ui_ParticleTypePropertiesDialog" >
   <property name="geometry" >
    <rect>
     <x>0</x>

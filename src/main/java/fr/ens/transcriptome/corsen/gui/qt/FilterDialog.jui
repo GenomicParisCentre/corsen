@@ -1,6 +1,6 @@
 <ui version="4.0" language="jambi" >
  <class>FilterDialog</class>
- <widget class="QDialog" name="FilterDialog" >
+ <widget class="QDialog" name="Ui_FilterDialog" >
   <property name="geometry" >
    <rect>
     <x>0</x>

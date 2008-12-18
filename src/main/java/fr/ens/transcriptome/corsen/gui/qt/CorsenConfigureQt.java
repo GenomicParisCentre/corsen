@@ -63,31 +63,31 @@ public class CorsenConfigureQt {
 
     final QObject o = new QObject() {
 
-      public void enable3DVisalisation() {
-
-        dialogUi.messengersCheckBox.setEnabled(true);
-        dialogUi.messengersCuboidsCheckBox.setEnabled(true);
-        dialogUi.distancesCheckBox.setEnabled(true);
-        dialogUi.mitosCheckBox.setEnabled(true);
-        dialogUi.mitosCuboidsCheckBox.setEnabled(true);
-      }
-
-      public void disable3DVisalisation() {
-
-        dialogUi.messengersCheckBox.setEnabled(false);
-        dialogUi.messengersCuboidsCheckBox.setEnabled(false);
-        dialogUi.distancesCheckBox.setEnabled(false);
-        dialogUi.mitosCheckBox.setEnabled(false);
-        dialogUi.mitosCuboidsCheckBox.setEnabled(false);
-      }
-
-      public void stateChanged3DVisualisation(final int value) {
-
-        if (value == 0)
-          disable3DVisalisation();
-        else
-          enable3DVisalisation();
-      }
+      // public void enable3DVisalisation() {
+      //
+      // dialogUi.messengersCheckBox.setEnabled(true);
+      // dialogUi.messengersCuboidsCheckBox.setEnabled(true);
+      // dialogUi.distancesCheckBox.setEnabled(true);
+      // dialogUi.mitosCheckBox.setEnabled(true);
+      // dialogUi.mitosCuboidsCheckBox.setEnabled(true);
+      // }
+      //
+      // public void disable3DVisalisation() {
+      //
+      // dialogUi.messengersCheckBox.setEnabled(false);
+      // dialogUi.messengersCuboidsCheckBox.setEnabled(false);
+      // dialogUi.distancesCheckBox.setEnabled(false);
+      // dialogUi.mitosCheckBox.setEnabled(false);
+      // dialogUi.mitosCuboidsCheckBox.setEnabled(false);
+      // }
+      //
+      // public void stateChanged3DVisualisation(final int value) {
+      //
+      // if (value == 0)
+      // disable3DVisalisation();
+      // else
+      // enable3DVisalisation();
+      // }
 
       public void changeMessengersColor() {
 
@@ -249,26 +249,37 @@ public class CorsenConfigureQt {
       break;
     }
 
-    dialogUi.visualizationCheckBox.stateChanged.connect(o,
-        "stateChanged3DVisualisation(int)");
+    // dialogUi.visualizationCheckBox.stateChanged.connect(o,
+    // "stateChanged3DVisualisation(int)");
 
-    dialogUi.visualizationCheckBox.setChecked(true);
-    dialogUi.visualizationCheckBox.setChecked(false);
+    // dialogUi.visualizationCheckBox.setChecked(true);
+    // dialogUi.visualizationCheckBox.setChecked(false);
 
     dialogUi.dataFileCheckBox.setChecked(s.isSaveDataFile());
     dialogUi.ivFileCheckBox.setChecked(s.isSaveIVFile());
     dialogUi.resultCheckBox.setChecked(s.isSaveResultsFile());
-    dialogUi.fullResultCheckBox.setChecked(s.isSaveFullResultsFile());
-    dialogUi.visualizationCheckBox.setChecked(s.isSaveVisualizationFiles());
-    dialogUi.messengersCheckBox.setChecked(s.isSaveParticleA3dFile());
-    dialogUi.messengersCuboidsCheckBox.setChecked(s
-        .isSaveParticlesACuboids3dFile());
-    dialogUi.mitosCheckBox.setChecked(s.isSaveParticleB3dFile());
-    dialogUi.mitosCuboidsCheckBox.setChecked(s.isSaveParticlesBCuboids3dFile());
-    dialogUi.distancesCheckBox.setChecked(s.isSaveDistances3dFile());
+    // dialogUi.fullResultCheckBox.setChecked(s.isSaveFullResultsFile());
+    // dialogUi.visualizationCheckBox.setChecked(s.isSaveVisualizationFiles());
+    // dialogUi.messengersCheckBox.setChecked(s.isSaveParticleA3dFile());
+    // dialogUi.messengersCuboidsCheckBox.setChecked(s
+    // .isSaveParticlesACuboids3dFile());
+    // dialogUi.mitosCheckBox.setChecked(s.isSaveParticleB3dFile());
+    // dialogUi.mitosCuboidsCheckBox.setChecked(s.isSaveParticlesBCuboids3dFile());
+    // dialogUi.distancesCheckBox.setChecked(s.isSaveDistances3dFile());
 
     dialogUi.clearHistoryCheckBox.setChecked(s
         .isClearHistoryWhenLaunchingNewCalc());
+
+    // Hide unused output files
+    dialogUi.resultCheckBox.setHidden(true);
+    // dialogUi.fullResultCheckBox.setHidden(true);
+    // dialogUi.spacerItem2.changeSize(0, 100);
+    // dialogUi.visualizationCheckBox.setHidden(true);
+    // dialogUi.messengersCheckBox.setHidden(true);
+    // dialogUi.messengersCuboidsCheckBox.setHidden(true);
+    // dialogUi.mitosCheckBox.setHidden(true);
+    // dialogUi.mitosCuboidsCheckBox.setHidden(true);
+    // dialogUi.distancesCheckBox.setHidden(true);
 
     // Third tab
 
@@ -368,16 +379,16 @@ public class CorsenConfigureQt {
 
       s.setSaveDataFile(dialogUi.dataFileCheckBox.isChecked());
       s.setSaveIVFile(dialogUi.ivFileCheckBox.isChecked());
-      s.setSaveFullResultFile(dialogUi.fullResultCheckBox.isChecked());
+      // s.setSaveFullResultFile(dialogUi.fullResultCheckBox.isChecked());
       s.setSaveResultFile(dialogUi.resultCheckBox.isChecked());
-      s.setSaveVisualizationFiles(dialogUi.visualizationCheckBox.isChecked());
-      s.setSaveParticlesA3dFile(dialogUi.messengersCheckBox.isChecked());
-      s.setSaveParticlesACuboids3dFile(dialogUi.messengersCuboidsCheckBox
-          .isChecked());
-      s.setSaveParticlesB3dFile(dialogUi.mitosCheckBox.isChecked());
-      s.setSaveParticlesBCuboids3dFile(dialogUi.mitosCuboidsCheckBox
-          .isChecked());
-      s.setSaveDistances3dFile(dialogUi.distancesCheckBox.isChecked());
+      // s.setSaveVisualizationFiles(dialogUi.visualizationCheckBox.isChecked());
+      // s.setSaveParticlesA3dFile(dialogUi.messengersCheckBox.isChecked());
+      // s.setSaveParticlesACuboids3dFile(dialogUi.messengersCuboidsCheckBox
+      // .isChecked());
+      // s.setSaveParticlesB3dFile(dialogUi.mitosCheckBox.isChecked());
+      // s.setSaveParticlesBCuboids3dFile(dialogUi.mitosCuboidsCheckBox
+      // .isChecked());
+      // s.setSaveDistances3dFile(dialogUi.distancesCheckBox.isChecked());
 
       s.setClearHistoryWhenLaunchNewCalc(dialogUi.clearHistoryCheckBox
           .isChecked());
@@ -392,9 +403,11 @@ public class CorsenConfigureQt {
           .setVisualisationParticlesBInDifferentsColors(dialogUi.showParticlesBDifferentColorCcheckBox
               .isChecked());
 
-      s.setParticlesATransparency(dialogUi.particlesATranscparencySpinBox.value());
-      s.setParticlesBTransparency(dialogUi.particlesBTranscparencySpinBox.value());
-      
+      s.setParticlesATransparency(dialogUi.particlesATranscparencySpinBox
+          .value());
+      s.setParticlesBTransparency(dialogUi.particlesBTranscparencySpinBox
+          .value());
+
       s.setColorParticlesA(qColorToColor(this.messengersColor));
       s.setColorParticlesB(qColorToColor(this.mitosColor));
       s.setColorBaryCenters(qColorToColor(this.baryCentersColor));

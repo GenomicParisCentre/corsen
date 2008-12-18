@@ -2,7 +2,7 @@
  <author>Laurent Jourdren</author>
  <comment>This interface allow the configuration of Corsen</comment>
  <class>ConfigureDialog</class>
- <widget class="QDialog" name="ConfigureDialog" >
+ <widget class="QDialog" name="Ui_ConfigureDialog" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -57,16 +57,7 @@
           </item>
           <item row="1" column="1" >
            <layout class="QHBoxLayout" >
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>0</number>
             </property>
             <item>
@@ -151,16 +142,7 @@
           </item>
           <item row="1" column="1" >
            <layout class="QHBoxLayout" >
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>0</number>
             </property>
             <item>
@@ -221,16 +203,7 @@
          <layout class="QVBoxLayout" >
           <item>
            <layout class="QGridLayout" >
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>0</number>
             </property>
             <item row="0" column="1" >
@@ -292,9 +265,9 @@
        <item>
         <spacer>
          <property name="orientation" >
-          <enum>Qt::Vertical</enum>
+          <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
            <height>40</height>
@@ -311,16 +284,7 @@
       <layout class="QVBoxLayout" >
        <item>
         <layout class="QVBoxLayout" >
-         <property name="rightMargin" >
-          <number>0</number>
-         </property>
-         <property name="leftMargin" >
-          <number>0</number>
-         </property>
-         <property name="topMargin" >
-          <number>0</number>
-         </property>
-         <property name="bottomMargin" >
+         <property name="margin" >
           <number>0</number>
          </property>
          <item>
@@ -329,19 +293,6 @@
             <string>Distance computation threads</string>
            </property>
            <layout class="QGridLayout" >
-            <item row="2" column="3" >
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
             <item row="2" column="0" >
              <widget class="QRadioButton" name="customThreadRadioButton" >
               <property name="focusPolicy" >
@@ -412,16 +363,7 @@
            <layout class="QVBoxLayout" >
             <item>
              <layout class="QGridLayout" >
-              <property name="rightMargin" >
-               <number>0</number>
-              </property>
-              <property name="leftMargin" >
-               <number>0</number>
-              </property>
-              <property name="topMargin" >
-               <number>0</number>
-              </property>
-              <property name="bottomMargin" >
+              <property name="margin" >
                <number>0</number>
               </property>
               <item row="0" column="0" >
@@ -443,78 +385,6 @@
                 </property>
                </widget>
               </item>
-              <item row="7" column="1" colspan="2" >
-               <widget class="QCheckBox" name="mitosCheckBox" >
-                <property name="focusPolicy" >
-                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-                </property>
-                <property name="text" >
-                 <string>Particles B</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0" >
-               <widget class="QCheckBox" name="fullResultCheckBox" >
-                <property name="focusPolicy" >
-                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-                </property>
-                <property name="text" >
-                 <string>Full &amp;results</string>
-                </property>
-                <property name="checked" >
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0" >
-               <widget class="QCheckBox" name="visualizationCheckBox" >
-                <property name="focusPolicy" >
-                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-                </property>
-                <property name="text" >
-                 <string>3d &amp;visualization</string>
-                </property>
-                <property name="checked" >
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="1" >
-               <widget class="QCheckBox" name="messengersCheckBox" >
-                <property name="focusPolicy" >
-                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-                </property>
-                <property name="text" >
-                 <string>Particles A</string>
-                </property>
-                <property name="checked" >
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="2" >
-               <spacer>
-                <property name="orientation" >
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" >
-                 <size>
-                  <width>21</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="8" column="1" >
-               <widget class="QCheckBox" name="mitosCuboidsCheckBox" >
-                <property name="focusPolicy" >
-                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-                </property>
-                <property name="text" >
-                 <string>Particles B cuboid&amp;s</string>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="0" >
                <widget class="QCheckBox" name="ivFileCheckBox" >
                 <property name="focusPolicy" >
@@ -525,29 +395,6 @@
                 </property>
                 <property name="checked" >
                  <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="1" >
-               <widget class="QCheckBox" name="messengersCuboidsCheckBox" >
-                <property name="focusPolicy" >
-                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-                </property>
-                <property name="text" >
-                 <string>Particles A cu&amp;boids</string>
-                </property>
-                <property name="checked" >
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="1" >
-               <widget class="QCheckBox" name="distancesCheckBox" >
-                <property name="focusPolicy" >
-                 <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
-                </property>
-                <property name="text" >
-                 <string>Dista&amp;nces</string>
                 </property>
                </widget>
               </item>
@@ -579,9 +426,9 @@
          <item>
           <spacer>
            <property name="orientation" >
-            <enum>Qt::Vertical</enum>
+            <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>399</width>
              <height>20</height>
@@ -697,9 +544,9 @@
        <item>
         <spacer>
          <property name="orientation" >
-          <enum>Qt::Vertical</enum>
+          <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
            <height>40</height>
@@ -725,16 +572,7 @@
          <layout class="QVBoxLayout" >
           <item>
            <layout class="QHBoxLayout" >
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>0</number>
             </property>
             <item>
@@ -761,16 +599,7 @@
           </item>
           <item>
            <layout class="QHBoxLayout" >
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>0</number>
             </property>
             <item>
@@ -1017,9 +846,9 @@
        <item>
         <spacer>
          <property name="orientation" >
-          <enum>Qt::Vertical</enum>
+          <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>521</width>
            <height>31</height>
@@ -1033,24 +862,15 @@
    </item>
    <item>
     <layout class="QGridLayout" >
-     <property name="rightMargin" >
-      <number>0</number>
-     </property>
-     <property name="leftMargin" >
-      <number>0</number>
-     </property>
-     <property name="topMargin" >
-      <number>0</number>
-     </property>
-     <property name="bottomMargin" >
+     <property name="margin" >
       <number>0</number>
      </property>
      <item rowspan="2" row="0" column="0" >
       <spacer>
        <property name="orientation" >
-        <enum>Qt::Vertical</enum>
+        <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0" >
         <size>
          <width>131</width>
          <height>31</height>
@@ -1061,9 +881,9 @@
      <item row="0" column="2" >
       <spacer>
        <property name="orientation" >
-        <enum>Qt::Vertical</enum>
+        <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0" >
         <size>
          <width>20</width>
          <height>40</height>
@@ -1074,9 +894,9 @@
      <item row="1" column="1" >
       <spacer>
        <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
+        <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0" >
         <size>
          <width>40</width>
          <height>20</height>
@@ -1086,16 +906,7 @@
      </item>
      <item row="1" column="2" >
       <layout class="QHBoxLayout" >
-       <property name="rightMargin" >
-        <number>0</number>
-       </property>
-       <property name="leftMargin" >
-        <number>0</number>
-       </property>
-       <property name="topMargin" >
-        <number>0</number>
-       </property>
-       <property name="bottomMargin" >
+       <property name="margin" >
         <number>0</number>
        </property>
        <item>
@@ -1142,13 +953,6 @@
   <tabstop>dataFileCheckBox</tabstop>
   <tabstop>ivFileCheckBox</tabstop>
   <tabstop>resultCheckBox</tabstop>
-  <tabstop>fullResultCheckBox</tabstop>
-  <tabstop>visualizationCheckBox</tabstop>
-  <tabstop>messengersCheckBox</tabstop>
-  <tabstop>messengersCuboidsCheckBox</tabstop>
-  <tabstop>mitosCheckBox</tabstop>
-  <tabstop>mitosCuboidsCheckBox</tabstop>
-  <tabstop>distancesCheckBox</tabstop>
   <tabstop>clearHistoryCheckBox</tabstop>
   <tabstop>histoResultClassesNumberSpinBox</tabstop>
   <tabstop>customExpressionLineEdit</tabstop>
