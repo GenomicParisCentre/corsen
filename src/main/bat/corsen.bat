@@ -1,1 +1,5 @@
-java -Djava.library.path="lib\win32" -cp ".\lib\commons-cli-1.0.jar;.\lib\win32\jogl.jar;.\lib\win32\qtjambi.jar;.\lib\win32\qtjambi-win32.jar;.\classes" fr.ens.transcriptome.corsen.Corsen %1 %2 %3 %4 %5 %6 %7 %8 %9
+@echo off
+SETLOCAL ENABLEDELAYEDEXPANSION
+set JARS=
+for %%i in (*.jar) do set JARS=!JARS!%%i;
+java -Xms64m -Xmx1024m -cp %JARS% fr.ens.transcriptome.corsen.Corsen -batchFile %1
