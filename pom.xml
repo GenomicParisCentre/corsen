@@ -6,7 +6,7 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.38</version>
+	<version>0.39</version>
 	<name>Corsen</name>
 	<description>
 		A tool to calc distance between mitochondria and RNA
@@ -14,7 +14,7 @@
 	<url>http://hestia.ens.fr/corsen</url>
 
 	<organization>
-		<name>Ecole Normale Superieure Microarray platform</name>
+		<name>École Normale Supérieure Microarray platform</name>
 		<url>http://transcriptome.ens.fr/sgdb</url>
 	</organization>
 
@@ -25,7 +25,7 @@
 			<email>jourdren 0 biologie ens fr</email>
 			<url />
 			<organization>
-				Ecole Normale Superieure Microarray platform
+				École Normale Supérieure Microarray platform
 			</organization>
 			<organizationUrl>
 				http://transcriptome.ens.fr/sgdb
@@ -38,13 +38,13 @@
 			<properties />
 		</developer>
 		<developer>
-			<id>mgarcia</id>
+			<id>magarcia</id>
 			<name>Mathilde Garcia</name>
-			<email>mgarcia 0 biologie ens fr</email>
+			<email>magarcia 0 biologie ens fr</email>
 			<url />
 			<organization>
-				Ecole Normale Superieure Laboratoire de G�n�tique
-				Mol�culaire
+				École Normale Supérieure Laboratoire de Génétique
+				Moléculaire
 			</organization>
 			<organizationUrl>
 				http://www.biologie.ens.fr/lgmgml
@@ -66,8 +66,8 @@
 			<!--<email></email>-->
 			<!--<email>see http://transcriptome.ens.fr/sgdb/presentation/people.php</email>-->
       			<organization>
-				Ecole Normale Superieure Laboratoire de G�n�tique
-				Mol�culaire
+				Ecole Normale Superieure Laboratoire de Génétique
+				Moléculaire
 			</organization>
 			<organisationUrl>http://www.biologie.ens.fr/lgmgml</organisationUrl>
 			<roles>
@@ -79,8 +79,22 @@
 
 	<licenses>
 		<license>
-			<name>GNU General Public License</name>
+			<name>GNU General Public License version 3</name>
 			<url>http://www.gnu.org/licenses/gpl.txt</url>
+			<distribution>repo</distribution>
+			<comments />
+		</license>
+		<license>
+			<name>GNU General Public License version 2</name>
+			<url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>
+				GPL version or later.
+			</comments>
+		</license>
+		<license>
+			<name>CeCILL Licence française de logiciel libre</name>
+			<url>http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt</url>
 			<distribution>repo</distribution>
 			<comments />
 		</license>
@@ -268,7 +282,7 @@
 		</resources>
 		<testResources>
 			<testResource>
-				<directory>src/test/java</directory>
+				<directory>src/test/java/files</directory>
 			</testResource>
 		</testResources>
 		<plugins>
@@ -443,16 +457,35 @@
 									<replacetoken>jar href="ij</replacetoken>
 									<replacevalue>jar main="true" href="ij</replacevalue>
 								</replace-->
-								<replace dir="${basedir}/target/site" value="${pom.url}">
+								<replace encoding="iso-8859-1" dir="${basedir}/target/site" value="${pom.url}">
 									<include name="**/*.jnlp"/>
 									<include name="**/*.html"/>
+									<include name="**/*.rss"/>
 									<replacetoken>@@@WEBSITE@@@</replacetoken>
 								</replace>
-								<replace dir="${basedir}/target/site" value="${pom.version}">
+								<replace encoding="iso-8859-1" dir="${basedir}/target/site" value="${pom.version}">
 									<include name="**/*.jnlp"/>
 									<include name="**/*.html"/>
+									<include name="**/*.rss"/>
 									<replacetoken>@@@VERSION@@@</replacetoken>
 								</replace>
+								<replace encoding="iso-8859-1" dir="${basedir}/target/site" value="${pom.name}">
+									<include name="**/*.jnlp"/>
+									<include name="**/*.html"/>
+									<include name="**/*.rss"/>
+									<replacetoken>@@@APPNAME@@@</replacetoken>
+								</replace>
+								<tstamp>
+									<format property="TODAY_UK" pattern="EEE, dd MMM yyyy HH:mm:ss z" locale="en,UK"/>
+								</tstamp>
+
+								<replace encoding="iso-8859-1" dir="${basedir}/target/site" value="${TODAY_UK}">
+									<include name="**/*.jnlp"/>
+									<include name="**/*.html"/>
+									<include name="**/*.rss"/>
+									<replacetoken>@@@DATE@@@</replacetoken>
+								</replace>
+
 								<copy file="${basedir}/target/corsen-${pom.version}.jar" 
 									tofile="${basedir}/target/site/corsen_plugin-${pom.version}.jar"/>
 								<copy file="${basedir}/target/corsen-src-${pom.version}.zip" 
@@ -461,6 +494,50 @@
 									tofile="${basedir}/target/site/corsen-src-${pom.version}.tar.gz"/>
 								<copy file="${basedir}/target/corsen-src-${pom.version}.tar.bz2" 
 									tofile="${basedir}/target/site/corsen-src-${pom.version}.tar.bz2"/>
+
+								<!-- Create corsen-cli packages  -->
+								<mkdir dir="${basedir}/target/corsen-cli"/>
+								<copy todir="${basedir}/target/corsen-cli">
+									<fileset dir="${basedir}/target/site/webstart">
+										<include name="*.jar"/>
+									</fileset>
+								</copy>
+								<copy file="${basedir}/src/main/bat/corsen.bat"
+									todir="${basedir}/target/corsen-cli" />
+								<copy file="${basedir}/src/main/sh/corsen.sh"
+									todir="${basedir}/target/corsen-cli" />
+
+								<tar tarfile="${basedir}/target/${artifactId}-cli-${version}.tar">
+									<!--tarfileset dir="${basedir}/src" mode="755" username="nobody" group="nobody" prefix="src/" /-->
+								
+									<tarfileset dir="${basedir}/target/corsen-cli"  mode="666" username="nobody" group="nobody">
+										<include name="*.jar"/>
+									</tarfileset>
+									<tarfileset dir="${basedir}/target/corsen-cli"  mode="777" username="nobody" group="nobody">
+										<include name="*.sh"/>
+										<include name="*.bat"/>
+									</tarfileset>
+								</tar>
+								<gzip zipfile="${basedir}/target/${artifactId}-cli-${version}.tar.gz" 
+									src="${basedir}/target/${artifactId}-cli-${version}.tar"/>
+								<bzip2 destfile="${basedir}/target/${artifactId}-cli-${version}.tar.bz2" 
+									src="${basedir}/target/${artifactId}-cli-${version}.tar"/>
+
+								<mkdir dir="${basedir}/target/cli-zip"/>
+								<untar src="${basedir}/target/${artifactId}-cli-${version}.tar" 
+									dest="${basedir}/target/cli-zip"/>
+								<zip destfile="${basedir}/target/${artifactId}-cli-${version}.zip" basedir="${basedir}/target/cli-zip"/>
+								<delete dir="${basedir}/target/cli-zip"/>
+	
+								<copy file="${basedir}/target/${artifactId}-cli-${version}.tar.gz"
+									todir="${basedir}/target/site" />
+								<copy file="${basedir}/target/${artifactId}-cli-${version}.tar.bz2"
+									todir="${basedir}/target/site" />
+								<copy file="${basedir}/target/${artifactId}-cli-${version}.zip"
+									todir="${basedir}/target/site" />
+		
+
+
 							</tasks>
 						</configuration>
 						<goals>
@@ -578,7 +655,7 @@
 							ENS Microarray Platform Bioinformatic Team
 						</dnameCn>
 						<dnameOu>Microarray Platform</dnameOu>
-						<dnameO>�cole Normale Sup�rieure</dnameO>
+						<dnameO>École Normale Supérieure</dnameO>
 						<dnameL>Paris</dnameL>
 						<dnameSt>Ile de France</dnameSt>
 						<dnameC>fr</dnameC>
@@ -715,6 +792,12 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>changelog-maven-plugin</artifactId>
+				<configuration>
+					<type>date</type>
+					<dates>
+						<date implementation="java.lang.String">2006-01-01</date>
+					</dates>
+				</configuration>
 			</plugin>
 			<!--plugin>
 				<groupId>org.codehaus.mojo</groupId>
