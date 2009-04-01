@@ -44,7 +44,7 @@ public final class ImageJImageCreate {
   private static final int MIN_THRESHOLD = 1;
   private static final int MAX_THRESHOLD = 2000;
 
-  private static ImagePlus createHoriPoints2(final int step) {
+  private static ImagePlus createHoriPoints(final int step) {
 
     ImageStack is = new ImageStack(LEN, LEN);
 
@@ -60,12 +60,12 @@ public final class ImageJImageCreate {
       is.addSlice("" + k / step, ip);
     }
 
-    ImagePlus ipl = new ImagePlus("cube", is);
+    ImagePlus ipl = new ImagePlus("hori", is);
 
     return ipl;
   }
 
-  private static ImagePlus createVertPoints2(final int step) {
+  private static ImagePlus createVertPoints(final int step) {
 
     ImageStack is = new ImageStack(LEN, LEN);
 
@@ -79,12 +79,47 @@ public final class ImageJImageCreate {
       is.addSlice("" + k, ip);
     }
 
-    ImagePlus ipl = new ImagePlus("cube", is);
+    ImagePlus ipl = new ImagePlus("vert", is);
 
     return ipl;
   }
 
-  private static ImagePlus createCubeImage2(final int step) {
+  private static ImagePlus create0ptImage(final int step) {
+
+    ImageStack is = new ImageStack(LEN, LEN);
+
+    for (int k = 0; k < LEN / step; k++) {
+
+      ImageProcessor ip = new ShortProcessor(LEN, LEN);
+
+      is.addSlice("" + k, ip);
+    }
+
+    ImagePlus ipl = new ImagePlus("0pt", is);
+
+    return ipl;
+  }
+
+  private static ImagePlus create1ptImage(final int step) {
+
+    ImageStack is = new ImageStack(LEN, LEN);
+
+    for (int k = 0; k < LEN / step; k++) {
+
+      ImageProcessor ip = new ShortProcessor(LEN, LEN);
+
+      if (k == 24)
+        ip.set(12, 12, INTENSITY);
+
+      is.addSlice("" + k, ip);
+    }
+
+    ImagePlus ipl = new ImagePlus("1pt", is);
+
+    return ipl;
+  }
+
+  private static ImagePlus createCubeImage(final int step) {
 
     ImageStack is = new ImageStack(LEN, LEN);
 
@@ -106,6 +141,56 @@ public final class ImageJImageCreate {
 
     System.out.println("create a cube with " + count + " blocks.");
     ImagePlus ipl = new ImagePlus("cube", is);
+
+    return ipl;
+  }
+
+  private static ImagePlus createPyramidImage(final int step) {
+
+    ImageStack is = new ImageStack(LEN, LEN);
+
+    int count = 0;
+
+    for (int k = 0; k < LEN / step; k++) {
+
+      ImageProcessor ip = new ShortProcessor(LEN, LEN);
+      for (int i = 0; i < k; i++)
+        for (int j = 0; j < k; j++) {
+          ip.set(i, j, INTENSITY);
+          count++;
+        }
+
+      is.addSlice("" + k, ip);
+    }
+
+    System.out.println("create a pyramid with " + count + " blocks.");
+    ImagePlus ipl = new ImagePlus("pyramid", is);
+
+    return ipl;
+  }
+
+  private static ImagePlus createSolidImage(final int step) {
+
+    ImageStack is = new ImageStack(LEN, LEN);
+
+    int count = 0;
+
+    final int max = LEN / step / 2;
+
+    for (int k = 0; k < LEN / step; k++) {
+
+      ImageProcessor ip = new ShortProcessor(LEN, LEN);
+      for (int i = 0; i < max - k; i++)
+        for (int j = 0; j < max + k; j++) {
+          ip.set(i, j, INTENSITY);
+          count++;
+        }
+
+      is.addSlice("" + k, ip);
+    }
+
+    System.out.println("create a solid with " + count + " blocks.");
+    ImagePlus ipl = new ImagePlus("solid", is);
 
     return ipl;
   }
@@ -140,30 +225,26 @@ public final class ImageJImageCreate {
     return pars;
   }
 
+  private static void createFile(final ImagePlus ip, final int step,
+      final String prefix) throws FileNotFoundException, IOException {
+
+    ip.getProcessor().setThreshold(MIN_THRESHOLD, MAX_THRESHOLD,
+        ImageProcessor.NO_LUT_UPDATE);
+    Particles3D particles = convertToParticles(ip, 1, 1, 1);
+    particles.saveParticles(new FileOutputStream(new File(prefix
+        + step + ".par")));
+  }
+
   private static void createFiles(final int step) throws FileNotFoundException,
       IOException {
 
-    ImagePlus cube = createCubeImage2(step);
-    ImagePlus hori = createHoriPoints2(step);
-    ImagePlus vert = createVertPoints2(step);
-
-    cube.getProcessor().setThreshold(MIN_THRESHOLD, MAX_THRESHOLD,
-        ImageProcessor.NO_LUT_UPDATE);
-    hori.getProcessor().setThreshold(MIN_THRESHOLD, MAX_THRESHOLD,
-        ImageProcessor.NO_LUT_UPDATE);
-    vert.getProcessor().setThreshold(MIN_THRESHOLD, MAX_THRESHOLD,
-        ImageProcessor.NO_LUT_UPDATE);
-
-    Particles3D cubeParticles = convertToParticles(cube, 1, 1, 1);
-    Particles3D horiParticles = convertToParticles(hori, 1, 1, 1);
-    Particles3D vertParticles = convertToParticles(vert, 1, 1, 1);
-
-    cubeParticles.saveParticles(new FileOutputStream(new File("cube"
-        + step + ".par")));
-    horiParticles.saveParticles(new FileOutputStream(new File("hori"
-        + step + ".par")));
-    vertParticles.saveParticles(new FileOutputStream(new File("vert"
-        + step + ".par")));
+    createFile(createCubeImage(step), step, "cube");
+    createFile(createHoriPoints(step), step, "hori");
+    createFile(createVertPoints(step), step, "vert");
+    createFile(createPyramidImage(step), step, "pyramid");
+    createFile(createSolidImage(step), step, "solid");
+    createFile(create0ptImage(step), step, "0pt");
+    createFile(create1ptImage(step), step, "1pt");
 
   }
 
