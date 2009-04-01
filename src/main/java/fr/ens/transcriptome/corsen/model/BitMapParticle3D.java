@@ -22,6 +22,9 @@
 
 package fr.ens.transcriptome.corsen.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.ens.transcriptome.corsen.util.MathUtil;
 import fr.ens.transcriptome.corsen.util.Stats;
 
@@ -369,7 +372,7 @@ public final class BitMapParticle3D {
     final double pixelHeight = this.pixelHeight;
     final double squareArea = pixelWidth * pixelHeight;
 
-    final double[] circularities = new double[zLen];
+    final List<Double> circularities = new ArrayList<Double>(zLen);
 
     for (int k = 0; k < zLen; k++) {
 
@@ -379,28 +382,31 @@ public final class BitMapParticle3D {
       for (int i = 0; i < xLen; i++)
         for (int j = 0; j < yLen; j++) {
 
-          if (isParticleInnerPoint(i, j, k)) {
+          if (isParticlePoint(i, j, k)) {
 
-            if (!isParticleInnerPoint(i - 1, j, k))
+            if (!isParticlePoint(i - 1, j, k))
               perimeter += pixelHeight;
-            if (!isParticleInnerPoint(i + 1, j, k))
+            if (!isParticlePoint(i + 1, j, k))
               perimeter += pixelHeight;
-            if (!isParticleInnerPoint(i, j - 1, k))
+            if (!isParticlePoint(i, j - 1, k))
               perimeter += pixelWidth;
-            if (!isParticleInnerPoint(i, j + 1, k))
+            if (!isParticlePoint(i, j + 1, k))
               perimeter += pixelWidth;
 
             count++;
           }
         }
 
-      final double area = count * squareArea;
-      circularities[k] =
-          perimeter == 0.0 ? 0.0 : 4.0
-              * Math.PI * (area / (perimeter * perimeter));
+      if (count > 0) {
+
+        final double area = count * squareArea;
+        final double c =
+            perimeter == 0.0 ? 0.0 : 4.0
+                * Math.PI * (area / (perimeter * perimeter));
+        circularities.add(c);
+      }
     }
 
-    // return new Median().evaluate(circularities);
     return Stats.median(circularities);
   }
 
@@ -425,14 +431,6 @@ public final class BitMapParticle3D {
    * @return true if the point to test is in the bitmap
    */
   public boolean isParticlePoint(final int x, final int y, final int z) {
-
-    // System.out.println("x="
-    // + x + "\ty=" + y + "\tz=" + z + "\tval=" + getBitMapValue(x, y, z));
-
-    // final byte val = getBitMapValue(x, y, z);
-
-    // if (val > 0)
-    // System.out.println(val + "\t" + NO_POINT + "\t" + (val != NO_POINT));
 
     return getBitMapValue(x, y, z) != NO_POINT;
   }
