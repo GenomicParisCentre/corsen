@@ -23,6 +23,7 @@
 package fr.ens.transcriptome.corsen.util;
 
 import java.io.File;
+import java.util.Collection;
 
 import fr.ens.transcriptome.corsen.model.Point3D;
 
@@ -300,6 +301,11 @@ public final class Util {
     return count;
   }
 
+  /**
+   * Format a duration in milliseconds in a human reading format.
+   * @param time in milliseconds
+   * @return a String with the duration in a human reading format
+   */
   public static final String toTimeHumanReadable(final long time) {
 
     long min = time / (60 * 1000);
@@ -401,6 +407,25 @@ public final class Util {
     double[] result = new double[c];
 
     System.arraycopy(tmp, 0, result, 0, c);
+
+    return result;
+  }
+
+  /**
+   * Convert a collection of doubles to an array of doubles.
+   * @param col collection to convert
+   * @return a new array of double
+   */
+  public static double[] toArray(final Collection<Double> col) {
+
+    if (col == null)
+      return null;
+
+    final double[] result = new double[col.size()];
+
+    int i = 0;
+    for (Double val : col)
+      result[i++] = val;
 
     return result;
   }
