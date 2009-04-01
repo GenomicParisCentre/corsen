@@ -24,11 +24,21 @@ package fr.ens.transcriptome.corsen.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class Stats {
+/**
+ * Statistical methods.
+ * @author Laurent Jourdren
+ */
+public final class Stats {
 
+  /**
+   * This class store in a compressed manner results of the intensities and
+   * values.
+   * @author Laurent Jourdren
+   */
   public final static class DataDouble implements Comparable<DataDouble> {
 
     public double value;
@@ -81,7 +91,12 @@ public class Stats {
 
   }
 
-  private static final int getRealSize(List<DataDouble> values) {
+  /**
+   * Get the real size of a list of DataDouble.
+   * @param values The list of DataDouble
+   * @return the real size of the list
+   */
+  private static final int getRealSize(final List<DataDouble> values) {
 
     if (values == null)
       return 0;
@@ -93,13 +108,17 @@ public class Stats {
       d.virtualIndexMin = count;
       count += d.intensity;
       d.virtualIndexMax = count - 1;
-      ;
     }
 
     return count;
   }
 
-  public static double[] toDouble(List<DataDouble> values) {
+  /**
+   * Convert a list of DataDouble in an array of doubles.
+   * @param values List to convert
+   * @return an array of double
+   */
+  public static double[] toDouble(final List<DataDouble> values) {
 
     if (values == null)
       return null;
@@ -121,7 +140,14 @@ public class Stats {
     return result;
   }
 
-  private static double getVirtualValue(List<DataDouble> values, int index) {
+  /**
+   * Get the value of a virtual value in a list of DataDouble
+   * @param values the list of DataDouble
+   * @param index index of the virtual value
+   * @return
+   */
+  private static double getVirtualValue(final List<DataDouble> values,
+      final int index) {
 
     for (DataDouble d : values)
 
@@ -131,6 +157,12 @@ public class Stats {
     return Double.NaN;
   }
 
+  /**
+   * Get the percentile of a list of DataDouble.
+   * @param values The list of DataDouble
+   * @param p the percentile value to compute
+   * @return the percentile of the list
+   */
   public static double percentile(final List<DataDouble> values, final double p) {
 
     if (values == null)
@@ -196,14 +228,37 @@ public class Stats {
     }
 
     return true;
-
   }
 
+  /**
+   * Get the median of a collection of Doubles.
+   * @param values The collection of Doubles
+   * @return the median
+   */
+  public static double median(final Collection<Double> values) {
+
+    if (values == null)
+      return Double.NaN;
+
+    return median(Util.toArray(values));
+  }
+
+  /**
+   * Get the median of an array of doubles.
+   * @param values The array of doubles
+   * @return the median
+   */
   public static double median(final double[] values) {
 
     return percentile(values, 50.0);
   }
 
+  /**
+   * Get the percentile of a array of doubles.
+   * @param values The array of doubles
+   * @param p the percentile to compute
+   * @return the percentile
+   */
   public static double percentile(final double[] values, final double p) {
 
     if (values == null)
@@ -246,6 +301,11 @@ public class Stats {
     return lower + dif * (upper - lower);
   }
 
+  /**
+   * Get the minimal value of a list of DataDouble
+   * @param values The list of DataDouble
+   * @return the minimal value of DataDouble
+   */
   public static double min(final List<DataDouble> values) {
 
     if (values == null)
@@ -267,16 +327,31 @@ public class Stats {
     return min.value;
   }
 
+  /**
+   * Get the first quartile of a list of DataDouble
+   * @param values The list of DataDouble
+   * @return the first quartile value of DataDouble
+   */
   public static double firstQuartile(final List<DataDouble> values) {
 
     return percentile(values, 25.0);
   }
 
+  /**
+   * Get the median of a list of DataDouble
+   * @param values The list of DataDouble
+   * @return the median value of DataDouble
+   */
   public static double median(final List<DataDouble> values) {
 
     return percentile(values, 50.0);
   }
 
+  /**
+   * Get the mean of a list of DataDouble
+   * @param values The list of DataDouble
+   * @return the median value of DataDouble
+   */
   public static double mean(final List<DataDouble> values) {
 
     if (values == null)
@@ -294,11 +369,21 @@ public class Stats {
     return sum / count;
   }
 
+  /**
+   * Get the third quartile of a list of DataDouble
+   * @param values The list of DataDouble
+   * @return the third quartile value of DataDouble
+   */
   public static double thirdQuartile(final List<DataDouble> values) {
 
     return percentile(values, 75.0);
   }
 
+  /**
+   * Get the maximal value of a list of DataDouble
+   * @param values The list of DataDouble
+   * @return the maximal value of DataDouble
+   */
   public static double max(final List<DataDouble> values) {
 
     if (values == null)
