@@ -8,13 +8,13 @@
     <x>0</x>
     <y>0</y>
     <width>561</width>
-    <height>644</height>
+    <height>663</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Corsen settings</string>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout" >
    <item>
     <widget class="QTabWidget" name="tabWidget" >
      <property name="currentIndex" >
@@ -24,7 +24,7 @@
       <attribute name="title" >
        <string>&amp;Particles</string>
       </attribute>
-      <layout class="QVBoxLayout" >
+      <layout class="QVBoxLayout" name="verticalLayout_2" >
        <item>
         <widget class="QGroupBox" name="ParticleBGroupBox" >
          <property name="title" >
@@ -861,74 +861,14 @@
     </widget>
    </item>
    <item>
-    <layout class="QGridLayout" >
-     <property name="margin" >
-      <number>0</number>
+    <widget class="QDialogButtonBox" name="okButtonBox" >
+     <property name="orientation" >
+      <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
      </property>
-     <item rowspan="2" row="0" column="0" >
-      <spacer>
-       <property name="orientation" >
-        <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0" >
-        <size>
-         <width>131</width>
-         <height>31</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="2" >
-      <spacer>
-       <property name="orientation" >
-        <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0" >
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="1" column="1" >
-      <spacer>
-       <property name="orientation" >
-        <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="1" column="2" >
-      <layout class="QHBoxLayout" >
-       <property name="margin" >
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QPushButton" name="okButton" >
-         <property name="text" >
-          <string>&amp;OK</string>
-         </property>
-         <property name="default" >
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="cancelButton" >
-         <property name="text" >
-          <string>&amp;Cancel</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
+     <property name="standardButtons" >
+      <set>com.trolltech.qt.gui.QDialogButtonBox.StandardButton.Cancel|com.trolltech.qt.gui.QDialogButtonBox.StandardButton.Ok</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -970,34 +910,34 @@
  <resources/>
  <connections>
   <connection>
-   <sender>okButton</sender>
-   <signal>clicked</signal>
-   <receiver>ConfigureDialog</receiver>
+   <sender>okButtonBox</sender>
+   <signal>accepted</signal>
+   <receiver>Ui_ConfigureDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>466</x>
-     <y>634</y>
+     <x>280</x>
+     <y>609</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>96</x>
-     <y>254</y>
+     <x>280</x>
+     <y>321</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>cancelButton</sender>
-   <signal>clicked</signal>
-   <receiver>ConfigureDialog</receiver>
+   <sender>okButtonBox</sender>
+   <signal>rejected</signal>
+   <receiver>Ui_ConfigureDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>551</x>
-     <y>634</y>
+     <x>280</x>
+     <y>609</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>179</x>
-     <y>282</y>
+     <x>280</x>
+     <y>321</y>
     </hint>
    </hints>
   </connection>
