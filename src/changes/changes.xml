@@ -38,6 +38,12 @@
 	</properties>
 	<body>
 
+        <release version="0.40" date="2009-05-12">
+            <action dev="jourdren" type="fix">
+                In configuration dialog, Ok and Cancel has no effect. (Effect from QtJambi 4.4 ?).
+            </action>
+        </release>
+
         <release version="0.39" date="2009-04-01">
 
             <action dev="jourdren" type="fix">
