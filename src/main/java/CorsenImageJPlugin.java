@@ -46,10 +46,12 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -94,6 +96,7 @@ public class CorsenImageJPlugin implements PlugInFilter {
   private int nSlices;
   private int width, height;
   private ResultsTable rt = new ResultsTable();
+  private boolean ImageJVersionOk;
 
   private Segmentation2DRunner seg2DRunner;
   private Segmentation3DRunner seg3DRunner = new Segmentation3DRunner();
@@ -144,7 +147,10 @@ public class CorsenImageJPlugin implements PlugInFilter {
    */
   public void run(final ImageProcessor ip) {
 
-    if (cancel || !testImageJVersion() || !testThreshold(ip))
+    if (!this.ImageJVersionOk)
+      this.ImageJVersionOk = testImageJVersion();
+
+    if (cancel || !this.ImageJVersionOk || !testThreshold(ip))
       return;
 
     this.slice++;
@@ -213,34 +219,53 @@ public class CorsenImageJPlugin implements PlugInFilter {
     }
   }
 
+  /**
+   * Get the version of ImageJ avoiding javac optimization that returns the
+   * imagej version used for compilation.
+   * @return the ImageJ version or null, if java reflexion can't work.
+   */
+  private String getImageJVersion() {
+
+    String result = null;
+
+    try {
+      Class imagej = Class.forName("ij.ImageJ");
+      Field version = imagej.getDeclaredField("VERSION");
+      result = (String) version.get(ImageJ.class);
+    } catch (ClassNotFoundException e) {
+    } catch (SecurityException e) {
+    } catch (NoSuchFieldException e) {
+    } catch (IllegalArgumentException e) {
+    } catch (IllegalAccessException e) {
+    }
+
+    return result;
+  }
+
   private boolean testImageJVersion() {
 
-    final String version = ImageJ.VERSION;
+    final String version = getImageJVersion();
 
-    final String[] tab = version.split("\\.");
+    if (version == null)
+      return true;
+
+    final Pattern versionPattern = Pattern.compile("^(\\d+)\\.(\\d+)(.*)");
+
+    final Matcher m = versionPattern.matcher(version);
+
     final String msg;
 
-    if (tab == null || tab.length != 2)
-      msg =
-          "Invalid ImageJ version.\n";
+    if (!m.matches())
+      msg = "Invalid ImageJ version.\n";
     else {
 
-      final String ch = tab[1];
-      final int len = ch.length();
-
-      final int major = Integer.parseInt(tab[0]);
-      final int minor;
-
-      final char last = ch.charAt(len - 1);
-
-      if (Character.isLetter(last))
-        minor = Integer.parseInt(ch.substring(0, len - 2));
-      else
-        minor = Integer.parseInt(tab[1]);
+      final int major = Integer.parseInt(m.group(1));
+      final int minor = Integer.parseInt(m.group(2));
+      // final String rev = m.group(3);
 
       if (major != 1)
         msg = Globals.APP_NAME + " plugin work only with ImageJ 1.x.\n";
-      else if (minor != 41)
+      else if (minor == 41)
         msg =
             "The 1.41 version of ImageJ is buggy.\n"
                 + "Please upgrade your imageJ version (Help > Update ImageJ) \n"
