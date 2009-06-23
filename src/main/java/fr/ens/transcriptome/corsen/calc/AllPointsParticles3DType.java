@@ -36,9 +36,9 @@ import fr.ens.transcriptome.corsen.model.Particle3D;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 
-class UndefinedParticles3D extends DistanceProcessor {
+class AllPointsParticles3DType extends DistanceProcessor {
 
-  private static String TYPE = "Undefined";
+  private static String TYPE = "Allpoints";
 
   @Override
   public String getPreProcessorType() {

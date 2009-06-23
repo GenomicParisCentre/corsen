@@ -33,14 +33,15 @@ import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
 import fr.ens.transcriptome.corsen.model.Particle3DUtil;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SingletonListPoint3D;
 
-public class TinyParticles3D extends DistanceProcessor {
+public class DecompostionParticles3DType extends DistanceProcessor {
 
-  private static String TYPE = "Tiny";
+  private static String TYPE = "Decomposition";
 
   // private Particles3D cuboids;
 
@@ -65,6 +66,8 @@ public class TinyParticles3D extends DistanceProcessor {
     final int countMax =
         Particle3DUtil.countInnerPointsInParticles(particles.getParticles());
     int count = 0;
+    Particle3DBuilder p3b = null;
+    
 
     for (Particle3D messenger : particles.getParticles()) {
 
@@ -79,7 +82,15 @@ public class TinyParticles3D extends DistanceProcessor {
       List<Particle3D> cuboids =
           Particle3DUtil.createCuboidToArrayList(messenger, len, len, len);
 
-      mapCuboids.put(messenger, cuboids);
+      if (p3b == null)
+        p3b = new Particle3DBuilder(messenger);
+
+      final List<Particle3D> barycentreCuboids = new ArrayList<Particle3D>(cuboids.size());
+      for (Particle3D p : cuboids)
+        barycentreCuboids
+            .add(Particle3DUtil.createBarycentreParticle3D(p, p3b));
+
+      mapCuboids.put(messenger, barycentreCuboids);
 
       count += messenger.innerPointsCount();
       final double p =

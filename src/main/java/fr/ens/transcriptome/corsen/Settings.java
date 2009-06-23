@@ -445,7 +445,7 @@ public final class Settings {
   public ParticleType getParticlesAType() {
 
     String val =
-        this.properties.getProperty(PARTICLES_A_TYPE_KEY, ParticleType.TINY
+        this.properties.getProperty(PARTICLES_A_TYPE_KEY, ParticleType.DECOMPOSITION
             .toString());
 
     return ParticleType.getParticleType(val);
@@ -508,7 +508,7 @@ public final class Settings {
   public ParticleType getParticlesBType() {
 
     return ParticleType.getParticleType(this.properties.getProperty(
-        PARTICLES_B_TYPE_KEY, ParticleType.HUGE.toString()));
+        PARTICLES_B_TYPE_KEY, ParticleType.SURFACE.toString()));
   }
 
   /**

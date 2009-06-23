@@ -65,7 +65,7 @@ public final class Particle3D {
   private boolean edgeParticle;
   private boolean pixelDimChange;
 
-  private ParticleType type = ParticleType.UNDEFINED;
+  private ParticleType type = ParticleType.ALLPOINTS;
 
   //
   // Getters

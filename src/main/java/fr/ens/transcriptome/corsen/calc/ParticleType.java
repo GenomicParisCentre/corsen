@@ -26,9 +26,9 @@ import java.util.Properties;
 
 public enum ParticleType {
 
-  HUGE("Huge particle", "full description for HUGE particle"), TINY(
-      "Tiny particle", "full description for TINY particle"), UNDEFINED(
-      "Undefined particle", "full description for UNDEFINED particle"),
+  SURFACE("Surface particle", "full description for HUGE particle"),
+  DECOMPOSITION("Decomposition particle", "full description for TINY particle"),
+  ALLPOINTS("All points particle", "full description for UNDEFINED particle"),
   BARYCENTER("Barycenter particle", "full description for BARYCENTER particle");
 
   private String description;
@@ -60,17 +60,17 @@ public enum ParticleType {
 
     switch (this) {
 
-    case HUGE:
-      return new HugeParticles3D();
+    case SURFACE:
+      return new SurfaceParticles3DType();
 
-    case TINY:
-      return new TinyParticles3D();
+    case DECOMPOSITION:
+      return new DecompostionParticles3DType();
 
-    case UNDEFINED:
-      return new UndefinedParticles3D();
+    case ALLPOINTS:
+      return new AllPointsParticles3DType();
 
     case BARYCENTER:
-      return new BarycenterParticles3D();
+      return new BarycenterParticles3DType();
 
     default:
       return null;
@@ -98,7 +98,7 @@ public enum ParticleType {
 
     switch (this) {
 
-    case TINY:
+    case DECOMPOSITION:
       Properties properties = new Properties();
       properties.setProperty("cuboid.automatic.size", "true");
       properties.setProperty("cuboid.custom.size", "" + 1.0);

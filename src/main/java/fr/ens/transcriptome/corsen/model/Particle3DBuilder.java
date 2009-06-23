@@ -442,6 +442,17 @@ public class Particle3DBuilder {
   }
 
   /**
+   * Public constructor.
+   * @param particle Particle to use to get the pixel(width, height, depth) to
+   *          initialize the Particle3DBuilder
+   */
+  public Particle3DBuilder(final Particle3D particle) {
+
+    this(particle.getPixelWidth(), particle.getPixelHeight(), particle
+        .getPixelDepth());
+  }
+
+  /**
    * Public constructor
    * @param pixelWidth The voxel Width
    * @param pixelHeight The pixel Height

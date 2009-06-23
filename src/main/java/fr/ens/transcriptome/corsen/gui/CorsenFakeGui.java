@@ -126,8 +126,8 @@ public class CorsenFakeGui {
     DistancesCalculator dc = new DistancesCalculator(result);
     dc.loadParticles();
 
-    result.getParticlesA().setType(ParticleType.TINY);
-    result.getParticlesB().setType(ParticleType.HUGE);
+    result.getParticlesA().setType(ParticleType.DECOMPOSITION);
+    result.getParticlesB().setType(ParticleType.SURFACE);
 
     System.out.println("Messengers inner: "
         + result.getParticlesA().countParticlesInnerPoints()

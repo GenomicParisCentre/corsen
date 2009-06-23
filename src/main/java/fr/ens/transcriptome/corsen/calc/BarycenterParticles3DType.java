@@ -33,6 +33,8 @@ import fr.ens.transcriptome.corsen.ProgressEvent;
 import fr.ens.transcriptome.corsen.ProgressEvent.ProgressEventType;
 import fr.ens.transcriptome.corsen.model.AbstractListPoint3D;
 import fr.ens.transcriptome.corsen.model.Particle3D;
+import fr.ens.transcriptome.corsen.model.Particle3DBuilder;
+import fr.ens.transcriptome.corsen.model.Particle3DUtil;
 import fr.ens.transcriptome.corsen.model.Particles3D;
 import fr.ens.transcriptome.corsen.model.Point3D;
 import fr.ens.transcriptome.corsen.model.SingletonListPoint3D;
@@ -41,7 +43,7 @@ import fr.ens.transcriptome.corsen.model.SingletonListPoint3D;
  * Define a class to compute distances from particles barycenter.
  * @author Laurent Jourdren
  */
-public class BarycenterParticles3D extends DistanceProcessor {
+public class BarycenterParticles3DType extends DistanceProcessor {
 
   private static String TYPE = "Barycenter";
 
@@ -65,9 +67,15 @@ public class BarycenterParticles3D extends DistanceProcessor {
 
     int count = 0;
     final int countMax = pars.getParticles().size();
+    Particle3DBuilder p3b = null;
 
     for (Particle3D par : pars.getParticles()) {
-      result.put(par, Collections.singletonList(par));
+
+      if (p3b == null)
+        p3b = new Particle3DBuilder(par);
+
+      result.put(par, Collections.singletonList(Particle3DUtil
+          .createBarycentreParticle3D(par, p3b)));
       count++;
 
       final double p =

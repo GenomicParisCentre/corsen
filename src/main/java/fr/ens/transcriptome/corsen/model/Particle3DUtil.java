@@ -282,4 +282,25 @@ public final class Particle3DUtil {
     return count;
   }
 
+  /**
+   * Create a particle with only one point. The point if the barycentre of
+   * another particle.
+   * @param particle Particle to use to compute the barycentre
+   * @param builder The builder to use to create the particle
+   * @return a new Particle3D with only one point or null if particle or builder
+   *         is null
+   */
+  public static Particle3D createBarycentreParticle3D(
+      final Particle3D particle, final Particle3DBuilder builder) {
+
+    if (particle == null || builder == null)
+      return null;
+
+    final Point3D barycentre = particle.getInnerPoints().getBarycenter();
+    builder.addInnerPoint(barycentre);
+    builder.addSurfacePoint(barycentre);
+
+    return builder.getParticle();
+  }
+
 }
