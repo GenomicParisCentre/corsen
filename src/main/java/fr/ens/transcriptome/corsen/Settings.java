@@ -435,7 +435,8 @@ public final class Settings {
    */
   public String getParticlesAName() {
 
-    return this.properties.getProperty(PARTICLES_A_NAME_KEY, "Messengers");
+    return this.properties.getProperty(PARTICLES_A_NAME_KEY,
+        Globals.PARTICLES_A_DEFAULT_NAME);
   }
 
   /**
@@ -445,8 +446,8 @@ public final class Settings {
   public ParticleType getParticlesAType() {
 
     String val =
-        this.properties.getProperty(PARTICLES_A_TYPE_KEY, ParticleType.DECOMPOSITION
-            .toString());
+        this.properties.getProperty(PARTICLES_A_TYPE_KEY,
+            ParticleType.DECOMPOSITION.toString());
 
     return ParticleType.getParticleType(val);
   }
@@ -458,7 +459,7 @@ public final class Settings {
   public String getParticlesABatchPrefix() {
 
     return this.properties.getProperty(PARTICLES_A_BATCH_PREFIX_KEY,
-        "messengers_");
+        Globals.PARTICLES_A_DEFAULT_BATCH_PREFIX);
   }
 
   /**
@@ -498,7 +499,8 @@ public final class Settings {
    */
   public String getParticlesBName() {
 
-    return this.properties.getProperty(PARTICLES_B_NAME_KEY, "Mitochondria");
+    return this.properties.getProperty(PARTICLES_B_NAME_KEY,
+        Globals.PARTICLES_B_DEFAULT_NAME);
   }
 
   /**
@@ -517,7 +519,8 @@ public final class Settings {
    */
   public String getParticlesBBatchPrefix() {
 
-    return this.properties.getProperty(PARTICLES_B_BATCH_PREFIX_KEY, "mitos_");
+    return this.properties.getProperty(PARTICLES_B_BATCH_PREFIX_KEY,
+        Globals.PARTICLES_B_DEFAULT_BATCH_PREFIX);
   }
 
   /**
@@ -923,7 +926,7 @@ public final class Settings {
   /**
    * Set if the distances lines must be shown in a different color if negative.
    * @param value if the distances lines must be shown in a different color if
-   *            negative
+   *          negative
    */
   public void setVisualizationShowNegativeDistances(final boolean value) {
 
@@ -1118,7 +1121,7 @@ public final class Settings {
   /**
    * Set if Particles A must be shown in different colors.
    * @param differentColors true if Particles A must be shown in different
-   *            colors
+   *          colors
    */
   public void setVisualisationParticlesAInDifferentsColors(
       final boolean differentColors) {
@@ -1131,7 +1134,7 @@ public final class Settings {
   /**
    * Set if Particles B must be shown in different colors.
    * @param differentColors true if Particles A must be shown in different
-   *            colors
+   *          colors
    */
   public void setVisualisationParticlesBInDifferentsColors(
       final boolean differentColors) {
@@ -1173,7 +1176,7 @@ public final class Settings {
   /**
    * Set if history results must be cleared when launching a new calc.
    * @param value true if history results must be cleared when launching a new
-   *            calc.
+   *          calc.
    */
   public void setClearHistoryWhenLaunchNewCalc(final boolean value) {
 

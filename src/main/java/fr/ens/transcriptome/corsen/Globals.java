@@ -27,6 +27,8 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 
+import fr.ens.transcriptome.corsen.calc.ParticleType;
+
 /**
  * Globals constants of the application.
  * @author Laurent Jourdren
@@ -63,7 +65,7 @@ public final class Globals {
   /** Use debug home dir. */
   public static final boolean DEBUG_HOME_DIR = IS_JAR ? false : true;
   /** Show built version. */
-  public static final boolean SHOW_BUILT = false; //IS_JAR ? true : false;
+  public static final boolean SHOW_BUILT = false; // IS_JAR ? true : false;
 
   /** Default Z coef value. */
   public static final float Z_COEF_DEFAULT = 2.96f;
@@ -121,6 +123,26 @@ public final class Globals {
 
   /** Full result extension. */
   public static final String EXTENSION_FULL_RESULT_FILE = ".fullresult";
+
+  /** Particles A default name. */
+  public static final String PARTICLES_A_DEFAULT_NAME = "Messengers";
+
+  /** Particles A default type. */
+  public static final ParticleType PARTICLES_A_DEFAULT_TYPE =
+      ParticleType.DECOMPOSITION;
+
+  /** Particles A default batch prefix. */
+  public static final String PARTICLES_A_DEFAULT_BATCH_PREFIX = "messengers_";
+
+  /** Particles B default name. */
+  public static final String PARTICLES_B_DEFAULT_NAME = "Mitochondria";
+
+  /** Particles B default type. */
+  public static final ParticleType PARTICLES_B_DEFAULT_TYPE =
+      ParticleType.SURFACE;
+
+  /** Particles B default batch prefix. */
+  public static final String PARTICLES_B_DEFAULT_BATCH_PREFIX = "mitos_";
 
   /** Licence text. */
   public static final String LICENCE_TXT =
