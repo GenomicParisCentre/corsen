@@ -153,7 +153,7 @@ public final class Particle3D {
    */
   public double getArea() {
 
-    if (this.area == -1)
+    if (this.area < 0)
       calcArea();
     return this.area;
   }
@@ -164,7 +164,7 @@ public final class Particle3D {
    */
   public double getMedianCircularity() {
 
-    if (this.medianCircularity == -1)
+    if (this.medianCircularity < 0)
       calcMedianCircularity();
     return this.medianCircularity;
   }
@@ -175,7 +175,7 @@ public final class Particle3D {
    */
   public double getSphericity() {
 
-    if (this.sphericity == -1)
+    if (this.sphericity < 0)
       calcSphericity();
 
     return this.sphericity;
@@ -187,7 +187,7 @@ public final class Particle3D {
    */
   public double getDensity() {
 
-    if (this.density == -1)
+    if (this.density < 0)
       calcDensity();
 
     return this.density;
@@ -251,7 +251,7 @@ public final class Particle3D {
    */
   void setVolume(final double volume) {
 
-    if (volume == -1 || volume == 0)
+    if (volume <= 0)
       calcVolume();
     else
       this.volume = volume;
@@ -263,7 +263,7 @@ public final class Particle3D {
    */
   void setIntensity(final long intensity) {
 
-    if (intensity == -1 || intensity == 0)
+    if (intensity <= 0)
       calcIntensity();
     else
       this.intensity = intensity;
@@ -275,7 +275,7 @@ public final class Particle3D {
    */
   void setArea(final double area) {
 
-    if (area == -1 || area == 0)
+    if (area <= 0)
       calcArea();
     else
       this.area = area;
@@ -287,7 +287,7 @@ public final class Particle3D {
    */
   void setMedianCircularity(final double medianCircularity) {
 
-    if (medianCircularity == -1 || medianCircularity == 0)
+    if (medianCircularity <= 0)
       calcMedianCircularity();
     else
       this.medianCircularity = medianCircularity;
@@ -299,7 +299,7 @@ public final class Particle3D {
    */
   void setSphericity(final double sphericity) {
 
-    if (sphericity == -1)
+    if (sphericity < 0)
       calcSphericity();
     else
       this.sphericity = sphericity;
@@ -311,7 +311,7 @@ public final class Particle3D {
    */
   void setDensity(final double density) {
 
-    if (density == -1)
+    if (density < 0)
       calcDensity();
     else
       this.density = density;
