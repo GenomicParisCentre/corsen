@@ -142,7 +142,7 @@ public final class Distance implements Comparable<Distance> {
    * @param distance distance to test
    * @return an int
    */
-  public int compareTo(final Distance distance) {
+  public final int compareTo(final Distance distance) {
 
     final float f;
 
