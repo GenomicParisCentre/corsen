@@ -26,10 +26,10 @@ import java.util.Properties;
 
 public enum ParticleType {
 
-  SURFACE("Surface particle", "full description for HUGE particle"),
-  DECOMPOSITION("Decomposition particle", "full description for TINY particle"),
-  ALLPOINTS("All points particle", "full description for UNDEFINED particle"),
-  BARYCENTER("Barycenter particle", "full description for BARYCENTER particle");
+  SURFACE("Surface particle", "Use the surface points of particles to compute distances."),
+  DECOMPOSITION("Decomposition particle", "Decompose the particles in cuboids before compute distances."),
+  ALLPOINTS("All points particle", "Use all the points of the particles to compute distances."),
+  BARYCENTER("Barycenter particle", "Use the barycenter of particles to compute distances.");
 
   private String description;
   private String fullDescription;
