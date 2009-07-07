@@ -512,7 +512,7 @@ public class CorsenResultWriter {
     if (cr == null)
       return;
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("#Particle A\tParticle B\t");
     sb.append("Mins min\tMins first quartile\tMins median\tMins mean\t"
         + "Mins median\tMins third quartile\tMins max\t");
@@ -553,7 +553,9 @@ public class CorsenResultWriter {
     sb.append("\t");
     sb.append(max.getMax());
     sb.append("\n");
-
+    
+    out.write(sb.toString());
+    out.close();
   }
 
   /**
