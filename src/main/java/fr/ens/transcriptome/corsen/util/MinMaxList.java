@@ -24,7 +24,7 @@ package fr.ens.transcriptome.corsen.util;
 
 import java.util.AbstractList;
 
-public class MinMaxList<E extends Comparable> extends AbstractList<E> {
+public final class MinMaxList<E extends Comparable> extends AbstractList<E> {
 
   private E min;
   private E max;
@@ -57,8 +57,7 @@ public class MinMaxList<E extends Comparable> extends AbstractList<E> {
     if (o == null)
       throw new NullPointerException("Object to add is null");
 
-    switch (this.count) {
-    case 2:
+    if (this.count == 2) {
 
       if (o.compareTo(min) < 0) {
         this.min = o;
@@ -69,13 +68,17 @@ public class MinMaxList<E extends Comparable> extends AbstractList<E> {
         this.max = o;
 
       return true;
+    }
 
-    case 0:
+    if (this.count == 0) {
+
       this.min = o;
       this.count = 1;
       return true;
+    }
 
-    case 1:
+    if (this.count == 1) {
+
       if (o.compareTo(min) < 0) {
         this.max = this.min;
         this.min = o;
@@ -84,12 +87,10 @@ public class MinMaxList<E extends Comparable> extends AbstractList<E> {
 
       this.count = 2;
       return true;
-
-    default:
-      throw new IllegalStateException("The object can't have "
-          + count + " values");
-
     }
+
+    throw new IllegalStateException("The object can't have "
+        + count + " values");
 
   }
 
