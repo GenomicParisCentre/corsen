@@ -233,22 +233,22 @@ public class CorsenSwing implements UpdateStatus {
             + (this.status.currentFile - last));
       break;
 
-    case START_READ_MESSENGERS_EVENT:
-    case START_READ_MITOS_EVENT:
-    case START_CHANGE_MESSENGERS_COORDINATES_EVENT:
-    case START_CHANGE_MITOS_COORDINATES_EVENT:
-    case START_CALC_MESSENGERS_CUBOIDS_EVENT:
-    case START_CALC_MITOS_CUBOIDS_EVENT:
+    case START_READ_PARTICLES_A_FILE_EVENT:
+    case START_READ_PARTICLES_B_FILE_EVENT:
+    case START_CHANGE_PARTICLES_A_COORDINATES_EVENT:
+    case START_CHANGE_PARTICLES_B_COORDINATES_EVENT:
+    case START_CALC_PARTICLES_A_CUBOIDS_EVENT:
+    case START_CALC_PARTICLES_B_CUBOIDS_EVENT:
     case START_CALC_MIN_DISTANCES_EVENT:
     case START_WRITE_DATA_EVENT:
-    case START_WRITE_IV_MESSENGERS_EVENT:
-    case START_WRITE_IV_MITOS_EVENT:
-    case START_WRITE_IV_MESSENGERS_CUBOIDS_EVENT:
+    case START_WRITE_IV_PARTICLES_A_EVENT:
+    case START_WRITE_IV_PARTICLES_B_EVENT:
+    case START_WRITE_IV_PARTICLES_A_CUBOIDS_EVENT:
     case START_WRITE_FULLRESULT_EVENT:
-    case START_WRITE_RPLOT_MESSENGERS_EVENT:
-    case START_WRITE_RPLOT_MITOS_EVENT:
-    case START_WRITE_RPLOT_MESSENGERS_CUBOIDS_EVENT:
-    case START_WRITE_RPLOT_MITOS_CUBOIDS_EVENT:
+    case START_WRITE_RPLOT_PARTICLES_A_EVENT:
+    case START_WRITE_RPLOT_PARTICLES_B_EVENT:
+    case START_WRITE_RPLOT_PARTICLES_A_CUBOIDS_EVENT:
+    case START_WRITE_RPLOT_PARTICLES_B_CUBOIDS_EVENT:
     case START_WRITE_RPLOT_DISTANCES_EVENT:
 
       this.status.phaseStart = System.currentTimeMillis();
@@ -256,8 +256,8 @@ public class CorsenSwing implements UpdateStatus {
 
       break;
 
-    case PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT:
-    case PROGRESS_CALC_MITOS_CUBOIDS_EVENT:
+    case PROGRESS_CALC_PARTICLES_A_CUBOIDS_EVENT:
+    case PROGRESS_CALC_PARTICLES_B_CUBOIDS_EVENT:
 
       this.status.phaseIndex = e.getIntValue1();
       break;
@@ -289,9 +289,9 @@ public class CorsenSwing implements UpdateStatus {
     sb.append("/11 (");
     sb.append(e.getType().toString());
 
-    if (this.status.currentPhase == ProgressEventType.START_CALC_MESSENGERS_CUBOIDS_EVENT
+    if (this.status.currentPhase == ProgressEventType.START_CALC_PARTICLES_A_CUBOIDS_EVENT
         .ordinal()
-        || this.status.currentPhase == ProgressEventType.START_CALC_MITOS_CUBOIDS_EVENT
+        || this.status.currentPhase == ProgressEventType.START_CALC_PARTICLES_B_CUBOIDS_EVENT
             .ordinal()) {
       sb.append(" ");
       sb.append((double) this.status.phaseIndex / 10);

@@ -258,7 +258,7 @@ public class DistancesCalculator {
     final String unit = result.getSettings().getUnit();
 
     // Read messengers
-    sendEvent(ProgressEventType.START_READ_MESSENGERS_EVENT);
+    sendEvent(ProgressEventType.START_READ_PARTICLES_A_FILE_EVENT);
     Particles3D particlesA = new Particles3D(result.getMessengersStream());
     particlesA.setName(result.getSettings().getParticlesAName());
     logger.info("ParticlesA: "
@@ -266,11 +266,11 @@ public class DistancesCalculator {
         + particlesA.getSurfacePointCount() + " sufrace points.");
 
     // Transform coordinates of messengers
-    sendEvent(ProgressEventType.START_CHANGE_MESSENGERS_COORDINATES_EVENT);
+    sendEvent(ProgressEventType.START_CHANGE_PARTICLES_A_COORDINATES_EVENT);
     changeFactors(particlesA);
 
     // Read mitos
-    sendEvent(ProgressEventType.START_READ_MITOS_EVENT);
+    sendEvent(ProgressEventType.START_READ_PARTICLES_B_FILE_EVENT);
     Particles3D particlesB = new Particles3D(result.getMitosStream());
     particlesB.setName(result.getSettings().getParticlesBName());
     logger.info("ParticlesB: "
@@ -278,7 +278,7 @@ public class DistancesCalculator {
         + particlesB.getSurfacePointCount() + " sufrace points.");
 
     // Transform coordinates of messengers
-    sendEvent(ProgressEventType.START_CHANGE_MITOS_COORDINATES_EVENT);
+    sendEvent(ProgressEventType.START_CHANGE_PARTICLES_B_COORDINATES_EVENT);
     changeFactors(particlesB);
 
     // Change unit if necessary
@@ -288,10 +288,10 @@ public class DistancesCalculator {
     }
 
     // Apply filters
-    sendEvent(ProgressEventType.START_FILTER_MESSENGERS_EVENT);
+    sendEvent(ProgressEventType.START_FILTER_PARTICLES_A_EVENT);
     result.setParticlesA(particlesA.filter(result.getParticlesAFilter()));
 
-    sendEvent(ProgressEventType.START_FILTER_MITOS_EVENT);
+    sendEvent(ProgressEventType.START_FILTER_PARTICLES_B_EVENT);
     result.setParticlesB(particlesB.filter(result.getParticlesBFilter()));
   }
 
@@ -355,14 +355,14 @@ public class DistancesCalculator {
     logger.info("Particle A processor: " + particlesA.getType().name());
 
     // Start the preprocess of the particle A
-    sendEvent(ProgressEventType.START_CALC_MESSENGERS_CUBOIDS_EVENT);
+    sendEvent(ProgressEventType.START_CALC_PARTICLES_A_CUBOIDS_EVENT);
     /*
      * this.processorA
      * .preprocess(ProgressEventType.PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT);
      */
     final Thread tpA =
         preprocessExecution(this.processorA, useThreads,
-            ProgressEventType.PROGRESS_CALC_MESSENGERS_CUBOIDS_EVENT,
+            ProgressEventType.PROGRESS_CALC_PARTICLES_A_CUBOIDS_EVENT,
             "preprocess Particle A");
 
     // Define the processor for particle B
@@ -371,14 +371,14 @@ public class DistancesCalculator {
     logger.info("Particle B processor: " + particlesB.getType().name());
 
     // Start the preprocess of the particle A
-    sendEvent(ProgressEventType.START_CALC_MITOS_CUBOIDS_EVENT);
+    sendEvent(ProgressEventType.START_CALC_PARTICLES_B_CUBOIDS_EVENT);
     /*
      * this.processorB
      * .preprocess(ProgressEventType.PROGRESS_CALC_MITOS_CUBOIDS_EVENT);
      */
     final Thread tpB =
         preprocessExecution(this.processorB, useThreads,
-            ProgressEventType.PROGRESS_CALC_MITOS_CUBOIDS_EVENT,
+            ProgressEventType.PROGRESS_CALC_PARTICLES_B_CUBOIDS_EVENT,
             "preprocess Particle B");
 
     if (tpA != null)
