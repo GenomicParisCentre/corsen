@@ -261,6 +261,9 @@ public class DistancesCalculator {
     sendEvent(ProgressEventType.START_READ_MESSENGERS_EVENT);
     Particles3D particlesA = new Particles3D(result.getMessengersStream());
     particlesA.setName(result.getSettings().getParticlesAName());
+    logger.info("ParticlesA: "
+        + particlesA.getInnerPointCount() + " inner points, "
+        + particlesA.getSurfacePointCount() + " sufrace points.");
 
     // Transform coordinates of messengers
     sendEvent(ProgressEventType.START_CHANGE_MESSENGERS_COORDINATES_EVENT);
@@ -270,6 +273,9 @@ public class DistancesCalculator {
     sendEvent(ProgressEventType.START_READ_MITOS_EVENT);
     Particles3D particlesB = new Particles3D(result.getMitosStream());
     particlesB.setName(result.getSettings().getParticlesBName());
+    logger.info("ParticlesB: "
+        + particlesB.getInnerPointCount() + " inner points, "
+        + particlesB.getSurfacePointCount() + " sufrace points.");
 
     // Transform coordinates of messengers
     sendEvent(ProgressEventType.START_CHANGE_MITOS_COORDINATES_EVENT);
@@ -299,7 +305,7 @@ public class DistancesCalculator {
       processor.preprocess(event);
       logger.info("End "
           + threadName + " (process in " + (System.currentTimeMillis() - start)
-          + " ms.");
+          + " ms).");
       return null;
     }
 
