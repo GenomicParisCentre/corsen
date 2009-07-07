@@ -62,6 +62,10 @@ import fr.ens.transcriptome.corsen.calc.DistancesCalculator;
 import fr.ens.transcriptome.corsen.gui.qt.DataModelQt.HistoryDataModel;
 import fr.ens.transcriptome.corsen.util.Util;
 
+/**
+ * This class implements the Qt GUI interface for Corsen.
+ * @author Laurent Jourdren
+ */
 // TODO add an in phase progress for writing/computing distances
 // TODO Remove the cancel button
 // TODO When alt-f4 -> System.exit(0)
@@ -72,20 +76,25 @@ public class CorsenQt extends QMainWindow {
   private static final int PATH_STRING_MAX_LEN = 50;
 
   private static CorsenQt mainw;
-
   private Ui_CorsenMainWindow mainWindowUi = new Ui_CorsenMainWindow();
 
   private DataModelQt models = new DataModelQt();
+  private final StatusInfo status = new StatusInfo();
   private Settings settings = new Settings();
+
   private String lastDir =
       Globals.DEBUG_HOME_DIR ? "/home/jourdren/Desktop/atp16" : "";
 
-  private String mitoPath = "";
-  private String messengerPath = "";
+  private String particlesAPath = "";
+  private String particlesBPath = "";
   private String directoryPath = "";
 
   private boolean refreshHistoryGraphics;
 
+  /**
+   * Class used for updating information about the running process.
+   * @author Laurent Jourdren
+   */
   private class UpdateStatusQt extends QObject implements UpdateStatus {
 
     public QObject.Signal1<ProgressEvent> statusSignal =
@@ -143,6 +152,10 @@ public class CorsenQt extends QMainWindow {
 
   }
 
+  /**
+   * Define a class that contains informations about the running process.
+   * @author Laurent Jourdren
+   */
   private static final class StatusInfo {
 
     int currentCellToProcess;
@@ -154,13 +167,18 @@ public class CorsenQt extends QMainWindow {
     int indexInPhase;
     long timeStartCells;
     long timeStartCell;
-    String mitoFilePath;
-    String rnaFilePath;
+    String particlesAFilePath;
+    String particlesBFilePath;
     String resultFilePath;
   }
 
-  private final StatusInfo status = new StatusInfo();
+  //
+  // Qt triggered methods
+  //
 
+  /**
+   * Open Corsen website.
+   */
   @SuppressWarnings("unused")
   private void openWebsite() {
 
@@ -169,6 +187,9 @@ public class CorsenQt extends QMainWindow {
     QDesktopServices.openUrl(url);
   }
 
+  /**
+   * Open Corsen handbook.
+   */
   @SuppressWarnings("unused")
   private void openHandbook() {
 
@@ -177,6 +198,9 @@ public class CorsenQt extends QMainWindow {
     QDesktopServices.openUrl(url);
   }
 
+  /**
+   * Open bug report page.
+   */
   @SuppressWarnings("unused")
   private void reportBug() {
 
@@ -185,23 +209,25 @@ public class CorsenQt extends QMainWindow {
     QDesktopServices.openUrl(url);
   }
 
-  //
-  // Qt triggered methods
-  //
-
-  @SuppressWarnings("unused")
+  /**
+   * Clear history results.
+   */
   void clearHistoryResults() {
 
     CorsenHistoryResults.getCorsenHistoryResults().clear();
     resultsHistoryChanged();
   }
 
+  /**
+   * Save history results.
+   */
   @SuppressWarnings("unused")
   private void saveHistoryResults() {
 
     String fileName =
         QFileDialog.getSaveFileName(this, "Save result", this.lastDir,
-            new QFileDialog.Filter("Result file (*.txt)"));
+            new QFileDialog.Filter("Result file (*"
+                + Globals.EXTENSION_POPULATION_FILE + ")"));
     if (fileName.length() != 0) {
 
       try {
@@ -237,21 +263,33 @@ public class CorsenQt extends QMainWindow {
 
   }
 
-  private void setMessengerPathLabelText(String text) {
+  /**
+   * Set the particles A path in the first tab of the GUI.
+   * @param text Text to show in the GUI
+   */
+  private void setParticlesAPathLabelText(final String text) {
 
-    this.messengerPath = text;
+    this.particlesAPath = text;
     mainWindowUi.messengerPathLabel.setText(Util.shortPath(text,
         PATH_STRING_MAX_LEN));
   }
 
-  private void setMitoPathLabelText(String text) {
+  /**
+   * Set the particles B path in the first tab of the GUI.
+   * @param text Text to show in the GUI
+   */
+  private void setParticlesBPathLabelText(final String text) {
 
-    this.mitoPath = text;
+    this.particlesBPath = text;
     mainWindowUi.mitoPathLabel.setText(Util
         .shortPath(text, PATH_STRING_MAX_LEN));
   }
 
-  private void setDirectoryPathLabelText(String text) {
+  /**
+   * Set the directory path in the first tab
+   * @param text Text to show in the GUI
+   */
+  private void setDirectoryPathLabelText(final String text) {
 
     this.directoryPath = text;
     mainWindowUi.directoryPathLabel.setText(Util.shortPath(text,
@@ -259,10 +297,10 @@ public class CorsenQt extends QMainWindow {
   }
 
   /**
-   * Set the messenger path.
+   * Open dialog box for particles A.
    */
   @SuppressWarnings("unused")
-  private void openMessengers() {
+  private void openParticlesA() {
 
     String fileName =
         QFileDialog.getOpenFileName(this, "Set "
@@ -270,7 +308,7 @@ public class CorsenQt extends QMainWindow {
             this.lastDir, new QFileDialog.Filter("Particles file (*"
                 + Globals.EXTENSION_PARTICLES_FILE + ")"));
     if (fileName.length() != 0) {
-      setMessengerPathLabelText(fileName);
+      setParticlesAPathLabelText(fileName);
       setDirectoryPathLabelText("");
       setLastDir(fileName);
     }
@@ -278,17 +316,18 @@ public class CorsenQt extends QMainWindow {
   }
 
   /**
-   * Set the mitos path.
+   * Open dialog box for particles B.
    */
   @SuppressWarnings("unused")
-  private void openMitos() {
+  private void openParticlesB() {
 
     String fileName =
         QFileDialog.getOpenFileName(this, "Set "
             + this.settings.getParticlesBName().toLowerCase() + " file",
-            this.lastDir, new QFileDialog.Filter("Particles file (*.par)"));
+            this.lastDir, new QFileDialog.Filter("Particles file (*"
+                + Globals.EXTENSION_PARTICLES_FILE + ")"));
     if (fileName.length() != 0) {
-      setMitoPathLabelText(fileName);
+      setParticlesBPathLabelText(fileName);
       setDirectoryPathLabelText("");
       setLastDir(fileName);
     }
@@ -312,8 +351,8 @@ public class CorsenQt extends QMainWindow {
       if (fileNames.size() > 0) {
         String file = fileNames.get(0);
         setDirectoryPathLabelText(file);
-        setMessengerPathLabelText("");
-        setMitoPathLabelText("");
+        setParticlesAPathLabelText("");
+        setParticlesBPathLabelText("");
         setLastDir(file);
       }
     }
@@ -356,6 +395,9 @@ public class CorsenQt extends QMainWindow {
 
   }
 
+  /**
+   * Open dialog box for the output prefix.
+   */
   @SuppressWarnings("unused")
   private void saveParticlesFile() {
 
@@ -363,7 +405,8 @@ public class CorsenQt extends QMainWindow {
 
     String fileName =
         QFileDialog.getSaveFileName(this, "Save result", this.lastDir,
-            new QFileDialog.Filter("Result file (*.par)"));
+            new QFileDialog.Filter("Result file (*"
+                + Globals.EXTENSION_PARTICLES_FILE + ")"));
     if (fileName.length() != 0) {
 
       try {
@@ -378,7 +421,6 @@ public class CorsenQt extends QMainWindow {
   /**
    * Set the result to the visualisation tabs
    */
-  @SuppressWarnings("unused")
   private void endProcess(final CorsenResult result) {
 
     mainWindowUi.viewOGL.setResult(result);
@@ -417,22 +459,22 @@ public class CorsenQt extends QMainWindow {
   /**
    * Update visalisation.
    */
-  @SuppressWarnings("unused")
   private void updateVisualisation() {
 
     final ViewOGL v = mainWindowUi.viewOGL;
 
     v
-        .setDrawNoMessengers(mainWindowUi.particlesANothingRadioButton
+        .setDrawNoParticlesA(mainWindowUi.particlesANothingRadioButton
             .isChecked());
-    v.setDrawNoMitos(mainWindowUi.particlesBNothingRadioButton.isChecked());
+    v
+        .setDrawNoParticlesB(mainWindowUi.particlesBNothingRadioButton
+            .isChecked());
     v.setDrawBaryCenter(mainWindowUi.showBarycentersCheckBox.isChecked());
     v.setDrawDistances(mainWindowUi.showDistancesCheckBox.isChecked());
-    v.setDrawMessengersCuboids(mainWindowUi.particlesACuboidsRadioButton
+    v.setDrawParticlesACuboids(mainWindowUi.particlesACuboidsRadioButton
         .isChecked());
-    v
-        .setDrawMitosCuboids(mainWindowUi.particlesBCuboidsRadioButton
-            .isChecked());
+    v.setDrawParticlesBCuboids(mainWindowUi.particlesBCuboidsRadioButton
+        .isChecked());
     v.setDrawDistances(mainWindowUi.showDistancesCheckBox.isChecked());
 
     v.setRemakeObject(true);
@@ -453,17 +495,17 @@ public class CorsenQt extends QMainWindow {
     this.resultViewChanged(Integer.valueOf(this.mainWindowUi.resultViewComboBox
         .currentIndex()));
 
-    String arnFile = messengerPath;
-    String mitoFile = mitoPath;
+    final String particlesAFile = particlesAPath;
+    final String particlesBFile = particlesBPath;
 
-    if (arnFile.length() == 0) {
+    if (particlesAFile.length() == 0) {
       showError("No particles particles A ("
           + this.settings.getParticlesAName() + ") to load.");
       setStartEnable(true);
       return;
     }
 
-    if (mitoFile.length() == 0) {
+    if (particlesBFile.length() == 0) {
       showError("No particles particles B ("
           + this.settings.getParticlesBName() + ") to load.");
       setStartEnable(true);
@@ -474,8 +516,8 @@ public class CorsenQt extends QMainWindow {
 
       mainWindowUi.logTextEdit.setText("");
       CorsenResult cr =
-          new CorsenResult(new File(arnFile), new File(mitoFile), null,
-              this.settings, null);
+          new CorsenResult(new File(particlesAFile), new File(particlesBFile),
+              null, this.settings, null);
       DistancesCalculator dc = new DistancesCalculator(cr);
       dc.setCoordinatesFactor(settings.getFactor());
       dc.setZCoordinatesFactor(settings.getZFactor());
@@ -485,9 +527,9 @@ public class CorsenQt extends QMainWindow {
 
       mainWindowUi.logTextEdit.append("Lannch 3D visualisation only.");
       mainWindowUi.logTextEdit.append("Particles A ("
-          + this.settings.getParticlesAName() + ") file: " + arnFile);
+          + this.settings.getParticlesAName() + ") file: " + particlesAFile);
       mainWindowUi.logTextEdit.append("Particles B ("
-          + this.settings.getParticlesBName() + ") file: " + mitoFile);
+          + this.settings.getParticlesBName() + ") file: " + particlesBFile);
 
       dc.loadParticles();
       mainWindowUi.logTextEdit.append("Show 3D visualisation successfully.");
@@ -520,14 +562,14 @@ public class CorsenQt extends QMainWindow {
   /**
    * Launch analysis.
    */
-  @SuppressWarnings("unused")
   void launchAnalysis() {
 
-    launchAnalysis(this.directoryPath, this.messengerPath, this.mitoPath, null);
+    launchAnalysis(this.directoryPath, this.particlesAPath,
+        this.particlesBPath, null);
   }
 
-  void launchAnalysis(final String dirFile, String arnFile, String mitoFile,
-      final String resultDir) {
+  void launchAnalysis(final String dirFile, final String particlesAFile,
+      final String particlesBFile, final String resultDir) {
 
     mainWindowUi.viewOGL.clear();
     this.models.setResult(null);
@@ -553,9 +595,9 @@ public class CorsenQt extends QMainWindow {
       cc.getUpdateStatus().moveToThread(t);
       t.start();
 
-    } else if (arnFile.length() == 0 || mitoFile.length() == 0) {
+    } else if (particlesAFile.length() == 0 || particlesBFile.length() == 0) {
 
-      if (arnFile.length() == 0)
+      if (particlesAFile.length() == 0)
         showError("No particles A ("
             + this.settings.getParticlesAName() + ")  file specified.");
       else
@@ -584,12 +626,12 @@ public class CorsenQt extends QMainWindow {
 
       if (outputDir != null) {
 
-        mainWindowUi.messengerPathLabel.setText(arnFile);
-        mainWindowUi.mitoPathLabel.setText(mitoFile);
+        mainWindowUi.messengerPathLabel.setText(particlesAFile);
+        mainWindowUi.mitoPathLabel.setText(particlesBFile);
         mainWindowUi.outputFilesPathLabel.setText(outputDir);
 
-        cc.setParticlesBFile(new File(mitoFile));
-        cc.setParticlesAFile(new File(arnFile));
+        cc.setParticlesBFile(new File(particlesBFile));
+        cc.setParticlesAFile(new File(particlesAFile));
         cc.setResultFile(new File(outputDir));
         cc.setMultipleFiles(false);
 
@@ -597,7 +639,6 @@ public class CorsenQt extends QMainWindow {
         cc.getUpdateStatus().moveToThread(t);
         t.start();
       }
-
     }
   }
 
@@ -627,6 +668,10 @@ public class CorsenQt extends QMainWindow {
     this.resultsHistoryChanged();
   }
 
+  /**
+   * Show status message.
+   * @param message Message to show
+   */
   private void showStatusMessage(final String message) {
 
     if (message == null)
@@ -635,11 +680,18 @@ public class CorsenQt extends QMainWindow {
     this.mainWindowUi.logTextEdit.insertPlainText(message + "\n");
   }
 
+  /**
+   * Clear status message.
+   */
   private void clearStatusMessage() {
 
     this.mainWindowUi.logTextEdit.setPlainText("");
   }
 
+  /**
+   * Set the last used directory using the last used filename.
+   * @param filename The last used filename
+   */
   private void setLastDir(final String filename) {
 
     if (filename == null)
@@ -650,6 +702,10 @@ public class CorsenQt extends QMainWindow {
     this.lastDir = f.getParentFile().getAbsolutePath();
   }
 
+  /**
+   * Set the progress message
+   * @param message Message to show
+   */
   private void showProgressMessage(final String message) {
 
     mainWindowUi.progressLabel.setText(message);
@@ -682,6 +738,9 @@ public class CorsenQt extends QMainWindow {
     QApplication.exit();
   }
 
+  /**
+   * Implements the copy function for the GUI
+   */
   @SuppressWarnings("unused")
   private void copy() {
 
@@ -693,6 +752,9 @@ public class CorsenQt extends QMainWindow {
 
   }
 
+  /**
+   * Copy the content of the table in the result tab.
+   */
   private void copyCorsenResult() {
 
     int index = this.mainWindowUi.resultViewComboBox.currentIndex();
@@ -716,6 +778,9 @@ public class CorsenQt extends QMainWindow {
 
   }
 
+  /**
+   * Copy the content of the table in the history tab.
+   */
   private void copyHistoryResult() {
 
     try {
@@ -735,7 +800,9 @@ public class CorsenQt extends QMainWindow {
 
   }
 
-  @SuppressWarnings("unused")
+  /**
+   * Launch the configure dialog box.
+   */
   public void configureDialog() {
 
     CorsenConfigureQt cc = new CorsenConfigureQt(this, this.settings);
@@ -744,7 +811,9 @@ public class CorsenQt extends QMainWindow {
     updateVisualisation();
   }
 
-  @SuppressWarnings("unused")
+  /**
+   * Launch the configure dialog box for viewer filter.
+   */
   public void configureViewerFilters() {
 
     FilterDialog fd = new FilterDialog(this, this.settings);
@@ -752,6 +821,9 @@ public class CorsenQt extends QMainWindow {
     updateVisualisation();
   }
 
+  //
+  // Changed methods
+  //
   private void resultsHistoryChanged() {
 
     final HistoryDataModel historyModel = DataModelQt.getHistoryModel();
@@ -801,8 +873,7 @@ public class CorsenQt extends QMainWindow {
     mainWindowUi.HistoryResultlabel.setText(historyModel.getResultMessage());
   }
 
-  @SuppressWarnings("unused")
-  private void resultViewChanged(Object o) {
+  private void resultViewChanged(final Object o) {
 
     resultsHistoryChanged();
 
@@ -852,15 +923,6 @@ public class CorsenQt extends QMainWindow {
     }
   }
 
-  public void closeEvent(QCloseEvent event) {
-
-    QApplication.exit();
-
-    /*
-     * super.closeEvent(event); quit(); System.exit(0);
-     */
-  }
-
   //
   // Update status methods
   //
@@ -888,8 +950,8 @@ public class CorsenQt extends QMainWindow {
       this.status.timeStartCells = System.currentTimeMillis();
 
       this.status.maxPhase = e.getIntValue1();
-      setMessengerPathLabelText("");
-      setMitoPathLabelText("");
+      setParticlesAPathLabelText("");
+      setParticlesBPathLabelText("");
       clearStatusMessage();
       this.status.currentPhase = 0;
 
@@ -900,11 +962,11 @@ public class CorsenQt extends QMainWindow {
       this.status.timeStartCell = System.currentTimeMillis();
       this.status.currentCellToProcess = e.getIntValue1();
       this.status.cellToProcessCount = e.getIntValue2();
-      this.status.rnaFilePath = e.getStringValue1();
-      this.status.mitoFilePath = e.getStringValue2();
+      this.status.particlesAFilePath = e.getStringValue1();
+      this.status.particlesBFilePath = e.getStringValue2();
       this.status.resultFilePath = e.getStringValue3();
-      setMessengerPathLabelText(this.status.rnaFilePath);
-      setMitoPathLabelText(this.status.mitoFilePath);
+      setParticlesAPathLabelText(this.status.particlesAFilePath);
+      setParticlesBPathLabelText(this.status.particlesBFilePath);
       this.status.currentPhase = 0;
       this.status.nbPhaseDone = 0;
 
@@ -917,10 +979,10 @@ public class CorsenQt extends QMainWindow {
           + this.status.cellToProcessCount + " cells");
       showStatusMessage("Particles A ("
           + this.settings.getParticlesAName() + ") file: "
-          + this.status.rnaFilePath);
+          + this.status.particlesAFilePath);
       showStatusMessage("Particles B ("
           + this.settings.getParticlesBName() + ") file: "
-          + this.status.mitoFilePath);
+          + this.status.particlesBFilePath);
       showStatusMessage("Output files prefix: " + this.status.resultFilePath);
 
       break;
@@ -1161,14 +1223,14 @@ public class CorsenQt extends QMainWindow {
 
   /**
    * Launch an analysis for a recalculation of a result
-   * @param arnFile path of arn file
-   * @param mitoFile path of mito file
+   * @param particlesAFile path of particles A file
+   * @param particlesBFile path of particles B file
    * @param dirFile path of results files
    */
-  static void launchAnalysis(final String arnFile, final String mitoFile,
-      final String dirFile) {
+  static void launchAnalysis(final String particlesAFile,
+      final String particlesBFile, final String dirFile) {
 
-    mainw.launchAnalysis(null, arnFile, mitoFile, dirFile);
+    mainw.launchAnalysis(null, particlesAFile, particlesBFile, dirFile);
   }
 
   /**
@@ -1183,6 +1245,22 @@ public class CorsenQt extends QMainWindow {
 
     return !mainw.mainWindowUi.launchAnalysisPushButton.isEnabled();
 
+  }
+
+  //
+  // End of application
+  //
+
+  /**
+   * Close the application.
+   */
+  public void closeEvent(QCloseEvent event) {
+
+    QApplication.exit();
+
+    /*
+     * super.closeEvent(event); quit(); System.exit(0);
+     */
   }
 
   //
@@ -1236,8 +1314,9 @@ public class CorsenQt extends QMainWindow {
         "configureDialog()");
     mainWindowUi.actionSave_settings.triggered.connect(this, "saveSettings()");
     mainWindowUi.actionOpen_particlesA.triggered.connect(this,
-        "openMessengers()");
-    mainWindowUi.actionOpen_particlesB.triggered.connect(this, "openMitos()");
+        "openParticlesA()");
+    mainWindowUi.actionOpen_particlesB.triggered.connect(this,
+        "openParticlesB()");
     mainWindowUi.actionOpen_a_directory.triggered.connect(this,
         "openDirectory()");
     mainWindowUi.action_Start_analysis.triggered.connect(this,
@@ -1254,11 +1333,12 @@ public class CorsenQt extends QMainWindow {
     initResultTab();
     initView3DTab();
     initHistoryTab();
-    
-    final String iconPath = "classpath:"
-      + (Globals.IS_JAR ? "" : "/files") + "/images/corsen-logo.png";
-    
-    logger.info("iconPath: "+iconPath);
+
+    final String iconPath =
+        "classpath:"
+            + (Globals.IS_JAR ? "" : "/files") + "/images/corsen-logo.png";
+
+    logger.info("iconPath: " + iconPath);
 
     setWindowIcon(new QIcon(iconPath));
 

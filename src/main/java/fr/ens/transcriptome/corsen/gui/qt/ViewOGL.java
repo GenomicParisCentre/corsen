@@ -178,7 +178,7 @@ public class ViewOGL extends QGLWidget {
    * Set if the messenges must be drawn.
    * @param drawNoMessengers The drawNoMessengers to set
    */
-  public void setDrawNoMessengers(boolean drawNoMessengers) {
+  public void setDrawNoParticlesA(boolean drawNoMessengers) {
     this.drawNoMessengers = drawNoMessengers;
   }
 
@@ -186,7 +186,7 @@ public class ViewOGL extends QGLWidget {
    * Set if the mitos must be drawn.
    * @param drawNoMitos The drawNoMitos to set
    */
-  public void setDrawNoMitos(boolean drawNoMitos) {
+  public void setDrawNoParticlesB(boolean drawNoMitos) {
     this.drawNoMitos = drawNoMitos;
   }
 
@@ -218,7 +218,7 @@ public class ViewOGL extends QGLWidget {
    * Set if messengers cuboids must be draw.
    * @param drawMessengersCuboids The drawMessengersCuboids to set
    */
-  public void setDrawMessengersCuboids(boolean drawMessengersCuboids) {
+  public void setDrawParticlesACuboids(boolean drawMessengersCuboids) {
     this.drawMessengersCuboids = drawMessengersCuboids;
   }
 
@@ -226,7 +226,7 @@ public class ViewOGL extends QGLWidget {
    * Set if mitos cuboids must be draw.
    * @param drawMitosCuboids The drawMitosCuboids to set
    */
-  public void setDrawMitosCuboids(boolean drawMitosCuboids) {
+  public void setDrawParticlesBCuboids(boolean drawMitosCuboids) {
     this.drawMitosCuboids = drawMitosCuboids;
   }
 

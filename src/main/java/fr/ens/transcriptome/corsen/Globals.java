@@ -124,6 +124,9 @@ public final class Globals {
   /** Full result extension. */
   public static final String EXTENSION_FULL_RESULT_FILE = ".fullresult";
 
+  /** Population file extension. */
+  public static final String EXTENSION_POPULATION_FILE = ".pop";
+
   /** Particles A default name. */
   public static final String PARTICLES_A_DEFAULT_NAME = "Messengers";
 
