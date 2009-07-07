@@ -212,8 +212,7 @@ public class Particles3D {
   public void setParticles(final List<Particle3D> particles) {
 
     if (particles == null)
-      if (particles == null)
-        throw new NullPointerException("Particles to set is null");
+      throw new NullPointerException("Particles to set is null");
 
     this.particles = Collections.unmodifiableList(particles);
   }
@@ -625,6 +624,32 @@ public class Particles3D {
     result.setParticles(filteredParticles);
 
     return result;
+  }
+
+  public int getInnerPointCount() {
+
+    if (this.particles == null)
+      return 0;
+
+    int count = 0;
+
+    for (Particle3D p : this.particles)
+      count += p.innerPointsCount();
+
+    return count;
+  }
+
+  public int getSurfacePointCount() {
+
+    if (this.particles == null)
+      return 0;
+
+    int count = 0;
+
+    for (Particle3D p : this.particles)
+      count += p.surfacePointsCount();
+
+    return count;
   }
 
   public String toString() {
