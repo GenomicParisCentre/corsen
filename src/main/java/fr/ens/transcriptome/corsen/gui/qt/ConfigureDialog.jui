@@ -672,10 +672,10 @@
              <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
             </property>
             <property name="text" >
-             <string>Messengers color:</string>
+             <string>Particles A color:</string>
             </property>
             <property name="buddy" >
-             <cstring>messengersColorPushButton</cstring>
+             <cstring>particlesAColorPushButton</cstring>
             </property>
            </widget>
           </item>
@@ -685,10 +685,10 @@
              <enum>com.trolltech.qt.core.Qt.FocusPolicy.NoFocus</enum>
             </property>
             <property name="text" >
-             <string>Mitochondria color:</string>
+             <string>Particles B color:</string>
             </property>
             <property name="buddy" >
-             <cstring>mitosColorPushButton</cstring>
+             <cstring>particlesBColorPushButton</cstring>
             </property>
            </widget>
           </item>
@@ -809,7 +809,7 @@
            </widget>
           </item>
           <item row="1" column="1" >
-           <widget class="QPushButton" name="mitosColorPushButton" >
+           <widget class="QPushButton" name="particlesBColorPushButton" >
             <property name="focusPolicy" >
              <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
             </property>
@@ -825,7 +825,7 @@
            </widget>
           </item>
           <item row="0" column="1" >
-           <widget class="QPushButton" name="messengersColorPushButton" >
+           <widget class="QPushButton" name="particlesAColorPushButton" >
             <property name="focusPolicy" >
              <enum>com.trolltech.qt.core.Qt.FocusPolicy.StrongFocus</enum>
             </property>
@@ -900,8 +900,8 @@
   <tabstop>showDistancesNegativeCheckBox</tabstop>
   <tabstop>showParticlesADifferentColorCcheckBox</tabstop>
   <tabstop>showParticlesBDifferentColorCcheckBox</tabstop>
-  <tabstop>messengersColorPushButton</tabstop>
-  <tabstop>mitosColorPushButton</tabstop>
+  <tabstop>particlesAColorPushButton</tabstop>
+  <tabstop>particlesBColorPushButton</tabstop>
   <tabstop>barycentersColorPushButton</tabstop>
   <tabstop>distancesColorPushButton</tabstop>
   <tabstop>backgroundColorPushButton</tabstop>

@@ -125,10 +125,10 @@
              <item>
               <widget class="QLabel" name="particleAFileLabel" >
                <property name="toolTip" >
-                <string>Messenger particle file path</string>
+                <string>Particles A file path</string>
                </property>
                <property name="statusTip" >
-                <string>Messenger particle file path</string>
+                <string>Particles A file path</string>
                </property>
                <property name="text" >
                 <string>&lt;b>Particles A () file:&lt;/b></string>
@@ -149,12 +149,12 @@
               </spacer>
              </item>
              <item>
-              <widget class="QLabel" name="messengerPathLabel" >
+              <widget class="QLabel" name="particlesAPathLabel" >
                <property name="toolTip" >
-                <string>Messenger particle file path</string>
+                <string>Particles A file path</string>
                </property>
                <property name="statusTip" >
-                <string>Messenger particle file path</string>
+                <string>Particles A file path</string>
                </property>
                <property name="text" >
                 <string/>
@@ -180,10 +180,10 @@
              <item>
               <widget class="QLabel" name="particleBFileLabel" >
                <property name="toolTip" >
-                <string>Mitochondria particle file path</string>
+                <string>Particles B file path</string>
                </property>
                <property name="statusTip" >
-                <string>Mitochondria particle file path</string>
+                <string>Particles B file path</string>
                </property>
                <property name="text" >
                 <string>&lt;b>Particles B () file:&lt;/b></string>
@@ -204,12 +204,12 @@
               </spacer>
              </item>
              <item>
-              <widget class="QLabel" name="mitoPathLabel" >
+              <widget class="QLabel" name="particlesBPathLabel" >
                <property name="toolTip" >
-                <string>Mitochondria particle file path</string>
+                <string>Particles B particle file path</string>
                </property>
                <property name="statusTip" >
-                <string>Mitochondria particle file path</string>
+                <string>Particles B particle file path</string>
                </property>
                <property name="text" >
                 <string/>

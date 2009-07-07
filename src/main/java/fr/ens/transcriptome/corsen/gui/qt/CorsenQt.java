@@ -270,7 +270,7 @@ public class CorsenQt extends QMainWindow {
   private void setParticlesAPathLabelText(final String text) {
 
     this.particlesAPath = text;
-    mainWindowUi.messengerPathLabel.setText(Util.shortPath(text,
+    mainWindowUi.particlesAPathLabel.setText(Util.shortPath(text,
         PATH_STRING_MAX_LEN));
   }
 
@@ -281,7 +281,7 @@ public class CorsenQt extends QMainWindow {
   private void setParticlesBPathLabelText(final String text) {
 
     this.particlesBPath = text;
-    mainWindowUi.mitoPathLabel.setText(Util
+    mainWindowUi.particlesBPathLabel.setText(Util
         .shortPath(text, PATH_STRING_MAX_LEN));
   }
 
@@ -626,8 +626,8 @@ public class CorsenQt extends QMainWindow {
 
       if (outputDir != null) {
 
-        mainWindowUi.messengerPathLabel.setText(particlesAFile);
-        mainWindowUi.mitoPathLabel.setText(particlesBFile);
+        mainWindowUi.particlesAPathLabel.setText(particlesAFile);
+        mainWindowUi.particlesBPathLabel.setText(particlesBFile);
         mainWindowUi.outputFilesPathLabel.setText(outputDir);
 
         cc.setParticlesBFile(new File(particlesBFile));

@@ -96,7 +96,7 @@ public class CorsenConfigureQt {
 
         if (c.isValid()) {
           CorsenConfigureQt.this.messengersColor = c;
-          dialogUi.messengersColorPushButton.setIcon(createIcon(c));
+          dialogUi.particlesAColorPushButton.setIcon(createIcon(c));
         }
       }
 
@@ -106,7 +106,7 @@ public class CorsenConfigureQt {
 
         if (c.isValid()) {
           CorsenConfigureQt.this.mitosColor = c;
-          dialogUi.mitosColorPushButton.setIcon(createIcon(c));
+          dialogUi.particlesBColorPushButton.setIcon(createIcon(c));
         }
       }
 
@@ -283,9 +283,9 @@ public class CorsenConfigureQt {
 
     // Third tab
 
-    dialogUi.messengersColorPushButton.clicked.connect(o,
+    dialogUi.particlesAColorPushButton.clicked.connect(o,
         "changeMessengersColor()");
-    dialogUi.mitosColorPushButton.clicked.connect(o, "changeMitosColor()");
+    dialogUi.particlesBColorPushButton.clicked.connect(o, "changeMitosColor()");
     dialogUi.barycentersColorPushButton.clicked.connect(o,
         "changeBaryCentersColor()");
     dialogUi.distancesColorPushButton.clicked.connect(o,
@@ -321,9 +321,9 @@ public class CorsenConfigureQt {
     this.backgroundColor = colorToQColor(s.getColorBackground());
     this.legendColor = colorToQColor(s.getColorLegend());
 
-    dialogUi.messengersColorPushButton
+    dialogUi.particlesAColorPushButton
         .setIcon(createIcon(this.messengersColor));
-    dialogUi.mitosColorPushButton.setIcon(createIcon(this.mitosColor));
+    dialogUi.particlesBColorPushButton.setIcon(createIcon(this.mitosColor));
     dialogUi.distancesColorPushButton.setIcon(createIcon(this.distancesColor));
     dialogUi.barycentersColorPushButton
         .setIcon(createIcon(this.baryCentersColor));
