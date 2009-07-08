@@ -77,7 +77,7 @@ public final class Particle3D {
    */
   public double getVolume() {
 
-    if (this.volume == -1)
+    if (this.volume < 0)
       calcVolume();
 
     return this.volume;
