@@ -52,6 +52,39 @@
 		</section>
 
 
+        <a name="phases"/>
+        <section name="Analysis phases">
+        
+        <p>This section describe all the steps of a Corsen analysis:</p>
+        
+        <table>
+            <tr><th>Phase name</th><th>Description</th><th>Tool</th><th>Input file(s)</th><th>Output file(s)</th></tr>
+            <tr><td>Data collection</td><td>3D Image acquisition.</td><td>Image acquisition software (e.g. Metamorph)</td><td>None</td><td>Tiff, Jpeg...</td></tr>
+            <tr><td>Data collection</td><td>Processing (e.g. remove background, choose cells...).</td><td>Image processing software (e.g. ImageJ)</td><td>Tiff, Jpeg...</td><td>Tiff, Jpeg...</td></tr>
+            <tr><td>3D segmentation and feature extraction</td><td>Extract 3D particles from images and extract particles features.</td><td>Corsen ImageJ plugin</td><td>Tiff, Jpeg...</td><td>.par file</td></tr>
+            <tr><td>Distance analysis</td><td>Compute distances between 3D particles.</td><td>Corsen application</td><td>.par files</td><td>.data, .iv, .txt</td></tr>
+            <tr><td>Statistical analysis</td><td>Statistical assessment of localization issue,quantification of population heterogeneity.</td><td>Statistical software (e.g. R, numpy, Matlab...)</td><td>.data, .iv, .txt</td><td></td></tr>
+        </table>
+
+        </section>
+
+        <a name="files_types"/>
+        <section name="Files types">
+
+        <p>The following table summaries all the types of files used in a Corsen analysis:</p>
+
+        <table>
+            <tr><th>File extension(s)</th><th>Description</th></tr>
+            <tr><td>.tiff, .tif, .jpeg ...</td><td>Image file</td></tr>
+            <tr><td>.par</td><td>Particles file</td></tr>
+            <tr><td>.data</td><td>Cells distance table</td></tr>
+            <tr><td>.iv</td><td>Cells particles feature table</td></tr>
+            <tr><td>.txt</td><td>Population table</td></tr>     
+        </table>       
+        
+        
+        </section>
+
         <a name="samples"/>
 		<section name="Sample files">
 		

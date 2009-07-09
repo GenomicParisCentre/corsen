@@ -34,16 +34,48 @@
     <section name="Screenshots">
     
     <p>This is some screenshots of Corsen on several operating systems:</p>
-    <ul>
-      <li>Main tab of Corsen under Windows Vista.<br/>
-      <a href="images/vista.png"><img src="images/vista-400.png" /></a>
-      </li>
-      <br/>
-      <li>Main tab of Corsen under Mac OS X.4 (Tiger).<br/>
-      <a href="images/tiger.png"><img src="images/tiger-400.png" /></a>
-      </li>
-      <br/>
-    </ul>
+    
+    <table>
+        <tr>
+            <td>
+            <ul>
+                <li>Main tab of Corsen under Windows Vista.<br/>
+                    <a href="images/vista.png"><img src="images/vista-400.png" /></a>
+                </li>
+            </ul>
+            </td>
+            <td>
+            <ul>
+            <li>Main tab of Corsen under Mac OS X.4 (Tiger).<br/>
+                <a href="images/tiger.png"><img src="images/tiger-400.png" /></a>
+             </li>
+            </ul>
+            </td>
+        </tr>
+
+        
+        <tr>
+            <td>
+            <ul>
+            <li>Results tab under Windows Vista.<br/>
+                <a href="images/vista-results.png"><img src="images/vista-results-400.png" /></a>
+            </li>
+            </ul>
+            </td>
+            <td>
+            <ul>
+            <li>3D view under Windows Vista.<br/>
+            <a href="images/vista-3d.png"><img src="images/vista-3d-400.png" /></a>
+            </li>
+            </ul>
+            </td>
+        </tr>
+    
+    </table>
+    
+
+   
+   
     
     </section>  
     

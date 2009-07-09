@@ -93,11 +93,11 @@ distance&gt;1 &amp;&amp; distance &lt; 3
                     <tr>
                         <th>Particle type</th>
                         <th>Example</th>
-                        <th>Distance computation from</th>
-                        <th>Distance computation to</th>
+                        <th>Particles A points used to compute distances</th>
+                        <th>Particles B points used to compute distances</th>
                     </tr>
                     <tr>
-                        <td>Undefined particle</td>
+                        <td>All points particle</td>
                         <td>Any object</td>
                         <td>All the points of the particles</td>
                         <td>All the points of the particles</td>
@@ -109,18 +109,19 @@ distance&gt;1 &amp;&amp; distance &lt; 3
                         <td>All the points of the particles</td>
                     </tr>
                     <tr>
-                        <td>Tiny</td>
+                        <td>Decomposition particle</td>
                         <td>RNAm</td>
                         <td>Barycenter of particles preprocessed in cuboids</td>
                         <td>All the points of the particle preprocessed in cuboids</td>
                     </tr>
                     <tr>
-                        <td>Huge</td>
+                        <td>Surface particle</td>
                         <td>Nucleus, mitochondria</td>
                         <td>All the points of the particle preprocessed in 
                         cuboids that are at the surface of the particles</td>
-                        <td>Surface of the particle. If the starting point is 
-                        in the particle, the distance is negative</td>
+                        <td>All the points of the particle preprocessed in 
+                        cuboids that are at the surface of the particles. If the starting points of particles A is 
+                        in a particle B, the distance will be negative</td>
                     </tr>
                     
                 </table>

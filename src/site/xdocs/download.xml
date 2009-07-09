@@ -93,8 +93,8 @@
 						<td>Operating System</td>
 						<td>
 							No minimum requirement. Tested on Windows
-							XP, Debian testing and Mac OS X. Note that Corsen 
-							application under Mac OS X is unstable. 
+							XP and Ubuntu. Note that Corsen 
+							application under Mac OS X is experimental. 
 						</td>
 					</tr>
 					<tr>

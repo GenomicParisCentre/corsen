@@ -33,10 +33,31 @@
 
     <body>
 
-
-        <section name="Corsen plugin">
+        <section name="Quickstart Guide">
         
-            <subsection name="installation">
+        <ul>
+            <li>Corsen plugin</li>
+            <ul>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#analysis_process">Analysis process</a></li>
+            </ul>
+            <li>Corsen application</li>
+            <ul>
+                <li><a href="#launch_corsen_application">Launch Corsen application</a></li>
+                <li><a href="#loading_par_files">Loading par files</a></li>
+                <li><a href="#the_result_tab">The result tab</a></li>
+                <li><a href="#the_3D_visualization">The 3D visualization</a></li>
+                <li><a href="#the_history_tab">The history tab</a></li>
+                <li><a href="#process_all_the_particles_of_a_directory">Process all the particles of a directory</a></li>        
+            </ul>
+            
+            
+        </ul>
+
+
+        <subsection name="Corsen plugin">
+        
+            <a name="installation"><h4>Installation</h4></a>
             
             <p>To install the ImageJ plugin, go to the 
             <a href="index.html">Corsen website main page</a> and download the 
@@ -50,12 +71,12 @@
             
             <center><img src="images/screenshot-0.png"/></center>
              
-            </subsection>
+           
             
-            <subsection name="Analysis process">
-            
+            <a name="analysis_process"><h4>Analysis process</h4></a>
+           
             <p>Now, you can launch ImageJ. Open the image to analysis by Corsen
-            (You can find samples in the <a href="handbook.html#samples">samples 
+            (You can find samples files (images and <b>.par</b> files) in the <a href="handbook.html#samples">samples 
             section of the documentation</a>). Note that with Cosen, only image 
             stacks are handled.</p> 
             
@@ -80,15 +101,16 @@
             <center><img src="images/screenshot-5.png"/></center>
             
             <p>According the checked options, a "Save as" dialog can appear at the end of the process. 
-            If everything ok, you will obtain a <b>".par"</b> file.</p>
+            If everything ok, you will obtain a <b>".par"</b> file. Sample <b>".par"</b> files can be 
+            found in Corsen <a href="handbook.html">handbook</a>.</p>
             
-            </subsection>
+        
             
-        </section>      
+        </subsection>      
 
-        <section name="Corsen application">
+        <subsection name="Corsen application">
 
-            <subsection name="Launch Corsen application">
+            <a name="launch_corsen_application"><h4>Launch Corsen application</h4></a>
             
                 <p>The Corsen application is a Java Web Start application, 
                 so to launch it, you only have to click on the link (in orange) on the Corsen website.</p>
@@ -100,10 +122,9 @@
                 
                 <center><img src="images/screenshot-7.png"/></center>
                 
-            </subsection>
-            
-            <subsection name="Loading par files">
-            
+
+
+            <a name="loading_par_files"><h4>Loading par files</h4></a>
             
             <p>First, select the first input file (<b>File > Open Particle A</b>).</p>
             
@@ -130,27 +151,27 @@
             
             <center><img src="images/screenshot-13.png"/></center>
             
-            </subsection>
+           
             
-            <subsection name="The result tab">
+            <a name="the_result_tab"><h4>The result tab</h4></a>
             
                 <p>The result tab show information about the particles and the distances 
                 calculated by corsen for the last couple of particles.</p>
                 
                  <center><img src="images/screenshot-14.png"/></center>
             
-            </subsection>
-            
-            <subsection name="The 3D visualization">
+           
+
+            <a name="the_3D_visualization"><h4>The 3D visualization</h4></a>
             
                 <p>The 3D visualization show the input particles and the distance in a 3D 
                 that allow allows a better understanding of the interactions between particles.</p>
             
                 <center><img src="images/screenshot-15.png"/></center>
                                     
-            </subsection>
             
-            <subsection name="The history tab">
+
+            <a name="the_history_tab"><h4>The history tab</h4></a>
             
                 <p>In the tab, all the previous computation of the distances between 
                 couples of particles is recorded. You can also get statistics on all the
@@ -158,11 +179,9 @@
             
                 <center><img src="images/screenshot-16.png"/></center>
             
-            </subsection>
-            
-            
-            
-             <subsection name="Process all the particles of a directory"> 
+ 
+                        
+             <a name="process_all_the_particles_of_a_directory"><h4>Process all the particles of a directory</h4></a>
              
              <p>Run Corsen for many couples for particles, can be tedious, so you can run Corsen on a batch of files. 
              To do that you must define the prefix for each type of particles in the setting:</p>
@@ -176,12 +195,9 @@
             <p>At last, launch the process as usual.</p>
             
             <center><img src="images/screenshot-11.png"/></center>
-            
-            
-            </subsection>
 
+        </subsection>
         </section>
-
 
     </body>
 </document>
