@@ -32,8 +32,9 @@
   <body>
   
     <section name="How I can conctact the authors">
-    
-      <p>You can contact the authors of Corsen by <a href="mailto:corsen@biologie.ens.fr">mail</a> or using the the <a href="http://groups.google.com/group/corsen">Corsen group</a> on Google group.</p>
+   
+      <!-- corsen 0 biologie ens fr --> 
+      <p>You can contact the authors of Corsen by <a href="mailto:%63%6f%72%73%65%6e%40%62%69%6f%6c%6f%67%69%65%2e%65%6e%73%2e%66%72">mail</a> or using the the <a href="http://groups.google.com/group/corsen">Corsen group</a> on Google group.</p>
     
     </section>
     
