@@ -31,7 +31,7 @@
     <j2se version="1.5+"
           href="http://java.sun.com/products/autodl/j2se"
           initial-heap="64m"
-          max-heap-size="1024m"/>
+          max-heap-size="1610m"/>
   </resources>
 
   <resources os="Mac OS">
