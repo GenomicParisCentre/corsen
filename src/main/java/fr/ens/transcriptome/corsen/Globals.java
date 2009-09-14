@@ -149,7 +149,7 @@ public final class Globals {
 
   /** Licence text. */
   public static final String LICENCE_TXT =
-      "This program is developed under the GNU General Public Licence version 2 or later.";
+      "This program is developed under the GNU General Public Licence version 2 or later and CeCILL.";
 
   private static final String COPYRIGHT_DATE = "2006-2009";
 
