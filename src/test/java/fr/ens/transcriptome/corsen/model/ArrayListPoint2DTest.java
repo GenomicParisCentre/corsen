@@ -13,12 +13,13 @@
  * These should be listed in @author doc comments.
  *
  * For more information on the Corsen project and its aims,
- * or to join the Nividic mailing list, visit the home page
+ * or to join the Corsen google group, visit the home page
  * at:
  *
- *      http://www.transcriptome.ens.fr/corsen
+ *      http://transcriptome.ens.fr/corsen
  *
  */
+
 package fr.ens.transcriptome.corsen.model;
 
 import java.util.Random;
