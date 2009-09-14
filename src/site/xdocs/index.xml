@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	/*
-	*                  Corsen development code
-	*
-	* This code may be freely distributed and modified under the
-	* terms of the GNU General Public Licence version 2 or later. This
-	* should be distributed with the code. If you do not have a copy,
-	* see:
-	*
-	*      http://www.gnu.org/licenses/gpl-2.0.txt
-	*
-	* Copyright for this code is held jointly by the microarray platform
-	* of the École Normale Supérieure and the individual authors.
-	* These should be listed in @author doc comments.
-	*
-	* For more information on the Corsen project and its aims,
-	* or to join the Nividic mailing list, visit the home page
-	* at:
-	*
-	*      http://www.transcriptome.ens.fr/corsen
-	*
-	*/
+    /*
+    *                  Corsen development code
+    *
+    * This code may be freely distributed and modified under the
+    * terms of the GNU General Public Licence version 2 or later. This
+    * should be distributed with the code. If you do not have a copy,
+    * see:
+    *
+    *      http://www.gnu.org/licenses/gpl-2.0.txt
+    *
+    * Copyright for this code is held jointly by the microarray platform
+    * of the École Normale Supérieure and the individual authors.
+    * These should be listed in @author doc comments.
+    *
+    * For more information on the Corsen project and its aims,
+    * or to join the Nividic mailing list, visit the home page
+    * at:
+    *
+    *      http://www.transcriptome.ens.fr/corsen
+    *
+    */
 -->
 <document>
 
@@ -74,16 +74,7 @@
 
 
 			<p>
-				Corsen is a tool dedicated to 3D distances measurements
-				within the cell developed to access the minimal distance
-				between cellular objects (e.g. individual mRNA molecules
-				and mitochondria surface). Corsen include 3D
-				segmentation algorithm allowing extracting and
-				characterizing cell objects to be processed - surface
-				calculation, aggregates decomposition- for minimal
-				distances calculation. A batch process is implemented to
-				analyse cell populations making possible statistical
-				analysis.
+				Corsen is a tool dedicated to 3D distances measurements developed to access the minimal distance between cellular objects (e.g. individual mRNA molecules and mitochondria surface). Corsen includes 3D segmentation algorithm allowing extraction and characterization of cell objects to be processed - surface calculation, aggregates decomposition- for minimal distances calculation. A batch process is implemented to analyse cell populations making possible statistical analysis. 
 			</p>
 
 

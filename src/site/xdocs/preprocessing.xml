@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    /*
+    *                  Corsen development code
+    *
+    * This code may be freely distributed and modified under the
+    * terms of the GNU General Public Licence version 2 or later. This
+    * should be distributed with the code. If you do not have a copy,
+    * see:
+    *
+    *      http://www.gnu.org/licenses/gpl-2.0.txt
+    *
+    * Copyright for this code is held jointly by the microarray platform
+    * of the École Normale Supérieure and the individual authors.
+    * These should be listed in @author doc comments.
+    *
+    * For more information on the Corsen project and its aims,
+    * or to join the Nividic mailing list, visit the home page
+    * at:
+    *
+    *      http://www.transcriptome.ens.fr/corsen
+    *
+    */
+-->
+<document>
+
+	<properties>
+		<title>Preprocessing</title>
+		<author email="jourdren@biologie.ens.fr">
+			Laurent Jourdren
+		</author>
+	</properties>
+
+	<body>
+
+		<section name="Preprocessing">
+			<p>
+				Corsen like other image analysis tools need preprocessed images as
+				input to get optimal quality results. Many preprocessing filters
+				exists in image analysis:
+				<ul>
+					<li>Adjust brightness/contrast</li>
+					<li>Removing background/dust/saturated pixels</li>
+					<li>Resizing image</li>
+					<li>...</li>
+				</ul>
+			</p>
+			
+			
+			<subsection name="Preprocessing use in Corsen article">
+
+			<p>To obtain data published in Corsen article (jourdren et al.,
+				2009), we developed an image processing procedure for automatic
+				extraction of both small particles and aggregates that could not be
+				segmented together using a unique threshold.</p>
+				
+				<p> It consists in a
+				Laplacien filter (r=2) allowing to enhance tiny objects signal
+				followed by a median filter (r=2 for mitochondria, r=1 for mRNA).</p>
+				<p>
+				The resulting image is added to the initial one subjected to a high
+				increase of the minimal grey value keeping only the intense and
+				large aggregates that could have been removed by the Laplacien
+				filter.</p><p> Automation is based on cell histogram calculation and
+				histogram adjustment prior filters application. Depending on objects
+				occupancy, the background threshold grey (minimal grey value) value
+				is chosen as follow: min=m+c.σ with min, minimal gray value; m, cell
+				median intensity; σ, cell intensiy standard deviation; and c, a
+				coefficient determined by object occupancy.</p>
+				
+				<p> Typically, before
+				Laplacien filter we took c = -2 for mitochondria objects and c =
+				[-1_1] for RNA objects depending on their expression level. For the
+				image used to keep only the strongest particles removed by this
+				filter the c value is 2 units raised.</p>
+				
+				<p>This method is available as a
+				macro for ImageJ. This leads to an enhanced image
+				that can be submitted to isodata automatic threshold and then used,
+				after eroding (r=2 for mitochondria, r=1 for mRNA), as a mask for
+				the initial image. 3D segmentation algorithm is therefore used
+				removing only pixels whose values are zero.</p>
+
+			<p>
+				Our
+				<a href="./image_processing.txt">image preprocessing macro</a>
+				can be freely downloaded and use. As a sample we provide a demonstration
+				<a href="./demo_image.tiff">image</a>
+				and its
+				<a href="./demo_mask.tiff">mask</a>.
+			</p>
+			
+			<p> The <a href="./apply_mask.txt">second script</a> used to apply mask is also available</p>
+        </subsection>
+		</section>
+	</body>
+</document>

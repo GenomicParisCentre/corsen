@@ -44,12 +44,14 @@
 		</menu>
 
 		<menu name="Documentation">
-		    <item name="Quickstart" href="/quickstart.html" />
+			<item name="Quickstart" href="/quickstart.html" />
 			<item name="Handbook" href="/handbook.html" collapse="true">
-                <item name="ImageJ Plugin" href="/plugin.html" />
-                <item name="Corsen Application" href="/application.html" />
-                <item name="Advanced topics" href="/advanced-topics.html" />
-            </item>
+				<item name="Preprocessing" href="/preprocessing.html" /> 
+                		<item name="ImageJ Plugin" href="/plugin.html" />
+      				<item name="Corsen Application" href="/application.html" />
+      				<item name="Advanced topics" href="/advanced-topics.html" />
+      				<item name="Command line" href="/download-cli.html" />
+      			</item>
 			
 			<item name="Known bugs" href="/bugs.html" />
 			<item name="Mailing list" href="/mail-lists.html" />

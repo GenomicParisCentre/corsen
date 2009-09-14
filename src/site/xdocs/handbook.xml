@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	/*
-	*                  Corsen development code
-	*
-	* This code may be freely distributed and modified under the
-	* terms of the GNU General Public Licence version 2 or later. This
-	* should be distributed with the code. If you do not have a copy,
-	* see:
-	*
-	*      http://www.gnu.org/licenses/gpl-2.0.txt
-	*
-	* Copyright for this code is held jointly by the microarray platform
-	* of the École Normale Supérieure and the individual authors.
-	* These should be listed in @author doc comments.
-	*
-	* For more information on the Corsen project and its aims,
-	* or to join the Nividic mailing list, visit the home page
-	* at:
-	*
-	*      http://www.transcriptome.ens.fr/corsen
-	*
-	*/
+    /*
+    *                  Corsen development code
+    *
+    * This code may be freely distributed and modified under the
+    * terms of the GNU General Public Licence version 2 or later. This
+    * should be distributed with the code. If you do not have a copy,
+    * see:
+    *
+    *      http://www.gnu.org/licenses/gpl-2.0.txt
+    *
+    * Copyright for this code is held jointly by the microarray platform
+    * of the École Normale Supérieure and the individual authors.
+    * These should be listed in @author doc comments.
+    *
+    * For more information on the Corsen project and its aims,
+    * or to join the Nividic mailing list, visit the home page
+    * at:
+    *
+    *      http://www.transcriptome.ens.fr/corsen
+    *
+    */
 -->
 <document>
 
@@ -32,124 +32,242 @@
 	</properties>
 
 	<body>
-	
-	   <section name="Corsen handbook">
 
-        <p>The Corsen documentation is composed of two parts: A quick guide and a more 
-        in-depth documentation.</p>
+		<section name="Corsen handbook">
 
-		<subection name="Table of contents">
-		
-			<ul>
-			    <li><a href="quickstart.html">Quickstart guide for Corsen</a></li>
-				<li><a href="plugin.html">Corsen ImageJ Plugin</a></li>
-				<li><a href="application.html">Corsen application</a></li>
-				<li><a href="advanced-topics.html">Advanced topics</a></li>				
-			</ul>
-			
-		</subection>
+			<p>The Corsen documentation is composed of two parts: A quick
+				guide and a more
+				in-depth documentation.</p>
+
+			<subection name="Table of contents">
+
+				<ul>
+					<li>
+						<a href="quickstart.html">Quickstart guide for Corsen</a>
+					</li>
+					<li>
+						<a href="preprocessing.html">Image preprocessing</a>
+					</li>
+					<li>
+						<a href="plugin.html">Corsen ImageJ Plug-in</a>
+					</li>
+					<li>
+						<a href="application.html">Corsen application</a>
+					</li>
+					<li>
+						<a href="advanced-topics.html">Advanced topics</a>
+					</li>
+				</ul>
+
+			</subection>
 
 		</section>
 
 
-        <a name="phases"/>
-        <section name="Analysis phases">
-        
-        <p>This section describe all the steps of a Corsen analysis:</p>
-        
-        <table>
-            <tr><th>Phase name</th><th>Description</th><th>Tool</th><th>Input file(s)</th><th>Output file(s)</th></tr>
-            <tr><td>Data collection</td><td>3D Image acquisition.</td><td>Image acquisition software (e.g. Metamorph)</td><td>None</td><td>Tiff, Jpeg...</td></tr>
-            <tr><td>Data collection</td><td>Processing (e.g. remove background, choose cells...).</td><td>Image processing software (e.g. ImageJ)</td><td>Tiff, Jpeg...</td><td>Tiff, Jpeg...</td></tr>
-            <tr><td>3D segmentation and feature extraction</td><td>Extract 3D particles from images and extract particles features.</td><td>Corsen ImageJ plugin</td><td>Tiff, Jpeg...</td><td>.par file</td></tr>
-            <tr><td>Distance analysis</td><td>Compute distances between 3D particles.</td><td>Corsen application</td><td>.par files</td><td>.data, .iv, .txt</td></tr>
-            <tr><td>Statistical analysis</td><td>Statistical assessment of localization issue,quantification of population heterogeneity.</td><td>Statistical software (e.g. R, numpy, Matlab...)</td><td>.data, .iv, .txt</td><td></td></tr>
-        </table>
+		<a name="phases" />
+		<section name="Analysis phases">
 
-        </section>
+			<p>This section describe all the steps of a Corsen analysis:</p>
 
-        <a name="files_types"/>
-        <section name="Files types">
+			<table>
+				<tr>
+					<th>Phase name</th>
+					<th>Description</th>
+					<th>Tool</th>
+					<th>Input file(s)</th>
+					<th>Output file(s)</th>
+				</tr>
+				<tr>
+					<td>Data collection</td>
+					<td>3D Image acquisition.</td>
+					<td>Image acquisition software (e.g. Metamorph)</td>
+					<td>None</td>
+					<td>Tiff, Jpeg...</td>
+				</tr>
+				<tr>
+					<td>Data collection</td>
+					<td>Preprocessing (e.g. remove background, choose cells...).
+					</td>
+					<td>Image processing software (e.g. ImageJ)</td>
+					<td>Tiff, Jpeg...</td>
+					<td>Tiff, Jpeg...</td>
+				</tr>
+				<tr>
+					<td>3D segmentation and feature extraction</td>
+					<td>Extract 3D particles from images and extract particles
+						features.</td>
+					<td>Corsen ImageJ plug-in</td>
+					<td>Tiff, Jpeg...</td>
+					<td>.par file</td>
+				</tr>
+				<tr>
+					<td>Distance analysis</td>
+					<td>Compute distances between 3D particles.</td>
+					<td>Corsen application</td>
+					<td>.par files</td>
+					<td>.data, .iv, .txt</td>
+				</tr>
+				<tr>
+					<td>Statistical analysis</td>
+					<td>Statistical assessment of localization
+						issue,quantification of population heterogeneity.</td>
+					<td>Statistical software (e.g. R, numpy, Matlab...)</td>
+					<td>.data, .iv, .txt</td>
+					<td></td>
+				</tr>
+			</table>
 
-        <p>The following table summaries all the types of files used in a Corsen analysis:</p>
+		</section>
 
-        <table>
-            <tr><th>File extension(s)</th><th>Description</th></tr>
-            <tr><td>.tiff, .tif, .jpeg ...</td><td>Image file</td></tr>
-            <tr><td>.par</td><td>Particles file</td></tr>
-            <tr><td>.data</td><td>Cells distance table</td></tr>
-            <tr><td>.iv</td><td>Cells particles feature table</td></tr>
-            <tr><td>.txt</td><td>Population table</td></tr>     
-        </table>       
-        
-        
-        </section>
+		<a name="files_types" />
+		<section name="Files types">
 
-        <a name="samples"/>
+			<p>The following table summaries all the types of files used in a
+				Corsen analysis:</p>
+
+			<table>
+				<tr>
+					<th>File extension(s)</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>.tiff, .tif, .jpeg ...</td>
+					<td>Image file</td>
+				</tr>
+				<tr>
+					<td>.par</td>
+					<td>Particles file</td>
+				</tr>
+				<tr>
+					<td>.data</td>
+					<td>Cells distance table</td>
+				</tr>
+				<tr>
+					<td>.iv</td>
+					<td>Cells particles feature table</td>
+				</tr>
+				<tr>
+					<td>.txt</td>
+					<td>Population table</td>
+				</tr>
+			</table>
+
+			<p>Note that jpeg images are usually not convenient for Corsen analysis as the compression used to store data is lossly.</p> 
+
+		</section>
+
+		<a name="samples" />
 		<section name="Sample files">
-		
-		<p>We provide in this section some samples files to test Corsen.</p>
-		
-		<subsection name="Image files">
-		
-		<p>The samples presented in this section show the localization or the non-localization of two RNAm 
-		(ATP2 and ATP16) with the mitochondria in Saccharomyces cerevisiae.</p>
-		
-		<ul>
-          <li>Localized particles
-              <ul>
-                  <li><a href="data/atp2/Gi252-atp2.tiff">ATP2 yeast RNA image (before processing)</a></li>
-                  <li><a href="data/atp2/Gi252-atp2-corsen.tiff">ATP2 yeast RNA image (after processing)</a></li>
-                  <li><a href="data/atp2/Gi252-mito.tiff">Mitochondria image (before processing)</a></li>
-                  <li><a href="data/atp2/Gi252-mito-corsen.tiff">Mitochondria image (after processing)</a></li>
-              </ul>
-          </li>
-          <li>Unlocalized particles
-              <ul>
-                  <li><a href="data/atp16/Gi252-atp16.tiff">ATP16 yeast RNA image (before processing)</a></li>
-                  <li><a href="data/atp16/Gi252-atp16-corsen.tiff">ATP16 yeast RNA image (after processing)</a></li>
-                  <li><a href="data/atp16/Gi252-mito.tiff">Mitochondria image (before processing)</a></li>
-                  <li><a href="data/atp16/Gi252-mito-corsen.tiff">Mitochondria image (after processing)</a></li>
-              </ul>
-          </li>
-        </ul>
-		
-		</subsection>
-		
-		<subsection name="Pars files">
-		
-		<p>The following files are the output of the Corsen plugin on the previous image with a threshold at 1:</p>
-		
-		<ul>
-		  <li>Localized particles
-		      <ul>
-		          <li><a href="data/atp2/Gi252-atp2-corsen.par">ATP2 yeast RNA particles</a></li>
-		          <li><a href="data/atp2/Gi252-mito-corsen.par">Mitochondria particles</a></li>
-		      </ul>
-		  </li>
-		  <li>Unlocalized particles
-              <ul>
-                  <li><a href="data/atp16/Gi252-atp16-corsen.par">ATP16 yeast RNA particles</a></li>
-                  <li><a href="data/atp16/Gi252-mito-corsen.par">Mitochondria particles</a></li>
-              </ul>
-          </li>
-		
-		  
-		</ul>		
-		
-		
-		<p>For specific usage, you will find next par files with 0 or 1 particle (with only on point) :</p>
-		
-		<ul>
-		  <li><a href="./data/test-0point.par">0 particle par file</a></li>
-		  <li><a href="./data/test-1point.par">1 particle par file</a></li>
-		</ul>
-		
-        </subsection>
-		
-		
+
+			<p>We provide in this section some samples files to test Corsen.
+			</p>
+
+			<subsection name="Image files">
+
+				<p>The samples presented in this section show the localization or
+					the non-localization of two RNAm
+					(ATP2 and ATP16) with the
+					mitochondria in Saccharomyces cerevisiae.</p>
+
+				<ul>
+					<li>
+						Localized particles
+						<ul>
+							<li>
+								<a href="data/atp2/Gi252-atp2.tiff">ATP2 yeast RNA image (before processing)</a>
+							</li>
+							<li>
+								<a href="data/atp2/Gi252-atp2-corsen.tiff">ATP2 yeast RNA image (after processing)</a>
+							</li>
+							<li>
+								<a href="data/atp2/Gi252-mito.tiff">Mitochondria image (before processing)</a>
+							</li>
+							<li>
+								<a href="data/atp2/Gi252-mito-corsen.tiff">Mitochondria image (after processing)</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						Unlocalized particles
+						<ul>
+							<li>
+								<a href="data/atp16/Gi252-atp16.tiff">ATP16 yeast RNA image (before processing)</a>
+							</li>
+							<li>
+								<a href="data/atp16/Gi252-atp16-corsen.tiff">ATP16 yeast RNA image (after processing)</a>
+							</li>
+							<li>
+								<a href="data/atp16/Gi252-mito.tiff">Mitochondria image (before processing)</a>
+							</li>
+							<li>
+								<a href="data/atp16/Gi252-mito-corsen.tiff">Mitochondria image (after processing)</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<p>
+					<b>Note:</b>
+					Image after processing were obtained using the processing
+					<a href="preprocessing.html">macro</a>
+					followed by a isodata threshold. The resulting image was
+					used as a
+					mask to select particles areas on the initial one.
+				</p>
+
+			</subsection>
+
+			<subsection name="Pars files">
+
+				<p>The following files are the output of the Corsen plugin on the
+					previous "after processing"
+					images
+					with a threshold at 1:</p>
+
+				<ul>
+					<li>
+						Localized particles
+						<ul>
+							<li>
+								<a href="data/atp2/Gi252-atp2-corsen.par">ATP2 yeast RNA particles</a>
+							</li>
+							<li>
+								<a href="data/atp2/Gi252-mito-corsen.par">Mitochondria particles</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						Unlocalized particles
+						<ul>
+							<li>
+								<a href="data/atp16/Gi252-atp16-corsen.par">ATP16 yeast RNA particles</a>
+							</li>
+							<li>
+								<a href="data/atp16/Gi252-mito-corsen.par">Mitochondria particles</a>
+							</li>
+						</ul>
+					</li>
+
+
+				</ul>
+
+
+				<p>For specific usage, you will find next <b>.par</b> files with 0 or 1
+					particle (with only on point) :</p>
+
+				<ul>
+					<li>
+						<a href="./data/test-0point.par">0 particle par file</a>
+					</li>
+					<li>
+						<a href="./data/test-1point.par">1 particle par file</a>
+					</li>
+				</ul>
+
+			</subsection>
+
+
 		</section>
-	
+
 
 	</body>
 </document>

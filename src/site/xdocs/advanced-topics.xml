@@ -24,56 +24,78 @@
 -->
 <document>
 
-    <properties>
-        <title>Advanced topics</title>
-        <author email="jourdren@biologie.ens.fr">
-            Laurent Jourdren
+	<properties>
+		<title>Advanced topics</title>
+		<author email="jourdren@biologie.ens.fr">
+			Laurent Jourdren
         </author>
-    </properties>
+	</properties>
 
-    <body>
+	<body>
 
 
-        <section name="Advanced topics">
-        
-            <subsection name="Filtering input particles">
-            
-                <p>Input particles can be filtered by setting with an expression 
-                the "filter" fields for particles A and B in the "Particles" 
-                tab in Corsen Settings.</p>
-                
-                <p>The expression must use the Javascript syntax. Several variable are defined for the test:</p>
-                
-                <table>
-                    <tr><th>Variable name</th><th>Comment</th></tr>
-                    <tr><td>area</td><td>Area of the particle</td></tr>
-                    <tr><td>density</td><td>Density of the particle</td></tr>
-                    <tr><td>intensity</td><td>Intensity of the particle</td></tr>
-                    <tr><td>sphericity</td><td>Sphericity of the particle</td></tr>
-                    <tr><td>volume</td><td>Volume of the particle</td></tr>
-                </table>
-            
-                <p>Sample of expression :</p>
-<code>
-intensity&gt;10000 &amp;&amp; volume &gt; 30
+		<section name="Advanced topics">
+
+			<subsection name="Filtering input particles">
+
+				<p>Input particles can be filtered by setting with an
+					expression
+					the "filter" fields for particles A and B in the
+					"Particles"
+					tab in Corsen Settings.</p>
+
+				<p>The expression must use the Javascript syntax. Several
+					variable are defined for the test:</p>
+
+				<table>
+					<tr>
+						<th>Variable name</th>
+						<th>Comment</th>
+					</tr>
+					<tr>
+						<td>area</td>
+						<td>Area of the particle</td>
+					</tr>
+					<tr>
+						<td>density</td>
+						<td>Density of the particle</td>
+					</tr>
+					<tr>
+						<td>intensity</td>
+						<td>Intensity of the particle</td>
+					</tr>
+					<tr>
+						<td>sphericity</td>
+						<td>Sphericity of the particle</td>
+					</tr>
+					<tr>
+						<td>volume</td>
+						<td>Volume of the particle</td>
+					</tr>
+				</table>
+
+				<p>Here an example:</p>
+				<code>
+					intensity &gt; 10000 &amp;&amp; volume &gt; 30
 </code>
             
             </subsection>
             <subsection name="Filtering particles shown in 3D visualization">
             
-                <p>Unlike the filtering of input particles, the filtering of 
-                particle in the 3D visualization is set by pressing on 
-                "Filter" button in the 3D View tab.</p>
-                
-                <p>The three expression to set for filtering the view work as in 
-                previous topic and use for particles A and B filtering the same
-                variables. However for filtering distances  other variable are 
-                defined :</p>
+            <p>Unlike the filtering of input particles, the filtering of particle in the 3D visualization is set by pressing on "<b>Filter</b>" button in the 3D View tab.</p>
+            <p>The expression system is the same as in the previous topic,except the name of the variable for filtering distances (see table below). For particles A and B, use the previously described variables.</p>   
+            
+               
                 
                 <table>
                     <tr><th>Variable name</th><th>Comment</th></tr>
                     <tr><td>distance</td><td>Distance (can be negative) 
                     between a particle A and a particle B</td></tr>
+		    <tr><td>area</td><td>Area of the particle</td></tr>
+		    <tr><td>density</td><td>Density of the particle</td></tr>
+		    <tr><td>intensity</td><td>Intensity of the particle</td></tr>
+		    <tr><td>sphericity</td><td>Sphericity of the particle</td></tr>
+		    <tr><td>volume</td><td>Volume of the particle</td></tr>
                 </table>
             
                 <p>Sample of expression :</p>
@@ -83,6 +105,15 @@ distance&gt;1 &amp;&amp; distance &lt; 3
             
             </subsection>
             <subsection name="Choose a particle type">
+            
+            <p>Different biological localization issue can be tackle by Corsen thanks to
+             several distance calculation options that should be chosen depending on the shape 
+             of objects to be analyzed.</p> 
+            <p>Please, before starting Corsen analysis carefully consider these 
+            different options.</p> 
+            <!--p>You should keep in mind that distances will be always calculated from particles A 
+            centers to particles B centers and that these centers will be defined by the selected 
+            particles processing option (see table below).</p-->
             
             <p>Corsen is a very flexible tool, you can select a particle 
             type in order to choose the algorithm used in the distances 
@@ -127,7 +158,7 @@ distance&gt;1 &amp;&amp; distance &lt; 3
                 </table>
                 
                 <p>If you want to add another type of particle, you can do it 
-                by adding your particle type to Cosen source code. See the
+                by adding your particle type to Corsen source code. See the
                 <a href="download-src.html">download source section</a> 
                 to download Corsen source code and see compiling instructions.</p>
             

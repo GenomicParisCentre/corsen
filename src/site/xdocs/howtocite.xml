@@ -34,20 +34,21 @@
 	<body>
 
 		<section name="How to cite Corsen">
+			<p>The Corsen article is currently under submission.</p>
+			<!--
 			<p>
 				<b>
-					Corsen, a new software dedicated to microcoped-based 3D distances measurements:
-from single-cell to population analysis of mRNA localization to the mitochondrial surface.
+					Corsen, a new software dedicated to microscope-based 3D distance measurements: from single-cell to population analysis of mRNA localization to the mitochondrial surface..
 				</b>
 			</p>
 			<p>
 				<small>
-					Laurent Jourdren, ...  Mathilde Garcia
+					Jourdren Laurent, Delaveau Thierry, Marquenet Emelie, Jacq Claude and Garcia Mathilde.
 					<br />
 				</small>
 				<small>
 					My favorite journal Advance Access published 
-					xx, 2008. doi:
+					xx, 2009. doi:
 					<br />
 				</small>
 				<small>
@@ -62,7 +63,7 @@ from single-cell to population analysis of mRNA localization to the mitochondria
 				    </a>
 				</small>
 			</p>
-
+			-->
 		</section>
 	</body>
 </document>

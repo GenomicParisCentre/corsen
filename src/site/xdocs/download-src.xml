@@ -44,20 +44,20 @@
           <a href="corsen-src-@@@VERSION@@@.zip">
             <code>.zip</code> archive
           </a>
-          <span style="font-size: smaller">(5.3 MiB)</span>
+          <span style="font-size: smaller">(13 MiB)</span>
         </li>
       
         <li>
           <a href="corsen-src-@@@VERSION@@@.tar.gz">
             <code>.tar.gz</code> archive
           </a>
-          <span style="font-size: smaller">(5.2 MiB)</span>
+          <span style="font-size: smaller">(13 MiB)</span>
         </li>
         <li>
           <a href="corsen-src-@@@VERSION@@@.tar.bz2">
             <code>.tar.bz2</code> archive
           </a>
-          <span style="font-size: smaller">(3.6 MiB)</span>
+          <span style="font-size: smaller">(9.1 MiB)</span>
         </li>
         
 
@@ -71,12 +71,12 @@
       	<p>To build Corsen, you need a <a href="http://java.sun.com/j2se/">Java 2
 	  	Standard Edition SDK</a> greater or equals to 5.0, 
 	  	<a href="http://maven.apache.org">Maven</a> 2.x and 
-	  	<a href="http://trolltech.com/downloads/opensource">Qt Jambi</a> 
+	  	<a href="ftp://ftp.qt.nokia.com/pub/qtjambi/source">Qt Jambi</a> 
 	  	4.3.3_01.</p>
 	  
 	  	<p>To compile Corsen, you need to add the environment variable 
 	  	<b>JAMBI_HOME</b> to your system that contains the path to your Qt Jambi 
-	  	installation. Due to a bug in <b>integrate-jnlp-site</b> maven plugin under 
+	  	installation. Due to a bug in <b>integrate-jnlp-site</b> maven plug-in under 
 	  	Windows, your path to JDK must not contain any space 
 	  	(so your JDK can't be installed in <b>C:\Program Files</b>).</p>
 	  

@@ -37,7 +37,7 @@
 			<p>
 				The
 				<a href="corsen_plugin-@@@VERSION@@@.jar">
-					Corsen plugin for Image J
+					Corsen plug-in for Image J
 				</a>
 				is available as jar file to put in imagej
 				<code>plugins</code>
