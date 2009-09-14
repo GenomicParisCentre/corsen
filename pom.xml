@@ -6,12 +6,13 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.40</version>
+	<version>0.42</version>
 	<name>Corsen</name>
 	<description>
-		A tool to calc distance between mitochondria and RNA
+		Corsen is a tool dedicated to 3D distances measurements developed to access the minimal distance between
+cellular objects (e.g. individual mRNA molecules and mitochondria surface).	
 	</description>
-	<url>http://hestia.ens.fr/corsen</url>
+	<url>http://transcriptome.ens.fr/corsen</url>
 
 	<organization>
 		<name>École Normale Supérieure Microarray platform</name>
@@ -22,7 +23,7 @@
 		<developer>
 			<id>jourdren</id>
 			<name>Laurent Jourdren</name>
-			<email>jourdren 0 biologie ens fr</email>
+			<email>corsen 0 biologie ens fr</email>
 			<url />
 			<organization>
 				École Normale Supérieure Microarray platform
@@ -40,7 +41,7 @@
 		<developer>
 			<id>magarcia</id>
 			<name>Mathilde Garcia</name>
-			<email>magarcia 0 biologie ens fr</email>
+			<email>corsen 0 biologie ens fr</email>
 			<url />
 			<organization>
 				École Normale Supérieure Laboratoire de Génétique
@@ -62,9 +63,21 @@
 
 	<contributors>
 		<contributor>
+			<name>Émelie Marquenet</name>
+			<!--<email></email>-->
+      			<organization>
+				Ecole Normale Superieure Laboratoire de Génétique
+				Moléculaire
+			</organization>
+			<organisationUrl>http://www.biologie.ens.fr/lgmgml</organisationUrl>
+			<roles>
+				<role>Testing</role>
+			</roles>
+			<timezone>1</timezone>
+		</contributor>
+		<contributor>
 			<name>Yann Saint Georges-Chaumet</name>
 			<!--<email></email>-->
-			<!--<email>see http://transcriptome.ens.fr/sgdb/presentation/people.php</email>-->
       			<organization>
 				Ecole Normale Superieure Laboratoire de Génétique
 				Moléculaire
@@ -102,14 +115,12 @@
 
 	<mailingLists>
 		<mailingList>
-		<name>corsen-list</name>
-		<!--subscribe>mailto:corsen-list-subscribe@maillist.biologie.ens.fr</subscribe-->
-		<subscribe>mailto:%63%6f%72%73%65%6e%2d%6c%69%73%74%2d%73%75%62%73%63%72%69%62%65%40%6d%61%69%6c%6c%69%73%74%2e%62%69%6f%6c%6f%67%69%65%2e%65%6e%73%2e%66%72</subscribe>
-		<!--subscribe>mailto:corsen-list-unsubscribe@maillist.biologie.ens.fr</subscribe-->
-		<unsubscribe>mailto:%63%6f%72%73%65%6e%2d%6c%69%73%74%2d%75%6e%73%75%62%73%63%72%69%62%65%40%6d%61%69%6c%6c%69%73%74%2e%62%69%6f%6c%6f%67%69%65%2e%65%6e%73%2e%66%72</unsubscribe>
-		<archive>https://maillist.biologie.ens.fr/wws/arc/corsen-list</archive>
+		<name>corsen-group</name>
+		<subscribe>http://groups.google.com/group/corsen/subscribe</subscribe>
+		<!--unsubscribe>http://groups.google.com/group/corsen/unsubscribe</unsubscribe-->
+		<archive>http://groups.google.com/group/corsen</archive>
 		</mailingList>
-  </mailingLists>
+	</mailingLists>
 
 
 	<repositories>
@@ -119,18 +130,9 @@
 			</snapshots>
 			<id>leburon</id>
 			<name>Leburon Maven 2.x Repository</name>
-			<url>http://hestia.ens.fr/maven2</url>
+			<url>http://transcriptome.ens.fr/maven2</url>
 			<layout>default</layout>
 		</repository>
-		<!--repository>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<id>sateh.com</id>
-			<name>seteh repository</name>
-			<url>http://maven.sateh.com/repository</url>
-			<layout>default</layout>
-		</repository-->
 		<repository>
 			<snapshots>
 				<enabled>true</enabled>
@@ -145,17 +147,11 @@
 	</repositories>
 
 
-	<scm>
-		<connection>
-			scm:svn:https://anosgdb:anosgdb@subversion.biologie.ens.fr/svn/leburon
-		</connection>
-		<developerConnection>
-			scm:svn:https://anosgdb@subversion.biologie.ens.fr/svn/leburon
-		</developerConnection>
-		<url>
-			http://skadi.ens.fr/websvn/listing.php?repname=leburon
-		</url>
-	</scm>
+	<!--scm>
+		<connection></connection>
+		<developerConnection></developerConnection>
+		<url></url>
+	</scm-->
 
 	<dependencies>
 		<dependency>
@@ -257,14 +253,7 @@
 			<version>1.6R5</version>
 			<scope>compile</scope>
 		</dependency>
-
-
 	
-		<!--dependency>
-			<groupId>org.apache.maven.skins</groupId>
-			<artifactId>maven-stylus-skin</artifactId>
-			<version>1.0</version>
-		</dependency-->
 	</dependencies>
 
 	<build>
@@ -371,7 +360,6 @@
 						<configuration>
 							<tasks>
 								<tar tarfile="${basedir}/target/${artifactId}-src-${version}.tar">
-									<!--tarfileset dir="${basedir}/src" mode="755" username="nobody" group="nobody" prefix="src/" /-->
 								
 									<tarfileset dir="${basedir}"  mode="755" username="nobody" group="nobody">
 										<include name="src/**"/>
@@ -453,10 +441,6 @@
 									</replacetoken>
 									<replacevalue />
 								</replace>
-								<!--replace file="${basedir}/target/site/webstart/imagej.jnlp">
-									<replacetoken>jar href="ij</replacetoken>
-									<replacevalue>jar main="true" href="ij</replacevalue>
-								</replace-->
 								<replace encoding="iso-8859-1" dir="${basedir}/target/site" value="${pom.url}">
 									<include name="**/*.jnlp"/>
 									<include name="**/*.html"/>
@@ -508,7 +492,6 @@
 									todir="${basedir}/target/corsen-cli" />
 
 								<tar tarfile="${basedir}/target/${artifactId}-cli-${version}.tar">
-									<!--tarfileset dir="${basedir}/src" mode="755" username="nobody" group="nobody" prefix="src/" /-->
 								
 									<tarfileset dir="${basedir}/target/corsen-cli"  mode="666" username="nobody" group="nobody">
 										<include name="*.jar"/>
@@ -607,12 +590,6 @@
 							<include>com.sun.phobos:jsr223-api</include>
 							<include>com.sun.phobos:phobos-rhino</include>
 							<include>mozilla:js</include>
-							<!--include>NIH:ij</include-->
-							<!--include>trolltech:qtjambi-launcher</include-->
-							<!--include>trolltech:qtjambi</include>
-								<include>trolltech:qtjambi-linux</include>
-								<include>trolltech:qtjambi-mac</include>
-								<include>trolltech:qtjambi-win32</include-->
 							<!-- excludes>
 								<exclude></exclude>
 								<excludes-->
@@ -723,9 +700,6 @@
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
-			<!--<plugin>
-				<artifactId>maven-plugin-plugin</artifactId>
-				</plugin>-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>changes-maven-plugin</artifactId>
@@ -736,27 +710,6 @@
 						</reports>
 					</reportSet>
 				</reportSets>
-				<!--executions>
-					<execution>
-						<goals>
-							<goal>announcement-generate</goal>
-						</goals>
-						<id>announcement-generate</id>
-					</execution>
-					<execution>
-					<goals>
-						<goal>announcement-mail</goal>
-					</goals>
-					<id>announcement-mail</id>
-					</execution>
-				</executions>
-				<configuration>
-					<smtpHost>smtp.biologie.ens.fr</smtpHost>
-					<smtpPort implementation="java.lang.Integer">25</smtpPort>
-					<toAddresses>
-						<toAddress implementation="java.lang.String">jourdren@biologie.ens.fr</toAddress>
-					</toAddresses>
-				</configuration-->
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -789,7 +742,7 @@
 				<minimumTokens>100</minimumTokens>
 				</configuration>
 				</plugin>-->
-			<plugin>
+			<!--plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>changelog-maven-plugin</artifactId>
 				<configuration>
@@ -798,7 +751,7 @@
 						<date implementation="java.lang.String">2006-01-01</date>
 					</dates>
 				</configuration>
-			</plugin>
+			</plugin-->
 			<!--plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>taglist-maven-plugin</artifactId>
@@ -825,31 +778,5 @@
 				</plugin>-->
 		</plugins>
 	</reporting>
-
-	<!-- Enabling the use of FTP -->
-	<distributionManagement>
-		<repository>
-			<id>leburon-repository</id>
-			<url>
-				ftp://hestia.ens.fr/export/home1/httpd/html/leburon/maven2
-			</url>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>true</uniqueVersion>
-			<id>leburon-repository</id>
-			<name>Nividic Snapshots</name>
-			<url>
-				ftp://hestia.ens.fr/export/home1/httpd/html/leburon/maven2
-			</url>
-		</snapshotRepository>
-		<site>
-			<id>leburon-repository</id>
-			<name>Nividic Website</name>
-			<url>
-				ftp://hestia.ens.fr/export/home1/httpd/html/leburon/corsen
-			</url>
-		</site>
-	</distributionManagement>
-
 
 </project>
