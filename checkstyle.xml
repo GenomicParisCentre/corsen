@@ -15,7 +15,7 @@
             <property name="allowUndeclaredRTE" value="true"/>
         </module>
         <module name="Header">
-            <property name="headerFile" value="/home/jourdren/workspace/corsen/checkstyle-license.txt"/>
+            <property name="headerFile" value="checkstyle-license.txt"/>
         </module>
         <module name="LeftCurly"/>
         <module name="RightCurly"/>
