@@ -42,7 +42,7 @@ C:\Corsen> corsen.bat batchfile.txt
 $ corsen.sh batchfile.txt
 </source>    	
     
-    <p>When running this version use the user saved options in Corsen application as configuration. As this version of Corsen is 100% pure Java, it can be launched on any couple of operating system (Windows, Linux, Solaris...) and processor (x86-32, x86-64, PowerPC, ARM...) where a Java runtime is available.</p>
+    <p>When running, this version select the user saved options in Corsen application as configuration. As this version of Corsen is 100% pure Java, it can be launched on any couple of operating system (Windows, Linux, Solaris...) and processor (x86-32, x86-64, PowerPC, ARM...) where a Java runtime is available.</p>
     
     <subsection name="batch file format">
 

@@ -36,7 +36,7 @@
 		<section name="Quickstart Guide">
 
 			<ul>
-				<li>Corsen plugin</li>
+				<li>Corsen plug-in</li>
 				<ul>
 					<li>
 						<a href="#installation">Installation</a>
@@ -71,14 +71,14 @@
 			</ul>
 
 
-			<subsection name="Corsen plugin">
+			<subsection name="Corsen plug-in">
 
 				<a name="installation">
 					<h4>Installation</h4>
 				</a>
 
 				<p>
-					To install the ImageJ plugin, go to the
+					To install the ImageJ plug-in, go to the
 					<a href="index.html">Corsen website main page</a>
 					and download the
 					plug-in jar archive.
@@ -144,11 +144,11 @@
 				</center>
 
 				<p>
-					The Corsen plugin setup menu will appear, check the option that you
+					The Corsen plug-in setup menu will appear, check options that you
 					want.
 					See the
 					<a href="plugin.html">plug-in documentation</a>
-					for more information.
+					for more informations.
 					Press
 					<b>OK</b>
 					to launch the analysis.
@@ -159,7 +159,7 @@
 				</center>
 
 				<p>
-					A Warning dialog, ask you to process all the images in the stack,
+					A Warning dialog ask you to process all the images in the stack,
 					answer
 					<b>Yes</b>
 					.
@@ -274,7 +274,7 @@
 					<h4>The result tab</h4>
 				</a>
 
-				<p>The result tab show information about the particles and the
+				<p>The result tab shows informations about the particles and the
 					distances
 					calculated by Corsen for the last couple of particles.</p>
 
@@ -289,7 +289,7 @@
 				</a>
 
 				<p>Corsen includes a 3D visualization interface in which
-					calculated distances are shows together with the input particles.
+					calculated distances are shown together with the input particles.
 				</p>
 
 				<center>
@@ -303,7 +303,7 @@
 				<p>For all the previous computation, some characteristic data of
 					the calculated distance distribution are collected in the history
 					table. It can be median, minimal, maximal distance or, depending on
-					the user settings, the percentage of particles under a given
+					the user settings, the percentage of particles under a given distance
 					threshold.
 					You can also get statistics on all the
 					recorded results.</p>
@@ -318,7 +318,7 @@
 					<h4>Process all the particles of a directory</h4>
 				</a>
 
-				<p>Run Corsen for many couples for particles, can be tedious, so
+				<p>Run Corsen for many couples for particle, can be tedious, so
 					you can run Corsen on a batch of files.
 					To do that you must define the prefix for each type of particles in
 					the setting:</p>

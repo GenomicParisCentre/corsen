@@ -46,7 +46,7 @@
 			reconstitution and basic statistical
 			analysis. Corsen application
 			contains 4 tabs and requires several
-			setting described bellow.</p>
+			settings described bellow.</p>
 	      </section>
 
 		<section name="Launching computation">
@@ -215,15 +215,13 @@
 						B.</td>
 				</tr>
 				<tr>
-					<td>Intensities and distances of cuboids of particles B
+					<td>Intensities and distances of preprocessed of particles B
 					</td>
-					<td>Show the intensity and volume for each cuboid of
+					<td>Show the intensity and volume for each preprocessed of
 						particles B
-						(if decomposition or surface particles option is selected in
-						Corsen settings?
 						</td>
 					<td>Plot the distribution of intensity and volumes of
-						cuboids of
+						preprocessed of
 						particles B</td>
 				</tr>
 				<tr>
@@ -235,15 +233,13 @@
 						A</td>
 				</tr>
 				<tr>
-					<td>Intensities and distances of cuboids of particles A
+					<td>Intensities and distances of preprocessed of particles A
 					</td>
-					<td>Show the intensity and volume for each cuboids of
+					<td>Show the intensity and volume for each preprocessed of
 						particle A
-						(if decomposition or surface particles option is selected in
-						Corsen settings?).
 						</td>
 					<td>Plot the distribution of intensity and volumes of
-						cuboids of
+						preprocessed of
 						particles A</td>
 				</tr>
 			</table>
@@ -333,15 +329,15 @@
 						<b>The type</b>
 						: Define the type of a particle (see the
 						<a href="advanced-topics.html">advanced topic</a>
-						for more information.
-						The properties button allow if available to
+						for more information).
+						The properties button allows if available to
 						set parameters
 						for your
 						particle type.
 					</li>
 					<li>
 						<b>The batch prefix</b>
-						: Define the prefix of your "<b>.par</b>" files that is specific of
+						: Define the prefix of your "<b>.par</b>" files that is specific
 						of particles in the directory to process.
 					</li>
 					<li>
@@ -385,10 +381,10 @@
 				<p>With no threads, the distance computation will not be
 					parallelized. In automatic mode,
 					the number of thread to use will be
-					the number of core/processor
+					the number of cores/processors
 					available on your computer.
 					At last, the
-					custom field allow you to define the desired number of threads.</p>
+					custom field allows you to define the desired number of threads.</p>
 
 				<p>An option also allows to clear the result history tables
 					before launching a batch.
@@ -400,11 +396,11 @@
 
 				<p>This tab allows to set the number of classes for the
 					histograms in the Results and History tab.
-					The other field set an
+					The other field sets an
 					optional expression for the custom statistic to
 					display in the
 					History tab.
-					The expression is a javascript expression where <b>intensity</b> and <b>distance</b>
+					The expression is a Javascript expression where <b>intensity</b> and <b>distance</b>
 					are variable
 					for intensity and distance.</p>
 

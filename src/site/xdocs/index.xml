@@ -32,7 +32,6 @@
 	</properties>
 
 	<body>
-		<link rel="alternate" type="application/rss+xml" title="Corsen updates" href="corsen.rss" />
 		<script src="http://java.com/js/deployJava.js"></script>
 		
 		<section name="Welcome to Corsen">
@@ -50,7 +49,7 @@
 					<a href="corsen_plugin-@@@VERSION@@@.jar">
 						Download
 					</a>
-					Corsen ImageJ plugin
+					Corsen ImageJ plug-in
 					<br/>
 				</p>
 				<p style="font-size: smaller">
@@ -95,9 +94,6 @@
     <p><a href="./corsen.rss"><img src="images/feed-icon-14x14.png" 
         alt="Syndicate the corsen updates" title="Corsen updates feed"/></a></p>
         
-    <p/>
-      
-    <p>Did you know that the "<a href="http://en.wikipedia.org/wiki/Pointe_de_Corsen">pointe de Corsen</a>" is the westernmost point of continental France?</p>    
         
 	</body>
 </document>

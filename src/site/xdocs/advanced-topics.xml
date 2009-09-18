@@ -111,9 +111,10 @@ distance&gt;1 &amp;&amp; distance &lt; 3
              of objects to be analyzed.</p> 
             <p>Please, before starting Corsen analysis carefully consider these 
             different options.</p> 
-            <!--p>You should keep in mind that distances will be always calculated from particles A 
-            centers to particles B centers and that these centers will be defined by the selected 
-            particles processing option (see table below).</p-->
+            
+            <p>You should keep in mind that distances will be always calculated from particles A 
+            archors to particles B archors and that these archors will be defined by the selected 
+            particles processing option (see table below).</p>
             
             <p>Corsen is a very flexible tool, you can select a particle 
             type in order to choose the algorithm used in the distances 
@@ -124,8 +125,8 @@ distance&gt;1 &amp;&amp; distance &lt; 3
                     <tr>
                         <th>Particle type</th>
                         <th>Example</th>
-                        <th>Particles A points used to compute distances</th>
-                        <th>Particles B points used to compute distances</th>
+                        <th>Particles A archors used to compute distances</th>
+                        <th>Particles B archors used to compute distances</th>
                     </tr>
                     <tr>
                         <td>All points particle</td>
@@ -137,7 +138,7 @@ distance&gt;1 &amp;&amp; distance &lt; 3
                         <td>Barycenter particle</td>
                         <td>Any object</td>
                         <td>The barycenters of the particles</td>
-                        <td>All the points of the particles</td>
+                        <td>The barycenters of the particles</td>
                     </tr>
                     <tr>
                         <td>Decomposition particle</td>
@@ -148,10 +149,10 @@ distance&gt;1 &amp;&amp; distance &lt; 3
                     <tr>
                         <td>Surface particle</td>
                         <td>Nucleus, mitochondria</td>
-                        <td>All the points of the particle preprocessed in 
-                        cuboids that are at the surface of the particles</td>
-                        <td>All the points of the particle preprocessed in 
-                        cuboids that are at the surface of the particles. If the starting points of particles A is 
+                        <td>All the points of the cuboids that are at the 
+                        surface of the particles</td>
+                        <td>All the points of the cuboids that are at the surface 
+                        of the particles. If the archor of particles A is 
                         in a particle B, the distance will be negative</td>
                     </tr>
                     
@@ -165,13 +166,13 @@ distance&gt;1 &amp;&amp; distance &lt; 3
             </subsection>
             <subsection name="Multithreading">
             
-                <p>The current generation of processors often contains two or more 
-                core core that allow to do easily parallel computation. Corsen can take 
+                <p>The current generation of processors often contains two or mores 
+                core that allow to do easily parallel computations. Corsen can take 
                 usage of the many core to increase the speed of distance computation. 
                 By default no thread are used to compute the distance, you can enable 
                 it in the computation tab of Corsen setting. If you choose to set the 
                 number of threads to automatic, this number will be equals to the number 
-                of processors/core in your computer.</p>
+                of processors/cores in your computer.</p>
             
             </subsection>
         

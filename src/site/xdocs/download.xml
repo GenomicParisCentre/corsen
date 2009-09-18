@@ -42,7 +42,7 @@
 			<ul>
 				<li>
 					<a href="">ImageJ</a>
-					plugin, available as a
+					plug-in, available as a
 					<a href="corsen_plugin-@@@VERSION@@@.jar">
 						<code>.zip</code>
 						archive
@@ -54,7 +54,7 @@
 					<br />
 					You only have to put this archive in the
 					ImageJ
-					<code>plug-ins</code>
+					plug-ins
 					folder and restart ImageJ to install it.
 				</li>
 				<li>
@@ -177,8 +177,7 @@
 					. We hope that next
 					versions of Corsen will run perfectly under Mac OS X. Ready to use
 					Virtualbox images for Ubuntu (and other OS) are available on
-					<a href="http://virtualbox.wordpress.com/images/">VirtualBox Images website</a>
-					.
+					<a href="http://virtualbox.wordpress.com/images/">VirtualBox Images website</a>.
 				</p>
 
 			</subsection>
@@ -205,7 +204,6 @@
 				<p>
 					For advanced users, a command line only version is
 					<a href="download-cli.html"> available</a>.
-					.
 				</p>
 
 			</subsection>

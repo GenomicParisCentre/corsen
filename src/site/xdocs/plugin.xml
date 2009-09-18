@@ -25,7 +25,7 @@
 <document>
 
 	<properties>
-		<title>ImageJ Plugin</title>
+		<title>ImageJ Plug-in</title>
 		<author email="jourdren@biologie.ens.fr">
 			Laurent Jourdren
         </author>
@@ -42,14 +42,14 @@
 			</ul>
 			<p>
 				Step 1 is performed using the image processing software ImageJ. We
-				provide a plugin for ImageJ
-				(the Corsen plugin) that allow converting an image stack to a "<b>.par</b>"
+				provide a plug-in for ImageJ
+				(the Corsen plug-in) that allow converting an image stack to a "<b>.par</b>"
 				file that resumes all the
 				informations about the 3D segmented particles (areas, volumes, coordinates...).
 			</p>
 
 			<p>As you need two particles types to compute distances, you must
-				perform 3D segmentations for both of them using Corsen plugin.</p>
+				perform 3D segmentations for both of them using Corsen plug-in.</p>
 
 			<subsection name="Installation">
 
@@ -62,7 +62,7 @@
 				</p>
 
 				<p>
-					To install Corsen ImageJ plugin you only need to put the
+					To install Corsen ImageJ plug-in you only need to put the
 					<b>corsen-plugin.jar</b>
 					archive in the
 					<b>plugins</b>
@@ -79,7 +79,7 @@
 			<subsection name="Allocating more memory to ImageJ">
 
 				<p>When you work with heavy images in ImageJ, the
-					execution of the Corsen plugin will require more memory.
+					execution of the Corsen plug-in will require more memory.
 					To allow the Java Virtual Machine that run ImageJ to use
 					more memory, you need to edit the following files :</p>
 
@@ -156,20 +156,20 @@ C:\Program Files\Java\jre1.6.0_05\bin\javaw.exe
 			</ul>
 
 			<p>
-				Before running Corsen ImageJ plugin you must define a
+				Before running Corsen ImageJ plug-in you must define a
 				threshold using the Theshold tool of ImageJ (menu
 				<b>Image</b>
 				/
 				<b>Adjust</b>
 				/
 				<b>Threshold</b>
-				).Then open the the Corsen plugin dialog box
+				).Then open the Corsen plug-in dialog box
 				(menu
 				<b>Plugins</b>
 				/
 				<b>Analyse</b>
 				/
-				<b>Corsen Plugin</b>
+				<b>Corsen Plug-in</b>
 				).
 				You can enable or disable the following options :
 			</p>
@@ -181,8 +181,8 @@ C:\Program Files\Java\jre1.6.0_05\bin\javaw.exe
 				</tr>
 				<tr>
 					<td>Display results</td>
-					<td>At the end of the plugin execution, a table will
-						show several information about segmented particles
+					<td>At the end of the plug-in execution, a table will
+						show several informations about segmented particles
 						3D (such as area, volume, sphericity, intensity...).</td>
 				</tr>
 				<tr>
@@ -193,7 +193,7 @@ C:\Program Files\Java\jre1.6.0_05\bin\javaw.exe
 				<tr>
 					<td>Change the output file name</td>
 					<td>A dialogbox to select the name of the output file
-						will appear after the execution of the plugin.</td>
+						will appear after the execution of the plug-in.</td>
 				</tr>
 				<tr>
 					<td>No confirm save dialog</td>
@@ -203,7 +203,7 @@ C:\Program Files\Java\jre1.6.0_05\bin\javaw.exe
 				</tr>
 				<tr>
 					<td>Show particles 3D</td>
-					<td>After the end of the execution of the plugin, a
+					<td>After the end of the execution of the plug-in, a
 						new image stack is created with the particles 3D in
 						different colors.</td>
 				</tr>
@@ -222,7 +222,7 @@ C:\Program Files\Java\jre1.6.0_05\bin\javaw.exe
 
 			<p>
 				When all options are
-				disabled the plugin will execute the 3D segmentation
+				disabled the plug-in will execute the 3D segmentation
 				and will ask you if you want to save the result file. The default name
 				of the output file will be the basename of your
 				image file with a "

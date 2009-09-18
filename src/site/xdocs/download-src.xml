@@ -65,7 +65,12 @@
       
       
       </subsection>
-      
+     
+      <subsection name="Code repository">
+        <p>You can also download the Corsen source from our <a href="http://code.google.com/p/corsen/source/checkout">code repository</a> hosted by <a href="http://code.google.com/hosting">Google code hosting</a>. On the <a href="http://code.google.com/p/corsen">main page of Corsen on this forge</a> you have access to the <a href="http://code.google.com/p/corsen/issues">issue tracker</a> and to the <a href="http://code.google.com/p/corsen/source/browse/">source browser</a> of the project.</p>
+      </subsection>
+
+ 
       <subsection name="Compilation">
       
       	<p>To build Corsen, you need a <a href="http://java.sun.com/j2se/">Java 2

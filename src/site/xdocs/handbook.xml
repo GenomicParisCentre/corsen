@@ -174,16 +174,16 @@
 						Localized particles
 						<ul>
 							<li>
-								<a href="data/atp2/Gi252-atp2.tiff">ATP2 yeast RNA image (before processing)</a>
+								<a href="./examples/atp2/Gi252-atp2.tiff">ATP2 yeast RNA image (before processing)</a>
 							</li>
 							<li>
-								<a href="data/atp2/Gi252-atp2-corsen.tiff">ATP2 yeast RNA image (after processing)</a>
+								<a href="./examples/atp2/Gi252-atp2-corsen.tiff">ATP2 yeast RNA image (after processing)</a>
 							</li>
 							<li>
-								<a href="data/atp2/Gi252-mito.tiff">Mitochondria image (before processing)</a>
+								<a href="./examples/atp2/Gi252-mito.tiff">Mitochondria image (before processing)</a>
 							</li>
 							<li>
-								<a href="data/atp2/Gi252-mito-corsen.tiff">Mitochondria image (after processing)</a>
+								<a href="./examples/atp2/Gi252-mito-corsen.tiff">Mitochondria image (after processing)</a>
 							</li>
 						</ul>
 					</li>
@@ -191,16 +191,16 @@
 						Unlocalized particles
 						<ul>
 							<li>
-								<a href="data/atp16/Gi252-atp16.tiff">ATP16 yeast RNA image (before processing)</a>
+								<a href="./examples/atp16/Gi252-atp16.tiff">ATP16 yeast RNA image (before processing)</a>
 							</li>
 							<li>
-								<a href="data/atp16/Gi252-atp16-corsen.tiff">ATP16 yeast RNA image (after processing)</a>
+								<a href="./examples/atp16/Gi252-atp16-corsen.tiff">ATP16 yeast RNA image (after processing)</a>
 							</li>
 							<li>
-								<a href="data/atp16/Gi252-mito.tiff">Mitochondria image (before processing)</a>
+								<a href="./examples/atp16/Gi252-mito.tiff">Mitochondria image (before processing)</a>
 							</li>
 							<li>
-								<a href="data/atp16/Gi252-mito-corsen.tiff">Mitochondria image (after processing)</a>
+								<a href="./examples/atp16/Gi252-mito-corsen.tiff">Mitochondria image (after processing)</a>
 							</li>
 						</ul>
 					</li>
@@ -218,7 +218,7 @@
 
 			<subsection name="Pars files">
 
-				<p>The following files are the output of the Corsen plugin on the
+				<p>The following files are the output of the Corsen plug-in on the
 					previous "after processing"
 					images
 					with a threshold at 1:</p>
@@ -228,10 +228,10 @@
 						Localized particles
 						<ul>
 							<li>
-								<a href="data/atp2/Gi252-atp2-corsen.par">ATP2 yeast RNA particles</a>
+								<a href="./examples/atp2/Gi252-atp2-corsen.par">ATP2 yeast RNA particles</a>
 							</li>
 							<li>
-								<a href="data/atp2/Gi252-mito-corsen.par">Mitochondria particles</a>
+								<a href="./examples/atp2/Gi252-mito-corsen.par">Mitochondria particles</a>
 							</li>
 						</ul>
 					</li>
@@ -239,10 +239,10 @@
 						Unlocalized particles
 						<ul>
 							<li>
-								<a href="data/atp16/Gi252-atp16-corsen.par">ATP16 yeast RNA particles</a>
+								<a href="./examples/atp16/Gi252-atp16-corsen.par">ATP16 yeast RNA particles</a>
 							</li>
 							<li>
-								<a href="data/atp16/Gi252-mito-corsen.par">Mitochondria particles</a>
+								<a href="./examples/atp16/Gi252-mito-corsen.par">Mitochondria particles</a>
 							</li>
 						</ul>
 					</li>
@@ -256,10 +256,10 @@
 
 				<ul>
 					<li>
-						<a href="./data/test-0point.par">0 particle par file</a>
+						<a href="./examples/test-0point.par">0 particle par file</a>
 					</li>
 					<li>
-						<a href="./data/test-1point.par">1 particle par file</a>
+						<a href="./examples/test-1point.par">1 particle par file</a>
 					</li>
 				</ul>
 
