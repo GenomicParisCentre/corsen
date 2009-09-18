@@ -1,5 +1,5 @@
 
-    <extension name="qtjambi" href="http://hestia.ens.fr/jnlp/qtjambi.jnlp"/>
+    <extension name="qtjambi" href="http://transcriptome.ens.fr/jnlp/qtjambi.jnlp"/>
     <extension name="jogl" href="http://download.java.net/media/jogl/builds/archive/jsr-231-webstart-current/jogl.jnlp"/>
     
     <!--extension name="jogl" href="http://download.java.net/media/jogl/builds/archive/jsr-231-1.0.0/jogl.jnlp"/-->
