@@ -24,11 +24,6 @@
 -->
 <project name="Corsen">
 
-	<skin>
-<groupId>org.apache.maven.skins</groupId>
-     <artifactId>maven-stylus-skin</artifactId>
-     <version>1.0</version>
-</skin>
 
 	<publishDate position="left" format="yyyy-MM-dd HH:mm"/>
 
@@ -79,11 +74,7 @@
 			<item name="Mailing list" href="/mail-lists.html" />
 		</menu>
 
-		<!--${reports}-->
-
-		<!--search/-->
-
-
-
+		<!--menu ref="reports"/-->
 	</body>
+
 </project>
