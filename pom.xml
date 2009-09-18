@@ -6,13 +6,17 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.42</version>
+	<version>0.43</version>
 	<name>Corsen</name>
 	<description>
 		Corsen is a tool dedicated to 3D distances measurements developed to access the minimal distance between
 cellular objects (e.g. individual mRNA molecules and mitochondria surface).	
 	</description>
 	<url>http://transcriptome.ens.fr/corsen</url>
+
+	<properties>
+		<didyouknow>Did you know that the "&lt;a href="http://en.wikipedia.org/wiki/Pointe_de_Corsen"&gt;pointe de Corsen&lt;/a&gt;" is the westernmost point of continental France?</didyouknow>
+	</properties>
 
 	<organization>
 		<name>École Normale Supérieure Microarray platform</name>
@@ -130,7 +134,7 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 			</snapshots>
 			<id>leburon</id>
 			<name>Leburon Maven 2.x Repository</name>
-			<url>http://transcriptome.ens.fr/maven2</url>
+			<url>http://www.transcriptome.ens.fr/maven2</url>
 			<layout>default</layout>
 		</repository>
 		<repository>
@@ -147,11 +151,17 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 	</repositories>
 
 
-	<!--scm>
-		<connection></connection>
-		<developerConnection></developerConnection>
-		<url></url>
-	</scm-->
+	<scm>
+		<connection>scm:svn:https://corsen.googlecode.com/svn/trunk/</connection>
+		<tag>corsen-read-only</tag>
+		<!--developerConnection></developerConnection-->
+		<url>http://code.google.com/p/corsen/source/checkout</url>
+	</scm>
+
+	<issueManagement>
+	    <system>GoogleCode</system>
+	    <url>http://code.google.com/p/corsen/issues/list</url>
+	</issueManagement>
 
 	<dependencies>
 		<dependency>
@@ -459,6 +469,12 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 									<include name="**/*.rss"/>
 									<replacetoken>@@@APPNAME@@@</replacetoken>
 								</replace>
+								<replace encoding="iso-8859-1" dir="${basedir}/target/site" value="${artifactId}">
+									<include name="**/*.jnlp"/>
+									<include name="**/*.html"/>
+									<include name="**/*.rss"/>
+									<replacetoken>@@@APPNAMEMIN@@@</replacetoken>
+								</replace>
 								<tstamp>
 									<format property="TODAY_UK" pattern="EEE, dd MMM yyyy HH:mm:ss z" locale="en,UK"/>
 								</tstamp>
@@ -676,6 +692,15 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<templateFile>${basedir}/src/site/site.vm</templateFile>
+					<outputEncoding>iso-8859-1</outputEncoding>
+				</configuration>
+			</plugin>
 		</plugins>
 		<extensions>
 			<extension>
@@ -699,6 +724,9 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 			</plugin>
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<encoding>utf-8</encoding>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
