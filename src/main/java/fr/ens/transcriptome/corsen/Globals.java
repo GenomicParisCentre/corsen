@@ -86,7 +86,7 @@ public final class Globals {
   public static final String HANDBOOK_URL = WEBSITE_URL + "/handbook.html";
   /** Corsen report bug url. */
   public static final String REPORT_BUG_URL =
-      "mailto:jourdren@biologie.ens.fr?subject=Corsen Report Bug&body=Report here the Corsen bug";
+      "http://code.google.com/p/corsen/issues/list";
 
   /** Enum of available ui. */
   public static enum GUI {
