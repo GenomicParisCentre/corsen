@@ -54,7 +54,7 @@ public abstract class DistanceProcessor {
     return sourceParticles;
   }
 
-  public List<Particle3D> getDestParticles() {
+  public List<Particle3D> getPreprocessedParticles() {
 
     return destParticles;
   }
@@ -75,7 +75,7 @@ public abstract class DistanceProcessor {
    * Set the dest particles.
    * @param destParticles
    */
-  private void setDestParticles(
+  private void setPreprocessedParticles(
       final Map<Particle3D, List<Particle3D>> destParticles) {
 
     this.destParticles = new ArrayList<Particle3D>();
@@ -131,14 +131,14 @@ public abstract class DistanceProcessor {
 
   final void preprocess(final ProgressEventType eventType) {
 
-    setDestParticles(defineDestParticles(eventType));
+    setPreprocessedParticles(computePreprocessedParticles(eventType));
   }
 
   //
   // Abstract methods
   //
 
-  protected abstract Map<Particle3D, List<Particle3D>> defineDestParticles(
+  protected abstract Map<Particle3D, List<Particle3D>> computePreprocessedParticles(
       ProgressEventType eventType);
 
   public abstract String getPreProcessorType();
@@ -147,8 +147,8 @@ public abstract class DistanceProcessor {
       final Point3D point, final Particle3D particleOfPoint,
       final List<Distance> result);
 
-  abstract AbstractListPoint3D getPresentationPoints(
-      final AbstractListPoint3D points);
+  abstract AbstractListPoint3D getPresentationPointsA(
+      final AbstractListPoint3D pointsA);
 
   abstract void setProperties(Properties properties);
 

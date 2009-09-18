@@ -51,7 +51,7 @@ public class DecompostionParticles3DType extends DistanceProcessor {
   }
 
   @Override
-  public Map<Particle3D, List<Particle3D>> defineDestParticles(
+  public Map<Particle3D, List<Particle3D>> computePreprocessedParticles(
       final ProgressEventType eventType) {
 
     final Particles3D particles = getSourceParticles();
@@ -66,7 +66,12 @@ public class DecompostionParticles3DType extends DistanceProcessor {
         Particle3DUtil.countInnerPointsInParticles(particles.getParticles());
     int count = 0;
 
-    for (Particle3D messenger : particles.getParticles()) {
+    // Input particles : n particles, p points (p=sum of points in all
+    // particles)
+    // Output particles : n' particles (the cuboids, n'>=n), p points (same
+    // number of total points)
+
+    for (Particle3D par : particles.getParticles()) {
 
       float len = particles.getPixelDepth();
       if (particles.getPixelWidth() > len)
@@ -77,11 +82,11 @@ public class DecompostionParticles3DType extends DistanceProcessor {
       len = len * Globals.CUBOID_SIZE_FACTOR;
 
       List<Particle3D> cuboids =
-          Particle3DUtil.createCuboidToArrayList(messenger, len, len, len);
+          Particle3DUtil.createCuboidToArrayList(par, len, len, len);
 
-      mapCuboids.put(messenger, cuboids);
+      mapCuboids.put(par, cuboids);
 
-      count += messenger.innerPointsCount();
+      count += par.innerPointsCount();
       final double p =
           (double) count / (double) countMax * ProgressEvent.INDEX_IN_PHASE_MAX;
       sendEvent(eventType, (int) p);
@@ -107,6 +112,7 @@ public class DecompostionParticles3DType extends DistanceProcessor {
     else
       result.clear();
 
+    // Compute standard distances
     for (Point3D p : list)
       result.add(new Distance(p, point, particleOfPoint, particle, p
           .distance(point)));
@@ -115,12 +121,13 @@ public class DecompostionParticles3DType extends DistanceProcessor {
   }
 
   @Override
-  AbstractListPoint3D getPresentationPoints(AbstractListPoint3D points) {
+  AbstractListPoint3D getPresentationPointsA(AbstractListPoint3D pointsA) {
 
-    if (points == null)
+    if (pointsA == null)
       return null;
 
-    return new SingletonListPoint3D(points.getBarycenter());
+    // Return the barycenter of Cuboids
+    return new SingletonListPoint3D(pointsA.getBarycenter());
   }
 
   @Override

@@ -247,7 +247,7 @@ public class CorsenResult {
    * Set the particlesB cuboids particles.
    * @param particles Particles to Set
    */
-  void setCuboidsMitosParticles(final Particles3D particles) {
+  void setCuboidsParticlesB(final Particles3D particles) {
 
     this.particlesBCuboids = particles;
   }
@@ -256,7 +256,7 @@ public class CorsenResult {
    * Set the particlesA cuboids particles.
    * @param particles Particles to Set
    */
-  void setCuboidsMessengersParticles(final Particles3D particles) {
+  void setCuboidsParticlesA(final Particles3D particles) {
 
     this.particlesACuboids = particles;
   }

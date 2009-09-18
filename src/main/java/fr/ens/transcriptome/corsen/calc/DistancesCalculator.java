@@ -126,7 +126,7 @@ public class DistancesCalculator {
 
           this.currentParticleA = parA;
           this.currentPointsA =
-              processorA.getPresentationPoints(parA.getInnerPoints());
+              processorA.getPresentationPointsA(parA.getInnerPoints());
           this.distances = new MinMaxList<Distance>();
 
           this.setRange(0, listBSize);
@@ -395,11 +395,11 @@ public class DistancesCalculator {
         logger.severe("Error while waiting the end of the preprocessing.");
       }
 
-    this.result.setCuboidsMessengersParticles(new Particles3D(particlesA,
-        this.processorA.getDestParticles()));
+    this.result.setCuboidsParticlesA(new Particles3D(particlesA,
+        this.processorA.getPreprocessedParticles()));
 
-    this.result.setCuboidsMitosParticles(new Particles3D(particlesB,
-        this.processorB.getDestParticles()));
+    this.result.setCuboidsParticlesB(new Particles3D(particlesB,
+        this.processorB.getPreprocessedParticles()));
 
     logger.info("Preprocessing in "
         + (System.currentTimeMillis() - start) + " ms.");
@@ -431,8 +431,8 @@ public class DistancesCalculator {
     // Start the computation of all distances
     sendEvent(ProgressEventType.START_CALC_MIN_DISTANCES_EVENT);
 
-    List<Particle3D> listA = this.processorA.getDestParticles();
-    List<Particle3D> listB = this.processorB.getDestParticles();
+    List<Particle3D> listA = this.processorA.getPreprocessedParticles();
+    List<Particle3D> listB = this.processorB.getPreprocessedParticles();
 
     Map<Particle3D, Distance> mins = new HashMap<Particle3D, Distance>();
     Map<Particle3D, Distance> maxs = new HashMap<Particle3D, Distance>();
@@ -485,7 +485,7 @@ public class DistancesCalculator {
       for (Particle3D parA : listA) {
 
         final AbstractListPoint3D pointsA =
-            this.processorA.getPresentationPoints(parA.getInnerPoints());
+            this.processorA.getPresentationPointsA(parA.getInnerPoints());
         // final List<Distance> distances = new LinkedList<Distance>();
         final List<Distance> distances = new MinMaxList<Distance>();
 

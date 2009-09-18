@@ -48,7 +48,7 @@ public class SurfaceParticles3DType extends DistanceProcessor {
   }
 
   @Override
-  protected Map<Particle3D, List<Particle3D>> defineDestParticles(
+  protected Map<Particle3D, List<Particle3D>> computePreprocessedParticles(
       final ProgressEventType eventType) {
 
     final Particles3D mitoParticles = getSourceParticles();
@@ -66,26 +66,30 @@ public class SurfaceParticles3DType extends DistanceProcessor {
     final int n = mitoParticles.getParticles().size();
     int i = 0;
 
-    for (Particle3D mito : mitoParticles.getParticles()) {
+    for (Particle3D par : mitoParticles.getParticles()) {
 
       Particle3DBuilder builder = new Particle3DBuilder(xlen, ylen, zlen);
 
-      final BitMapParticle3D bitmap = mito.getBitMapParticle();
+      final BitMapParticle3D bitmap = par.getBitMapParticle();
 
-      // for (Point3D p : mito.getSurfacePoints()) {
+      // Input particles : n particles, p points (p=sum of points in all
+      // particles)
+      // Output particles : n particles, p' point (p'<<=p, only the surface
+      // points)
+
       for (Point3D p : bitmap.getSurfacePoints()) {
 
         builder.addInnerPoint(p);
         builder.addSurfacePoint(p);
       }
-      builder.setBitMapParticle(mito.getBitMapParticle());
-      final List<Particle3D> cuboids =
+      builder.setBitMapParticle(par.getBitMapParticle());
+      final List<Particle3D> surface =
           Collections.singletonList(builder.getParticle());
 
       final double p = (double) ++i / (double) n * 1000.0;
       sendEvent(eventType, (int) p);
 
-      mapCuboids.put(mito, cuboids);
+      mapCuboids.put(par, surface);
     }
 
     return mapCuboids;
@@ -108,10 +112,10 @@ public class SurfaceParticles3DType extends DistanceProcessor {
     else
       result.clear();
 
+    // Compute distance to surface (can be negative)
     for (final Point3D p : listPoints) {
 
       final float d = p.distance(point);
-
       result.add(new Distance(p, point, particleOfPoint, mito, isNeg ? -d : d));
     }
 
@@ -128,13 +132,15 @@ public class SurfaceParticles3DType extends DistanceProcessor {
     if (particle == null)
       throw new NullPointerException("Particle is null");
 
+    // Compute standard distances
     return calcAllDistances(particle, point, particleOfPoint, particle
         .getBitMapParticle().isPointInParticle(point), result);
   }
 
   @Override
-  AbstractListPoint3D getPresentationPoints(AbstractListPoint3D points) {
+  AbstractListPoint3D getPresentationPointsA(AbstractListPoint3D points) {
 
+    // Get all the point the surface of the particle
     return points;
   }
 

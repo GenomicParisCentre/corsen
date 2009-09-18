@@ -47,7 +47,7 @@ class AllPointsParticles3DType extends DistanceProcessor {
   }
 
   @Override
-  public Map<Particle3D, List<Particle3D>> defineDestParticles(
+  public Map<Particle3D, List<Particle3D>> computePreprocessedParticles(
       final ProgressEventType eventType) {
 
     Particles3D pars = getSourceParticles();
@@ -60,6 +60,10 @@ class AllPointsParticles3DType extends DistanceProcessor {
 
     int count = 0;
     final int countMax = pars.getParticles().size();
+
+    // Input particles : n particles, p points
+    // Output particles : n particles (same particles), p points (same particles
+    // points)
 
     for (Particle3D par : pars.getParticles()) {
       result.put(par, Collections.singletonList(par));
@@ -88,6 +92,7 @@ class AllPointsParticles3DType extends DistanceProcessor {
     else
       result.clear();
 
+    // Compute standard distance
     for (Point3D p : particle.getInnerPoints())
       result.add(new Distance(p, point, particleOfPoint, particle, p
           .distance(point)));
@@ -96,9 +101,10 @@ class AllPointsParticles3DType extends DistanceProcessor {
   }
 
   @Override
-  AbstractListPoint3D getPresentationPoints(AbstractListPoint3D points) {
+  AbstractListPoint3D getPresentationPointsA(AbstractListPoint3D pointsA) {
 
-    return points;
+    // Get all the points of the particles
+    return pointsA;
   }
 
   @Override

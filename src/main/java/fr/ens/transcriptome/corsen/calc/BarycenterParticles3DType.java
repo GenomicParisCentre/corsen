@@ -54,7 +54,7 @@ public class BarycenterParticles3DType extends DistanceProcessor {
   }
 
   @Override
-  public Map<Particle3D, List<Particle3D>> defineDestParticles(
+  public Map<Particle3D, List<Particle3D>> computePreprocessedParticles(
       final ProgressEventType eventType) {
 
     Particles3D pars = getSourceParticles();
@@ -68,6 +68,11 @@ public class BarycenterParticles3DType extends DistanceProcessor {
     int count = 0;
     final int countMax = pars.getParticles().size();
     Particle3DBuilder p3b = null;
+
+    // Input particles : n particles, p points (p=sum of points in all
+    // particles)
+    // Output particles : n particles (same particles), n points (1 point by
+    // particle: the barycenter)
 
     for (Particle3D par : pars.getParticles()) {
 
@@ -101,6 +106,7 @@ public class BarycenterParticles3DType extends DistanceProcessor {
     else
       result.clear();
 
+    // Compute standard distances
     for (Point3D p : particle.getInnerPoints())
       result.add(new Distance(p, point, particleOfPoint, particle, p
           .distance(point)));
@@ -109,9 +115,10 @@ public class BarycenterParticles3DType extends DistanceProcessor {
   }
 
   @Override
-  AbstractListPoint3D getPresentationPoints(AbstractListPoint3D points) {
+  AbstractListPoint3D getPresentationPointsA(AbstractListPoint3D pointsA) {
 
-    return new SingletonListPoint3D(points.getBarycenter());
+    // Get the barycenter of barycenter of particle (stupid!!!)
+    return new SingletonListPoint3D(pointsA.getBarycenter());
   }
 
   @Override
