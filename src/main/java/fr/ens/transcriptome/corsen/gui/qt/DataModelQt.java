@@ -577,7 +577,7 @@ public class DataModelQt {
   //
 
   /**
-   * Set the CorsenSwing result.
+   * Set the Corsen result.
    * @param result The result to set
    */
   public void setResult(final CorsenResult result) {
