@@ -34,6 +34,20 @@
 		</author>
 	</properties>
 	<body>
+	
+	   <release version="0.44" date="2009-09-21">
+            <action dev="jourdren" type="fix">
+                Many fixes in documentation
+                and website.
+            </action>
+            <action dev="jourdren" type="update">
+                Zipfiles for Corsen source had a root directory
+            </action>
+            <action dev="jourdren" type="update">
+               Change URL for submit bugs
+            </action>
+        </release>
+	
 
 		<release version="0.43" date="2009-09-18">
 			<action dev="jourdren" type="fix">
