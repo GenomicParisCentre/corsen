@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Corsen google group, visit the home page
+ * at:
+ *
+ *      http://transcriptome.ens.fr/corsen
+ *
+ */
+-->
+<document>
+
+	<properties>
+		<title>Advanced topics</title>
+		<author email="jourdren@biologie.ens.fr">
+			Laurent Jourdren
+        </author>
+	</properties>
+
+	<body>
+
+
+		<section name="Advanced topics">
+
+			<subsection name="Filtering input particles">
+
+				<p>Input particles can be filtered by setting with an
+					expression
+					the "filter" fields for particles A and B in the
+					"Particles"
+					tab in Corsen Settings.</p>
+
+				<p>The expression must use the Javascript syntax. Several
+					variable are defined for the test:</p>
+
+				<table>
+					<tr>
+						<th>Variable name</th>
+						<th>Comment</th>
+					</tr>
+					<tr>
+						<td>area</td>
+						<td>Area of the particle</td>
+					</tr>
+					<tr>
+						<td>density</td>
+						<td>Density of the particle</td>
+					</tr>
+					<tr>
+						<td>intensity</td>
+						<td>Intensity of the particle</td>
+					</tr>
+					<tr>
+						<td>sphericity</td>
+						<td>Sphericity of the particle</td>
+					</tr>
+					<tr>
+						<td>volume</td>
+						<td>Volume of the particle</td>
+					</tr>
+				</table>
+
+				<p>Here an example:</p>
+				<code>
+					intensity &gt; 10000 &amp;&amp; volume &gt; 30
+</code>
+            
+            </subsection>
+            <subsection name="Filtering particles shown in 3D visualization">
+            
+            <p>Unlike the filtering of input particles, the filtering of particle in the 3D visualization is set by pressing on "<b>Filter</b>" button in the 3D View tab.</p>
+            <p>The expression system is the same as in the previous topic,except the name of the variable for filtering distances (see table below). For particles A and B, use the previously described variables.</p>   
+            
+               
+                
+                <table>
+                    <tr><th>Variable name</th><th>Comment</th></tr>
+                    <tr><td>distance</td><td>Distance (can be negative) 
+                    between a particle A and a particle B</td></tr>
+		    <tr><td>area</td><td>Area of the particle</td></tr>
+		    <tr><td>density</td><td>Density of the particle</td></tr>
+		    <tr><td>intensity</td><td>Intensity of the particle</td></tr>
+		    <tr><td>sphericity</td><td>Sphericity of the particle</td></tr>
+		    <tr><td>volume</td><td>Volume of the particle</td></tr>
+                </table>
+            
+                <p>Sample of expression :</p>
+<code>
+distance&gt;1 &amp;&amp; distance &lt; 3
+</code>         
+            
+            </subsection>
+            <subsection name="Choose a particle type">
+            
+            <p>Different biological localization issue can be tackle by Corsen thanks to
+             several distance calculation options that should be chosen depending on the shape 
+             of objects to be analyzed.</p> 
+            <p>Please, before starting Corsen analysis carefully consider these 
+            different options.</p> 
+            
+            <p>You should keep in mind that distances will be always calculated from particles A 
+            archors to particles B archors and that these archors will be defined by the selected 
+            particles processing option (see table below).</p>
+            
+            <p>Corsen is a very flexible tool, you can select a particle 
+            type in order to choose the algorithm used in the distances 
+            computation. The following table summary the characteristics of the
+            available particles type.</p>
+            
+            <table>
+                    <tr>
+                        <th>Particle type</th>
+                        <th>Example</th>
+                        <th>Particles A archors used to compute distances</th>
+                        <th>Particles B archors used to compute distances</th>
+                    </tr>
+                    <tr>
+                        <td>All points particle</td>
+                        <td>Any object</td>
+                        <td>All the points of the particles</td>
+                        <td>All the points of the particles</td>
+                    </tr>
+                    <tr>
+                        <td>Barycenter particle</td>
+                        <td>Any object</td>
+                        <td>Barycenters of the particles</td>
+                        <td>Barycenters of the particles</td>
+                    </tr>
+                    <tr>
+                        <td>Decomposition particle</td>
+                        <td>RNAm</td>
+                        <td>Barycenter of particles preprocessed in cuboids</td>
+                        <td>All the points of the particle preprocessed in cuboids</td>
+                    </tr>
+                    <tr>
+                        <td>Surface particle</td>
+                        <td>Nucleus, mitochondria</td>
+                        <td>All the points of the cuboids that are at the 
+                        surface of the particles</td>
+                        <td>All the points of the cuboids that are at the surface 
+                        of the particles. If the archor of particles A is 
+                        in a particle B, the distance will be negative</td>
+                    </tr>
+                    
+                </table>
+                
+                <p>If you want to add another type of particle, you can do it 
+                by adding your particle type to Corsen source code. See the
+                <a href="download-src.html">download source section</a> 
+                to download Corsen source code and see compiling instructions.</p>
+            
+            </subsection>
+            <subsection name="Multithreading">
+            
+                <p>The current generation of processors often contains two or mores 
+                core that allow to do easily parallel computations. Corsen can take 
+                usage of the many core to increase the speed of distance computation. 
+                By default no thread are used to compute the distance, you can enable 
+                it in the computation tab of Corsen setting. If you choose to set the 
+                number of threads to automatic, this number will be equals to the number 
+                of processors/cores in your computer.</p>
+            
+            </subsection>
+        
+        </section>
+    
+
+    </body>
+</document>

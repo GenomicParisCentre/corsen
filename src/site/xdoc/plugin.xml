@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Corsen google group, visit the home page
+ * at:
+ *
+ *      http://transcriptome.ens.fr/corsen
+ *
+ */
+-->
+<document>
+
+	<properties>
+		<title>ImageJ Plug-in</title>
+		<author email="jourdren@biologie.ens.fr">
+			Laurent Jourdren
+        </author>
+	</properties>
+
+	<body>
+
+		<section name="Corsen ImageJ Plugin">
+
+			<p>The Corsen analysis is a two steps process:</p>
+			<ul>
+			  <li>3D segmentation</li>
+			  <li>Distance computation</li>
+			</ul>
+			<p>
+				Step 1 is performed using the image processing software ImageJ. We
+				provide a plug-in for ImageJ
+				(the Corsen plug-in) that allow converting an image stack to a "<b>.par</b>"
+				file that resumes all the
+				informations about the 3D segmented particles (areas, volumes, coordinates...).
+			</p>
+
+			<p>As you need two particles types to compute distances, you must
+				perform 3D segmentations for both of them using Corsen plug-in.</p>
+
+			<subsection name="Installation">
+
+				<p>
+					If the ImageJ software is not available on your computer, you can
+					freely download it (It's a domain
+					public program) on the
+					<a href="http://rsbweb.nih.gov/ij">ImageJ website</a>.
+				</p>
+
+				<p>
+					To install Corsen ImageJ plug-in you only need to put the
+					<b>corsen-plugin.jar</b>
+					archive in the
+					<b>plugins</b>
+					folder of your ImageJ installation (usualy the default ImageJ
+					directory installation under Microsoft Windows is located in
+					<code>c:\Program Files\ImageJ</code>
+					.
+					See the
+					<a href="download.html">download section for more information</a>.
+				</p>
+
+			</subsection>
+
+			<subsection name="Allocating more memory to ImageJ">
+
+				<p>When you work with heavy images in ImageJ, the
+					execution of the Corsen plug-in will require more memory.
+					To allow the Java Virtual Machine that run ImageJ to use
+					more memory, you need to edit the following files :</p>
+
+				<ul>
+					<li>
+						For
+						<b>Linux/Unix</b>
+						:
+						<code>run</code>
+						script shell in the ImageJ
+						installation directory. Set the
+						<code>-Xmx</code>
+						parameter the define
+						the maximal amount of memory. The following sample will set maximal
+						memory
+						use by ImageJ to 512 MB:
+					</li>
+					<source>
+#!/bin/sh
+./jre/bin/java -Xmx512m -jar ij.jar
+</source>
+
+					<li>
+						For
+						<b>Windows</b>
+						:
+						<code>imagej.cfg</code>
+						in ImageJ installation
+						directory (usualy
+						<code>C:\Program Files\ImageJ</code>
+						). The third line contains
+						arguments to the JVM to launch ImageJ. Set the
+						<code>-Xmx</code>
+						parameter the
+						define the maximal amount of memory. Note that with Windows 32 bits
+						versions, the maximum size of memory allocation is 1610 MB. The
+						following sample will set maximal memory
+						use by ImageJ to 1610 MB:
+					</li>
+
+					<source>
+C:\PROGRA~1\ImageJ\
+C:\Program Files\Java\jre1.6.0_05\bin\javaw.exe
+-Xmx1610m -cp ij.jar;C:\PROGRA~1\ImageJ\ij.jar ij.ImageJ
+</source>
+
+				</ul>
+
+				<p>
+					For Mac OS X users, see the
+					<a href="http://rsb.info.nih.gov/ij/docs/install/osx.html">Image J documentation</a>
+					for more informations.
+				</p>
+
+			</subsection>
+
+
+		</section>
+
+		<subsection name="Usage">
+
+			<p>Since Corsen segmentation is based on a simple threshold, we
+				advise Corsen users to preprocess images
+				(e.g. signal enhancement, removing of background) before using Corsen.
+				The quality of the Corsen 3D segmentation will be better 
+				(see <a href="preprocessing">preprocessing section</a>).</p>
+
+			<p>Corsen ImageJ plugin can only handle the following
+				images types :</p>
+
+			<ul>
+				<li>Stacks of 8-bit grayscale images.</li>
+				<li>Stacks of 16-bit images.</li>
+			</ul>
+
+			<p>
+				Before running Corsen ImageJ plug-in you must define a
+				threshold using the Theshold tool of ImageJ (menu
+				<b>Image</b>
+				>
+				<b>Adjust</b>
+				>
+				<b>Threshold</b>
+				).Then open the Corsen plug-in dialog box
+				(menu
+				<b>Plugins</b>
+				>
+				<b>Analyse</b>
+				>
+				<b>Corsen Plug-in</b>
+				).
+				You can enable or disable the following options :
+			</p>
+
+			<table>
+				<tr>
+					<th>Option</th>
+					<th>Role</th>
+				</tr>
+				<tr>
+					<td>Display results</td>
+					<td>At the end of the plug-in execution, a table will
+						show several informations about segmented particles
+						3D (such as area, volume, sphericity, intensity...).</td>
+				</tr>
+				<tr>
+					<td>Exclude on edge</td>
+					<td>All 3D particles that are on edge of the image will be
+						removed from the output file.</td>
+				</tr>
+				<tr>
+					<td>Change the output file name</td>
+					<td>A dialogbox to select the name of the output file
+						will appear after the execution of the plug-in.</td>
+				</tr>
+				<tr>
+					<td>No confirm save dialog</td>
+					<td>By default a dialogbox ask if the result file must
+						be saved. Enable this option to disable this
+						dialogbox.</td>
+				</tr>
+				<tr>
+					<td>Show particles 3D</td>
+					<td>After the end of the execution of the plug-in, a
+						new image stack is created with the particles 3D in
+						different colors.</td>
+				</tr>
+				<tr>
+					<td>Pack particles data</td>
+					<td>Use this option when your memory is low to
+						handle large segmentation work. Corsen will reduce the
+						memory footprinting of the particles 3D object.</td>
+				</tr>
+
+			</table>
+
+			<p>Once, your options selected, launch the 3D segmentation of
+				Corsen by pressing OK. ImageJ will ask you if you want
+				to process all the image of your stack, answer yes.</p>
+
+			<p>
+				When all options are
+				disabled the plug-in will execute the 3D segmentation
+				and will ask you if you want to save the result file. The default name
+				of the output file will be the basename of your
+				image file with a "
+				<b>.par</b>
+				" extension. If your image
+				to process is no linked to a file, a dialog box will appear for
+				selecting the output file.
+			</p>
+
+
+
+		</subsection>
+
+
+
+	</body>
+</document>

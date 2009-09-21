@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Corsen google group, visit the home page
+ * at:
+ *
+ *      http://transcriptome.ens.fr/corsen
+ *
+ */
+-->
+<document>
+  <properties>
+    <title>Download Corsen @@@VERSION@@@ command line version</title>
+    <author email="jourdren@biologie.ens.fr">Laurent Jourdren</author>
+  </properties>
+  <body>
+    <section name="Corsen command line version">
+    	
+    	<p>The Corsen command line version is a version of the Corsen application that only run in command line. To launch it under Windows type :</p>
+    	
+<source>
+C:\Corsen> corsen.bat batchfile.txt
+</source>
+
+<p>and the following command line under *nix :</p>
+
+<source>
+$ corsen.sh batchfile.txt
+</source>    	
+    
+    <p>When running, this version select the user saved options in Corsen application as configuration. As this version of Corsen is 100% pure Java, it can be launched on any couple of operating system (Windows, Linux, Solaris...) and processor (x86-32, x86-64, PowerPC, ARM...) where a Java runtime is available.</p>
+    
+    <subsection name="batch file format">
+
+    <p>The batch file must be a text file with tabular as separator, the first line of the file 
+    will be ignored. The following table show an example of a batch file.</p>
+    
+    <table>
+        <tr><th>Directory path</th><th>Particle A prefix</th><th>Particle B prefix</th></tr>
+        <tr><td>W:/microscopie/ImageJ/070411/G1</td><td>G1-lacz-(1_2_1_0)</td><td>G1-mito-(2_0_2_1)</td></tr>
+        <tr><td>W:/microscopie/ImageJ/070411/G24</td><td>G24-lacz-(1_2_1_0)</td><td>G24-mito-(2_0_2_1)</td></tr>
+    </table>
+    
+    </subsection>
+    
+    <subsection name="Download Corsen cli">
+      <p>
+        Corsen CLI version is distributed in several formats for your convenience.
+      </p>
+      <ul>
+         <li>
+          <a href="corsen-cli-@@@VERSION@@@.zip">
+            <code>.zip</code> archive
+          </a>
+          <span style="font-size: smaller">(5.3 MiB)</span>
+        </li>
+      
+        <li>
+          <a href="corsen-cli-@@@VERSION@@@.tar.gz">
+            <code>.tar.gz</code> archive
+          </a>
+          <span style="font-size: smaller">(5.2 MiB)</span>
+        </li>
+        <li>
+          <a href="corsen-cli-@@@VERSION@@@.tar.bz2">
+            <code>.tar.bz2</code> archive
+          </a>
+          <span style="font-size: smaller">(3.6 MiB)</span>
+        </li>
+        
+
+      </ul>
+      
+      
+      </subsection>
+      
+    </section>
+  </body>
+</document>
+

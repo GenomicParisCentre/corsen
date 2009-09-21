@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Corsen google group, visit the home page
+ * at:
+ *
+ *      http://transcriptome.ens.fr/corsen
+ *
+ */
+-->
+<document>
+
+	<properties>
+		<title>Download Corsen @@@VERSION@@@</title>
+		<author email="jourdren@biologie.ens.fr">
+			Laurent Jourdren
+		</author>
+	</properties>
+	<body>
+		<script src="http://java.com/js/deployJava.js"></script>
+		<a name="installation" />
+		<section name="Download Corsen latest version">
+			<p>
+				Corsen analysis is a two steps process (3D segmentation and
+				distance calculation) and so requires the installation of two
+				components:				
+			</p>
+			<ul>
+				<li>
+					<a href="http://rsbweb.nih.gov/ij/">ImageJ</a>
+					plug-in, available as a
+					<a href="corsen_plugin-@@@VERSION@@@.jar">
+						<code>.zip</code>
+						archive
+					</a>
+					<span style="font-size: smaller">
+						(934 KiB)
+					</span>
+					.
+					<br />
+					You only have to put this archive in the
+					ImageJ
+					plug-ins
+					folder and restart ImageJ to install it.
+				</li>
+				<li>
+					Application, available only as a Java Web Start
+					application.
+					<br />
+					To install it, you need an internet
+					connection and click on the
+					<a
+						href="javascript:if (!deployJava.isWebStartInstalled(&quot;1.5.0&quot;)) {if (deployJava.installLatestJRE()) {if (deployJava.launch(&quot;@@@WEBSITE@@@/webstart/corsen.jnlp&quot;)) {}}} else {if (deployJava.launch(&quot;@@@WEBSITE@@@/webstart/corsen.jnlp&quot;)) {}}"
+						onMouseOver="window.status=''; return true;">
+						corsen jnlp link
+					</a>
+					to launch the application.
+				</li>
+			</ul>
+			<p>
+				Corsen is distributed under the
+				<a href="license.html">General Public License version 2 and later</a>
+				.
+			</p>
+			<a name="requirements" />
+			<subsection name="System Requirements">
+				<table>
+					<tr>
+						<th>Component</th>
+						<th>Comment</th>
+					</tr>
+					<tr>
+						<td>Java Runtime Environment</td>
+						<td>
+							5.0 or above.
+						</td>
+					</tr>
+					<tr>
+						<td>Memory</td>
+						<td>
+							No minimum requirement. The necessary amount
+							of memory needed
+							by Corsen depends on size
+							of the inputs files (images and .par
+							files). However
+							we recommends 1GiB for standard analysis. 
+						</td>
+					</tr>
+					<tr>
+						<td>Disk Space</td>
+						<td>
+							No minimum requirement. Approximately 40 MiB
+							will be used by
+							Corsen.
+						</td>
+					</tr>
+					<tr>
+						<td>Operating System</td>
+						<td>
+							No minimum requirement. Tested on Windows
+							XP and Ubuntu. Note
+							that Corsen
+							application under Mac OS X is experimental. 
+						</td>
+					</tr>
+					<tr>
+						<td>ImageJ version</td>
+						<td>
+							>= 1.39. Note that Image 1.40 is buggy for Corsen,
+							so the use of this version if forbidden.
+                        </td>
+					</tr>
+				</table>
+			</subsection>
+
+
+			<subsection name="How install Corsen on Mac OS X">
+
+				<p>
+					Corsen works only with an Intel Macintosh and Mac OS X.4 (Tiger).
+					With this operating system, you must install manualy jogl to
+					use the 3D view. This limitation is due to a
+					<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=63306">
+						bug
+				</a>
+					in Apple Java implementation. Corsen contains a hack to
+					bypass this bug but force user to manually install JOGL.
+				</p>
+
+				<ul>
+					<li>
+						Download the lastest version of JOGL for Mac Os
+						X (Corsen is tested
+						with 1.1) on
+						<a href="https://jogl.dev.java.net/">
+							JOGL website
+						</a>
+						.
+					</li>
+					<li>Unzip the archive.</li>
+					<li>
+						Put the content of the
+						<code>lib</code>
+						folder to
+						<code>/Library/Java/Extensions</code>
+					</li>
+				</ul>
+
+				<p>
+					<b>Warning</b>
+					: No tests have been done under Mac OS 10.5
+					(Leopard) and Mac OS 10.6 (Snown Leopard) with Java 5.0 and Java 6.0.
+				</p>
+				<br />
+				<p>
+					If Corsen application is still too unstable for you on Mac OS X,
+					you can
+					install
+					<a href="http://www.virtualbox.org/">Virtual box</a>
+					or other
+					virtualization software and a linux distribution such
+					<a href="http://www.ubuntu.com">ubuntu</a>
+					. We hope that next
+					versions of Corsen will run perfectly under Mac OS X. Ready to use
+					Virtualbox images for Ubuntu (and other OS) are available on
+					<a href="http://virtualbox.wordpress.com/images/">VirtualBox Images website</a>.
+				</p>
+
+			</subsection>
+
+			<subsection name="Corsen application under Linux">
+
+				<p>Corsen is currently only available for 32 bit Intel processor (i386)
+					versions of linux.
+					If you use OpenJDK/IcedTea version of the Java Runtime (see your
+					distribution documentation
+					to install it), the default Java Web Start on the main page may no
+					work.</p>
+
+				<p>
+					Use this specific
+					<a href="webstart/corsen.jnlp">Corsen application launch link</a>
+					to run Corsen (Don't use Sun script to check java version).
+				</p>
+
+			</subsection>
+
+			<subsection name="Corsen command line version">
+
+				<p>
+					For advanced users, a command line only version is
+					<a href="download-cli.html"> available</a>.
+				</p>
+
+			</subsection>
+
+		</section>
+
+	</body>
+
+</document>
