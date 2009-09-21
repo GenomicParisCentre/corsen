@@ -16,6 +16,7 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 
 	<properties>
 		<didyouknow>Did you know that the "&lt;a href="http://en.wikipedia.org/wiki/Pointe_de_Corsen"&gt;pointe de Corsen&lt;/a&gt;" is the westernmost point of continental France?</didyouknow>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<organization>
@@ -369,9 +370,10 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 						<phase>package</phase>
 						<configuration>
 							<tasks>
-								<tar tarfile="${basedir}/target/${artifactId}-src-${version}.tar">
-								
-									<tarfileset dir="${basedir}"  mode="755" username="nobody" group="nobody">
+
+								<mkdir dir="${basedir}/target/dist-src/"/>
+								<copy todir="${basedir}/target/dist-src/">
+									<fileset dir="${basedir}">
 										<include name="src/**"/>
 										<include name="pom.xml"/>
 										<include name="checkstyle.xml"/>
@@ -379,19 +381,24 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 										<include name="COMPILING.txt"/>
 										<include name="INSTALL.txt"/>
 										<include name="LICENSE.txt"/>
+									</fileset>
+								</copy>
+								<move file="${basedir}/target/dist-src/" tofile="${basedir}/target/dist-src/${pom.artifactId}-${pom.version}"/>
+
+								<tar tarfile="${basedir}/target/${artifactId}-src-${version}.tar">
+									<tarfileset dir="${basedir}/target/dist-src"  mode="755" username="nobody" group="nobody">
+										<include name="*/**"/>
 									</tarfileset>
 								</tar>
-								<gzip zipfile="${basedir}/target/${artifactId}-src-${version}.tar.gz" 
+								<gzip zipfile="${basedir}/target/${artifactId}-src-${version}.tar.gz"
 									src="${basedir}/target/${artifactId}-src-${version}.tar"/>
-								<bzip2 destfile="${basedir}/target/${artifactId}-src-${version}.tar.bz2" 
+								<bzip2 destfile="${basedir}/target/${artifactId}-src-${version}.tar.bz2"
 									src="${basedir}/target/${artifactId}-src-${version}.tar"/>
 
-								<mkdir dir="${basedir}/target/zip"/>
-								<untar src="${basedir}/target/${artifactId}-src-${version}.tar" 
-									dest="${basedir}/target/zip"/>
-								<zip destfile="${basedir}/target/${artifactId}-src-${version}.zip" basedir="${basedir}/target/zip"/>
-								<delete dir="${basedir}/target/zip"/>
-								
+								<untar src="${basedir}/target/${pom.artifactId}-src-${pom.version}.tar"
+									dest="${basedir}/target/tar-src"/>
+								<zip destfile="${basedir}/target/${artifactId}-src-${version}.zip"
+									basedir="${basedir}/target/tar-src"/>
 							</tasks>
 						</configuration>
 						<goals>
