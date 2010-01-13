@@ -32,7 +32,8 @@
 	</properties>
 
 	<body>
-		<script src="http://java.com/js/deployJava.js"></script>
+		<script src="osdetect.js"></script>
+		<script src="jnlp.js"></script>
 		
 		<section name="Welcome to Corsen">
 
@@ -53,7 +54,7 @@
 					<br/>
 				</p>
 				<p style="font-size: smaller">
-				<a href="javascript:if (!deployJava.isWebStartInstalled(&quot;1.5.0&quot;)) {if (deployJava.installLatestJRE()) {if (deployJava.launch(&quot;@@@WEBSITE@@@/webstart/corsen.jnlp&quot;)) {}}} else {if (deployJava.launch(&quot;@@@WEBSITE@@@/webstart/corsen.jnlp&quot;)) {}}" onMouseOver="window.status=''; return true;"><img src="http://java.sun.com/products/jfc/tsc/articles/swing2d/webstart.png" border="0" /></a> Corsen Application
+				<script>launchCorsen('1024m');</script> Corsen Application with 1024 MB of memory.
 				</p>
 				<ul style="margin-top: 0; list-style-type: disc">
 					<li style="font-size: smaller">
@@ -63,6 +64,7 @@
 						and 
 						<a href="download.html#installation">Installation Instructions</a>.						
 					</li>
+					<li>Other <a href="webstart.html">amount</a> of memory for Corsen application.</li>
 					<li style="font-size: smaller">
 						<a href="quickstart.html">
 							QuickStart tutorial

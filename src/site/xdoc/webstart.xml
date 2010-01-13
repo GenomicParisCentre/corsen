@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ *                  Corsen development code
+ *
+ * This code may be freely distributed and modified under the
+ * terms of the GNU General Public Licence version 2 or later. This
+ * should be distributed with the code. If you do not have a copy,
+ * see:
+ *
+ *      http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Copyright for this code is held jointly by the microarray platform
+ * of the École Normale Supérieure and the individual authors.
+ * These should be listed in @author doc comments.
+ *
+ * For more information on the Corsen project and its aims,
+ * or to join the Corsen google group, visit the home page
+ * at:
+ *
+ *      http://transcriptome.ens.fr/corsen
+ *
+ */
+-->
+<document> 
+
+  <properties> 
+    <author email="jourdren@biologie.ens.fr">Laurent Jourdren</author> 
+  </properties> 
+
+
+
+  <body>
+  
+	<script src="osdetect.js"></script>
+
+	<section name="Starting Corsen Application">
+
+		<p>We provides here several Java Web Start links to launch Corsen application according the memory available on your computer.</p>
+		<script src="jnlp.js"></script>
+		<ul>
+			<li><script>runCorsen('128m');</script> Corsen with 128 MB memory.</li>
+			<li><script>runCorsen('256m');</script> Corsen with 256 MB memory.</li>
+			<li><script>runCorsen('512m');</script> Corsen with 512 MB memory.</li>
+			<li><script>runCorsen('768m');</script> Corsen with 768 MB memory.</li>
+			<li><script>runCorsen('1024m');</script> Corsen with 1024 MB memory.</li>
+			<li><script>runCorsen('1280m');</script> Corsen with 1280 MB memory.</li>
+			<li><script>runCorsen('1536m');</script> Corsen with 1536 MB memory.</li>
+		</ul>
+	</section>
+
+
+
+
+
+  </body>
+  
+</document>

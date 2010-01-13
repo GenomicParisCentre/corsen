@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs xmlns="http://maven.apache.org/FML/1.0.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd"
+  title="Frequently Asked Questions"
+  toplink="false">
+
+  <part id="Troubleshooting">
+    <title>Troubleshooting</title>
+
+    <faq id="memory">
+      <question>
+        The Java Virtual Machine Launcher reports "Could not create the Java Virtual Machine" when launching Corsen application. There is no explanation about the issue. What can i do ?
+      </question>
+      <answer>
+	<p>The Java Virtual Machine can't allocate the amount of memory that you want. Select in the <a href="webstart.html">Corsen application start page</a> a launcher that allocate less memory.</p>
+      </answer>
+    </faq>
+    <faq id="jvm64">
+      <question>
+        When launching Corsen Application, Corsen shows "Unable to launch the application". What it means ?
+      </question>
+      <answer>
+	<p>You are attempting to run Corsen application in a 64-bit Java Virtual Machine (JVM). Unfortunaly, Corsen is currently not compatible with this type of JVM.</p>
+      </answer>
+    </faq>
+
+  </part>
+
+  <part id="General">
+
+    <title>General</title>
+
+    <faq id="more memory">
+      <question>
+        I need more memory to compute distance with Corsen, memory sizes available in <a href="webstart.html">Corsen application start page</a> can't fit my needs.
+      </question>
+      <answer>
+	<p>The only method to solve this issue is to use the <a href="download-src.html">command line</a>. With command line interface you also use 64-bit Java Virtual Machine that allow to use any amount of memory that you need.</p>
+      </answer>
+    </faq>
+    <faq id="otheros">
+      <question>
+         My operating system/arch is not supported by Corsen application. Is there a solution to run Corsen application.
+      </question>
+      <answer>
+	<p>There is two awnsers to your problem:</p>
+        <ul>
+          <li>Use the <a href="download-cli.html">command line</a>.</li>
+          <li>Use an Ubuntu image disc for Virtual box. A <a href="virtualbox.html">preconfigured image with Corsen and ImageJ</a> is available on our website.</li>
+       </ul>
+      </answer>
+    </faq>
+
+  </part>
+
+</faqs>

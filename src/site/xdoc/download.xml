@@ -128,7 +128,7 @@
 			</subsection>
 
 
-			<subsection name="How install Corsen on Mac OS X">
+			<!--subsection name="How install Corsen on Mac OS X">
 
 				<p>
 					Corsen works only with an Intel Macintosh and Mac OS X.4 (Tiger).
@@ -180,7 +180,7 @@
 					<a href="http://virtualbox.wordpress.com/images/">VirtualBox Images website</a>.
 				</p>
 
-			</subsection>
+			</subsection-->
 
 			<subsection name="Corsen application under Linux">
 
@@ -193,7 +193,7 @@
 
 				<p>
 					Use this specific
-					<a href="webstart/corsen.jnlp">Corsen application launch link</a>
+					<a href="webstart/corsen-1024m.jnlp">Corsen application launch link (with 1024 MB allocated for Java)</a>
 					to run Corsen (Don't use Sun script to check java version).
 				</p>
 

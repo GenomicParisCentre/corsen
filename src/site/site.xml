@@ -56,12 +56,15 @@
 
 		<menu name="Getting Corsen">
 			<item name="Downloading" href="/download.html" />
+			<item name="Corsen Application" href="/webstart.html" />
 			<item name="Release Notes" href="/changes-report.html" />
 			<item name="Downloading sources" href="/download-src.html" />
 		</menu>
 
 		<menu name="Documentation">
 			<item name="Quickstart" href="/quickstart.html" />
+			<item name="Troubleshooting/FAQ" href="/faq.html" />
+			<item name="Supported platforms" href="/supportedplatforms.html" />
 			<item name="Handbook" href="/handbook.html" collapse="true">
 				<item name="Preprocessing" href="/preprocessing.html" /> 
                 		<item name="ImageJ Plugin" href="/plugin.html" />

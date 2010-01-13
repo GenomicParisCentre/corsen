@@ -2,7 +2,7 @@
 <jnlp
   spec="1.5+"
   codebase="@@@WEBSITE@@@/webstart"
-  href="corsen.jnlp">
+  href="corsen-@@@MAXHEAPSIZE@@@.jnlp">
   <information>
     <title>Corsen</title>
     <vendor>ENS Microarray platform</vendor>
@@ -31,13 +31,13 @@
     <j2se version="1.5+"
           href="http://java.sun.com/products/autodl/j2se"
           initial-heap="64m"
-          max-heap-size="1610m"/>
+          max-heap-size="@@@MAXHEAPSIZE@@@"/>
   </resources>
 
   <resources os="Mac OS">
     <j2se version="1.5+"
           initial-heap="64m"
-          max-heap-size="1024m"
+          max-heap-size="@@@MAXHEAPSIZE@@@"
           java-vm-args="-XstartOnFirstThread -Xdock:name='Corsen'"/>
   </resources>
 
@@ -45,7 +45,7 @@
     <j2se version="1.5+"
           href="http://java.sun.com/products/autodl/j2se"
           initial-heap="64m"
-         max-heap-size="1024m"
+         max-heap-size="@@@MAXHEAPSIZE@@@"
           java-vm-args="-server"/>
   </resources>
 
@@ -53,4 +53,4 @@
     <j2se version="1.5+"
           href="http://java.sun.com/products/autodl/j2se"
           initial-heap="64m"
-          max-heap-size="1024m"/>
+          max-heap-size="@@@MAXHEAPSIZE@@@"/>
