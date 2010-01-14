@@ -39,19 +39,15 @@
 		<p>We provides here several Java Web Start links to launch Corsen application according the memory available on your computer.</p>
 		<script src="jnlp.js"></script>
 		<ul>
-			<li><script>runCorsen('128m');</script> Corsen with 128 MB memory.</li>
-			<li><script>runCorsen('256m');</script> Corsen with 256 MB memory.</li>
-			<li><script>runCorsen('512m');</script> Corsen with 512 MB memory.</li>
-			<li><script>runCorsen('768m');</script> Corsen with 768 MB memory.</li>
-			<li><script>runCorsen('1024m');</script> Corsen with 1024 MB memory.</li>
-			<li><script>runCorsen('1280m');</script> Corsen with 1280 MB memory.</li>
-			<li><script>runCorsen('1536m');</script> Corsen with 1536 MB memory.</li>
+			<li><script>launchCorsen('128m');</script> Corsen with 128 MB memory.</li>
+			<li><script>launchCorsen('256m');</script> Corsen with 256 MB memory.</li>
+			<li><script>launchCorsen('512m');</script> Corsen with 512 MB memory.</li>
+			<li><script>launchCorsen('768m');</script> Corsen with 768 MB memory.</li>
+			<li><script>launchCorsen('1024m');</script> Corsen with 1024 MB memory.</li>
+			<li><script>launchCorsen('1280m');</script> Corsen with 1280 MB memory.</li>
+			<li><script>launchCorsen('1536m');</script> Corsen with 1536 MB memory.</li>
 		</ul>
 	</section>
-
-
-
-
 
   </body>
   

@@ -21,7 +21,7 @@
         When launching Corsen Application, Corsen shows "Unable to launch the application". What it means ?
       </question>
       <answer>
-	<p>You are attempting to run Corsen application in a 64-bit Java Virtual Machine (JVM). Unfortunaly, Corsen is currently not compatible with this type of JVM.</p>
+	<p>You are attempting to run Corsen application in a 64-bit Java Virtual Machine (JVM). Unfortunately, Corsen is currently not compatible with this type of JVM.</p>
       </answer>
     </faq>
 
@@ -44,13 +44,49 @@
          My operating system/arch is not supported by Corsen application. Is there a solution to run Corsen application.
       </question>
       <answer>
-	<p>There is two awnsers to your problem:</p>
+	<p>There is two answers to your problem:</p>
         <ul>
           <li>Use the <a href="download-cli.html">command line</a>.</li>
           <li>Use an Ubuntu image disc for Virtual box. A <a href="virtualbox.html">preconfigured image with Corsen and ImageJ</a> is available on our website.</li>
        </ul>
       </answer>
     </faq>
+
+  </part>
+
+
+  <part id="MacOSX"> 
+    <title>Mac OS X</title>
+    
+
+    <faq id="Only a console icon in the dock">
+      <question>
+        When i launch Corsen i only see a console icon in the dock.
+      </question>
+      <answer>
+	<p>The window of the Corsen Application is under the window of your browser. Click on the console icon to show it.</p>
+      </answer>
+    </faq>
+
+    <faq id="When i launch Corsen, nothing">
+
+      <question>
+        Nothing appears when launching Corsen under Mac OS X.
+      </question>
+      <answer>
+	<p>Under Mac OS X, no error message will be shown. You MUST use Mac OS X Snow Leopard and Java 6. Try to launch Corsen with less memory allocated to Corsen.</p>
+      </answer>
+    </faq>
+
+
+    <faq id="Unable to quit Corsen">
+      <question>
+        When i quit Corsen under Mac OS X, the Java icon still in the dock.
+      </question>
+      <answer>
+	<p>There is a bug that can't allow to properly quit Corsen under Mac OS X. You need to use the "Force to Quit" in Apple menu and kill the java entry in the list.</p>
+      </answer>
+   </faq>
 
   </part>
 
