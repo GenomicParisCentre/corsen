@@ -6,7 +6,7 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.44</version>
+	<version>0.45</version>
 	<name>Corsen</name>
 	<description>
 		Corsen is a tool dedicated to 3D distances measurements developed to access the minimal distance between
@@ -144,9 +144,10 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 			</snapshots>
 			<id>java.net</id>
 			<name>java.net repository</name>
-			<url>
+			<!--url>
 				https://maven-repository.dev.java.net/nonav/repository
-			</url>
+			</url-->
+			<url>http://download.java.net/maven/1</url>
 			<layout>legacy</layout>
 		</repository>
 	</repositories>
@@ -225,6 +226,12 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 			<groupId>sun</groupId>
 			<artifactId>javaws</artifactId>
 			<version>1.5</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>sun</groupId>
+			<artifactId>deploy</artifactId>
+			<version>1.6</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -458,28 +465,56 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 									</replacetoken>
 									<replacevalue />
 								</replace>
+								
+								<copy file="${basedir}/target/site/webstart/corsen.jnlp" tofile="${basedir}/target/site/webstart/corsen-128m.jnlp"/>
+								<replace encoding="iso-8859-1" file="${basedir}/target/site/webstart/corsen-128m.jnlp" value="128m" token="@@@MAXHEAPSIZE@@@" />
+
+								<copy file="${basedir}/target/site/webstart/corsen.jnlp" tofile="${basedir}/target/site/webstart/corsen-256m.jnlp"/>
+								<replace encoding="iso-8859-1" file="${basedir}/target/site/webstart/corsen-256m.jnlp" value="256m" token="@@@MAXHEAPSIZE@@@" />
+
+								<copy file="${basedir}/target/site/webstart/corsen.jnlp" tofile="${basedir}/target/site/webstart/corsen-512m.jnlp"/>
+								<replace encoding="iso-8859-1" file="${basedir}/target/site/webstart/corsen-512m.jnlp" value="512m" token="@@@MAXHEAPSIZE@@@" />
+
+								<copy file="${basedir}/target/site/webstart/corsen.jnlp" tofile="${basedir}/target/site/webstart/corsen-768m.jnlp"/>
+								<replace encoding="iso-8859-1" file="${basedir}/target/site/webstart/corsen-768m.jnlp" value="768m" token="@@@MAXHEAPSIZE@@@" />
+
+								<copy file="${basedir}/target/site/webstart/corsen.jnlp" tofile="${basedir}/target/site/webstart/corsen-1024m.jnlp"/>
+								<replace encoding="iso-8859-1" file="${basedir}/target/site/webstart/corsen-1024m.jnlp" value="1024m" token="@@@MAXHEAPSIZE@@@" />
+
+								<copy file="${basedir}/target/site/webstart/corsen.jnlp" tofile="${basedir}/target/site/webstart/corsen-1280m.jnlp"/>
+								<replace encoding="iso-8859-1" file="${basedir}/target/site/webstart/corsen-1280m.jnlp" value="1280m" token="@@@MAXHEAPSIZE@@@" />
+
+								<copy file="${basedir}/target/site/webstart/corsen.jnlp" tofile="${basedir}/target/site/webstart/corsen-1536m.jnlp"/>
+								<replace encoding="iso-8859-1" file="${basedir}/target/site/webstart/corsen-1536m.jnlp" value="1538m" token="@@@MAXHEAPSIZE@@@" />
+
+								<delete file="${basedir}/target/site/webstart/corsen.jnlp" />
+
 								<replace encoding="iso-8859-1" dir="${basedir}/target/site" value="${pom.url}">
 									<include name="**/*.jnlp"/>
 									<include name="**/*.html"/>
 									<include name="**/*.rss"/>
+									<include name="**/*.js"/>
 									<replacetoken>@@@WEBSITE@@@</replacetoken>
 								</replace>
 								<replace encoding="iso-8859-1" dir="${basedir}/target/site" value="${pom.version}">
 									<include name="**/*.jnlp"/>
 									<include name="**/*.html"/>
 									<include name="**/*.rss"/>
+									<include name="**/*.js"/>
 									<replacetoken>@@@VERSION@@@</replacetoken>
 								</replace>
 								<replace encoding="iso-8859-1" dir="${basedir}/target/site" value="${pom.name}">
 									<include name="**/*.jnlp"/>
 									<include name="**/*.html"/>
 									<include name="**/*.rss"/>
+									<include name="**/*.js"/>
 									<replacetoken>@@@APPNAME@@@</replacetoken>
 								</replace>
 								<replace encoding="iso-8859-1" dir="${basedir}/target/site" value="${artifactId}">
 									<include name="**/*.jnlp"/>
 									<include name="**/*.html"/>
 									<include name="**/*.rss"/>
+									<include name="**/*.js"/>
 									<replacetoken>@@@APPNAMEMIN@@@</replacetoken>
 								</replace>
 								<tstamp>
@@ -490,6 +525,7 @@ cellular objects (e.g. individual mRNA molecules and mitochondria surface).
 									<include name="**/*.jnlp"/>
 									<include name="**/*.html"/>
 									<include name="**/*.rss"/>
+									<include name="**/*.js"/>
 									<replacetoken>@@@DATE@@@</replacetoken>
 								</replace>
 

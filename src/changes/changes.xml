@@ -35,6 +35,21 @@
 	</properties>
 	<body>
 	
+	   <release version="0.45-SNAPSHOT" date="2010-01-14/">
+            <action dev="jourdren" type="update">
+                Update Mac OS X Mac OS version. Now works under Snow Leopard.
+            </action>
+            <action dev="jourdren" type="update">
+               Update website to allow to launch Corsen application with various amount of memory.
+            </action>
+            <action dev="jourdren" type="add">
+               Add a FAQ to the website.
+            </action>
+            <action dev="jourdren" type="add">
+               Add a VirtualBox image for platform where Corsen don't work.
+            </action>
+        </release>
+
 	   <release version="0.44" date="2009-09-21">
             <action dev="jourdren" type="fix">
                 Many fixes in documentation
