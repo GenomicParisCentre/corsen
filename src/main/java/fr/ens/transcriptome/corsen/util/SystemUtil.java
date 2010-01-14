@@ -22,6 +22,8 @@
 
 package fr.ens.transcriptome.corsen.util;
 
+import java.util.StringTokenizer;
+
 public final class SystemUtil {
 
   /**
@@ -54,6 +56,19 @@ public final class SystemUtil {
    */
   public static boolean isLinux() {
     return !System.getProperty("os.name").toLowerCase().startsWith("linux");
+  }
+
+  /**
+   * Get Major version of the JRE
+   * @return the major version of the JRE as an integer
+   */
+  public static int getJREMajorVersion() {
+
+    final String version = System.getProperty("java.specification.version");
+    StringTokenizer st = new StringTokenizer(version, ".");
+
+    st.nextToken();
+    return Integer.parseInt(st.nextToken());
   }
 
   //

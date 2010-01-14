@@ -62,6 +62,9 @@ public final class Globals {
   /** If the application is packaged in a jar file. */
   public static final boolean IS_JAR = isJar();
 
+  /** Debug mode. */
+  public static final boolean DEBUG = false;
+
   /** Use debug home dir. */
   public static final boolean DEBUG_HOME_DIR = IS_JAR ? false : true;
   /** Show built version. */
@@ -151,7 +154,7 @@ public final class Globals {
   public static final String LICENCE_TXT =
       "This program is developed under the GNU General Public Licence version 2 or later and CeCILL.";
 
-  private static final String COPYRIGHT_DATE = "2006-2009";
+  private static final String COPYRIGHT_DATE = "2006-2010";
 
   /** About string, plain text version. */
   public static final String ABOUT_TXT =
@@ -184,7 +187,7 @@ public final class Globals {
           + " ("
           + Globals.APP_BUILD_NUMBER
           + ")"
-          + "</b> is a tool dedicated to 3D distances measurements developed to access" 
+          + "</b> is a tool dedicated to 3D distances measurements developed to access"
           + " the minimal distance between cellular objects.</p><br/>"
           + "<br/>This version has been built on "
           + APP_BUILD_DATE

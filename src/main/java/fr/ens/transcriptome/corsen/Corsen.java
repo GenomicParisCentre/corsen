@@ -47,6 +47,7 @@ import fr.ens.transcriptome.corsen.gui.CLIGui;
 import fr.ens.transcriptome.corsen.gui.CorsenFakeGui;
 import fr.ens.transcriptome.corsen.gui.qt.CorsenQt;
 import fr.ens.transcriptome.corsen.gui.swing.CorsenSwing;
+import fr.ens.transcriptome.corsen.util.SystemUtil;
 import fr.ens.transcriptome.corsen.util.Util;
 
 /**
@@ -89,7 +90,12 @@ public final class Corsen {
 
     try {
       Corsen.class.getClassLoader().loadClass("com.sun.jnlp.JNLPClassLoader");
-      BootStrap.bootstrap();
+
+      if (SystemUtil.getJREMajorVersion() >= 6) {
+        BootStrapJDK6.bootstrap();
+      } else
+        BootStrap.bootstrap();
+
     } catch (ClassNotFoundException e) {
     }
   }
