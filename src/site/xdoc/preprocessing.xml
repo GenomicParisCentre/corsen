@@ -49,7 +49,7 @@
 			
 			<subsection name="Preprocessing use in Corsen article">
 
-			<p>To obtain data published in Corsen article (jourdren et al.,
+			<!--p>To obtain data published in Corsen article (jourdren et al.,
 				2009), we developed an image processing procedure for automatic
 				extraction of both small particles and aggregates that could not be
 				segmented together using a unique threshold.</p>
@@ -79,7 +79,43 @@
 				that can be submitted to isodata automatic threshold and then used,
 				after eroding (r=2 for mitochondria, r=1 for mRNA), as a mask for
 				the initial image. 3D segmentation algorithm is therefore used
-				removing only pixels whose values are zero.</p>
+				removing only pixels whose values are zero.</p-->
+
+			<p>To obtain data published in Corsen article (jourdren et al.,
+                                2010), we developed an image processing procedure for automatic 
+				extraction of both small particles and aggregates that could not be 
+				segmented together using a unique threshold.</p>
+
+				<p>The procedure is based on the generation of two distinct images,
+				one containing the tiny objects, the other containing the brightest 
+				ones, that are then added up to retrieve all the significant signals.</p>
+
+				<p>After applying a threshold on the minimal grey value to remove 
+				cellular background, the tiny object image (I<sub>1</sub>) is obtained by 
+				performing a Laplacien filter (r=2), that enhances small particles 
+				signal, followed by a median filter (r=2 for mitochondria, r=1 for 
+				mRNA). The brightest particle image (I<sub>2</sub>) is obtained simply by a 
+				applying to the initial image a high threshold on the minimal grey 
+				value. Selection of the two thresholds needed for generation of I<sub>1</sub> 
+				and I<sub>2</sub> is automated using an analysis of the cell intensity histogram.</p>
+
+
+				<p>According to objects occupancy, the background thresholds values 
+				are chosen as follow: T=m+c.o with T, threshold gray value; m, cellular
+				median intensity; o, cellular standard deviation of intensity; and c, 
+				a coefficient determined by object occupancy. Typically, for I<sub>1</sub> 
+				generation, we set c=-2 for mitochondria objects and c E [-1,1] for 
+				RNA objects depending on their expression level. For I<sub>2</sub> generation, 
+				the c value was raised of 2 units. Adding up of I<sub>1</sub> and I<sub>2</sub> results in an 
+				intensity enhanced image that can be submitted to isodata automatic 
+				threshold. After eroding (median filter with r=2 for mitochondria and 
+				r=1 for mRNA), this binary image was used as a mask on the initial image 
+				to set all background pixels to zero, whereas selected object pixels 
+				kept their initial intensity. This final image was analysed using 
+				Corsen 3D segmentation algorithm with the minimal threshold value set 
+				to 1.</p>
+
+
 
 			<p>
 				Our

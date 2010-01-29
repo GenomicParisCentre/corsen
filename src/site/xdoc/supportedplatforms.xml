@@ -43,28 +43,23 @@
 		<tr><td>Windows</td><td>x86_64 64 bits</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Still works in 32-bit mode.</td></tr>
 		<tr><td>Linux</td><td>x86 32 bits</td><td>Yes</td><td>Yes</td><td>Yes</td><td></td></tr>
 		<tr><td>Linux</td><td>x86_64 64 bits</td><td>Yes</td><td><b>No</b></td><td>Yes</td><td></td></tr>
-		<tr><td>Mac OS X</td><td>Intel</td><td>Yes</td><td>Yes(*)</td><td>Yes</td><td>(*) Experimental. Only for Mac OS Snow Leopard (10.6) and Java 6. 32-bit mode only.</td></tr>
+		<tr><td>Mac OS X</td><td>Intel</td><td>Yes</td><td><b>Yes(*)</b></td><td>Yes</td><td>(*) Experimental. Only for Mac OS Snow Leopard (10.6) and Java 6. 32-bit mode only.</td></tr>
 		<tr><td>Other OS with Java 5 or newer</td><td></td><td>Yes</td><td><b>No</b></td><td>Yes</td><td></td></tr>
 	</table>
 
     </section>
 
-
+	<a name="virtualbox"/>
 	<section name="Run Corsen with VirtualBox">
 
-		<p>If your platform is not supported by Corsen, you can also run Corsen inside a virtual machine. We provide here an image disc with ImageJ and Corsen preinstalled for VirtualBox. VirtualBox is a free software that allow to run instances of virtual machine on most platform (Windows, Mac OS X, Linux and Solaris).</p>
+		<p>If your platform is not supported by Corsen, you can also run Corsen inside a virtual machine. VirtualBox is a free software that allow to run instances of virtual machine on most platform (Windows, Mac OS X, Linux and Solaris).</p>
 
 
 		<ol>
 			<li>Download <a href="http://www.virtualbox.org/" class="externalLink">VirtualBox package</a> for your platform and install it.</li>
-			<li>Download the <a href="http://transcriptome.ens.fr/misc/ubuntu-9.10-corsen.vdi" class="externalLink">Ubuntu 9.10 with Corsen</a> image disc.</li>
-			<li>Uncompress the image disc with 7zip. 7zip is free available on its <a href="http://www.7-zip.org/download.html" class="externalLink">website</a>.</li>
-			<li>Launch VirtualBox.</li>
-			<li>Create a new virtual machine for Linux/Ubuntu.</li>
-			<li>Allow at least 768 MB to this virtual machine.</li>
-			<li>For the hard drive of the virtual machine, select an existing hard drive. Click on the browsing icon and then on the add icon. Select the image of Ubuntu 9.10 with Corsen that you had downloaded.</li>
-			<li>Now the virtual machine is configured. You can start it.</li>
-			<li>The login of the account is 'ubuntu' and the password is 'reverse'</li>
+			<li>Install an operating system (e.g. a linux distribution such <a href="http://www.ubuntu.com">ubuntu</a>) or Ready to use
+                                        Virtualbox images for Ubuntu (and other OS) available <a href="http://virtualbox.wordpress.com/images/"> here</a>.</li>
+			<li>Use Corsen.</li>
 		</ol>
 
 		<p><b>Note:</b> The 3D emulation of the virtual machine by VirtualBox is currently not stable and may produce some freeze of Corsen.</p>

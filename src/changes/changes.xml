@@ -35,7 +35,13 @@
 	</properties>
 	<body>
 	
-	   <release version="0.45-SNAPSHOT" date="2010-01-14/">
+	   <release version="0.46" date="2010-01-29/">
+            <action dev="jourdren" type="update">
+               Update of Corsen website.
+            </action>
+        </release>
+	
+	   <release version="0.45" date="2010-01-14/">
             <action dev="jourdren" type="update">
                 Update Mac OS X Mac OS version. Now works under Snow Leopard.
             </action>

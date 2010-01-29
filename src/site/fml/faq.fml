@@ -33,7 +33,7 @@
 
     <faq id="more memory">
       <question>
-        I need more memory to compute distance with Corsen, memory sizes available in <a href="webstart.html">Corsen application start page</a> can't fit my needs.
+        I need more memory to compute distance with Corsen, memory sizes available in Corsen application start page can't fit my needs.
       </question>
       <answer>
 	<p>The only method to solve this issue is to use the <a href="download-src.html">command line</a>. With command line interface you also use 64-bit Java Virtual Machine that allow to use any amount of memory that you need.</p>
@@ -65,6 +65,15 @@
       </question>
       <answer>
 	<p>The window of the Corsen Application is under the window of your browser. Click on the console icon to show it.</p>
+      </answer>
+    </faq>
+
+    <faq id="3D visualization don't work under Mac OS X">
+      <question>
+        No 3D visualization is available under Mac OS X.
+      </question>
+      <answer>
+	<p>You must <a href="download.html#macosx">install JOGL</a> to enable 3D visualization.</p>
       </answer>
     </faq>
 

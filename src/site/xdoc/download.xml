@@ -127,18 +127,13 @@
 				</table>
 			</subsection>
 
-
-			<!--subsection name="How install Corsen on Mac OS X">
+			<a name="macosx"/>
+			<subsection name="How install Corsen on Mac OS X">
 
 				<p>
-					Corsen works only with an Intel Macintosh and Mac OS X.4 (Tiger).
+					Corsen works only with an Intel Macintosh and Mac OS X.6 (Snow Leopard) with Java 6.0.
 					With this operating system, you must install manualy jogl to
-					use the 3D view. This limitation is due to a
-					<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=63306">
-						bug
-				</a>
-					in Apple Java implementation. Corsen contains a hack to
-					bypass this bug but force user to manually install JOGL.
+					use the 3D view.
 				</p>
 
 				<ul>
@@ -146,56 +141,42 @@
 						Download the lastest version of JOGL for Mac Os
 						X (Corsen is tested
 						with 1.1) on
-						<a href="https://jogl.dev.java.net/">
-							JOGL website
-						</a>
-						.
+						<a href="http://kenai.com/projects/jogl"> JOGL website </a>. 
+						You can directly download the JOGL 1.1.1 version for Mac OS X intel 
+						<a href="http://download.java.net/media/jogl/builds/archive/jsr-231-1.1.1/jogl-1.1.1-macosx-universal.zip">here</a>.
 					</li>
 					<li>Unzip the archive.</li>
 					<li>
 						Put the content of the
 						<code>lib</code>
 						folder to
-						<code>/Library/Java/Extensions</code>
+						<a href="file:///Library/java/Extensions"><code>/Library/Java/Extensions</code></a> at the root of your system harddrive.
 					</li>
 				</ul>
 
 				<p>
 					<b>Warning</b>
-					: No tests have been done under Mac OS 10.5
-					(Leopard) and Mac OS 10.6 (Snown Leopard) with Java 5.0 and Java 6.0.
+					: Tests have been only done under Mac OS 10.6 (Snow Leopard) with Java 6.0.
 				</p>
-				<br />
 				<p>
 					If Corsen application is still too unstable for you on Mac OS X,
-					you can
-					install
-					<a href="http://www.virtualbox.org/">Virtual box</a>
-					or other
-					virtualization software and a linux distribution such
-					<a href="http://www.ubuntu.com">ubuntu</a>
-					. We hope that next
-					versions of Corsen will run perfectly under Mac OS X. Ready to use
-					Virtualbox images for Ubuntu (and other OS) are available on
-					<a href="http://virtualbox.wordpress.com/images/">VirtualBox Images website</a>.
+					you can use a <a href="supportedplatforms.html#virtualbox">virtualization software</a> to run Corsen.
 				</p>
 
-			</subsection-->
+			</subsection>
 
 			<subsection name="Corsen application under Linux">
 
 				<p>Corsen is currently only available for 32 bit Intel processor (i386)
-					versions of linux.
-					If you use OpenJDK/IcedTea version of the Java Runtime (see your
-					distribution documentation
-					to install it), the default Java Web Start on the main page may no
-					work.</p>
+					versions of linux. We strongly recommand you to use the Java implementation of Sun to 
+					run Corsen (the <code>sun-java6-jre</code> package for debian/ubuntu).</p>
 
-				<p>
-					Use this specific
-					<a href="webstart/corsen-1024m.jnlp">Corsen application launch link (with 1024 MB allocated for Java)</a>
-					to run Corsen (Don't use Sun script to check java version).
-				</p>
+				<p>If you use OpenJDK/IcedTea version of the Java Runtime (see your
+				   distribution documentation
+				   to install it), the default Java Web Start on the main page may no
+				   work. Use this specific
+				   <a href="webstart/corsen-1024m.jnlp">Corsen application launch link (with 1024 MB allocated for Java)</a>
+				   to run Corsen (Don't use Sun script to check java version) with OpenJDK/IcedTea or gcj.</p>
 
 			</subsection>
 
