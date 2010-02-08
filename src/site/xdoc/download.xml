@@ -98,6 +98,9 @@
 							of the inputs files (images and .par
 							files). However
 							we recommends 1GiB for standard analysis. 
+							If Corsen application can't launch, try to run it with 
+							<a href="webstart.html">less memory allocated</a>.
+							
 						</td>
 					</tr>
 					<tr>

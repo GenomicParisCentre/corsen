@@ -72,6 +72,7 @@
       				<item name="Advanced topics" href="/advanced-topics.html" />
       				<item name="Command line" href="/download-cli.html" />
       			</item>
+			<item name="Sample files" href="/handbook.html#samples" />
 			
 			<item name="Known bugs" href="/bugs.html" />
 			<item name="Mailing list" href="/mail-lists.html" />
