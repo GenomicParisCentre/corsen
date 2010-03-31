@@ -6,7 +6,7 @@
 	<groupId>fr.ens.transcriptome</groupId>
 	<artifactId>corsen</artifactId>
 	<packaging>jar</packaging>
-	<version>0.47</version>
+	<version>1.0</version>
 	<name>Corsen</name>
 	<description>
 		Corsen is a tool dedicated to 3D distances measurements developed to access the minimal distance between

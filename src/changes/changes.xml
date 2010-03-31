@@ -35,6 +35,12 @@
 	</properties>
 	<body>
 	
+	   <release version="1.0" date="2010-03-31/">
+            <action dev="jourdren" type="update">
+               Corsen is now 1.0. First public release.
+            </action>
+        </release>
+	
 	   <release version="0.47" date="2010-02-08/">
             <action dev="jourdren" type="update">
                Small website updates.
