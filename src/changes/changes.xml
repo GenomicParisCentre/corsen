@@ -35,6 +35,13 @@
 	</properties>
 	<body>
 	
+	   <release version="1.0.1" date="2011-08-23/">
+            <action dev="jourdren" type="update">
+               Now distances can be negative if testing point 
+               is also in surface points (and not only in inner points).
+            </action>
+        </release>
+	
 	   <release version="1.0" date="2010-03-31/">
             <action dev="jourdren" type="update">
                Corsen is now 1.0. First public release.
