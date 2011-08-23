@@ -501,7 +501,8 @@ public final class BitMapParticle3D {
     else if (isParticleInnerPoint(point))
       return true;
 
-    final Point3D nearest = findNearestInnerPointNotSurfacePoint(point);
+    // final Point3D nearest = findNearestInnerPointNotSurfacePoint(point);
+    final Point3D nearest = findNearestPoint(point);
 
     final float x = nearest.getX();
     final float y = nearest.getY();
@@ -538,14 +539,42 @@ public final class BitMapParticle3D {
     return result;
   }
 
-  private Point3D findNearestInnerPointNotSurfacePoint(final Point3D point) {
+  // private Point3D findNearestInnerPointNotSurfacePoint(final Point3D point) {
+  //
+  // Point3D nearest = null;
+  // float minDistance = Float.MAX_VALUE;
+  //
+  // final int n = this.particle.innerPointsCount();
+  //
+  // for (int j = 0; j < n; j++) {
+  // final Point3D p2 = this.particle.getInnerPoint(j);
+  //
+  // if (nearest == null) {
+  // nearest = p2;
+  // minDistance = p2.distance(point);
+  // } else {
+  //
+  // float d = p2.distance(point);
+  // if (d < minDistance && isParticleInnerPoint(p2)) {
+  // minDistance = d;
+  // nearest = p2;
+  // }
+  //
+  // }
+  //
+  // }
+  //
+  // return nearest;
+  // }
+
+  private Point3D findNearestPoint(final Point3D point) {
 
     Point3D nearest = null;
     float minDistance = Float.MAX_VALUE;
 
-    final int n = this.particle.innerPointsCount();
+    final int n1 = this.particle.innerPointsCount();
 
-    for (int j = 0; j < n; j++) {
+    for (int j = 0; j < n1; j++) {
       final Point3D p2 = this.particle.getInnerPoint(j);
 
       if (nearest == null) {
@@ -555,6 +584,25 @@ public final class BitMapParticle3D {
 
         float d = p2.distance(point);
         if (d < minDistance && isParticleInnerPoint(p2)) {
+          minDistance = d;
+          nearest = p2;
+        }
+
+      }
+
+    }
+
+    final int n2 = this.particle.surfacePointsCount();
+    for (int j = 0; j < n2; j++) {
+      final Point3D p2 = this.particle.getSurfacePoint(j);
+
+      if (nearest == null) {
+        nearest = p2;
+        minDistance = p2.distance(point);
+      } else {
+
+        float d = p2.distance(point);
+        if (d < minDistance && isParticleSurfacePoint(p2)) {
           minDistance = d;
           nearest = p2;
         }
